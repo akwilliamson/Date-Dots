@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
 		97364CE91AFBF44A0095BC57 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE71AFBF44A0095BC57 /* DateAid.xcdatamodeld */; };
-		97364CEB1AFBF44A0095BC57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* ViewController.swift */; };
+		97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */; };
 		97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEC1AFBF44A0095BC57 /* Main.storyboard */; };
 		97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEF1AFBF44A0095BC57 /* Images.xcassets */; };
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
 		97364CFF1AFBF44A0095BC57 /* DateAidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */; };
+		97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */; };
+		97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */; };
+		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +34,18 @@
 		97364CE41AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CE51AFBF44A0095BC57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97364CE81AFBF44A0095BC57 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
-		97364CEA1AFBF44A0095BC57 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportVC.swift; sourceTree = "<group>"; };
 		97364CED1AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97364CEF1AFBF44A0095BC57 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		97364CF21AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		97364CF81AFBF44A0095BC57 /* DateAidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateAidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97364CFD1AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
+		97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
+		97364D091AFBFCB10095BC57 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesTableVC.swift; sourceTree = "<group>"; };
+		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
-				97364CEA1AFBF44A0095BC57 /* ViewController.swift */,
+				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
+				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
+				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
 				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
@@ -93,7 +103,10 @@
 		97364CE31AFBF44A0095BC57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				97364D091AFBFCB10095BC57 /* SWRevealViewController.h */,
+				97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */,
 				97364CE41AFBF44A0095BC57 /* Info.plist */,
+				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -215,9 +228,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97364CEB1AFBF44A0095BC57 /* ViewController.swift in Sources */,
+				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
 				97364CE91AFBF44A0095BC57 /* DateAid.xcdatamodeld in Sources */,
+				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
+				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
+				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,9 +360,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DateAid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -354,9 +373,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DateAid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
 			};
 			name = Release;
 		};
