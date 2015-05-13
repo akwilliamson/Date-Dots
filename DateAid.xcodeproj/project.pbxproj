@@ -17,6 +17,8 @@
 		97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */; };
 		97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */; };
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
+		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
+		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesTableVC.swift; sourceTree = "<group>"; };
 		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
+		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */,
+				97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,15 +93,17 @@
 		97364CE21AFBF44A0095BC57 /* DateAid */ = {
 			isa = PBXGroup;
 			children = (
+				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
 				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
-				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
 				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
-				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
+				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
 				97364CE71AFBF44A0095BC57 /* DateAid.xcdatamodeld */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
+				97C511CE1B030FED00613C77 /* AddressBook.framework */,
+				97C511CF1B030FED00613C77 /* AddressBookUI.framework */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -434,6 +442,7 @@
 				97364D041AFBF44A0095BC57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		97364D051AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateAidTests" */ = {
 			isa = XCConfigurationList;
@@ -442,6 +451,7 @@
 				97364D071AFBF44A0095BC57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

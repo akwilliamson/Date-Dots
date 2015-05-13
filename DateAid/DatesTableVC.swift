@@ -14,7 +14,7 @@ class DatesTableVC: UITableViewController {
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
     // Fake table view rows
-    let fakeDatesArray = ["date 1", "holiday 2", "date 3", "anniversary 4", ]
+        var datesDictionary = [String: (NSDate, String)]()
     
     var showDates = [String]()
     var menuIndexPath: Int?
@@ -43,7 +43,7 @@ class DatesTableVC: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if menuIndexPath == nil {
-            return fakeDatesArray.count
+            return datesDictionary.count
         } else {
             return showDates.count
         }
@@ -52,7 +52,7 @@ class DatesTableVC: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         if menuIndexPath == nil {
-            cell.textLabel?.text = fakeDatesArray[indexPath.row]
+            
         } else {
             cell.textLabel?.text = showDates[indexPath.row]
         }
