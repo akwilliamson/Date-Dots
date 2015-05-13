@@ -9,17 +9,20 @@
 import UIKit
 
 class InitialImportVC: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        var userHasSeenInitialVIew = NSUserDefaults.standardUserDefaults().valueForKey("seenInitialView") as? Bool
+        if userHasSeenInitialVIew == !true {
+            return
+        } else if userHasSeenInitialVIew! == true {
+            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "seenInitialView")
     }
-
-
+    
 }
 

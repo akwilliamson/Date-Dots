@@ -54,12 +54,15 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="6Er-P5-vP8" kind="show" id="5c3-6T-RLp"/>
+                                    <segue destination="6Er-P5-vP8" kind="show" identifier="" id="5c3-6T-RLp"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="6Er-P5-vP8" kind="show" identifier="HomeScreen" id="SXV-Qu-gXZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -131,6 +134,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xUz-hE-7cZ" id="jgP-57-ftk">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="PaR-uw-Bbs" kind="show" identifier="ShowDateDetails" id="PZS-0A-BTy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -139,10 +145,65 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="yk7-8C-YI1"/>
+                    <connections>
+                        <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="Kd0-AH-YAd"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S8O-kJ-9ip" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2716" y="-679"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="bfe-1f-yLk">
+            <objects>
+                <viewController id="i1f-AG-9F2" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CAy-wP-cL3"/>
+                        <viewControllerLayoutGuide type="bottom" id="OwV-4I-2tz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a12-fm-HpS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8VU-sA-hFu">
+                                <rect key="frame" x="16" y="88" width="122" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3534" y="-1179"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="A4I-dg-Jq3">
+            <objects>
+                <viewController id="PaR-uw-Bbs" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
+                        <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sia-pu-44W">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHr-7x-JkF">
+                                <rect key="frame" x="28" y="91" width="109" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ljB-LZ-q1m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3534" y="-494"/>
         </scene>
         <!--Dates-->
         <scene sceneID="Iui-As-nW8">
@@ -238,6 +299,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="SXV-Qu-gXZ"/>
         <segue reference="e2t-De-Ntf"/>
     </inferredMetricsTieBreakers>
 </document>

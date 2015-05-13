@@ -29,8 +29,8 @@ class DatesTableVC: UITableViewController {
         
         self.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                   style: .Plain,
-                                                 target: nil,
-                                                 action: nil)
+                                                 target: self,
+                                                 action: Selector("customFunc:"))
         
         self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
         self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
@@ -60,6 +60,8 @@ class DatesTableVC: UITableViewController {
         return cell
     }
 
-    
+    func customFunc(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("AddDate", sender: UIBarButtonItem())
+    }
 
 }
