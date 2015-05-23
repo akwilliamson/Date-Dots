@@ -7,36 +7,69 @@
 //
 
 import UIKit
+import CoreData
 import AddressBook
 import AddressBookUI
 
 class InitialImportVC: UIViewController {
     
+    // Initialized through application(_:didFinishLaunchingWithOptions)
+    var managedContext: NSManagedObjectContext!
+    // object to interact with iOS contacts
     var addressBook: ABAddressBook!
-    var datesDictionary = [String: (NSDate, String)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var userHasSeenInitialVIew = NSUserDefaults.standardUserDefaults().valueForKey("seenInitialView") as? Bool
-        if userHasSeenInitialVIew == !true {
+    }
+    
+    func getDatesFromContacts() {
+        if !self.determineStatus() {
+            println("determineStatus() returns false. Exiting getContactNames()")
             return
-        } else if userHasSeenInitialVIew == true {
-            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        }
+        let people = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray as [ABRecord]
+        for person in people {
+            
+            var anniversaries: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue() as ABMultiValueRef
+            var anniversaryLabel: String
+            
+            var stuff: ABMultiValueRef
+            stuff = anniversaries
+            var i = 0
+            for (i = 0; i < ABMultiValueGetCount(anniversaries); i++) {
+                anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaries, i)).takeRetainedValue() as! String
+                
+                let otherLabel = kABPersonAnniversaryLabel as! String
+                if anniversaryLabel == otherLabel {
+                    println("Anniversary for:")
+                    println(ABRecordCopyCompositeName(person).takeUnretainedValue() as! String)
+                    println((ABMultiValueCopyValueAtIndex(anniversaries, i)).takeUnretainedValue() as! NSDate)
+                }
+            }
+            
+            
+            let birthday = ABRecordCopyValue(person, kABPersonBirthdayProperty)
+            if birthday != nil {
+                let name = ABRecordCopyCompositeName(person)
+                let dateForDateEntity = birthday.takeUnretainedValue() as! NSDate
+                let nameForDateEntity = name.takeUnretainedValue() as! String
+                
+                let dateEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+                let date = Date(entity: dateEntity!, insertIntoManagedObjectContext: managedContext)
+                date.name = nameForDateEntity
+                date.date = dateForDateEntity
+                date.type = "birthday"
+                
+                var error: NSError?
+                if !managedContext.save(&error) {
+                    println("Could not save: \(error)")
+                }
+            }
         }
     }
     
-    func createAddressBook() -> Bool {
-        if self.addressBook != nil {
-            return true
-        }
-        var err: Unmanaged<CFError>? = nil
-        let adbk: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
-        if adbk == nil {
-            self.addressBook = nil
-            return false
-        }
-        self.addressBook = adbk
-        return true
+    func addDateToCoreData(type: String, date: NSDate, name: String) {
+    
     }
     
     func determineStatus() -> Bool {
@@ -68,47 +101,46 @@ class InitialImportVC: UIViewController {
         }
     }
     
+    func createAddressBook() -> Bool {
+        if self.addressBook != nil {
+            return true
+        }
+        var err: Unmanaged<CFError>? = nil
+        let adbk: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+        if adbk == nil {
+            self.addressBook = nil
+            return false
+        }
+        self.addressBook = adbk
+        return true
+    }
+    
     @IBAction func syncContacts(sender: AnyObject) {
-        getContactNames()
-    }
-    
-    func daysBetween(date1: NSDate, date2: NSDate) -> Int {
-        var unitFlags = NSCalendarUnit.CalendarUnitDay
-        var calendar = NSCalendar.currentCalendar()
-        var components = calendar.components(unitFlags, fromDate: date1, toDate: date2, options: nil)
-        return 365 - (components.day)
-    }
-    
-    func getContactNames() {
-        if !self.determineStatus() {
-            println("determineStatus() returns false. Exiting getContactNames()")
-            return
-        }
-        let people = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray as [ABRecord]
-        for people in people {
-            let date = ABRecordCopyValue(people, kABPersonBirthdayProperty)
-            if date != nil {
-                let name = ABRecordCopyCompositeName(people)
-                let contactDate = date.takeUnretainedValue() as! NSDate
-                var daysAway = daysBetween(contactDate, date2: NSDate())
-                while daysAway < 0 {
-                    daysAway = daysAway + 365
-                }
-                let dateName = name.takeUnretainedValue() as! String
-                let dateDaysAway = "\(daysAway) days away"
-                
-                var thing = [contactDate, dateDaysAway]
-                
-                datesDictionary.updateValue((contactDate, dateDaysAway), forKey: dateName)
-                
-            }
-        }
+        getDatesFromContacts()
+        self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "seenInitialView")
-        let destinationVC = segue.destinationViewController as! DatesTableVC
+//        let tabBarVC = segue.destinationViewController as! UITabBarController
+//        let revealVC = tabBarVC.childViewControllers[0] as! SW
+//        let destinationVC = revealVC.
+//        destinationVC.datesDictionary = datesDictionary
     }
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

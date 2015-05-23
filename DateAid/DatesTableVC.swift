@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import CoreData
 
 class DatesTableVC: UITableViewController {
+    
+    var managedContext = CoreDataStack().context
     
     // Bar button items
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
-    // Fake table view rows
-        var datesDictionary = [String: (NSDate, String)]()
+    
+    var datesArray: [Date] = []
     
     var showDates = [String]()
     var menuIndexPath: Int?
@@ -37,13 +40,18 @@ class DatesTableVC: UITableViewController {
         self.title = "Dates"
         
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
+        // Fetch all dates from core data
+        let datesFetch = NSFetchRequest(entityName: "Date")
+        var error: NSError?
+        datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
     }
 
 // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if menuIndexPath == nil {
-            return datesDictionary.count
+        if menuIndexPath == nil || menuIndexPath == 0 {
+            return datesArray.count
         } else {
             return showDates.count
         }
@@ -52,7 +60,8 @@ class DatesTableVC: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         if menuIndexPath == nil {
-            
+            let date = datesArray[indexPath.row]
+            cell.textLabel?.text = "\(date.name): \(date.date)"
         } else {
             cell.textLabel?.text = showDates[indexPath.row]
         }
@@ -65,3 +74,21 @@ class DatesTableVC: UITableViewController {
     }
 
 }
+
+/*
+
+How to get days until date:
+
+func daysBetween(date1: NSDate, date2: NSDate) -> Int {
+    var unitFlags = NSCalendarUnit.CalendarUnitDay
+    var calendar = NSCalendar.currentCalendar()
+    var components = calendar.components(unitFlags, fromDate: date1, toDate: date2, options: nil)
+    return 365 - (components.day)
+}
+
+var daysAway = daysBetween(contactDate, date2: NSDate())
+while daysAway < 0 {
+    daysAway = daysAway + 365
+}
+
+*/
