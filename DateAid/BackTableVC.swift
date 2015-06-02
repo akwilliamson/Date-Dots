@@ -11,13 +11,12 @@ import Foundation
 class BackTableVC: UITableViewController {
     
     var tableArray = [String]()
-    let fakeDatesArray = ["date 1", "holiday 2", "date 3", "anniversary 4", ]
     let fakeHolidaysArray = ["holiday 1", "holiday 2", "holiday 3", "holiday 4", "holiday 5"]
     let fakeAnniversariesArray = ["anniversary 1", "anniversary 2", "anniversary 3"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableArray = ["All", "Holidays", "Anniversaries"]
+        tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,7 +38,6 @@ class BackTableVC: UITableViewController {
         
         var indexPath = self.tableView.indexPathForSelectedRow()
         if indexPath!.row == 0 {
-            destinationVC.showDates = fakeDatesArray
             destinationVC.menuIndexPath = 0
         } else if indexPath!.row == 1 {
             destinationVC.showDates = fakeHolidaysArray

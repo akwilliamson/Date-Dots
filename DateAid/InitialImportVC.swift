@@ -13,9 +13,9 @@ import AddressBookUI
 
 class InitialImportVC: UIViewController {
     
-    // Initialized through application(_:didFinishLaunchingWithOptions)
+    // Passed through application(_:didFinishLaunchingWithOptions)
     var managedContext: NSManagedObjectContext!
-    // object to interact with iOS contacts
+    // Object to interact with contacts in address book
     var addressBook: ABAddressBook!
     
     override func viewDidLoad() {
@@ -41,24 +41,30 @@ class InitialImportVC: UIViewController {
                 
                 let otherLabel = kABPersonAnniversaryLabel as! String
                 if anniversaryLabel == otherLabel {
-                    println("Anniversary for:")
-                    println(ABRecordCopyCompositeName(person).takeUnretainedValue() as! String)
-                    println((ABMultiValueCopyValueAtIndex(anniversaries, i)).takeUnretainedValue() as! NSDate)
+                    
+                    let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+                    let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
+      
+                    anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                    anniversary.date = ABMultiValueCopyValueAtIndex(anniversaries, i).takeUnretainedValue() as! NSDate
+                    anniversary.type = "anniversary"
+                    
+                    var error: NSError?
+                    if !managedContext.save(&error) {
+                        println("Could not save: \(error)")
+                    }
                 }
             }
             
-            
-            let birthday = ABRecordCopyValue(person, kABPersonBirthdayProperty)
-            if birthday != nil {
-                let name = ABRecordCopyCompositeName(person)
-                let dateForDateEntity = birthday.takeUnretainedValue() as! NSDate
-                let nameForDateEntity = name.takeUnretainedValue() as! String
+            let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
+            if birthdayProperty != nil {
                 
-                let dateEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-                let date = Date(entity: dateEntity!, insertIntoManagedObjectContext: managedContext)
-                date.name = nameForDateEntity
-                date.date = dateForDateEntity
-                date.type = "birthday"
+                let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+                let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+                
+                birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                birthday.date = birthdayProperty.takeUnretainedValue() as! NSDate
+                birthday.type = "birthday"
                 
                 var error: NSError?
                 if !managedContext.save(&error) {
@@ -69,7 +75,6 @@ class InitialImportVC: UIViewController {
     }
     
     func addDateToCoreData(type: String, date: NSDate, name: String) {
-    
     }
     
     func determineStatus() -> Bool {
@@ -118,13 +123,6 @@ class InitialImportVC: UIViewController {
     @IBAction func syncContacts(sender: AnyObject) {
         getDatesFromContacts()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let tabBarVC = segue.destinationViewController as! UITabBarController
-//        let revealVC = tabBarVC.childViewControllers[0] as! SW
-//        let destinationVC = revealVC.
-//        destinationVC.datesDictionary = datesDictionary
     }
 }
 

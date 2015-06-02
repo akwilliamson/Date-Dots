@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
     }
 
+    // Persist data to disk when app enters background
     func applicationDidEnterBackground(application: UIApplication) {
         coreDataStack.saveContext()
     }
@@ -50,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
     }
 
+    // Persist data to disk when app terminates
     func applicationWillTerminate(application: UIApplication) {
         coreDataStack.saveContext()
     }

@@ -11,12 +11,14 @@ import CoreData
 
 class DatesTableVC: UITableViewController {
     
+    // Grab the context
     var managedContext = CoreDataStack().context
     
     // Bar button items
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
     
+    // Holds dates shown in table
     var datesArray: [Date] = []
     
     var showDates = [String]()
@@ -24,31 +26,34 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Set title
+        self.title = "Dates"
+        
         // Set bar button items
         self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
                                                   style: .Plain,
                                                  target: self.revealViewController(),
                                                  action: Selector("revealToggle:"))
+        self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
         
         self.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                   style: .Plain,
                                                  target: self,
                                                  action: Selector("customFunc:"))
-        
-        self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
         self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
-        self.title = "Dates"
-        
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         // Fetch all dates from core data
         let datesFetch = NSFetchRequest(entityName: "Date")
         var error: NSError?
         datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
+        
+        // Detect gesture to reveal/hide side menu
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
 
 // MARK: - Table view data source
 
+    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if menuIndexPath == nil || menuIndexPath == 0 {
             return datesArray.count
@@ -59,7 +64,7 @@ class DatesTableVC: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-        if menuIndexPath == nil {
+        if menuIndexPath == nil || menuIndexPath == 0 {
             let date = datesArray[indexPath.row]
             cell.textLabel?.text = "\(date.name): \(date.date)"
         } else {
