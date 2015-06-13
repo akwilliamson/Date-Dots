@@ -102,11 +102,8 @@
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
 				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
 				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
-				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
-				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
-				97C511CE1B030FED00613C77 /* AddressBook.framework */,
-				97C511CF1B030FED00613C77 /* AddressBookUI.framework */,
+				97F212E71B1D90EA00E88C43 /* Frameworks */,
 				97943B5A1B0EE00E004FC095 /* Date.swift */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
@@ -117,6 +114,8 @@
 		97364CE31AFBF44A0095BC57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
+				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 				97364D091AFBFCB10095BC57 /* SWRevealViewController.h */,
 				97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */,
 				97364CE41AFBF44A0095BC57 /* Info.plist */,
@@ -140,6 +139,15 @@
 				97364CFD1AFBF44A0095BC57 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97F212E71B1D90EA00E88C43 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97C511CE1B030FED00613C77 /* AddressBook.framework */,
+				97C511CF1B030FED00613C77 /* AddressBookUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

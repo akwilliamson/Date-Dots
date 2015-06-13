@@ -30,10 +30,9 @@ class InitialImportVC: UIViewController {
         let people = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray as [ABRecord]
         for person in people {
             
-            var anniversaries: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue() as ABMultiValueRef
+            let anniversaries: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue() as ABMultiValueRef
             var anniversaryLabel: String
-            
-            var stuff: ABMultiValueRef
+            let stuff: ABMultiValueRef
             stuff = anniversaries
             var i = 0
             for (i = 0; i < ABMultiValueGetCount(anniversaries); i++) {

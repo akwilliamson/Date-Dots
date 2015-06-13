@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
 //
 
+/*
+Next to do: Prevent saving duplicate dates to disc
+*/
+
 import UIKit
 import CoreData
 

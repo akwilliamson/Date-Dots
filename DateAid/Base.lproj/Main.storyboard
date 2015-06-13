@@ -68,7 +68,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Dates" id="0Ef-6P-KoM"/>
+                    <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="0Ef-6P-KoM">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="people-selected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <connections>
                         <segue destination="6sN-oB-xmV" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="S9O-1R-H1j"/>
                         <segue destination="Uns-kb-TbM" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="oNP-ia-Yef"/>
@@ -250,7 +254,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Calendar" id="nwt-Ud-Qch"/>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar-outline" id="nwt-Ud-Qch">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="calendar-selected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wf5-zB-PhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -278,7 +286,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" id="Ryy-wP-WgG"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="cog-outline" id="Ryy-wP-WgG">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="cog-selected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oqe-Z9-Cyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -305,6 +317,14 @@
             <point key="canvasLocation" x="276" y="479"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="calendar-outline" width="32" height="32"/>
+        <image name="calendar-selected" width="32" height="32"/>
+        <image name="cog-outline" width="32" height="32"/>
+        <image name="cog-selected" width="32" height="32"/>
+        <image name="people-outline" width="32" height="32"/>
+        <image name="people-selected" width="32" height="32"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="oNP-ia-Yef"/>
         <segue reference="SXV-Qu-gXZ"/>
