@@ -20,7 +20,6 @@ class DatesTableVC: UITableViewController {
     
     // Holds dates shown in table
     var datesArray: [Date] = []
-    
     var showDates = [String]()
     var menuIndexPath: Int?
     

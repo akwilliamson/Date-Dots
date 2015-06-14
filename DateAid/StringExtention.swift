@@ -8,7 +8,6 @@
 
 import Foundation
 
-// Converts a regular range (0..5) to a proper String.Index range.
 extension String {
     public func convertRange(range: Range<Int>) -> Range<String.Index> {
         

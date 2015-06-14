@@ -84,8 +84,13 @@ class InitialImportVC: UIViewController {
     
     func abbreviateName(fullName: String) -> String {
         let castString = fullName as NSString
+        let convertedRange: Range<String.Index>
         let endIndex = castString.rangeOfString(" ", options: .BackwardsSearch).location
-        let convertedRange = fullName.convertRange(0..<endIndex)
+        if endIndex < 100 {
+            convertedRange = fullName.convertRange(0..<endIndex)
+        } else {
+            convertedRange = fullName.convertRange(0..<castString.length-2)
+        }
         
         return fullName.substringWithRange(convertedRange)
     }
