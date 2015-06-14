@@ -6,6 +6,13 @@
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
 //
 
+/**
+
+TO DO: Add another property to Date entity that includes the user's abbreviated name for quick 
+       access and display in DatesTableVC's tableview rows. Ex: Aaron Williamson -> Aaron W.
+
+**/
+
 import UIKit
 import CoreData
 import AddressBook

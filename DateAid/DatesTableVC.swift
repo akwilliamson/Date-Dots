@@ -12,7 +12,7 @@ import CoreData
 class DatesTableVC: UITableViewController {
     
     // Grab the context
-    var managedContext = CoreDataStack().context
+    var managedContext = CoreDataStack().managedObjectContext
     
     // Bar button items
     var leftBarButtonItem: UIBarButtonItem!
@@ -29,7 +29,7 @@ class DatesTableVC: UITableViewController {
         // Set title
         self.title = "Dates"
         
-        // Set bar button items
+        // Set bar buttons and corresponding actions
         self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
                                                   style: .Plain,
                                                  target: self.revealViewController(),
@@ -49,13 +49,17 @@ class DatesTableVC: UITableViewController {
         
         // Detect gesture to reveal/hide side menu
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
+        // *** Register nib tableviewcells for reuse
+        let birthdayNib = UINib(nibName: "BirthdayCell", bundle: nil)
+        tableView.registerNib(birthdayNib, forCellReuseIdentifier: "BirthdayCell")
     }
 
 // MARK: - Table view data source
 
     //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if menuIndexPath == nil || menuIndexPath == 0 {
+        if menuIndexPath == nil || menuIndexPath == 0 || menuIndexPath == 1 || menuIndexPath == 2 {
             return datesArray.count
         } else {
             return showDates.count
@@ -63,26 +67,50 @@ class DatesTableVC: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-        if menuIndexPath == nil || menuIndexPath == 0 {
+        let cell: UITableViewCell!
+        
+        let dayTimePeriodFormatter = NSDateFormatter()
+        dayTimePeriodFormatter.dateFormat = "dd MMM"
+        
+        // If "All" is selected in the side navigation, show all saved dates
+        
+        if menuIndexPath == nil || menuIndexPath! == 0 {
+            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
             let date = datesArray[indexPath.row]
-            cell.textLabel?.text = "\(date.name): \(date.date)"
+            birthdayCell.name = date.name
+            let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
+            birthdayCell.date = stringDate
+            cell = birthdayCell
+        } else if menuIndexPath! == 1 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
+            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
+            let date = datesArray[indexPath.row]
+            birthdayCell.name = date.name
+            let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
+            birthdayCell.date = stringDate
+            cell = birthdayCell
+        } else if menuIndexPath! == 2 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
+            cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+            let anniversary = datesArray[indexPath.row]
+            cell.textLabel?.text = "\(anniversary.name): \(anniversary.date)"
         } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
             cell.textLabel?.text = showDates[indexPath.row]
         }
-        
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
 
     func customFunc(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("AddDate", sender: UIBarButtonItem())
     }
-
 }
 
 /*
 
-How to get days until date:
+How to get number of days until date:
 
 func daysBetween(date1: NSDate, date2: NSDate) -> Int {
     var unitFlags = NSCalendarUnit.CalendarUnitDay

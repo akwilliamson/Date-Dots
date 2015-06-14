@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         let viewController = self.window!.rootViewController as! InitialImportVC
-        viewController.managedContext = coreDataStack.context
+        viewController.managedContext = coreDataStack.managedObjectContext
         
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        let rootController1 = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! UIViewController

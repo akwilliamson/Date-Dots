@@ -11,10 +11,10 @@ import CoreData
 
 class CoreDataStack {
     // These properties correspond to the stack components. Since they aren't set to anything, an initializer is needed
-    let context: NSManagedObjectContext
-    let psc: NSPersistentStoreCoordinator
-    let model: NSManagedObjectModel
-    let persistentStore: NSPersistentStore?
+    let       managedObjectContext: NSManagedObjectContext
+    let persistentStoreCoordinator: NSPersistentStoreCoordinator
+    let         managedObjectModel: NSManagedObjectModel
+    let            persistentStore: NSPersistentStore?
     
     // This initializer is responsible for configuring each individual component in this Core Data stack
     init() {
@@ -22,14 +22,14 @@ class CoreDataStack {
         // Load the managed object model from disk into a NSManagedObjectModel object
         let bundle = NSBundle.mainBundle()
         let modelURL = bundle.URLForResource("DateAid", withExtension: "momd")
-        model = NSManagedObjectModel(contentsOfURL: modelURL!)!
+        managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL!)!
         
         // Set the persistent store coordinator
-        psc = NSPersistentStoreCoordinator(managedObjectModel: model)
+        persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         
         // Set the managed object context and connect it to the persistent store coordinator
-        context = NSManagedObjectContext()
-        context.persistentStoreCoordinator = psc
+        managedObjectContext = NSManagedObjectContext()
+        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         
         // Access a URL to the application's documents directory
         // The SQLite databased (simply a file) will be stored in this directory which is the recommended place to store user's data
@@ -43,7 +43,7 @@ class CoreDataStack {
         var error: NSError? = nil
         
         // Provide a persistent store type, a new URL to persist to, and any extra options
-        persistentStore = psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)!
+        persistentStore = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)!
         
         if persistentStore == nil {
             println("Error adding persistent store: \(error)")
@@ -54,7 +54,7 @@ class CoreDataStack {
     // A convenience method to save the stack's managed object context with error handling
     func saveContext() {
         var error: NSError? = nil
-        if context.hasChanges && !context.save(&error) {
+        if managedObjectContext.hasChanges && !managedObjectContext.save(&error) {
             println("Could not save: \(error), \(error?.userInfo)")
         }
     }
