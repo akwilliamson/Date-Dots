@@ -21,6 +21,7 @@
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		97943B5B1B0EE00E004FC095 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B5A1B0EE00E004FC095 /* Date.swift */; };
+		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97943B5A1B0EE00E004FC095 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
+		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -113,6 +115,7 @@
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97361A631B2C0CEF006394E1 /* BirthdayCell.xib */,
 				976BD4F61B2D079200415D65 /* BirthdayCell.swift */,
+				97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				97943B5B1B0EE00E004FC095 /* Date.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
+				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
 			);

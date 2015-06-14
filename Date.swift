@@ -11,8 +11,9 @@ import CoreData
 
 class Date: NSManagedObject {
 
-    @NSManaged var type: String
-    @NSManaged var name: String
-    @NSManaged var date: NSDate
+    @NSManaged var            name: String
+    @NSManaged var abbreviatedName: String
+    @NSManaged var            date: NSDate
+    @NSManaged var            type: String
 
 }

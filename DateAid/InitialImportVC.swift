@@ -52,6 +52,7 @@ class InitialImportVC: UIViewController {
                     let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
       
                     anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                    anniversary.abbreviatedName = abbreviateName(anniversary.name)
                     anniversary.date = ABMultiValueCopyValueAtIndex(anniversaries, i).takeUnretainedValue() as! NSDate
                     anniversary.type = "anniversary"
                     
@@ -69,6 +70,7 @@ class InitialImportVC: UIViewController {
                 let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
                 
                 birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                birthday.abbreviatedName = abbreviateName(birthday.name)
                 birthday.date = birthdayProperty.takeUnretainedValue() as! NSDate
                 birthday.type = "birthday"
                 
@@ -78,6 +80,14 @@ class InitialImportVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func abbreviateName(fullName: String) -> String {
+        let castString = fullName as NSString
+        let endIndex = castString.rangeOfString(" ", options: .BackwardsSearch).location
+        let convertedRange = fullName.convertRange(0..<endIndex)
+        
+        return fullName.substringWithRange(convertedRange)
     }
     
     func addDateToCoreData(type: String, date: NSDate, name: String) {

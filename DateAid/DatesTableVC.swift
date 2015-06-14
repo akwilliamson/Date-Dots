@@ -77,14 +77,14 @@ class DatesTableVC: UITableViewController {
         if menuIndexPath == nil || menuIndexPath! == 0 {
             let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
             let date = datesArray[indexPath.row]
-            birthdayCell.name = date.name
+            birthdayCell.name = date.abbreviatedName
             let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
             birthdayCell.date = stringDate
             cell = birthdayCell
         } else if menuIndexPath! == 1 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
             let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
             let date = datesArray[indexPath.row]
-            birthdayCell.name = date.name
+            birthdayCell.name = date.abbreviatedName
             let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
             birthdayCell.date = stringDate
             cell = birthdayCell
