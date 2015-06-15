@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0F627369-6F82-4740-9DC7-A3E6EA46093A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DateAid</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F31C737610E760743C7ACE182E457F5BC9CDC557</key>
+		<string>https://github.com/willia15/DateAid.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DateAid.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F31C737610E760743C7ACE182E457F5BC9CDC557</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/willia15/DateAid.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F31C737610E760743C7ACE182E457F5BC9CDC557</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F31C737610E760743C7ACE182E457F5BC9CDC557</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Date%20Aid</string>
+		</dict>
+	</array>
+</dict>
+</plist>

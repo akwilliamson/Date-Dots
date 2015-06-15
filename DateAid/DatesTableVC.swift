@@ -19,9 +19,15 @@ class DatesTableVC: UITableViewController {
     var rightBarButtonItem: UIBarButtonItem!
     
     // Holds dates shown in table
-    var datesArray: [Date] = []
-    var showDates = [String]()
+    var datesArray = [Date]()
+    var holidaysDictionary = [String: NSDate]()
     var menuIndexPath: Int?
+    
+    // Format NSDate to be human readable
+    let dayTimePeriodFormatter = NSDateFormatter()
+    
+    // Custom colors
+    let blueColor = UIColor(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,17 +47,24 @@ class DatesTableVC: UITableViewController {
                                                  action: Selector("customFunc:"))
         self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
         
-        // Fetch all dates from core data
-        let datesFetch = NSFetchRequest(entityName: "Date")
-        var error: NSError?
-        datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
-        
         // Detect gesture to reveal/hide side menu
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
-        // *** Register nib tableviewcells for reuse
+        // Register nib tableviewcells for reuse
         let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
         tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
+        
+        var myDict: NSDictionary?
+        if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
+            myDict = NSDictionary(contentsOfFile: path)
+            if let myDictionary = myDict {
+                for each in myDictionary {
+                    holidaysDictionary[each.key as! String] = each.value as? NSDate
+                }
+            }
+        }
+        
+        dayTimePeriodFormatter.dateFormat = "dd MMM"
     }
 
 // MARK: - Table view data source
@@ -61,44 +74,36 @@ class DatesTableVC: UITableViewController {
         if menuIndexPath == nil || menuIndexPath == 0 || menuIndexPath == 1 || menuIndexPath == 2 {
             return datesArray.count
         } else {
-            return showDates.count
+            return holidaysDictionary.count
         }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell!
+        let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
         
-        let dayTimePeriodFormatter = NSDateFormatter()
-        dayTimePeriodFormatter.dateFormat = "dd MMM"
+        let date = datesArray[indexPath.row]
+        dateCell.name = date.abbreviatedName
+        let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
+        dateCell.date = stringDate
         
-        // If "All" is selected in the side navigation, show all saved dates
-        
-        if menuIndexPath == nil || menuIndexPath! == 0 {
-            let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
-            let date = datesArray[indexPath.row]
-            if date.type == "anniversary" {
+        if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
+            switch date.type {
+            case "birthday":
+                dateCell.nameLabel.textColor = UIColor.yellowColor()
+            case "anniversary":
                 dateCell.nameLabel.textColor = UIColor.redColor()
+            default:
+                dateCell.nameLabel.textColor = blueColor
             }
-            dateCell.name = date.abbreviatedName
-            let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
-            dateCell.date = stringDate
-            cell = dateCell
-        } else if menuIndexPath! == 1 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
-            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
-            let date = datesArray[indexPath.row]
-            birthdayCell.name = date.abbreviatedName
-            let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
-            birthdayCell.date = stringDate
-            cell = birthdayCell
-        } else if menuIndexPath! == 2 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
-            cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-            let anniversary = datesArray[indexPath.row]
-            cell.textLabel?.text = "\(anniversary.name): \(anniversary.date)"
-        } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-            cell.textLabel?.text = showDates[indexPath.row]
+            
+        } else if menuIndexPath! == 1 { // Show birthday cells
+            dateCell.nameLabel.textColor = UIColor.yellowColor()
+        } else if menuIndexPath! == 2 { // Show anniversary cells
+            dateCell.nameLabel.textColor = UIColor.redColor()
+        } else {                        // Show holiday cells
+            dateCell.nameLabel.textColor = blueColor
         }
-        return cell
+        return dateCell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

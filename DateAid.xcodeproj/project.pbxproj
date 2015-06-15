@@ -22,6 +22,8 @@
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		97943B5B1B0EE00E004FC095 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B5A1B0EE00E004FC095 /* Date.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
+		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
+		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,8 @@
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97943B5A1B0EE00E004FC095 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
+		97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -106,8 +110,8 @@
 				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
 				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
-				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
 				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
+				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
 				97F212E71B1D90EA00E88C43 /* Frameworks */,
 				97943B5A1B0EE00E004FC095 /* Date.swift */,
@@ -116,6 +120,7 @@
 				97361A631B2C0CEF006394E1 /* DateCell.xib */,
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */,
+				97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 				97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */,
 				97364CE41AFBF44A0095BC57 /* Info.plist */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
+				97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -240,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */,
+				97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */,
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
@@ -266,6 +273,7 @@
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
 				97943B5B1B0EE00E004FC095 /* Date.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
+				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
