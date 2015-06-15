@@ -43,7 +43,7 @@ class CoreDataStack {
         var error: NSError? = nil
         
         // Provide a persistent store type, a new URL to persist to, and any extra options
-        persistentStore = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)!
+        persistentStore = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)
         
         if persistentStore == nil {
             println("Error adding persistent store: \(error)")

@@ -21,23 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let viewController = self.window!.rootViewController as! InitialImportVC
-        viewController.managedContext = coreDataStack.managedObjectContext
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let rootController1 = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! UIViewController
-//        let rootController2 = storyboard.instantiateViewControllerWithIdentifier("MainView") as! UIViewController
+        // Show the import contacts view on first launch only
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let rootController1 = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
+        rootController1.managedContext = coreDataStack.managedObjectContext
+        let rootController2 = storyboard.instantiateViewControllerWithIdentifier("MainView") as! UIViewController
     
-//        if NSUserDefaults.standardUserDefaults().objectForKey("seenInitialView") == nil {
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedOnce")
-//            if let window = self.window {
-//                self.window!.rootViewController = rootController1
-//            }
-//        } else {
-//            if let window = self.window {
-//                self.window!.rootViewController = rootController2
-//            }
-//        }
+        if NSUserDefaults.standardUserDefaults().objectForKey("seenInitialView") == nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedOnce")
+            if let window = self.window {
+                self.window!.rootViewController = rootController1
+            }
+        } else {
+            if let window = self.window {
+                self.window!.rootViewController = rootController2
+            }
+        }
         return true
     }
 

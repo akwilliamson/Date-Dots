@@ -65,7 +65,7 @@ class InitialImportVC: UIViewController {
             
             let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
             if birthdayProperty != nil {
-                
+
                 let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
                 let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
                 

@@ -50,8 +50,8 @@ class DatesTableVC: UITableViewController {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
         // *** Register nib tableviewcells for reuse
-        let birthdayNib = UINib(nibName: "BirthdayCell", bundle: nil)
-        tableView.registerNib(birthdayNib, forCellReuseIdentifier: "BirthdayCell")
+        let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
+        tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
     }
 
 // MARK: - Table view data source
@@ -74,14 +74,17 @@ class DatesTableVC: UITableViewController {
         // If "All" is selected in the side navigation, show all saved dates
         
         if menuIndexPath == nil || menuIndexPath! == 0 {
-            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
+            let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
             let date = datesArray[indexPath.row]
-            birthdayCell.name = date.abbreviatedName
+            if date.type == "anniversary" {
+                dateCell.nameLabel.textColor = UIColor.redColor()
+            }
+            dateCell.name = date.abbreviatedName
             let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
-            birthdayCell.date = stringDate
-            cell = birthdayCell
+            dateCell.date = stringDate
+            cell = dateCell
         } else if menuIndexPath! == 1 {                          // If "Birthdays" is selected in the side navigation, show all birthdays
-            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell", forIndexPath: indexPath) as! BirthdayCell
+            let birthdayCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
             let date = datesArray[indexPath.row]
             birthdayCell.name = date.abbreviatedName
             let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)

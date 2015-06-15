@@ -1,5 +1,5 @@
 //
-//  BirthdayCell.swift
+//  DateCell.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 6/13/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BirthdayCell: UITableViewCell {
+class DateCell: UITableViewCell {
     
     var name: String = "" {
         didSet {
