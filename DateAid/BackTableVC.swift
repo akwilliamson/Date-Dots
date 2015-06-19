@@ -26,47 +26,39 @@ class BackTableVC: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
-        
         cell.textLabel?.text = tableArray[indexPath.row]
-        
         return cell
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         let navigationVC = segue.destinationViewController as! UINavigationController
         let destinationVC = navigationVC.topViewController as! DatesTableVC
         
         let datesFetch = NSFetchRequest(entityName: "Date")
+        var error: NSError?
+        
         let indexPath = self.tableView.indexPathForSelectedRow()
         
-        if indexPath!.row == 0 {
-            
+        switch indexPath!.row {
+        case 0:
             destinationVC.menuIndexPath = 0
-            
-        } else if indexPath!.row == 1 {
-            
+            if let allDatesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
+                destinationVC.datesArray = allDatesArray
+            }
+        case 1:
             destinationVC.menuIndexPath = 1
             datesFetch.predicate = NSPredicate(format: "type == %@", "birthday")
-            var error: NSError?
             if let birthdaysArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
                 destinationVC.datesArray = birthdaysArray
             }
-            
-        } else if indexPath!.row == 2 {
-            
+        case 2:
             destinationVC.menuIndexPath = 2
             datesFetch.predicate = NSPredicate(format: "type == %@", "anniversary")
-            var error: NSError?
             if let anniversariesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
                 destinationVC.datesArray = anniversariesArray
             }
-            
-        } else {
-            
+        default: // indexPath!.row = 3
             destinationVC.menuIndexPath = 3
-            
-            
         }
     }
 }

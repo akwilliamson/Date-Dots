@@ -6,13 +6,6 @@
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
 //
 
-/**
-
-TO DO: Add another property to Date entity that includes the user's abbreviated name for quick 
-       access and display in DatesTableVC's tableview rows. Ex: Aaron Williamson -> Aaron W.
-
-**/
-
 import UIKit
 import CoreData
 import AddressBook
@@ -28,60 +21,115 @@ class InitialImportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+// MARK: - Actions
+    
+    @IBAction func syncContacts(sender: AnyObject) {
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityView.transform = CGAffineTransformMakeScale(2, 2)
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        self.view.addSubview(activityView)
+        getDatesFromContacts()
+        activityView.stopAnimating()
+        self.performSegueWithIdentifier("HomeScreen", sender: self)
+    }
     
     func getDatesFromContacts() {
-        if !self.determineStatus() {
-            println("determineStatus() returns false. Exiting getContactNames()")
+        if !determineStatus() {
             return
         }
         let people = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray as [ABRecord]
         for person in people {
-            
-            let anniversaries: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue() as ABMultiValueRef
-            var anniversaryLabel: String
-            let stuff: ABMultiValueRef
-            stuff = anniversaries
-            var i = 0
-            for (i = 0; i < ABMultiValueGetCount(anniversaries); i++) {
-                anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaries, i)).takeRetainedValue() as! String
-                
-                let otherLabel = kABPersonAnniversaryLabel as! String
-                if anniversaryLabel == otherLabel {
-                    
-                    let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-                    let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
-      
-                    anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
-                    anniversary.abbreviatedName = abbreviateName(anniversary.name)
-                    anniversary.date = ABMultiValueCopyValueAtIndex(anniversaries, i).takeUnretainedValue() as! NSDate
-                    anniversary.type = "anniversary"
-                    
-                    var error: NSError?
-                    if !managedContext.save(&error) {
-                        println("Could not save: \(error)")
-                    }
+            // Add Date entities for address book birthdays
+            addEntitiesForAddressBookBirthdays(person)
+            saveManagedContext()
+            // Add Date entities for address book anniversaries
+            addEntitiesForAddressBookAnniversaries(person)
+            saveManagedContext()
+            // Add Date entities for holidays
+        }
+    }
+    /* Passes user's address book to getDatesFromContacts() and allows said function
+    to continue, or returns no address book and forces getDatesFromContacts to exit. */
+    func determineStatus() -> Bool {
+        switch ABAddressBookGetAuthorizationStatus() {
+        case .Authorized:
+            return self.createAddressBook()
+        case .NotDetermined:
+            var userDidAuthorize = false
+            ABAddressBookRequestAccessWithCompletion(nil) { (granted: Bool, error: CFError!) in
+                if granted {
+                    userDidAuthorize = self.createAddressBook()
+                } else {
+                    println("Not granted access to user's addressbook")
                 }
             }
-            
-            let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
-            if birthdayProperty != nil {
+            return userDidAuthorize == true ? true : false
+        case .Restricted:
+            println("Not authorized to access user's addressbook")
+            return false
+        case .Denied:
+            println("Denied access user's addressbook")
+            return false
+        }
+    }
+    // Helper method for determineStatus that extracts and initializes the actual address book
+    func createAddressBook() -> Bool {
+        if self.addressBook != nil {
+            return true
+        }
+        var error: Unmanaged<CFError>? = nil
+        let newAddressBook: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+        if newAddressBook == nil {
+            return false
+        } else {
+            self.addressBook = newAddressBook
+            return true
+        }
+    }
 
-                let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-                let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+    func addEntitiesForAddressBookBirthdays(person: AnyObject) {
+        let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
+        if birthdayProperty != nil {
+            
+            let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+            let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+            
+            birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+            birthday.abbreviatedName = abbreviateName(birthday.name)
+            birthday.date = birthdayProperty.takeUnretainedValue() as! NSDate
+            birthday.type = "birthday"
+        }
+    }
+    
+    func addEntitiesForAddressBookAnniversaries(person: AnyObject) {
+        let anniversaryDate: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue()
+        println(anniversaryDate)
+        for index in 0..<ABMultiValueGetCount(anniversaryDate) {
+            let anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaryDate, index)).takeRetainedValue() as! String
+            let otherLabel = kABPersonAnniversaryLabel as! String
+            
+            if anniversaryLabel == otherLabel {
                 
-                birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
-                birthday.abbreviatedName = abbreviateName(birthday.name)
-                birthday.date = birthdayProperty.takeUnretainedValue() as! NSDate
-                birthday.type = "birthday"
+                let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+                let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
                 
-                var error: NSError?
-                if !managedContext.save(&error) {
-                    println("Could not save: \(error)")
-                }
+                anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                anniversary.abbreviatedName = abbreviateName(anniversary.name)
+                anniversary.date = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
+                anniversary.type = "anniversary"
             }
         }
     }
     
+    func saveManagedContext() {
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save: \(error?.localizedDescription)")
+        }
+    }
+    // Abbreviates an address book name. Ex: Aaron Williamson -> Aaron W.
     func abbreviateName(fullName: String) -> String {
         let castString = fullName as NSString
         let convertedRange: Range<String.Index>
@@ -94,56 +142,8 @@ class InitialImportVC: UIViewController {
         
         return fullName.substringWithRange(convertedRange)
     }
-    
+    // ??
     func addDateToCoreData(type: String, date: NSDate, name: String) {
-    }
-    
-    func determineStatus() -> Bool {
-        let status = ABAddressBookGetAuthorizationStatus()
-        switch status {
-        case .Authorized:
-            return self.createAddressBook()
-        case .NotDetermined:
-            var ok = false
-            ABAddressBookRequestAccessWithCompletion(nil) {
-                (granted:Bool, err:CFError!) in
-                dispatch_async(dispatch_get_main_queue()) {
-                    if granted {
-                        ok = self.createAddressBook()
-                    }
-                }
-            }
-            if ok == true {
-                return true
-            }
-            self.addressBook = nil
-            return false
-        case .Restricted:
-            self.addressBook = nil
-            return false
-        case .Denied:
-            self.addressBook = nil
-            return false
-        }
-    }
-    
-    func createAddressBook() -> Bool {
-        if self.addressBook != nil {
-            return true
-        }
-        var err: Unmanaged<CFError>? = nil
-        let adbk: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
-        if adbk == nil {
-            self.addressBook = nil
-            return false
-        }
-        self.addressBook = adbk
-        return true
-    }
-    
-    @IBAction func syncContacts(sender: AnyObject) {
-        getDatesFromContacts()
-        self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
 }
 

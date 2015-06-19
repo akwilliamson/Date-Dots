@@ -10,22 +10,17 @@ import UIKit
 import CoreData
 
 class DatesTableVC: UITableViewController {
-    
     // Grab the context
     var managedContext = CoreDataStack().managedObjectContext
-    
     // Bar button items
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
-    
     // Holds dates shown in table
     var datesArray = [Date]()
     var holidaysDictionary = [String: NSDate]()
     var menuIndexPath: Int?
-    
     // Format NSDate to be human readable
     let dayTimePeriodFormatter = NSDateFormatter()
-    
     // Custom colors
     let blueColor = UIColor(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1)
     
@@ -33,7 +28,12 @@ class DatesTableVC: UITableViewController {
         super.viewDidLoad()
         // Set title
         self.title = "Dates"
-        
+        // Set initial datesArray
+        let datesFetch = NSFetchRequest(entityName: "Date")
+        var error: NSError?
+        if let fetchedDates = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
+            datesArray = fetchedDates
+        }
         // Set bar buttons and corresponding actions
         self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
                                                   style: .Plain,
@@ -72,8 +72,10 @@ class DatesTableVC: UITableViewController {
     //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if menuIndexPath == nil || menuIndexPath == 0 || menuIndexPath == 1 || menuIndexPath == 2 {
+            println("datesArray: \(datesArray.count)")
             return datesArray.count
         } else {
+            println("holidaysDictionary: \(holidaysDictionary.count)")
             return holidaysDictionary.count
         }
     }
