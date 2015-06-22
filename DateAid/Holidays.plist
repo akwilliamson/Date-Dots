@@ -3,19 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Thanksgiving</key>
-	<dict>
-		<key>date</key>
-		<date>2015-11-26T08:00:01Z</date>
-	</dict>
+	<date>2015-11-26T08:00:01Z</date>
 	<key>4th of July</key>
-	<dict>
-		<key>date</key>
-		<date>2015-07-04T07:00:01Z</date>
-	</dict>
+	<date>2015-07-04T07:00:01Z</date>
 	<key>Christmas</key>
-	<dict>
-		<key>date</key>
-		<date>2015-12-25T08:00:01Z</date>
-	</dict>
+	<date>2015-12-25T08:00:01Z</date>
 </dict>
 </plist>

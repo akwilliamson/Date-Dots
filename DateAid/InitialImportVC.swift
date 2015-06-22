@@ -31,6 +31,8 @@ class InitialImportVC: UIViewController {
         activityView.startAnimating()
         self.view.addSubview(activityView)
         getDatesFromContacts()
+        addEntitiesForHolidaysFromPlist()
+        saveManagedContext()
         activityView.stopAnimating()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
@@ -43,11 +45,8 @@ class InitialImportVC: UIViewController {
         for person in people {
             // Add Date entities for address book birthdays
             addEntitiesForAddressBookBirthdays(person)
-            saveManagedContext()
             // Add Date entities for address book anniversaries
             addEntitiesForAddressBookAnniversaries(person)
-            saveManagedContext()
-            // Add Date entities for holidays
         }
     }
     /* Passes user's address book to getDatesFromContacts() and allows said function
@@ -126,6 +125,20 @@ class InitialImportVC: UIViewController {
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save: \(error?.localizedDescription)")
+        }
+    }
+    
+    func addEntitiesForHolidaysFromPlist() {
+        if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
+            var holidaysDictionary = NSDictionary(contentsOfFile: path)!
+            for (holidayName, holidayDate) in holidaysDictionary {
+                let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+                let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
+                holiday.name = holidayName as! String
+                holiday.abbreviatedName = holidayName as! String
+                holiday.date = holidayDate as! NSDate
+                holiday.type = "holiday"
+            }
         }
     }
     // Abbreviates an address book name. Ex: Aaron Williamson -> Aaron W.
