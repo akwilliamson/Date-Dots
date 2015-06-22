@@ -59,6 +59,10 @@ class BackTableVC: UITableViewController {
             }
         default: // indexPath!.row = 3
             destinationVC.menuIndexPath = 3
+            datesFetch.predicate = NSPredicate(format: "type == %@", "holiday")
+            if let holidaysArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
+                destinationVC.datesArray = holidaysArray
+            }
         }
     }
 }

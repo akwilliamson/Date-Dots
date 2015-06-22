@@ -17,12 +17,13 @@ class DatesTableVC: UITableViewController {
     var rightBarButtonItem: UIBarButtonItem!
     // Holds dates shown in table
     var datesArray = [Date]()
-    var holidaysDictionary = [String: NSDate]()
     var menuIndexPath: Int?
     // Format NSDate to be human readable
     let dayTimePeriodFormatter = NSDateFormatter()
-    // Custom colors
-    let blueColor = UIColor(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1)
+    // Colors
+    let   blueColor = UIColor(red:  37/255.0, green:  62/255.0, blue: 102/255.0,  alpha: 1)
+    let orangeColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
+    let   goldColor = UIColor(red: 194/255.0, green: 157/255.0, blue:  98/255.0,  alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +32,8 @@ class DatesTableVC: UITableViewController {
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
         var error: NSError?
-        if let fetchedDates = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
-            datesArray = fetchedDates
+        if menuIndexPath == nil {
+            datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
         }
         // Set bar buttons and corresponding actions
         self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
@@ -54,16 +55,6 @@ class DatesTableVC: UITableViewController {
         let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
         tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
         
-        var myDict: NSDictionary?
-        if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
-            myDict = NSDictionary(contentsOfFile: path)
-            if let myDictionary = myDict {
-                for each in myDictionary {
-                    holidaysDictionary[each.key as! String] = each.value as? NSDate
-                }
-            }
-        }
-        
         dayTimePeriodFormatter.dateFormat = "dd MMM"
     }
 
@@ -71,13 +62,7 @@ class DatesTableVC: UITableViewController {
 
     //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if menuIndexPath == nil || menuIndexPath == 0 || menuIndexPath == 1 || menuIndexPath == 2 {
-            println("datesArray: \(datesArray.count)")
-            return datesArray.count
-        } else {
-            println("holidaysDictionary: \(holidaysDictionary.count)")
-            return holidaysDictionary.count
-        }
+        return datesArray.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -91,19 +76,19 @@ class DatesTableVC: UITableViewController {
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
             switch date.type {
             case "birthday":
-                dateCell.nameLabel.textColor = UIColor.yellowColor()
-            case "anniversary":
-                dateCell.nameLabel.textColor = UIColor.redColor()
-            default:
                 dateCell.nameLabel.textColor = blueColor
+            case "anniversary":
+                dateCell.nameLabel.textColor = orangeColor
+            default: // "holiday":
+                dateCell.nameLabel.textColor = goldColor
             }
             
         } else if menuIndexPath! == 1 { // Show birthday cells
-            dateCell.nameLabel.textColor = UIColor.yellowColor()
-        } else if menuIndexPath! == 2 { // Show anniversary cells
-            dateCell.nameLabel.textColor = UIColor.redColor()
-        } else {                        // Show holiday cells
             dateCell.nameLabel.textColor = blueColor
+        } else if menuIndexPath! == 2 { // Show anniversary cells
+            dateCell.nameLabel.textColor = orangeColor
+        } else {                        // Show holiday cells
+            dateCell.nameLabel.textColor = goldColor
         }
         return dateCell
     }

@@ -34,7 +34,7 @@ class InitialImportVC: UIViewController {
         activityView.stopAnimating()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
-    
+    // The main method to extract and save all initial dates
     func getDatesFromContacts() {
         if !determineStatus() {
             return
@@ -105,7 +105,6 @@ class InitialImportVC: UIViewController {
     
     func addEntitiesForAddressBookAnniversaries(person: AnyObject) {
         let anniversaryDate: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue()
-        println(anniversaryDate)
         for index in 0..<ABMultiValueGetCount(anniversaryDate) {
             let anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaryDate, index)).takeRetainedValue() as! String
             let otherLabel = kABPersonAnniversaryLabel as! String
@@ -141,9 +140,6 @@ class InitialImportVC: UIViewController {
         }
         
         return fullName.substringWithRange(convertedRange)
-    }
-    // ??
-    func addDateToCoreData(type: String, date: NSDate, name: String) {
     }
 }
 
