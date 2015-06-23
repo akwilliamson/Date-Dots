@@ -12,12 +12,17 @@ import CoreData
 class BackTableVC: UITableViewController {
     
     var managedContext = CoreDataStack().managedObjectContext
-    
     var tableArray = [String]()
+    // Colors
+    let   blueColor = UIColor(red:  37/255.0, green:  62/255.0, blue: 102/255.0,  alpha: 1)
+    let orangeColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
+    let   goldColor = UIColor(red: 194/255.0, green: 157/255.0, blue:  98/255.0,  alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
+        let navigationCelllNib = UINib(nibName: "NavigationCell", bundle: nil)
+        tableView.registerNib(navigationCelllNib, forCellReuseIdentifier: "NavigationCell")
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -25,12 +30,23 @@ class BackTableVC: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = tableArray[indexPath.row]
-        return cell
+        var navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as! NavigationCell
+        navigationCell.nameLabel.text = tableArray[indexPath.row]
+        switch tableArray[indexPath.row] {
+        case "All":
+            navigationCell.nameLabel.textColor = UIColor.blackColor()
+        case "Birthdays":
+            navigationCell.nameLabel.textColor = blueColor
+        case "Anniversaries":
+            navigationCell.nameLabel.textColor = orangeColor
+        default: // Holidays
+            navigationCell.nameLabel.textColor = goldColor
+        }
+        return navigationCell
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println("hey")
         let navigationVC = segue.destinationViewController as! UINavigationController
         let destinationVC = navigationVC.topViewController as! DatesTableVC
         

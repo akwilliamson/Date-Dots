@@ -24,6 +24,8 @@
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
 		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
+		97BBA3931B37F1D000DA8FDE /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97BBA3921B37F1D000DA8FDE /* NavigationCell.xib */; };
+		97BBA3951B37F41000DA8FDE /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BBA3941B37F41000DA8FDE /* NavigationCell.swift */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,8 @@
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
+		97BBA3921B37F1D000DA8FDE /* NavigationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCell.xib; sourceTree = "<group>"; };
+		97BBA3941B37F41000DA8FDE /* NavigationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -117,10 +121,12 @@
 				97943B5A1B0EE00E004FC095 /* Date.swift */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
-				97361A631B2C0CEF006394E1 /* DateCell.xib */,
-				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */,
 				97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */,
+				976BD4F61B2D079200415D65 /* DateCell.swift */,
+				97361A631B2C0CEF006394E1 /* DateCell.xib */,
+				97BBA3941B37F41000DA8FDE /* NavigationCell.swift */,
+				97BBA3921B37F1D000DA8FDE /* NavigationCell.xib */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -250,6 +256,7 @@
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
+				97BBA3931B37F1D000DA8FDE /* NavigationCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +285,7 @@
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
+				97BBA3951B37F41000DA8FDE /* NavigationCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
