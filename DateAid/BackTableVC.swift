@@ -21,8 +21,6 @@ class BackTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
-        let navigationCelllNib = UINib(nibName: "NavigationCell", bundle: nil)
-        tableView.registerNib(navigationCelllNib, forCellReuseIdentifier: "NavigationCell")
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,18 +28,19 @@ class BackTableVC: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as! NavigationCell
-        navigationCell.nameLabel.text = tableArray[indexPath.row]
+        let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as! UITableViewCell
+        let label = navigationCell.viewWithTag(1) as! UILabel
+        label.text = tableArray[indexPath.row]
         
         switch tableArray[indexPath.row] {
         case "All":
-            navigationCell.nameLabel.textColor = UIColor.blackColor()
+            label.textColor = UIColor.blackColor()
         case "Birthdays":
-            navigationCell.nameLabel.textColor = blueColor
+            label.textColor = blueColor
         case "Anniversaries":
-            navigationCell.nameLabel.textColor = orangeColor
+            label.textColor = orangeColor
         default: // Holidays
-            navigationCell.nameLabel.textColor = goldColor
+            label.textColor = goldColor
         }
         return navigationCell
     }

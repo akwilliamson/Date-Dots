@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Initial ImportVC-->
@@ -88,17 +89,33 @@
         <scene sceneID="Yb9-FJ-WCa">
             <objects>
                 <tableViewController id="6sN-oB-xmV" userLabel="Back Table View Controller" customClass="BackTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="KxF-HB-0aT">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="KxF-HB-0aT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dWK-Gj-AmN">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" rowHeight="80" id="dWK-Gj-AmN" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dWK-Gj-AmN" id="SfW-8W-294">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T9-zj-bre">
+                                            <rect key="frame" x="8" y="18" width="72" height="43"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="25"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5T9-zj-bre" secondAttribute="bottom" constant="10" id="W45-HY-hLy"/>
+                                        <constraint firstItem="5T9-zj-bre" firstAttribute="leading" secondItem="SfW-8W-294" secondAttribute="leadingMargin" id="k6S-cV-mEJ"/>
+                                        <constraint firstItem="5T9-zj-bre" firstAttribute="top" secondItem="SfW-8W-294" secondAttribute="topMargin" constant="10" id="kxr-5T-tyY"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Uns-kb-TbM" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="cPJ-5X-Yk6"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -124,7 +141,7 @@
                             <outlet property="delegate" destination="ktA-Zm-bPy" id="c2V-ES-8q0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="yk7-8C-YI1"/>
+                    <navigationItem key="navigationItem" title="Dates Table VC" id="yk7-8C-YI1"/>
                     <connections>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="Kd0-AH-YAd"/>
                     </connections>
@@ -296,5 +313,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SXV-Qu-gXZ"/>
+        <segue reference="cPJ-5X-Yk6"/>
     </inferredMetricsTieBreakers>
 </document>
