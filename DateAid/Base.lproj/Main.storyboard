@@ -84,23 +84,21 @@
             </objects>
             <point key="canvasLocation" x="1202" y="-679"/>
         </scene>
-        <!--Back TableVC-->
+        <!--Back Table View Controller-->
         <scene sceneID="Yb9-FJ-WCa">
             <objects>
-                <tableViewController id="6sN-oB-xmV" customClass="BackTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="6sN-oB-xmV" userLabel="Back Table View Controller" customClass="BackTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="KxF-HB-0aT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="70" id="LlS-hO-k1I">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dWK-Gj-AmN">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LlS-hO-k1I" id="ovL-4I-Ide">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dWK-Gj-AmN" id="SfW-8W-294">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Uns-kb-TbM" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="e2t-De-Ntf"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -113,45 +111,14 @@
             </objects>
             <point key="canvasLocation" x="1993" y="-1395"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Dates Table View Controller-->
         <scene sceneID="3Ht-Gr-w8u">
             <objects>
-                <tableViewController id="ktA-Zm-bPy" customClass="DatesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="ktA-Zm-bPy" userLabel="Dates Table View Controller" customClass="DatesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mGq-A1-8s9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="xUz-hE-7cZ">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xUz-hE-7cZ" id="jgP-57-ftk">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syK-Sp-aqZ">
-                                            <rect key="frame" x="28" y="11" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5iX-Ze-TBY">
-                                            <rect key="frame" x="447" y="11" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0x-xr-ktH">
-                                            <rect key="frame" x="209" y="11" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="PaR-uw-Bbs" kind="show" identifier="ShowDateDetails" id="PZS-0A-BTy"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="ktA-Zm-bPy" id="XLi-MA-cb1"/>
                             <outlet property="delegate" destination="ktA-Zm-bPy" id="c2V-ES-8q0"/>
@@ -166,10 +133,10 @@
             </objects>
             <point key="canvasLocation" x="2716" y="-679"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Date View Controller-->
         <scene sceneID="bfe-1f-yLk">
             <objects>
-                <viewController id="i1f-AG-9F2" sceneMemberID="viewController">
+                <viewController id="i1f-AG-9F2" userLabel="Add Date View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CAy-wP-cL3"/>
                         <viewControllerLayoutGuide type="bottom" id="OwV-4I-2tz"/>
@@ -192,10 +159,10 @@
             </objects>
             <point key="canvasLocation" x="3534" y="-1179"/>
         </scene>
-        <!--View Controller-->
+        <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
             <objects>
-                <viewController id="PaR-uw-Bbs" sceneMemberID="viewController">
+                <viewController id="PaR-uw-Bbs" userLabel="Date Details View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
@@ -218,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="3534" y="-494"/>
         </scene>
-        <!--Dates-->
+        <!--Dates Navigation Controller-->
         <scene sceneID="Iui-As-nW8">
             <objects>
-                <navigationController id="Uns-kb-TbM" sceneMemberID="viewController">
+                <navigationController id="Uns-kb-TbM" userLabel="Dates Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Dates" id="5SE-Ef-l1s"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uha-Gn-0T8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -328,7 +295,6 @@
         <image name="people-selected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oNP-ia-Yef"/>
         <segue reference="SXV-Qu-gXZ"/>
     </inferredMetricsTieBreakers>
 </document>
