@@ -21,40 +21,42 @@ class DatesTableVC: UITableViewController {
     // Format NSDate to be human readable
     let dayTimePeriodFormatter = NSDateFormatter()
     // Colors
-    let   blueColor = UIColor(red:  37/255.0, green:  62/255.0, blue: 102/255.0,  alpha: 1)
-    let orangeColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
-    let   goldColor = UIColor(red: 194/255.0, green: 157/255.0, blue:  98/255.0,  alpha: 1)
+    let   greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue: 80/255.0,  alpha: 1)
+    let redColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
+    let   aquaColor = UIColor(red: 18/255.0, green: 151/255.0, blue:  147/255.0,  alpha: 1)
+    let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue:  185/255.0,  alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Set title
-        self.title = "Dates"
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
         var error: NSError?
         if menuIndexPath == nil {
             datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
         }
-        // Set bar buttons and corresponding actions
+        // Configure navigation bar
+        self.title = "Date Aid"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: creamColor]
         self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
                                                   style: .Plain,
                                                  target: self.revealViewController(),
                                                  action: Selector("revealToggle:"))
         self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
-        
         self.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                   style: .Plain,
                                                  target: self,
                                                  action: Selector("customFunc:"))
         self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
-        
+        self.navigationController?.navigationBar.barTintColor = aquaColor
+        self.navigationController?.navigationBar.tintColor = creamColor
+        // Configure tab bar
+        self.tabBarController?.tabBar.barTintColor = aquaColor
         // Detect gesture to reveal/hide side menu
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        
         // Register nib tableviewcells for reuse
         let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
         tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
-        
+        // Set date format for display
         dayTimePeriodFormatter.dateFormat = "dd MMM"
     }
 
@@ -76,19 +78,19 @@ class DatesTableVC: UITableViewController {
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
             switch date.type {
             case "birthday":
-                dateCell.nameLabel.textColor = blueColor
+                dateCell.nameLabel.textColor = aquaColor
             case "anniversary":
-                dateCell.nameLabel.textColor = orangeColor
+                dateCell.nameLabel.textColor = redColor
             default: // "holiday":
-                dateCell.nameLabel.textColor = goldColor
+                dateCell.nameLabel.textColor = greyColor
             }
             
         } else if menuIndexPath! == 1 { // Show birthday cells
-            dateCell.nameLabel.textColor = blueColor
+            dateCell.nameLabel.textColor = aquaColor
         } else if menuIndexPath! == 2 { // Show anniversary cells
-            dateCell.nameLabel.textColor = orangeColor
+            dateCell.nameLabel.textColor = redColor
         } else {                        // Show holiday cells
-            dateCell.nameLabel.textColor = goldColor
+            dateCell.nameLabel.textColor = greyColor
         }
         return dateCell
     }

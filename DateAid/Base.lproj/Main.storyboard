@@ -74,6 +74,9 @@
                     <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="0Ef-6P-KoM">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="people-selected"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.96078431372549022" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <connections>
@@ -94,7 +97,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" rowHeight="80" id="dWK-Gj-AmN" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" rowHeight="80" id="dWK-Gj-AmN" customClass="NavigationCell">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dWK-Gj-AmN" id="SfW-8W-294">
@@ -141,7 +144,7 @@
                             <outlet property="delegate" destination="ktA-Zm-bPy" id="c2V-ES-8q0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Dates Table VC" id="yk7-8C-YI1"/>
+                    <navigationItem key="navigationItem" id="yk7-8C-YI1"/>
                     <connections>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="Kd0-AH-YAd"/>
                     </connections>
@@ -243,6 +246,9 @@
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar-outline" id="nwt-Ud-Qch">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="calendar-selected"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.96078431372549022" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -275,6 +281,9 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="cog-outline" id="Ryy-wP-WgG">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="cog-selected"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.96078431372549022" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                 </viewController>
@@ -287,7 +296,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Zdv-7h-m4M">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -312,7 +321,7 @@
         <image name="people-selected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SXV-Qu-gXZ"/>
         <segue reference="cPJ-5X-Yk6"/>
+        <segue reference="SXV-Qu-gXZ"/>
     </inferredMetricsTieBreakers>
 </document>
