@@ -92,9 +92,17 @@ class DatesTableVC: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80
     }
-
-    func customFunc(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("AddDate", sender: UIBarButtonItem())
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("ShowDateDetails", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let indexPath = tableView.indexPathForSelectedRow()
+        if segue.identifier == "ShowDateDetails" {
+            let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
+            dateDetailsVC.date = datesArray[indexPath!.row] as Date
+        }
     }
 }
 

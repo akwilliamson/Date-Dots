@@ -135,7 +135,7 @@
         <scene sceneID="3Ht-Gr-w8u">
             <objects>
                 <tableViewController id="ktA-Zm-bPy" userLabel="Dates Table View Controller" customClass="DatesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mGq-A1-8s9">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="mGq-A1-8s9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -146,11 +146,15 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="yk7-8C-YI1">
                         <barButtonItem key="leftBarButtonItem" image="filter" id="FDs-gR-GhE"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gaM-zp-ZWe"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gaM-zp-ZWe">
+                            <connections>
+                                <segue destination="i1f-AG-9F2" kind="show" id="WGb-MU-B13"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="menuBarButtonItem" destination="FDs-gR-GhE" id="6Gg-r5-GC2"/>
-                        <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="Kd0-AH-YAd"/>
+                        <segue destination="PaR-uw-Bbs" kind="show" identifier="ShowDateDetails" id="ikV-5z-sOm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S8O-kJ-9ip" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -186,7 +190,7 @@
         <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
             <objects>
-                <viewController id="PaR-uw-Bbs" userLabel="Date Details View Controller" sceneMemberID="viewController">
+                <viewController id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
@@ -195,15 +199,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHr-7x-JkF">
-                                <rect key="frame" x="28" y="91" width="109" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcF-pq-o1m">
+                                <rect key="frame" x="16" y="72" width="573" height="44"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="fullNameLabel" destination="qcF-pq-o1m" id="Dxf-5q-IRS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ljB-LZ-q1m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
