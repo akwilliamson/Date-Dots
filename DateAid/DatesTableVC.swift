@@ -21,10 +21,10 @@ class DatesTableVC: UITableViewController {
     // Format NSDate to be human readable
     let dayTimePeriodFormatter = NSDateFormatter()
     // Colors
-    let   greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue: 80/255.0,  alpha: 1)
-    let redColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
-    let   aquaColor = UIColor(red: 18/255.0, green: 151/255.0, blue:  147/255.0,  alpha: 1)
-    let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue:  185/255.0,  alpha: 1)
+    let  aquaColor = UIColor(red:  18/255.0, green: 151/255.0, blue: 147/255.0, alpha: 1)
+    let   redColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0, alpha: 1)
+    let  greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue:  80/255.0, alpha: 1)
+    let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue: 185/255.0, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()

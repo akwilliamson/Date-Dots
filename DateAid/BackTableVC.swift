@@ -14,9 +14,9 @@ class BackTableVC: UITableViewController {
     var managedContext = CoreDataStack().managedObjectContext
     var tableArray = [String]()
     // Colors
-    let   blueColor = UIColor(red:  37/255.0, green:  62/255.0, blue: 102/255.0,  alpha: 1)
-    let orangeColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0,  alpha: 1)
-    let   goldColor = UIColor(red: 194/255.0, green: 157/255.0, blue:  98/255.0,  alpha: 1)
+    let   aquaColor = UIColor(red:  18/255.0, green: 151/255.0, blue: 147/255.0, alpha: 1)
+    let    redColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0, alpha: 1)
+    let   greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue:  80/255.0, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +36,11 @@ class BackTableVC: UITableViewController {
         case "All":
             label.textColor = UIColor.blackColor()
         case "Birthdays":
-            label.textColor = blueColor
+            label.textColor = aquaColor
         case "Anniversaries":
-            label.textColor = orangeColor
+            label.textColor = redColor
         default: // Holidays
-            label.textColor = goldColor
+            label.textColor = greyColor
         }
         return navigationCell
     }
