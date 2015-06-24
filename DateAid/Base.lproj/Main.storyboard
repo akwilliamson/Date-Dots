@@ -144,8 +144,12 @@
                             <outlet property="delegate" destination="ktA-Zm-bPy" id="c2V-ES-8q0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="yk7-8C-YI1"/>
+                    <navigationItem key="navigationItem" id="yk7-8C-YI1">
+                        <barButtonItem key="leftBarButtonItem" image="filter" id="FDs-gR-GhE"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gaM-zp-ZWe"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="menuBarButtonItem" destination="FDs-gR-GhE" id="6Gg-r5-GC2"/>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="Kd0-AH-YAd"/>
                     </connections>
                 </tableViewController>
@@ -296,7 +300,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Zdv-7h-m4M">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -317,6 +321,7 @@
         <image name="calendar-selected" width="32" height="32"/>
         <image name="cog-outline" width="32" height="32"/>
         <image name="cog-selected" width="32" height="32"/>
+        <image name="filter" width="50" height="50"/>
         <image name="people-outline" width="32" height="32"/>
         <image name="people-selected" width="32" height="32"/>
     </resources>

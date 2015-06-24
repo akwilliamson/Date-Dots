@@ -26,6 +26,8 @@ class DatesTableVC: UITableViewController {
     let  greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue:  80/255.0, alpha: 1)
     let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue: 185/255.0, alpha: 1)
     
+    @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set initial datesArray
@@ -37,16 +39,8 @@ class DatesTableVC: UITableViewController {
         // Configure navigation bar
         self.title = "Date Aid"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: creamColor]
-        self.leftBarButtonItem =  UIBarButtonItem(title: "Menu",
-                                                  style: .Plain,
-                                                 target: self.revealViewController(),
-                                                 action: Selector("revealToggle:"))
-        self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
-        self.rightBarButtonItem = UIBarButtonItem(title: "Add",
-                                                  style: .Plain,
-                                                 target: self,
-                                                 action: Selector("customFunc:"))
-        self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
+        menuBarButtonItem.target = self.revealViewController()
+        menuBarButtonItem.action = Selector("revealToggle:")
         self.navigationController?.navigationBar.barTintColor = aquaColor
         self.navigationController?.navigationBar.tintColor = creamColor
         // Configure tab bar
