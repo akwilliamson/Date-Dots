@@ -13,6 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue: 185/255.0, alpha: 1)
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -32,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.window!.rootViewController = rootController2
             }
         }
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: creamColor], forState:.Normal)
         return true
     }
 

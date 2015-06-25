@@ -43,8 +43,15 @@ class DatesTableVC: UITableViewController {
         menuBarButtonItem.action = Selector("revealToggle:")
         self.navigationController?.navigationBar.barTintColor = aquaColor
         self.navigationController?.navigationBar.tintColor = creamColor
-        // Configure tab bar
+        // Configure tab bar and tab bar items
         self.tabBarController?.tabBar.barTintColor = aquaColor
+        self.tabBarController?.tabBar.tintColor = creamColor
+        let items = self.tabBarController?.tabBar.items as! [UITabBarItem]
+        for item in items as [UITabBarItem] {
+            if let image = item.image {
+                item.image = image.imageWithColor(creamColor).imageWithRenderingMode(.AlwaysOriginal)
+            }
+        }
         // Detect gesture to reveal/hide side menu
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         // Register nib tableviewcells for reuse
@@ -56,7 +63,6 @@ class DatesTableVC: UITableViewController {
 
 // MARK: - Table view data source
 
-    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return datesArray.count
     }
