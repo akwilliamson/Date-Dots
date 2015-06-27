@@ -57,27 +57,16 @@ class BackTableVC: UITableViewController {
         switch indexPath!.row {
         case 0:
             destinationVC.menuIndexPath = 0
-            if let allDatesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
-                destinationVC.datesArray = allDatesArray
-            }
+            destinationVC.datesPredicate = nil
         case 1:
             destinationVC.menuIndexPath = 1
-            datesFetch.predicate = NSPredicate(format: "type == %@", "birthday")
-            if let birthdaysArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
-                destinationVC.datesArray = birthdaysArray
-            }
+            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "birthday")
         case 2:
             destinationVC.menuIndexPath = 2
-            datesFetch.predicate = NSPredicate(format: "type == %@", "anniversary")
-            if let anniversariesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
-                destinationVC.datesArray = anniversariesArray
-            }
+            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "anniversary")
         default: // indexPath!.row = 3
             destinationVC.menuIndexPath = 3
-            datesFetch.predicate = NSPredicate(format: "type == %@", "holiday")
-            if let holidaysArray = managedContext.executeFetchRequest(datesFetch, error: &error) as? [Date] {
-                destinationVC.datesArray = holidaysArray
-            }
+            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "holiday")
         }
     }
 }

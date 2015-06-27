@@ -14,6 +14,7 @@ class DatesTableVC: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController!
     var fetchedResults = [Date]()
     var managedContext = CoreDataStack().managedObjectContext
+    var datesPredicate: NSPredicate?
     // Date for comparing dates
     var currentDateString: String?
     // Bar button items
@@ -37,28 +38,22 @@ class DatesTableVC: UITableViewController {
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
         let dateSort = NSSortDescriptor(key: "equalizedDate", ascending: true)
-        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        let nameSort = NSSortDescriptor(key: "name",          ascending: true)
         datesFetch.sortDescriptors = [dateSort, nameSort]
+        datesFetch.predicate = datesPredicate
 
         fetchedResultsController = NSFetchedResultsController(fetchRequest: datesFetch, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         var error: NSError?
-        if menuIndexPath == nil {
-            if !fetchedResultsController.performFetch(&error) {
-                println(error?.localizedDescription)
-            }
+        
+        if !fetchedResultsController.performFetch(&error) {
+            println(error?.localizedDescription)
         }
+        
         // Compare and sort dates most recent from today
         currentDateString = formatCurrentDateIntoString(NSDate())
         
         fetchedResults = fetchedResultsController.fetchedObjects as! [Date]
-        for fetchedDate in fetchedResults {
-            if fetchedDate.equalizedDate < currentDateString! {
-                fetchedResults.removeAtIndex(0)
-                fetchedResults.append(fetchedDate)
-            } else {
-                break
-            }
-        }
+        sortFetchedResultsArray(fetchedResults)
         
         // Configure navigation bar
         self.title = "Date Aid"
@@ -86,11 +81,24 @@ class DatesTableVC: UITableViewController {
     }
     
 // MARK: - Custom Methods
+    
     func formatCurrentDateIntoString(date: NSDate) -> String {
         let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = formatString
         return dateFormatter.stringFromDate(NSDate())
+    }
+    
+    func sortFetchedResultsArray(resultsArray: [Date]) -> [Date] {
+        for fetchedDate in fetchedResults {
+            if fetchedDate.equalizedDate < currentDateString! {
+                fetchedResults.removeAtIndex(0)
+                fetchedResults.append(fetchedDate)
+            } else {
+                break
+            }
+        }
+        return fetchedResults
     }
 
 // MARK: - Table view data source
