@@ -21,14 +21,14 @@
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
-		97943B5B1B0EE00E004FC095 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B5A1B0EE00E004FC095 /* Date.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
 		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
-		97D185B51B3B4C86009E576E /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B41B3B4C86009E576E /* CalendarViewController.swift */; };
 		97D185B71B3B51E8009E576E /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* UIImageExtension.swift */; };
+		97DC58861B3E155A008FA222 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58851B3E155A008FA222 /* Date.swift */; };
+		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,14 +62,14 @@
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
-		97943B5A1B0EE00E004FC095 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		97D185B41B3B4C86009E576E /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarViewController.swift; path = ../../../CalendarViewController.swift; sourceTree = "<group>"; };
 		97D185B61B3B51E8009E576E /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		97DC58851B3E155A008FA222 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
+		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,15 +121,15 @@
 				978446901B3A8143003889BD /* DateDetailsVC.swift */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
 				97F212E71B1D90EA00E88C43 /* Frameworks */,
-				97943B5A1B0EE00E004FC095 /* Date.swift */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */,
 				97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */,
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
+				97DC58851B3E155A008FA222 /* Date.swift */,
 				97361A631B2C0CEF006394E1 /* DateCell.xib */,
-				97D185B41B3B4C86009E576E /* CalendarViewController.swift */,
 				97D185B61B3B51E8009E576E /* UIImageExtension.swift */,
+				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -280,15 +280,15 @@
 				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
-				97943B5B1B0EE00E004FC095 /* Date.swift in Sources */,
+				97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
-				97D185B51B3B4C86009E576E /* CalendarViewController.swift in Sources */,
 				97D185B71B3B51E8009E576E /* UIImageExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
+				97DC58861B3E155A008FA222 /* Date.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

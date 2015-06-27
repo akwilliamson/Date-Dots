@@ -10,8 +10,12 @@ import UIKit
 import CoreData
 
 class DatesTableVC: UITableViewController {
-    // Grab the context
+    
+    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResults = [Date]()
     var managedContext = CoreDataStack().managedObjectContext
+    // Date for comparing dates
+    var currentDateString: String?
     // Bar button items
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
@@ -32,10 +36,30 @@ class DatesTableVC: UITableViewController {
         super.viewDidLoad()
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
+        let dateSort = NSSortDescriptor(key: "equalizedDate", ascending: true)
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        datesFetch.sortDescriptors = [dateSort, nameSort]
+
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: datesFetch, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         var error: NSError?
         if menuIndexPath == nil {
-            datesArray = managedContext.executeFetchRequest(datesFetch, error: &error) as! [Date]
+            if !fetchedResultsController.performFetch(&error) {
+                println(error?.localizedDescription)
+            }
         }
+        // Compare and sort dates most recent from today
+        currentDateString = formatCurrentDateIntoString(NSDate())
+        
+        fetchedResults = fetchedResultsController.fetchedObjects as! [Date]
+        for fetchedDate in fetchedResults {
+            if fetchedDate.equalizedDate < currentDateString! {
+                fetchedResults.removeAtIndex(0)
+                fetchedResults.append(fetchedDate)
+            } else {
+                break
+            }
+        }
+        
         // Configure navigation bar
         self.title = "Date Aid"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: creamColor]
@@ -60,21 +84,30 @@ class DatesTableVC: UITableViewController {
         // Set date format for display
         dayTimePeriodFormatter.dateFormat = "dd MMM"
     }
+    
+// MARK: - Custom Methods
+    func formatCurrentDateIntoString(date: NSDate) -> String {
+        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = formatString
+        return dateFormatter.stringFromDate(NSDate())
+    }
 
 // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datesArray.count
+        let sectionInfo = fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
         
-        let date = datesArray[indexPath.row]
+        let date = fetchedResults[indexPath.row]
         dateCell.name = date.abbreviatedName
         let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
         dateCell.date = stringDate
-        
+
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
             switch date.type {
             case "birthday":

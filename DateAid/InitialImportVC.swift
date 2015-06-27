@@ -97,7 +97,12 @@ class InitialImportVC: UIViewController {
             
             birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
             birthday.abbreviatedName = abbreviateName(birthday.name)
-            birthday.date = birthdayProperty.takeUnretainedValue() as! NSDate
+            var actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
+            birthday.date = actualDate
+            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+            birthday.equalizedDate = dateFormatter.stringFromDate(actualDate)
             birthday.type = "birthday"
         }
     }
@@ -115,7 +120,12 @@ class InitialImportVC: UIViewController {
                 
                 anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
                 anniversary.abbreviatedName = abbreviateName(anniversary.name)
-                anniversary.date = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
+                var actualDate = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
+                anniversary.date = actualDate
+                let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = formatString
+                anniversary.equalizedDate = dateFormatter.stringFromDate(actualDate)
                 anniversary.type = "anniversary"
             }
         }
@@ -136,7 +146,12 @@ class InitialImportVC: UIViewController {
                 let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
                 holiday.name = holidayName as! String
                 holiday.abbreviatedName = holidayName as! String
-                holiday.date = holidayDate as! NSDate
+                var actualDate = holidayDate as! NSDate
+                holiday.date = actualDate
+                let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = formatString
+                holiday.equalizedDate = dateFormatter.stringFromDate(actualDate)
                 holiday.type = "holiday"
             }
         }
