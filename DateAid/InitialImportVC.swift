@@ -26,82 +26,13 @@ class InitialImportVC: UIViewController {
 // MARK: - Actions
 
     @IBAction func realImport(sender: AnyObject) {
-        if #available(iOS 9.0, *) {
-            // Rewrite new determineStatus() for iOS9
-            if determineStatus() {
-                return
-            }
-            iOS9AddBirthdays()
-            iOS9AddAnniversaries()
-            addEntitiesForHolidaysFromPlist()
-            saveManagedContext()
-            self.performSegueWithIdentifier("HomeScreen", sender: self)
-        } else {
-            if determineStatus() {
-                return
-            }
-            getDatesFromContacts()
-            addEntitiesForHolidaysFromPlist()
-            saveManagedContext()
-            self.performSegueWithIdentifier("HomeScreen", sender: self)
-        }
-    }
-    
-    func iOS9AddBirthdays() {
-        if #available(iOS 9.0, *) {
-            let contacts = CNContactStore()
-            let birthdayKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNContactBirthdayKey]
-            let birthdayFetch = CNContactFetchRequest(keysToFetch: birthdayKeys)
-            
-            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = formatString
-            
-            try! contacts.enumerateContactsWithFetchRequest(birthdayFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
-                let fullName = "\(contact.givenName) \(contact.familyName)"
-                let abbreviatedName = self.abbreviateName(fullName)
-                if let contactBirthday = contact.birthday {
-                    let birthday = NSCalendar.currentCalendar().dateFromComponents(contactBirthday)
-                    let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
-                    let birthdayDate = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: self.managedContext)
-                    
-                    birthdayDate.name = fullName
-                    birthdayDate.abbreviatedName = abbreviatedName
-                    birthdayDate.date = birthday!
-                    birthdayDate.equalizedDate = dateFormatter.stringFromDate(birthday!)
-                    birthdayDate.type = "birthday"
-                }
-            }
-        }
-    }
-    
-    func iOS9AddAnniversaries() {
-        if #available(iOS 9.0, *) {
-            let contacts = CNContactStore()
-            let anniversaryKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNLabelDateAnniversary]
-            let anniversaryFetch = CNContactFetchRequest(keysToFetch: anniversaryKeys)
-            
-            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = formatString
-            
-            try! contacts.enumerateContactsWithFetchRequest(anniversaryFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
-                for date in contact.dates {
-                    if date.label == CNLabelDateAnniversary {
-                        let anniversaryValue = date.value as! NSDateComponents
-                        let anniversary = NSCalendar.currentCalendar().dateFromComponents(anniversaryValue)
-                        let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
-                        let anniversaryDate = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: self.managedContext)
-                        
-                        anniversaryDate.name = "\(contact.givenName) \(contact.familyName)"
-                        anniversaryDate.abbreviatedName = self.abbreviateName(anniversaryDate.name)
-                        anniversaryDate.date = anniversary!
-                        anniversaryDate.equalizedDate = dateFormatter.stringFromDate(anniversary!)
-                        anniversaryDate.type = "birthday"
-                    }
-                }
-            }
-        }
+        if determineStatus() { return }
+        addEntitiesForHolidaysFromPlist()
+        saveManagedContext()
+        self.performSegueWithIdentifier("HomeScreen", sender: self)
+        // iOS9AddBirthdays()
+        // iOS9AddAnniversaries()
+
     }
     
     @IBAction func syncContacts(sender: AnyObject) {
@@ -206,12 +137,10 @@ class InitialImportVC: UIViewController {
     }
     
     func saveManagedContext() {
-        var error: NSError?
         do {
             try managedContext.save()
-        } catch let error1 as NSError {
-            error = error1
-            print("Could not save: \(error?.localizedDescription)")
+        } catch {
+            // print error
         }
     }
     
@@ -235,20 +164,68 @@ class InitialImportVC: UIViewController {
     }
     // Abbreviates an address book name. Ex: Aaron Williamson -> Aaron W.
     func abbreviateName(fullName: String) -> String {
-        let castString = fullName as NSString
-        let convertedRange: Range<String.Index>
-        let endIndex = castString.rangeOfString(" ", options: .BackwardsSearch).location
-        if endIndex < 100 {
-            convertedRange = fullName.convertRange(0..<endIndex)
-        } else {
-            convertedRange = fullName.convertRange(0..<castString.length-2)
-        }
+        let name = fullName as NSString
+        let space = name.rangeOfString(" ").location
         
-        return fullName.substringWithRange(convertedRange)
+        return fullName[0...space + 1]
     }
 }
 
 
+// Add when iOS9 is released
+
+//    func iOS9AddBirthdays() {
+//        let contacts = CNContactStore()
+//        let birthdayKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNContactBirthdayKey]
+//        let birthdayFetch = CNContactFetchRequest(keysToFetch: birthdayKeys)
+//
+//        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = formatString
+//
+//        contacts.enumerateContactsWithFetchRequest(birthdayFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
+//            let fullName = "\(contact.givenName) \(contact.familyName)"
+//            let abbreviatedName = self.abbreviateName(fullName)
+//            if let contactBirthday = contact.birthday {
+//                let birthday = NSCalendar.currentCalendar().dateFromComponents(contactBirthday)
+//                let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
+//                let birthdayDate = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: self.managedContext)
+//
+//                birthdayDate.name = fullName
+//                birthdayDate.abbreviatedName = abbreviatedName
+//                birthdayDate.date = birthday!
+//                birthdayDate.equalizedDate = dateFormatter.stringFromDate(birthday!)
+//                birthdayDate.type = "birthday"
+//            }
+//        }
+//    }
+//
+//    func iOS9AddAnniversaries() {
+//        let contacts = CNContactStore()
+//        let anniversaryKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNLabelDateAnniversary]
+//        let anniversaryFetch = CNContactFetchRequest(keysToFetch: anniversaryKeys)
+//
+//        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = formatString
+//
+//        contacts.enumerateContactsWithFetchRequest(anniversaryFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
+//            for date in contact.dates {
+//                if date.label == CNLabelDateAnniversary {
+//                    let anniversaryValue = date.value as! NSDateComponents
+//                    let anniversary = NSCalendar.currentCalendar().dateFromComponents(anniversaryValue)
+//                    let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
+//                    let anniversaryDate = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: self.managedContext)
+//
+//                    anniversaryDate.name = "\(contact.givenName) \(contact.familyName)"
+//                    anniversaryDate.abbreviatedName = self.abbreviateName(anniversaryDate.name)
+//                    anniversaryDate.date = anniversary!
+//                    anniversaryDate.equalizedDate = dateFormatter.stringFromDate(anniversary!)
+//                    anniversaryDate.type = "birthday"
+//                }
+//            }
+//        }
+//    }
 
 
 

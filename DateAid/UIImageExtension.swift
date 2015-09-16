@@ -16,7 +16,7 @@ extension UIImage {
         
         tintColor.setFill()
         
-        let context = UIGraphicsGetCurrentContext() as CGContextRef
+        let context = UIGraphicsGetCurrentContext()! as CGContextRef
         CGContextTranslateCTM(context, 0, self.size.height)
             CGContextScaleCTM(context, 1.0, -1.0);
         CGContextSetBlendMode(context, CGBlendMode.Normal)

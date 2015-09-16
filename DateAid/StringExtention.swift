@@ -9,11 +9,11 @@
 import Foundation
 
 extension String {
-    public func convertRange(range: Range<Int>) -> Range<String.Index> {
-        
-        let startIndex = advance(self.startIndex, range.startIndex)
-        let endIndex = advance(startIndex, range.endIndex + 2)
-        
-        return Range<String.Index>(start: startIndex, end: endIndex)
+
+    subscript(integerRange: Range<Int>) -> String {
+        let start = startIndex.advancedBy(integerRange.startIndex)
+        let end = startIndex.advancedBy(integerRange.endIndex)
+        let range = start..<end
+        return self[range]
     }
 }
