@@ -34,7 +34,7 @@ class CoreDataStack {
         // Access a URL to the application's documents directory
         // The SQLite databased (simply a file) will be stored in this directory which is the recommended place to store user's data
         let fileManager = NSFileManager.defaultManager()
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as! [NSURL]
+        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as [NSURL]
         let documentsURL = urls[0]
         
         // Create the persistent store through the persistent store coordinator method
@@ -42,11 +42,16 @@ class CoreDataStack {
         let options = [NSMigratePersistentStoresAutomaticallyOption: true]
         var error: NSError? = nil
         
-        // Provide a persistent store type, a new URL to persist to, and any extra options
-        persistentStore = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: &error)
+        do {
+            // Provide a persistent store type, a new URL to persist to, and any extra options
+            persistentStore = try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+        } catch let error1 as NSError {
+            error = error1
+            persistentStore = nil
+        }
         
         if persistentStore == nil {
-            println("Error adding persistent store: \(error)")
+            print("Error adding persistent store: \(error)")
             abort()
         }
     }
@@ -54,8 +59,13 @@ class CoreDataStack {
     // A convenience method to save the stack's managed object context with error handling
     func saveContext() {
         var error: NSError? = nil
-        if managedObjectContext.hasChanges && !managedObjectContext.save(&error) {
-            println("Could not save: \(error), \(error?.userInfo)")
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch let error1 as NSError {
+                error = error1
+                print("Could not save: \(error), \(error?.userInfo)")
+            }
         }
     }
 }

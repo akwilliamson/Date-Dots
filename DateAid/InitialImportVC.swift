@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import AddressBook
 import AddressBookUI
+import Contacts
 
 class InitialImportVC: UIViewController {
     
@@ -23,17 +24,90 @@ class InitialImportVC: UIViewController {
     }
 
 // MARK: - Actions
+
+    @IBAction func realImport(sender: AnyObject) {
+        if #available(iOS 9.0, *) {
+            // Rewrite new determineStatus() for iOS9
+            if determineStatus() {
+                return
+            }
+            iOS9AddBirthdays()
+            iOS9AddAnniversaries()
+            addEntitiesForHolidaysFromPlist()
+            saveManagedContext()
+            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        } else {
+            if determineStatus() {
+                return
+            }
+            getDatesFromContacts()
+            addEntitiesForHolidaysFromPlist()
+            saveManagedContext()
+            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        }
+    }
+    
+    func iOS9AddBirthdays() {
+        if #available(iOS 9.0, *) {
+            let contacts = CNContactStore()
+            let birthdayKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNContactBirthdayKey]
+            let birthdayFetch = CNContactFetchRequest(keysToFetch: birthdayKeys)
+            
+            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+            
+            try! contacts.enumerateContactsWithFetchRequest(birthdayFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
+                let fullName = "\(contact.givenName) \(contact.familyName)"
+                let abbreviatedName = self.abbreviateName(fullName)
+                if let contactBirthday = contact.birthday {
+                    let birthday = NSCalendar.currentCalendar().dateFromComponents(contactBirthday)
+                    let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
+                    let birthdayDate = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: self.managedContext)
+                    
+                    birthdayDate.name = fullName
+                    birthdayDate.abbreviatedName = abbreviatedName
+                    birthdayDate.date = birthday!
+                    birthdayDate.equalizedDate = dateFormatter.stringFromDate(birthday!)
+                    birthdayDate.type = "birthday"
+                }
+            }
+        }
+    }
+    
+    func iOS9AddAnniversaries() {
+        if #available(iOS 9.0, *) {
+            let contacts = CNContactStore()
+            let anniversaryKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNLabelDateAnniversary]
+            let anniversaryFetch = CNContactFetchRequest(keysToFetch: anniversaryKeys)
+            
+            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+            
+            try! contacts.enumerateContactsWithFetchRequest(anniversaryFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
+                for date in contact.dates {
+                    if date.label == CNLabelDateAnniversary {
+                        let anniversaryValue = date.value as! NSDateComponents
+                        let anniversary = NSCalendar.currentCalendar().dateFromComponents(anniversaryValue)
+                        let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
+                        let anniversaryDate = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: self.managedContext)
+                        
+                        anniversaryDate.name = "\(contact.givenName) \(contact.familyName)"
+                        anniversaryDate.abbreviatedName = self.abbreviateName(anniversaryDate.name)
+                        anniversaryDate.date = anniversary!
+                        anniversaryDate.equalizedDate = dateFormatter.stringFromDate(anniversary!)
+                        anniversaryDate.type = "birthday"
+                    }
+                }
+            }
+        }
+    }
     
     @IBAction func syncContacts(sender: AnyObject) {
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        activityView.transform = CGAffineTransformMakeScale(2, 2)
-        activityView.center = self.view.center
-        activityView.startAnimating()
-        self.view.addSubview(activityView)
         getDatesFromContacts()
         addEntitiesForHolidaysFromPlist()
         saveManagedContext()
-        activityView.stopAnimating()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
     // The main method to extract and save all initial dates
@@ -61,15 +135,15 @@ class InitialImportVC: UIViewController {
                 if granted {
                     userDidAuthorize = self.createAddressBook()
                 } else {
-                    println("Not granted access to user's addressbook")
+                    print("Not granted access to user's addressbook")
                 }
             }
             return userDidAuthorize == true ? true : false
         case .Restricted:
-            println("Not authorized to access user's addressbook")
+            print("Not authorized to access user's addressbook")
             return false
         case .Denied:
-            println("Denied access user's addressbook")
+            print("Denied access user's addressbook")
             return false
         }
     }
@@ -87,7 +161,7 @@ class InitialImportVC: UIViewController {
             return true
         }
     }
-
+    
     func addEntitiesForAddressBookBirthdays(person: AnyObject) {
         let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
         if birthdayProperty != nil {
@@ -95,9 +169,9 @@ class InitialImportVC: UIViewController {
             let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
             let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
             
-            birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+            birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
             birthday.abbreviatedName = abbreviateName(birthday.name)
-            var actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
+            let actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
             birthday.date = actualDate
             let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
             let dateFormatter = NSDateFormatter()
@@ -110,17 +184,17 @@ class InitialImportVC: UIViewController {
     func addEntitiesForAddressBookAnniversaries(person: AnyObject) {
         let anniversaryDate: ABMultiValueRef = ABRecordCopyValue(person, kABPersonDateProperty).takeUnretainedValue()
         for index in 0..<ABMultiValueGetCount(anniversaryDate) {
-            let anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaryDate, index)).takeRetainedValue() as! String
-            let otherLabel = kABPersonAnniversaryLabel as! String
+            let anniversaryLabel = (ABMultiValueCopyLabelAtIndex(anniversaryDate, index)).takeRetainedValue() as String
+            let otherLabel = kABPersonAnniversaryLabel as String
             
             if anniversaryLabel == otherLabel {
                 
                 let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
                 let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
                 
-                anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as! String
+                anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
                 anniversary.abbreviatedName = abbreviateName(anniversary.name)
-                var actualDate = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
+                let actualDate = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
                 anniversary.date = actualDate
                 let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
                 let dateFormatter = NSDateFormatter()
@@ -133,20 +207,23 @@ class InitialImportVC: UIViewController {
     
     func saveManagedContext() {
         var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save: \(error?.localizedDescription)")
+        do {
+            try managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save: \(error?.localizedDescription)")
         }
     }
     
     func addEntitiesForHolidaysFromPlist() {
         if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
-            var holidaysDictionary = NSDictionary(contentsOfFile: path)!
+            let holidaysDictionary = NSDictionary(contentsOfFile: path)!
             for (holidayName, holidayDate) in holidaysDictionary {
                 let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
                 let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
                 holiday.name = holidayName as! String
                 holiday.abbreviatedName = holidayName as! String
-                var actualDate = holidayDate as! NSDate
+                let actualDate = holidayDate as! NSDate
                 holiday.date = actualDate
                 let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
                 let dateFormatter = NSDateFormatter()

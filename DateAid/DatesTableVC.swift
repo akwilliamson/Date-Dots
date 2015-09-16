@@ -45,8 +45,11 @@ class DatesTableVC: UITableViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: datesFetch, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         var error: NSError?
         
-        if !fetchedResultsController.performFetch(&error) {
-            println(error?.localizedDescription)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error1 as NSError {
+            error = error1
+            print(error?.localizedDescription)
         }
         
         // Compare and sort dates most recent from today
@@ -65,8 +68,8 @@ class DatesTableVC: UITableViewController {
         // Configure tab bar and tab bar items
         self.tabBarController?.tabBar.barTintColor = aquaColor
         self.tabBarController?.tabBar.tintColor = creamColor
-        let items = self.tabBarController?.tabBar.items as! [UITabBarItem]
-        for item in items as [UITabBarItem] {
+        let items = self.tabBarController?.tabBar.items
+        for item in items! {
             if let image = item.image {
                 item.image = image.imageWithColor(creamColor).imageWithRenderingMode(.AlwaysOriginal)
             }
@@ -104,7 +107,7 @@ class DatesTableVC: UITableViewController {
 // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo = fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
 
@@ -145,7 +148,7 @@ class DatesTableVC: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = tableView.indexPathForSelectedRow()
+        let indexPath = tableView.indexPathForSelectedRow
         if segue.identifier == "ShowDateDetails" {
             let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
             dateDetailsVC.date = datesArray[indexPath!.row] as Date

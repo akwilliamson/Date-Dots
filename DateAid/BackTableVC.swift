@@ -28,7 +28,7 @@ class BackTableVC: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as! UITableViewCell
+        let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as UITableViewCell
         let label = navigationCell.viewWithTag(1) as! UILabel
         label.text = tableArray[indexPath.row]
         
@@ -52,7 +52,7 @@ class BackTableVC: UITableViewController {
         let datesFetch = NSFetchRequest(entityName: "Date")
         var error: NSError?
         
-        let indexPath = self.tableView.indexPathForSelectedRow()
+        let indexPath = self.tableView.indexPathForSelectedRow
         
         switch indexPath!.row {
         case 0:
