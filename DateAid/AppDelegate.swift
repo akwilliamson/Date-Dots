@@ -21,18 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let rootController1 = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
         rootController1.managedContext = coreDataStack.managedObjectContext
-//        let rootController2 = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
+        let rootController2 = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
     
-//        if NSUserDefaults.standardUserDefaults().objectForKey("seenInitialView") == nil {
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedOnce")
-//            if let window = self.window {
-//                self.window!.rootViewController = rootController1
-//            }
-//        } else {
-//            if let window = self.window {
-//                self.window!.rootViewController = rootController2
-//            }
-//        }
+        if NSUserDefaults.standardUserDefaults().objectForKey("seenInitialView") == nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedOnce")
+            if let window = self.window {
+                window.rootViewController = rootController1
+            }
+        } else {
+            if let window = self.window {
+                window.rootViewController = rootController2
+            }
+        }
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: creamColor], forState:.Normal)
         return true
     }

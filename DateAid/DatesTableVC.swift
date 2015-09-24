@@ -21,7 +21,6 @@ class DatesTableVC: UITableViewController {
     var leftBarButtonItem: UIBarButtonItem!
     var rightBarButtonItem: UIBarButtonItem!
     // Holds dates shown in table
-    var datesArray = [Date]()
     var menuIndexPath: Int?
     // Format NSDate to be human readable
     let dayTimePeriodFormatter = NSDateFormatter()
@@ -43,13 +42,11 @@ class DatesTableVC: UITableViewController {
         datesFetch.predicate = datesPredicate
 
         fetchedResultsController = NSFetchedResultsController(fetchRequest: datesFetch, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        var error: NSError?
         
         do {
             try fetchedResultsController.performFetch()
-        } catch let error1 as NSError {
-            error = error1
-            print(error?.localizedDescription)
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
         
         // Compare and sort dates most recent from today
@@ -151,25 +148,7 @@ class DatesTableVC: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         if segue.identifier == "ShowDateDetails" {
             let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
-            dateDetailsVC.date = datesArray[indexPath!.row] as Date
+            dateDetailsVC.date = fetchedResults[indexPath!.row] as Date
         }
     }
 }
-
-/*
-
-How to get number of days until date:
-
-func daysBetween(date1: NSDate, date2: NSDate) -> Int {
-    var unitFlags = NSCalendarUnit.CalendarUnitDay
-    var calendar = NSCalendar.currentCalendar()
-    var components = calendar.components(unitFlags, fromDate: date1, toDate: date2, options: nil)
-    return 365 - (components.day)
-}
-
-var daysAway = daysBetween(contactDate, date2: NSDate())
-while daysAway < 0 {
-    daysAway = daysAway + 365
-}
-
-*/

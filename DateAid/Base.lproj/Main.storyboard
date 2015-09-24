@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Bold</string>
             <string>AvenirNext-DemiBold</string>
         </mutableArray>
@@ -24,28 +26,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-U9-Mg1">
-                                <rect key="frame" x="16" y="20" width="179" height="68"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-U9-Mg1">
+                                <rect key="frame" x="225" y="85" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.070588235294117646" green="0.59215686274509804" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="9NO-TM-pSo"/>
+                                    <constraint firstAttribute="height" constant="150" id="Hjq-ci-qBy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <state key="normal" title="Import Contacts">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="syncContacts:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TbS-Yj-o5H"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="usA-Tr-V7H">
-                                <rect key="frame" x="16" y="96" width="179" height="68"/>
-                                <color key="backgroundColor" red="0.84138257579999998" green="0.1377612449" blue="0.090832743450000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Import Google">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I52-SK-dt9">
-                                <rect key="frame" x="16" y="172" width="179" height="68"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I52-SK-dt9">
+                                <rect key="frame" x="250" y="267" width="100" height="100"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="nBz-jj-chl"/>
+                                    <constraint firstAttribute="height" constant="100" id="tRd-6E-Vci"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <state key="normal" title="Skip">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,17 +57,18 @@
                                     <segue destination="6Er-P5-vP8" kind="show" identifier="" id="5c3-6T-RLp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jz7-IQ-SL4">
-                                <rect key="frame" x="16" y="248" width="97" height="30"/>
-                                <state key="normal" title="REAL IMPORT"/>
-                                <connections>
-                                    <action selector="realImport:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="VVP-Gy-uxX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ssd-U9-Mg1" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Fb0-Am-4Vp"/>
+                            <constraint firstItem="Ssd-U9-Mg1" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="65" id="Fu8-9K-BO5"/>
+                            <constraint firstItem="I52-SK-dt9" firstAttribute="top" secondItem="Ssd-U9-Mg1" secondAttribute="bottom" constant="32" id="UXT-Pj-HpY"/>
+                            <constraint firstItem="I52-SK-dt9" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="knG-Fg-whu"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="importButton" destination="Ssd-U9-Mg1" id="i3b-pj-5sY"/>
+                        <outlet property="skipButton" destination="I52-SK-dt9" id="rec-YG-gd8"/>
                         <segue destination="6Er-P5-vP8" kind="show" identifier="HomeScreen" id="SXV-Qu-gXZ"/>
                     </connections>
                 </viewController>
@@ -116,7 +120,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T9-zj-bre">
-                                            <rect key="frame" x="8" y="18" width="72" height="43"/>
+                                            <rect key="frame" x="16" y="18" width="72" height="43"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="25"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -124,7 +128,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="5T9-zj-bre" secondAttribute="bottom" constant="10" id="W45-HY-hLy"/>
-                                        <constraint firstItem="5T9-zj-bre" firstAttribute="leading" secondItem="SfW-8W-294" secondAttribute="leadingMargin" id="k6S-cV-mEJ"/>
+                                        <constraint firstItem="5T9-zj-bre" firstAttribute="leading" secondItem="SfW-8W-294" secondAttribute="leadingMargin" constant="8" id="k6S-cV-mEJ"/>
                                         <constraint firstItem="5T9-zj-bre" firstAttribute="top" secondItem="SfW-8W-294" secondAttribute="topMargin" constant="10" id="kxr-5T-tyY"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -202,7 +206,7 @@
         <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
             <objects>
-                <viewController id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowDateDetails" id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
@@ -211,16 +215,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcF-pq-o1m">
-                                <rect key="frame" x="16" y="72" width="573" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcF-pq-o1m">
+                                <rect key="frame" x="16" y="72" width="573" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="pat-DV-hWh"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days until:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xb-KT-IjO">
+                                <rect key="frame" x="15" y="186" width="95" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Age turning:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3V4-Wq-Wre">
+                                <rect key="frame" x="16" y="231" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date of:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fD-sh-sMd">
+                                <rect key="frame" x="16" y="134" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi">
+                                <rect key="frame" x="15" y="210" width="392" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ">
+                                <rect key="frame" x="15" y="260" width="528" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z">
+                                <rect key="frame" x="15" y="163" width="528" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qcF-pq-o1m" firstAttribute="leading" secondItem="sia-pu-44W" secondAttribute="leadingMargin" constant="-4" id="JTt-tq-8w6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qcF-pq-o1m" secondAttribute="trailing" constant="-9" id="Vrc-pO-tTK"/>
+                            <constraint firstItem="qcF-pq-o1m" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="8" id="cxN-FQ-oWH"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="ageLabel" destination="3Ml-Gk-LXZ" id="Acd-3M-5mf"/>
+                        <outlet property="dateLabel" destination="mDV-mQ-X2z" id="fLN-Oa-csi"/>
+                        <outlet property="daysUntilLabel" destination="gjl-WM-ZEi" id="iof-67-yMB"/>
                         <outlet property="fullNameLabel" destination="qcF-pq-o1m" id="Dxf-5q-IRS"/>
                     </connections>
                 </viewController>
@@ -339,7 +390,7 @@
         <image name="people-selected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SXV-Qu-gXZ"/>
-        <segue reference="oNP-ia-Yef"/>
+        <segue reference="cPJ-5X-Yk6"/>
+        <segue reference="5c3-6T-RLp"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,11 +12,20 @@ import CoreData
 class DateDetailsVC: UIViewController {
 
     var date: Date?
-
+    let dateFormatter = NSDateFormatter()
+    
     @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var daysUntilLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fullNameLabel.text = date?.name
+        let dateValue = date!.date
+        dateFormatter.dateFormat = "dd MMM"
+        fullNameLabel.text = date!.name
+        dateLabel.text = "\(dateFormatter.stringFromDate(dateValue))"
+        daysUntilLabel.text = "\(dateValue.daysBetween()) days away"
+        ageLabel.text = "turning \(dateValue.ageTurning())"
     }
 }

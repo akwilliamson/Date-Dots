@@ -9,11 +9,7 @@
 import Foundation
 
 extension String {
-
-    subscript(integerRange: Range<Int>) -> String {
-        let start = startIndex.advancedBy(integerRange.startIndex)
-        let end = startIndex.advancedBy(integerRange.endIndex)
-        let range = start..<end
-        return self[range]
+    subscript (r: Range<Int>) -> String {
+        return substringWithRange(Range(start: startIndex.advancedBy(r.startIndex), end: startIndex.advancedBy(r.endIndex)))
     }
 }
