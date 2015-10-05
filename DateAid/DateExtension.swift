@@ -14,19 +14,24 @@ extension NSDate {
         let dateStringFormatter = NSDateFormatter()
         dateStringFormatter.dateFormat = "yyyy-MM-dd"
         dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        let d = dateStringFormatter.dateFromString(dateString)!
-        self.init(timeInterval:0, sinceDate:d)
+        let date = dateStringFormatter.dateFromString(dateString)!
+        self.init(timeInterval: 0, sinceDate: date)
     }
     
     func daysBetween() -> Int {
-        let unitFlags = NSCalendarUnit.Day
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(unitFlags, fromDate: self, toDate: NSDate(), options: [])
-        var result = 365 - (components.day)
-        while result < 0 {
-            result = result + 365
+        let dateComponents = calendar.components([.Year, .Month, .Day], fromDate: self)
+        // Static year component for now, should change to dynamic
+        dateComponents.setValue(2015, forComponent: .Year)
+        let newDate = calendar.dateFromComponents(dateComponents)
+        
+        let dateDay = calendar.ordinalityOfUnit(.Day, inUnit: .Year, forDate: newDate!)
+        let nowDay = calendar.ordinalityOfUnit(.Day, inUnit: .Year, forDate: NSDate())
+        var difference = dateDay - nowDay
+        if difference < 0 {
+            difference += 365
         }
-        return result
+        return difference
     }
     
     func ageTurning() -> Int {
