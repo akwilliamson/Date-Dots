@@ -115,6 +115,8 @@ class DatesTableVC: UITableViewController {
         let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
         
         let date = fetchedResults[indexPath.row]
+        print(date.name)
+        print(date.type)
         dateCell.name = date.abbreviatedName
         let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
         dateCell.date = stringDate

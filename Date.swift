@@ -11,10 +11,10 @@ import CoreData
 
 class Date: NSManagedObject {
 
+    @NSManaged var            type: String
+    @NSManaged var            name: String
     @NSManaged var abbreviatedName: String
     @NSManaged var            date: NSDate
     @NSManaged var   equalizedDate: String
-    @NSManaged var            name: String
-    @NSManaged var            type: String
-    
+
 }

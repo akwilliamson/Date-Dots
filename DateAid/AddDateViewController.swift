@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
-class AddDateViewController: UIViewController {
+class AddDateViewController: UIViewController, UITextFieldDelegate {
+    
+    let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
+    var managedContext = CoreDataStack().managedObjectContext
 
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
@@ -24,11 +28,32 @@ class AddDateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSliderValues()
+        nameField.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         print("didReceiveMemoryWarning in AddDateVC")
+    }
+    
+    // Dismissing keyboard
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let _ = touches.first {
+            view.endEditing(true)
+        }
+        super.touchesBegan(touches , withEvent:event)
+    }
+    
+    // Dismissing keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        view.endEditing(true)
+        return true
+    }
+    
+    // Clearing text
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        return false
     }
     
     func setUpSliderValues() {
@@ -64,15 +89,43 @@ class AddDateViewController: UIViewController {
     }
     
     @IBAction func yearSlider(sender: UISlider) {
-        yearLabel.text = String(round(sender.value))
+        yearLabel.text = String(Int(round(sender.value)))
     }
     
     @IBAction func monthSlider(sender: UISlider) {
-        monthLabel.text = String(round(sender.value))
+        monthLabel.text = String(Int(round(sender.value)))
     }
     
     @IBAction func daySlider(sender: UISlider) {
-        dayLabel.text = String(round(sender.value))
+        dayLabel.text = String(Int(round(sender.value)))
     }
     
+    @IBAction func saveButton(sender: AnyObject) {
+        let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+        let date = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        date.type = typeLabel.text!.lowercaseString
+        date.name = nameField.text!
+        date.abbreviatedName = abbreviateName(nameField.text!)
+        date.date = NSDate(dateString: "\(yearLabel.text!)-\(monthLabel.text!)-\(dayLabel.text!)")
+        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = formatString
+        date.equalizedDate = dateFormatter.stringFromDate(date.date)
+        
+        saveManagedContext()
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func saveManagedContext() {
+        do { try managedContext.save() } catch {}
+    }
+    
+    func abbreviateName(name: String) -> String {
+        return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
+    }
 }
+
+
+
+
+
