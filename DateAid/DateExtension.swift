@@ -36,8 +36,8 @@ extension NSDate {
     }
     
     func ageTurning() -> Int {
-        let ageComponents = NSCalendar.currentCalendar()
-        let date = ageComponents.components(.Year, fromDate: self, toDate: NSDate(), options: [])
+        let calendar = NSCalendar.currentCalendar()
+        let date = calendar.components(.Year, fromDate: self, toDate: NSDate(), options: [])
         return date.year + 1
     }
 }
