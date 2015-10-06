@@ -28,4 +28,14 @@ class DateDetailsVC: UIViewController {
         daysUntilLabel.text = "\(dateValue.daysBetween()) days away"
         ageLabel.text = "turning \(dateValue.ageTurning())"
     }
+    
+    @IBAction func editDate(sender: AnyObject) {
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let addDateVC = segue.destinationViewController as! AddDateViewController
+        addDateVC.type = date!.type
+        addDateVC.name = date!.name
+        addDateVC.date = date!.date
+    }
 }

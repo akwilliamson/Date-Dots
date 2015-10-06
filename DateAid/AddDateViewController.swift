@@ -11,8 +11,11 @@ import CoreData
 
 class AddDateViewController: UIViewController, UITextFieldDelegate {
     
-    let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     var managedContext = CoreDataStack().managedObjectContext
+    
+    var type: String?
+    var name: String?
+    var date: NSDate?
 
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
@@ -28,6 +31,7 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSliderValues()
+        populateEditValues()
         nameField.delegate = self
     }
 
@@ -54,6 +58,20 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
     // Clearing text
     func textFieldShouldClear(textField: UITextField) -> Bool {
         return false
+    }
+    
+    func populateEditValues() {
+        if let typeToEdit = type {
+            typeLabel.text = typeToEdit.capitalizedString
+        }
+        if let nameToEdit = name {
+            nameField.text = nameToEdit
+        }
+        if let dateToEdit = date {
+            yearSlider.value = Float(dateToEdit.getYear())
+            monthSlider.value = Float(dateToEdit.getMonth())
+            daySlider.value = Float(dateToEdit.getDay())
+        }
     }
     
     func setUpSliderValues() {

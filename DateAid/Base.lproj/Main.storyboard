@@ -359,6 +359,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylI-lH-q23">
+                                <rect key="frame" x="23" y="289" width="30" height="30"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editDate:" destination="PaR-uw-Bbs" eventType="touchUpInside" id="e6Q-sE-vLG"/>
+                                    <segue destination="i1f-AG-9F2" kind="show" identifier="EditDate" id="kCN-za-ZUV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -491,5 +499,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="cPJ-5X-Yk6"/>
         <segue reference="5c3-6T-RLp"/>
+        <segue reference="kCN-za-ZUV"/>
     </inferredMetricsTieBreakers>
 </document>
