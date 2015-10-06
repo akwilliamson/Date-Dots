@@ -133,8 +133,10 @@ class DatesTableVC: UITableViewController {
     
     func sortFetchedResultsArray() -> [Date] {
         fetchedResults = fetchedResultsController?.fetchedObjects as! [Date]
+
+        currentDateString = formatCurrentDateIntoString(NSDate())
         for fetchedDate in fetchedResults {
-            if fetchedDate.equalizedDate < self.title {
+            if fetchedDate.equalizedDate < currentDateString! {
                 fetchedResults.removeAtIndex(0)
                 fetchedResults.append(fetchedDate)
             } else {

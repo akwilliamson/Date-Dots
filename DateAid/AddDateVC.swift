@@ -98,8 +98,10 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
                 managedObject.setValue(self.typeLabel.text!, forKey: "type")
                 managedObject.setValue(self.nameField.text!, forKey: "name")
                 managedObject.setValue(self.abbreviateName(self.nameField.text!), forKey: "abbreviatedName")
-                managedObject.setValue(NSDate(dateString: "\(self.yearLabel.text!)-\(self.monthLabel.text!)-\(self.dayLabel.text!)"), forKey: "date")
-                managedObject.setValue(self.typeLabel.text!, forKey: "equalizedDate")
+                let editedDate = NSDate(dateString: "\(self.yearLabel.text!)-\(self.monthLabel.text!)-\(self.dayLabel.text!)")
+                managedObject.setValue(editedDate, forKey: "date")
+                let equalizedDate = formatCurrentDateIntoString(editedDate)
+                managedObject.setValue(equalizedDate, forKey: "equalizedDate")
                 self.saveManagedContext()
             } catch let fetchError as NSError {
                 print(fetchError.localizedDescription)
@@ -168,6 +170,13 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     
     func abbreviateName(name: String) -> String {
         return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
+    }
+    
+    func formatCurrentDateIntoString(date: NSDate) -> String {
+        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = formatString
+        return dateFormatter.stringFromDate(NSDate())
     }
     
     func saveManagedContext() {
