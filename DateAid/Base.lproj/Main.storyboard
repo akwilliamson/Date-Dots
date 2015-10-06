@@ -180,7 +180,7 @@
         <!--Add Date View Controller-->
         <scene sceneID="bfe-1f-yLk">
             <objects>
-                <viewController id="i1f-AG-9F2" userLabel="Add Date View Controller" sceneMemberID="viewController">
+                <viewController id="i1f-AG-9F2" userLabel="Add Date View Controller" customClass="AddDateViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CAy-wP-cL3"/>
                         <viewControllerLayoutGuide type="bottom" id="OwV-4I-2tz"/>
@@ -192,14 +192,23 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G">
                                 <rect key="frame" x="20" y="121" width="58" height="30"/>
                                 <state key="normal" title="Birthday"/>
+                                <connections>
+                                    <action selector="birthdayButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="kJ9-Ze-1XK"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF">
                                 <rect key="frame" x="86" y="121" width="81" height="30"/>
                                 <state key="normal" title="Anniversary"/>
+                                <connections>
+                                    <action selector="anniversaryButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="nwb-o1-2ms"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv">
                                 <rect key="frame" x="175" y="121" width="52" height="30"/>
                                 <state key="normal" title="Holiday"/>
+                                <connections>
+                                    <action selector="holidayButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="kTO-fz-L8V"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2z-xV-SNo">
                                 <rect key="frame" x="20" y="85" width="42" height="21"/>
@@ -207,38 +216,47 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU">
-                                <rect key="frame" x="18" y="177" width="564" height="31"/>
-                            </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS">
-                                <rect key="frame" x="18" y="245" width="564" height="31"/>
+                                <rect key="frame" x="18" y="282" width="564" height="31"/>
+                                <connections>
+                                    <action selector="monthSlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="e54-pZ-R62"/>
+                                </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM">
-                                <rect key="frame" x="18" y="315" width="564" height="31"/>
+                                <rect key="frame" x="18" y="352" width="564" height="31"/>
+                                <connections>
+                                    <action selector="daySlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="XG2-Dg-n0g"/>
+                                </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-kg-cmc">
-                                <rect key="frame" x="279" y="215" width="42" height="21"/>
+                                <rect key="frame" x="279" y="252" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="az4-qD-VXJ">
-                                <rect key="frame" x="279" y="283" width="42" height="21"/>
+                                <rect key="frame" x="279" y="320" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPn-Eo-PGS">
-                                <rect key="frame" x="279" y="353" width="42" height="21"/>
+                                <rect key="frame" x="279" y="390" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G">
-                                <rect key="frame" x="20" y="388" width="560" height="30"/>
+                                <rect key="frame" x="20" y="159" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU">
+                                <rect key="frame" x="18" y="214" width="564" height="31"/>
+                                <connections>
+                                    <action selector="yearSlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="ZpD-VX-QPm"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -247,7 +265,7 @@
                             <constraint firstItem="xPn-Eo-PGS" firstAttribute="centerX" secondItem="a12-fm-HpS" secondAttribute="centerX" id="Ekw-Au-nNJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8DU-k5-J9G" secondAttribute="trailing" id="FtL-O6-909"/>
                             <constraint firstAttribute="leadingMargin" secondItem="w7i-R0-OwM" secondAttribute="leading" id="HTq-K6-zzs"/>
-                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="CAy-wP-cL3" secondAttribute="bottom" constant="113" id="Ho7-4S-kJ9"/>
+                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="CAy-wP-cL3" secondAttribute="bottom" constant="150" id="Ho7-4S-kJ9"/>
                             <constraint firstItem="az4-qD-VXJ" firstAttribute="centerX" secondItem="a12-fm-HpS" secondAttribute="centerX" id="MK2-wz-m24"/>
                             <constraint firstAttribute="leadingMargin" secondItem="8DU-k5-J9G" secondAttribute="leading" id="NtX-zl-l3I"/>
                             <constraint firstItem="w7i-R0-OwM" firstAttribute="top" secondItem="vhw-nm-zBS" secondAttribute="bottom" constant="40" id="Omt-5x-2IS"/>
@@ -256,12 +274,22 @@
                             <constraint firstItem="xPn-Eo-PGS" firstAttribute="top" secondItem="w7i-R0-OwM" secondAttribute="bottom" constant="8" id="aYU-d4-p1y"/>
                             <constraint firstItem="PaQ-kg-cmc" firstAttribute="top" secondItem="hYm-pd-QLU" secondAttribute="bottom" constant="8" id="iM4-QQ-n5b"/>
                             <constraint firstAttribute="leadingMargin" secondItem="hYm-pd-QLU" secondAttribute="leading" id="izA-rg-Z3a"/>
+                            <constraint firstItem="8DU-k5-J9G" firstAttribute="top" secondItem="CAy-wP-cL3" secondAttribute="bottom" constant="95" id="mGZ-bl-f3Z"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7i-R0-OwM" secondAttribute="trailing" id="wJq-iM-d6g"/>
                             <constraint firstItem="PaQ-kg-cmc" firstAttribute="centerX" secondItem="a12-fm-HpS" secondAttribute="centerX" id="y2j-ry-vpE"/>
-                            <constraint firstItem="8DU-k5-J9G" firstAttribute="top" secondItem="xPn-Eo-PGS" secondAttribute="bottom" constant="14" id="zEA-oy-t3v"/>
                             <constraint firstItem="az4-qD-VXJ" firstAttribute="top" secondItem="vhw-nm-zBS" secondAttribute="bottom" constant="8" id="zb9-LA-nZr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="dayLabel" destination="xPn-Eo-PGS" id="oiu-zw-pEi"/>
+                        <outlet property="daySlider" destination="w7i-R0-OwM" id="BgY-wB-Qsf"/>
+                        <outlet property="monthLabel" destination="az4-qD-VXJ" id="FL5-DX-CLd"/>
+                        <outlet property="monthSlider" destination="vhw-nm-zBS" id="NNZ-pE-3dn"/>
+                        <outlet property="nameField" destination="8DU-k5-J9G" id="gCB-Yk-4S1"/>
+                        <outlet property="typeLabel" destination="r2z-xV-SNo" id="Gpf-wd-uAF"/>
+                        <outlet property="yearLabel" destination="PaQ-kg-cmc" id="9pJ-Fn-hzh"/>
+                        <outlet property="yearSlider" destination="hYm-pd-QLU" id="VU6-rD-jqm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -29,6 +29,7 @@
 		97D185B71B3B51E8009E576E /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* UIImageExtension.swift */; };
 		97DC58861B3E155A008FA222 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58851B3E155A008FA222 /* Date.swift */; };
 		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
+		97DD38151BC3659F00CF8A25 /* AddDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		97D185B61B3B51E8009E576E /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		97DC58851B3E155A008FA222 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		97DD38141BC3659F00CF8A25 /* AddDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				97361A631B2C0CEF006394E1 /* DateCell.xib */,
 				97D185B61B3B51E8009E576E /* UIImageExtension.swift */,
 				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
+				97DD38141BC3659F00CF8A25 /* AddDateViewController.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
+				97DD38151BC3659F00CF8A25 /* AddDateViewController.swift in Sources */,
 				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
