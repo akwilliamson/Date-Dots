@@ -60,9 +60,6 @@ class BackTableVC: UITableViewController {
         let navigationVC = segue.destinationViewController as! UINavigationController
         let destinationVC = navigationVC.topViewController as! DatesTableVC
         
-        let datesFetch = NSFetchRequest(entityName: "Date")
-        var error: NSError?
-        
         let indexPath = self.tableView.indexPathForSelectedRow
         
         switch indexPath!.row {

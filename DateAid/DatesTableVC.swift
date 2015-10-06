@@ -40,7 +40,7 @@ class DatesTableVC: UITableViewController {
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
         let dateSort = NSSortDescriptor(key: "equalizedDate", ascending: true)
-        let nameSort = NSSortDescriptor(key: "name",          ascending: true)
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
         datesFetch.sortDescriptors = [dateSort, nameSort]
         datesFetch.predicate = datesPredicate
 

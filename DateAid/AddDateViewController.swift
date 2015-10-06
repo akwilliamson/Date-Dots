@@ -69,8 +69,11 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
         }
         if let dateToEdit = date {
             yearSlider.value = Float(dateToEdit.getYear())
+            yearLabel.text = String(Int(round(yearSlider.value)))
             monthSlider.value = Float(dateToEdit.getMonth())
+            monthLabel.text = String(Int(round(monthSlider.value)))
             daySlider.value = Float(dateToEdit.getDay())
+            dayLabel.text = String(Int(round(daySlider.value)))
         }
     }
     
@@ -78,14 +81,17 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
         yearSlider.minimumValue = 1900
         yearSlider.maximumValue = 2015
         yearSlider.continuous = true
+        yearSlider.value = 2015
         yearSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
         monthSlider.minimumValue = 1
         monthSlider.maximumValue = 12
         monthSlider.continuous = true
+        monthSlider.value = 1
         monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
         daySlider.minimumValue = 1
         daySlider.maximumValue = 31
         daySlider.continuous = true
+        daySlider.value = 1
         daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
     }
     
@@ -119,27 +125,43 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveButton(sender: AnyObject) {
-        let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-        let date = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        date.type = typeLabel.text!.lowercaseString
-        date.name = nameField.text!
-        date.abbreviatedName = abbreviateName(nameField.text!)
-        date.date = NSDate(dateString: "\(yearLabel.text!)-\(monthLabel.text!)-\(dayLabel.text!)")
-        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = formatString
-        date.equalizedDate = dateFormatter.stringFromDate(date.date)
-        
-        saveManagedContext()
+        if type != nil {
+            let fetchRequest = NSFetchRequest(entityName: "Date")
+            fetchRequest.predicate = NSPredicate(format: "name = %@ AND type = %@", nameField.text!, typeLabel.text!.lowercaseString)
+            
+            do { let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+                let managedObject = fetchedResults![0]
+                managedObject.setValue(self.typeLabel.text!, forKey: "type")
+                managedObject.setValue(self.nameField.text!, forKey: "name")
+                managedObject.setValue(self.abbreviateName(self.nameField.text!), forKey: "abbreviatedName")
+                managedObject.setValue(NSDate(dateString: "\(self.yearLabel.text!)-\(self.monthLabel.text!)-\(self.dayLabel.text!)"), forKey: "date")
+                managedObject.setValue(self.typeLabel.text!, forKey: "equalizedDate")
+                self.saveManagedContext()
+            } catch let fetchError as NSError {
+                print(fetchError.localizedDescription)
+            }
+        } else {
+            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+            let date = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            date.type = typeLabel.text!.lowercaseString
+            date.name = nameField.text!
+            date.abbreviatedName = abbreviateName(nameField.text!)
+            date.date = NSDate(dateString: "\(yearLabel.text!)-\(monthLabel.text!)-\(dayLabel.text!)")
+            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+            date.equalizedDate = dateFormatter.stringFromDate(date.date)   
+            saveManagedContext()
+        }
         self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    func saveManagedContext() {
-        do { try managedContext.save() } catch {}
     }
     
     func abbreviateName(name: String) -> String {
         return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
+    }
+    
+    func saveManagedContext() {
+        do { try managedContext.save() } catch {}
     }
 }
 
