@@ -34,6 +34,9 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let revealController = self.revealViewController()
+        revealController.panGestureRecognizer()
+        revealController.tapGestureRecognizer()
         // Set initial datesArray
         let datesFetch = NSFetchRequest(entityName: "Date")
         let dateSort = NSSortDescriptor(key: "equalizedDate", ascending: true)
