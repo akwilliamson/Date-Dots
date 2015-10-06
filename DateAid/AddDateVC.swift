@@ -1,5 +1,5 @@
 //
-//  AddDateViewController.swift
+//  AddDateVC.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 10/5/15.
@@ -9,38 +9,44 @@
 import UIKit
 import CoreData
 
-class AddDateViewController: UIViewController, UITextFieldDelegate {
+class AddDateVC: UIViewController, UITextFieldDelegate {
     
-    var managedContext = CoreDataStack().managedObjectContext
+// MARK: PROPERTIES
     
+    let managedContext = CoreDataStack().managedObjectContext
     var type: String?
     var name: String?
     var date: NSDate?
+    
+// MARK: OUTLETS
 
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
-    
     @IBOutlet weak var nameField: UITextField!
-    
     @IBOutlet weak var yearSlider: UISlider!
     @IBOutlet weak var monthSlider: UISlider!
     @IBOutlet weak var daySlider: UISlider!
 
+// MARK: VIEW SETUP
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSliderValues()
-        populateEditValues()
-        nameField.delegate = self
+        populateEditableValues()
+        setDelegates()
     }
-
+    
+// MARK: MEMORY
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         print("didReceiveMemoryWarning in AddDateVC")
     }
     
-    // Dismissing keyboard
+// MARK: TEXTFIELDS
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let _ = touches.first {
             view.endEditing(true)
@@ -48,56 +54,14 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
         super.touchesBegan(touches , withEvent:event)
     }
     
-    // Dismissing keyboard
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         view.endEditing(true)
         return true
     }
     
-    // Clearing text
     func textFieldShouldClear(textField: UITextField) -> Bool {
         return false
-    }
-    
-    func populateEditValues() {
-        if let typeToEdit = type {
-            typeLabel.text = typeToEdit.capitalizedString
-        }
-        if let nameToEdit = name {
-            nameField.text = nameToEdit
-        }
-        if let dateToEdit = date {
-            yearSlider.value = Float(dateToEdit.getYear())
-            yearLabel.text = String(Int(round(yearSlider.value)))
-            monthSlider.value = Float(dateToEdit.getMonth())
-            monthLabel.text = String(Int(round(monthSlider.value)))
-            daySlider.value = Float(dateToEdit.getDay())
-            dayLabel.text = String(Int(round(daySlider.value)))
-        }
-    }
-    
-    func setUpSliderValues() {
-        yearSlider.minimumValue = 1900
-        yearSlider.maximumValue = 2015
-        yearSlider.continuous = true
-        yearSlider.value = 2015
-        yearSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
-        monthSlider.minimumValue = 1
-        monthSlider.maximumValue = 12
-        monthSlider.continuous = true
-        monthSlider.value = 1
-        monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
-        daySlider.minimumValue = 1
-        daySlider.maximumValue = 31
-        daySlider.continuous = true
-        daySlider.value = 1
-        daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
-    }
-    
-    func valueChanged(sender: UISlider) {
-        let value = round(sender.value)
-        sender.setValue(value, animated: false)
     }
     
     @IBAction func birthdayButton(sender: AnyObject) {
@@ -154,6 +118,52 @@ class AddDateViewController: UIViewController, UITextFieldDelegate {
             saveManagedContext()
         }
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+// MARK: HELPERS
+    
+    func setDelegates() {
+        nameField.delegate = self
+    }
+    
+    func populateEditableValues() {
+        if let typeToEdit = type {
+            typeLabel.text = typeToEdit.capitalizedString
+        }
+        if let nameToEdit = name {
+            nameField.text = nameToEdit
+        }
+        if let dateToEdit = date {
+            yearSlider.value = Float(dateToEdit.getYear())
+            yearLabel.text = String(Int(round(yearSlider.value)))
+            monthSlider.value = Float(dateToEdit.getMonth())
+            monthLabel.text = String(Int(round(monthSlider.value)))
+            daySlider.value = Float(dateToEdit.getDay())
+            dayLabel.text = String(Int(round(daySlider.value)))
+        }
+    }
+    
+    func setUpSliderValues() {
+        yearSlider.minimumValue = 1900
+        yearSlider.maximumValue = 2015
+        yearSlider.continuous = true
+        yearSlider.value = 2015
+        yearSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+        monthSlider.minimumValue = 1
+        monthSlider.maximumValue = 12
+        monthSlider.continuous = true
+        monthSlider.value = 1
+        monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+        daySlider.minimumValue = 1
+        daySlider.maximumValue = 31
+        daySlider.continuous = true
+        daySlider.value = 1
+        daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+    }
+    
+    func valueChanged(sender: UISlider) {
+        let value = round(sender.value)
+        sender.setValue(value, animated: false)
     }
     
     func abbreviateName(name: String) -> String {

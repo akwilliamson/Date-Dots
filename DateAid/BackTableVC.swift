@@ -11,28 +11,35 @@ import CoreData
 
 class BackTableVC: UITableViewController {
     
-    var managedContext = CoreDataStack().managedObjectContext
-    var tableArray = [String]()
-    // Colors
-    let   aquaColor = UIColor(red:  18/255.0, green: 151/255.0, blue: 147/255.0, alpha: 1)
-    let    redColor = UIColor(red: 239/255.0, green: 101/255.0, blue:  85/255.0, alpha: 1)
-    let   greyColor = UIColor(red:  80/255.0, green:  80/255.0, blue:  80/255.0, alpha: 1)
+// MARK: PROPERTIES
+    
+    let managedContext = CoreDataStack().managedObjectContext
+    let tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
+    
+// MARK: VIEW SETUP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        self.revealViewController().frontViewController.view.userInteractionEnabled = false
-        self.revealViewController().view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        configureTopViewInteraction(allowed: false)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(true)
-        self.revealViewController().frontViewController.view.userInteractionEnabled = true
+        configureTopViewInteraction(allowed: true)
     }
+    
+// MARK: MEMORY
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("didReceiveMemoryWarning in BackTableVC")
+    }
+    
+// MARK: TABLE VIEW
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableArray.count
@@ -47,11 +54,11 @@ class BackTableVC: UITableViewController {
         case "All":
             label.textColor = UIColor.blackColor()
         case "Birthdays":
-            label.textColor = aquaColor
+            label.textColor = UIColor.birthdayColor()
         case "Anniversaries":
-            label.textColor = redColor
-        default: // Holidays
-            label.textColor = greyColor
+            label.textColor = UIColor.anniversaryColor()
+        default:
+            label.textColor = UIColor.holidayColor()
         }
         return navigationCell
     }
@@ -68,13 +75,24 @@ class BackTableVC: UITableViewController {
             destinationVC.datesPredicate = nil
         case 1:
             destinationVC.menuIndexPath = 1
-            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "birthday")
+            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "birthday")
         case 2:
             destinationVC.menuIndexPath = 2
-            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "anniversary")
+            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "anniversary")
         default: // indexPath!.row = 3
             destinationVC.menuIndexPath = 3
-            destinationVC.datesPredicate = NSPredicate(format: "type == %@", "holiday")
+            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "holiday")
         }
+    }
+    
+// MARK: HELPERS
+    
+    func configureTopViewInteraction(allowed allowed: Bool) {
+        if allowed {
+            self.revealViewController().frontViewController.view.userInteractionEnabled = true
+        } else {
+            self.revealViewController().frontViewController.view.userInteractionEnabled = false
+        }
+        self.revealViewController().view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
 }

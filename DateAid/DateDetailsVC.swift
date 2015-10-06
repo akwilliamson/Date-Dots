@@ -10,32 +10,71 @@ import UIKit
 import CoreData
 
 class DateDetailsVC: UIViewController {
-
-    var date: Date?
-    let dateFormatter = NSDateFormatter()
     
-    @IBOutlet weak var fullNameLabel: UILabel!
+// MARK: PROPERTIES
+
+    var date: Date!
+
+// MARK: OUTLETS
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var daysUntilLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
+// MARK: VIEW SETUP
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let dateValue = date!.date
-        dateFormatter.dateFormat = "dd MMM"
-        fullNameLabel.text = date!.name
-        dateLabel.text = "\(dateFormatter.stringFromDate(dateValue))"
-        daysUntilLabel.text = "\(dateValue.daysBetween()) days away"
-        ageLabel.text = "turning \(dateValue.ageTurning())"
+        configureNavBar()
+        configureFormattedDate()
+        configureDaysUntil()
+        configureAge()
     }
+    
+// MARK: MEMORY
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("didReceiveMemoryWarning in DateDetailsVC")
+    }
+    
+// MARK: ACTIONS
     
     @IBAction func editDate(sender: AnyObject) {
     }
     
+// MARK: SEGUE
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let addDateVC = segue.destinationViewController as! AddDateViewController
-        addDateVC.type = date!.type
-        addDateVC.name = date!.name
-        addDateVC.date = date!.date
+        let addDateVC = segue.destinationViewController as! AddDateVC
+        addDateVC.type = date.type
+        addDateVC.name = date.name
+        addDateVC.date = date.date
+    }
+    
+// MARK: HELPERS
+    
+    func configureNavBar() {
+        self.title = abbreviateName(date.name)
+    }
+    
+    func configureFormattedDate() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        let dateString = dateFormatter.stringFromDate(date.date)
+        dateLabel.text = dateString
+    }
+    
+    func configureDaysUntil() {
+        let numberOfDays = date.date.daysBetween()
+        daysUntilLabel.text = "\(numberOfDays) days away"
+    }
+    
+    func configureAge() {
+        ageLabel.text = "turning \(date.date.ageTurning())"
+    }
+    
+    func abbreviateName(name: String) -> String {
+        return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
     }
 }

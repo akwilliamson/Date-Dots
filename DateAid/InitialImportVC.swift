@@ -27,6 +27,13 @@ class InitialImportVC: UIViewController {
         setButtonStyles()
     }
     
+// MARK: MEMORY
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("didReceiveMemoryWarning in InitialImportVC")
+    }
+    
     func setButtonStyles() {
         importButton.titleLabel?.textAlignment = .Center
         importButton.layer.cornerRadius = 75

@@ -13,27 +13,27 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let creamColor = UIColor(red: 255/255.0, green: 245/255.0, blue: 185/255.0, alpha: 1)
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let tabBarAppearance = UITabBarItem.appearance()
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Show the import contacts view on first launch only
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let rootController1 = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
-        rootController1.managedContext = coreDataStack.managedObjectContext
-        let rootController2 = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
-    
-        if NSUserDefaults.standardUserDefaults().objectForKey("seenInitialView") == nil {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "hasLaunchedOnce")
-            if let window = self.window {
-                window.rootViewController = rootController1
-            }
-        } else {
-            if let window = self.window {
-                window.rootViewController = rootController2
+        let initialImportVC = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
+            initialImportVC.managedContext = coreDataStack.managedObjectContext
+        let datesTableVC = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
+        
+        if let window = self.window {
+            if userDefaults.objectForKey("seenInitialView") == nil {
+                userDefaults.setBool(true, forKey: "hasLaunchedOnce")
+                window.rootViewController = initialImportVC
+            } else {
+                window.rootViewController = datesTableVC
             }
         }
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: creamColor], forState:.Normal)
+        tabBarAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.creamColor()], forState:.Normal)
+
         return true
     }
 
