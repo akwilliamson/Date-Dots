@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 window.rootViewController = datesTableVC
             }
         }
-        tabBarAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.creamColor()], forState:.Normal)
+        tabBarAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
 
         return true
     }

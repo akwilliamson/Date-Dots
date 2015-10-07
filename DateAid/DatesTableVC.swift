@@ -148,9 +148,9 @@ class DatesTableVC: UITableViewController {
         formatter.dateFormat = "MMMM d"
         title = formatter.stringFromDate(NSDate())
         let navBar = navigationController?.navigationBar
-        navBar!.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.creamColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
+        navBar!.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
         navBar!.barTintColor = UIColor.birthdayColor()
-        navBar!.tintColor = UIColor.creamColor()
+        navBar!.tintColor = UIColor.whiteColor()
         menuBarButtonItem.target = self.revealViewController()
         menuBarButtonItem.action = Selector("revealToggle:")
     }
@@ -158,10 +158,10 @@ class DatesTableVC: UITableViewController {
     func configureTabBar() {
         let tabBar = tabBarController?.tabBar
         tabBar!.barTintColor = UIColor.birthdayColor()
-        tabBar!.tintColor = UIColor.creamColor()
+        tabBar!.tintColor = UIColor.whiteColor()
         for item in tabBar!.items! {
             if let image = item.image {
-                item.image = image.imageWithColor(UIColor.creamColor()).imageWithRenderingMode(.AlwaysOriginal)
+                item.image = image.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
             }
         }
     }
