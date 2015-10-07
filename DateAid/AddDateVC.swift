@@ -89,13 +89,13 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveButton(sender: AnyObject) {
-        if type != nil {
+        if let type = type {
             let fetchRequest = NSFetchRequest(entityName: "Date")
-            fetchRequest.predicate = NSPredicate(format: "name = %@ AND type = %@", nameField.text!, typeLabel.text!.lowercaseString)
+            fetchRequest.predicate = NSPredicate(format: "name = %@ AND type = %@", nameField.text!, type)
             
             do { let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
                 let managedObject = fetchedResults![0]
-                managedObject.setValue(self.typeLabel.text!, forKey: "type")
+                managedObject.setValue(self.typeLabel.text!.lowercaseString, forKey: "type")
                 managedObject.setValue(self.nameField.text!, forKey: "name")
                 managedObject.setValue(self.abbreviateName(self.nameField.text!), forKey: "abbreviatedName")
                 let editedDate = NSDate(dateString: "\(self.yearLabel.text!)-\(self.monthLabel.text!)-\(self.dayLabel.text!)")
