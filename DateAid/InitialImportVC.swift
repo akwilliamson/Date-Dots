@@ -10,17 +10,21 @@ import UIKit
 import CoreData
 import AddressBook
 import AddressBookUI
-import Contacts
+//import Contacts
 
 class InitialImportVC: UIViewController {
     
-    // Passed through application(_:didFinishLaunchingWithOptions)
+// MARK: PROPERTIES
+    
     var managedContext: NSManagedObjectContext!
-    // Object to interact with contacts in address book
     var addressBook: ABAddressBook!
+    
+// MARK: OUTLETS
     
     @IBOutlet weak var importButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
+    
+// MARK: VIEW SETUP
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +37,8 @@ class InitialImportVC: UIViewController {
         super.didReceiveMemoryWarning()
         print("didReceiveMemoryWarning in InitialImportVC")
     }
-    
-    func setButtonStyles() {
-        importButton.titleLabel?.textAlignment = .Center
-        importButton.layer.cornerRadius = 75
-        skipButton.titleLabel?.textAlignment = .Center
-        skipButton.layer.cornerRadius = 50
-    }
 
-// MARK: - Actions
+// MARK: ACTIONS
     
     @IBAction func syncContacts(sender: AnyObject) {
         getDatesFromContacts()
@@ -49,6 +46,9 @@ class InitialImportVC: UIViewController {
         saveManagedContext()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
+    
+// MARK: HELPERS
+    
     // The main method to extract and save all initial dates
     func getDatesFromContacts() {
         if !determineStatus() { return }
@@ -60,6 +60,7 @@ class InitialImportVC: UIViewController {
             addEntitiesForAddressBookAnniversaries(person)
         }
     }
+    
     /* Passes user's address book to getDatesFromContacts() and allows said function
     to continue, or returns no address book and forces getDatesFromContacts to exit. */
     func determineStatus() -> Bool {
@@ -143,10 +144,9 @@ class InitialImportVC: UIViewController {
     }
     
     func saveManagedContext() {
-        do {
-            try managedContext.save()
-        } catch {
-            // print error
+        do { try managedContext.save()
+        } catch let fetchError as NSError {
+            print(fetchError.localizedDescription)
         }
     }
     
@@ -170,6 +170,14 @@ class InitialImportVC: UIViewController {
             }
         }
     }
+    
+    func setButtonStyles() {
+        importButton.titleLabel?.textAlignment = .Center
+        importButton.layer.cornerRadius = 75
+        skipButton.titleLabel?.textAlignment = .Center
+        skipButton.layer.cornerRadius = 50
+    }
+    
     // Abbreviates an address book name. Ex: Aaron Williamson -> Aaron W.
     func abbreviateName(name: String) -> String {
         return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)

@@ -102,11 +102,8 @@ class DatesTableVC: UITableViewController {
 // MARK: HELPERS
     
     func addGestureRecognizers() {
-        // Check if this line is really necessary
-        view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        let revealController = self.revealViewController()
-        revealController.panGestureRecognizer()
-        revealController.tapGestureRecognizer()
+        revealViewController().panGestureRecognizer()
+        revealViewController().tapGestureRecognizer()
     }
     
     func registerNibCells() {
@@ -147,9 +144,11 @@ class DatesTableVC: UITableViewController {
     }
     
     func configureNavigationBar() {
-        self.title = formatCurrentDateIntoString(NSDate())
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMMM d"
+        title = formatter.stringFromDate(NSDate())
         let navBar = navigationController?.navigationBar
-        navBar!.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.creamColor()]
+        navBar!.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.creamColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
         navBar!.barTintColor = UIColor.birthdayColor()
         navBar!.tintColor = UIColor.creamColor()
         menuBarButtonItem.target = self.revealViewController()
