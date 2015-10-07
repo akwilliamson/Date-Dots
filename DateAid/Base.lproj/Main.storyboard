@@ -215,16 +215,10 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ASValueTrackingSlider">
                                 <rect key="frame" x="18" y="282" width="564" height="31"/>
                                 <connections>
                                     <action selector="monthSlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="e54-pZ-R62"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM">
-                                <rect key="frame" x="18" y="352" width="564" height="31"/>
-                                <connections>
-                                    <action selector="daySlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="XG2-Dg-n0g"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-kg-cmc">
@@ -250,7 +244,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="ASValueTrackingSlider">
                                 <rect key="frame" x="18" y="214" width="564" height="31"/>
                                 <connections>
                                     <action selector="yearSlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="ZpD-VX-QPm"/>
@@ -263,6 +257,12 @@
                                     <action selector="saveButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="5bZ-87-hJl"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ASValueTrackingSlider">
+                                <rect key="frame" x="18" y="352" width="564" height="31"/>
+                                <connections>
+                                    <action selector="daySlider:" destination="i1f-AG-9F2" eventType="valueChanged" id="XG2-Dg-n0g"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -288,13 +288,13 @@
                     </view>
                     <connections>
                         <outlet property="dayLabel" destination="xPn-Eo-PGS" id="oiu-zw-pEi"/>
-                        <outlet property="daySlider" destination="w7i-R0-OwM" id="BgY-wB-Qsf"/>
+                        <outlet property="daySlider" destination="w7i-R0-OwM" id="iKy-Sz-M8K"/>
                         <outlet property="monthLabel" destination="az4-qD-VXJ" id="FL5-DX-CLd"/>
-                        <outlet property="monthSlider" destination="vhw-nm-zBS" id="NNZ-pE-3dn"/>
+                        <outlet property="monthSlider" destination="vhw-nm-zBS" id="H4o-VD-Nem"/>
                         <outlet property="nameField" destination="8DU-k5-J9G" id="gCB-Yk-4S1"/>
                         <outlet property="typeLabel" destination="r2z-xV-SNo" id="Gpf-wd-uAF"/>
                         <outlet property="yearLabel" destination="PaQ-kg-cmc" id="9pJ-Fn-hzh"/>
-                        <outlet property="yearSlider" destination="hYm-pd-QLU" id="VU6-rD-jqm"/>
+                        <outlet property="yearSlider" destination="hYm-pd-QLU" id="uvC-Qd-O9E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -345,6 +345,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z">
                                 <rect key="frame" x="15" y="163" width="528" height="21"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>

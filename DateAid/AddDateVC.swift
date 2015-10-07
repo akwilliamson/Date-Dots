@@ -25,9 +25,9 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var yearSlider: UISlider!
-    @IBOutlet weak var monthSlider: UISlider!
-    @IBOutlet weak var daySlider: UISlider!
+    @IBOutlet weak var yearSlider: ASValueTrackingSlider!
+    @IBOutlet weak var monthSlider: ASValueTrackingSlider!
+    @IBOutlet weak var daySlider: ASValueTrackingSlider!
 
 // MARK: VIEW SETUP
     
@@ -146,19 +146,35 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     }
     
     func setUpSliderValues() {
+        setUpYearSlider()
+        setUpMonthSlider()
+        setUpDaySlider()
+    }
+    
+    func setUpYearSlider() {
         yearSlider.minimumValue = 1900
         yearSlider.maximumValue = 2015
-        yearSlider.continuous = true
+        yearSlider.popUpViewCornerRadius = 12.0
+        yearSlider.setMaxFractionDigitsDisplayed(0)
         yearSlider.value = 2015
+        yearSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
         yearSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+    }
+    
+    func setUpMonthSlider() {
         monthSlider.minimumValue = 1
         monthSlider.maximumValue = 12
-        monthSlider.continuous = true
+        monthSlider.popUpViewCornerRadius = 12.0
+        monthSlider.setMaxFractionDigitsDisplayed(0)
         monthSlider.value = 1
         monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+    }
+    
+    func setUpDaySlider() {
         daySlider.minimumValue = 1
         daySlider.maximumValue = 31
-        daySlider.continuous = true
+        daySlider.popUpViewCornerRadius = 12.0
+        daySlider.setMaxFractionDigitsDisplayed(0)
         daySlider.value = 1
         daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
     }
