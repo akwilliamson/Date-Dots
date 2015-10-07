@@ -187,7 +187,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         slider.textColor = UIColor.whiteColor()
         switch type! {
         case "birthday":
-            slider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+            slider.setSmallImage(UIImage(named: "birthday-button.png")!)
             slider.popUpViewColor = UIColor.birthdayColor()
         case "anniversary":
             slider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)

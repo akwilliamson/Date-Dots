@@ -10,10 +10,19 @@ import Foundation
 
 class DateSlider: ASValueTrackingSlider {
 
-    override func thumbRectForBounds(bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+    func setSmallImage(image: UIImage) {
+        let size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(0.7, 0.7))
+        let hasAlpha = false
+        let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         
-        let smallerBounds = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width-15, height: bounds.height-15)
+        UIGraphicsBeginImageContextWithOptions(size, hasAlpha, scale)
         
-        return super.thumbRectForBounds(smallerBounds, trackRect: rect, value: value)
+        image.drawInRect(CGRect(origin: CGPointZero, size: size))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        self.setThumbImage(scaledImage, forState: .Normal)
     }
+    
 }
