@@ -50,6 +50,7 @@ class DateDetailsVC: UIViewController {
         addDateVC.type = date.type
         addDateVC.name = date.name
         addDateVC.date = date.date
+        addDateVC.editingDate = true
     }
     
 // MARK: HELPERS

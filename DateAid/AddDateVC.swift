@@ -17,14 +17,17 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     var type: String?
     var name: String?
     var date: NSDate?
+    var editingDate: Bool? // To change view's title
     
 // MARK: OUTLETS
 
-    @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var birthdayButton: UIButton!
+    @IBOutlet weak var anniversaryButton: UIButton!
+    @IBOutlet weak var holidayButton: UIButton!
     @IBOutlet weak var yearSlider: ASValueTrackingSlider!
     @IBOutlet weak var monthSlider: ASValueTrackingSlider!
     @IBOutlet weak var daySlider: ASValueTrackingSlider!
@@ -33,6 +36,10 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkType()
+        setTitle(editingDate)
+        addBarButtonItem()
+        configureTypeButtons()
         setUpSliderValues()
         populateEditableValues()
         setDelegates()
@@ -65,37 +72,34 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func birthdayButton(sender: AnyObject) {
-        typeLabel.text = "Birthday"
+        type = "birthday"
+        yearSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+        monthSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+        daySlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
     }
     
     @IBAction func anniversaryButton(sender: AnyObject) {
-        typeLabel.text = "Anniversary"
+        type = "anniversary"
+        yearSlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+        monthSlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+        daySlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
     }
     
     @IBAction func holidayButton(sender: AnyObject) {
-        typeLabel.text = "Holiday"
+        type = "holiday"
+        yearSlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+        monthSlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+        daySlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
     }
     
-    @IBAction func yearSlider(sender: UISlider) {
-        yearLabel.text = String(Int(round(sender.value)))
-    }
-    
-    @IBAction func monthSlider(sender: UISlider) {
-        monthLabel.text = String(Int(round(sender.value)))
-    }
-    
-    @IBAction func daySlider(sender: UISlider) {
-        dayLabel.text = String(Int(round(sender.value)))
-    }
-    
-    @IBAction func saveButton(sender: AnyObject) {
-        if let type = type {
+    func saveButton(sender: UIBarButtonItem) {
+        if name != nil { // if user is editing a date
             let fetchRequest = NSFetchRequest(entityName: "Date")
-            fetchRequest.predicate = NSPredicate(format: "name = %@ AND type = %@", nameField.text!, type)
+            fetchRequest.predicate = NSPredicate(format: "name = %@ AND type = %@", nameField.text!, type!)
             
             do { let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
                 let managedObject = fetchedResults![0]
-                managedObject.setValue(self.typeLabel.text!.lowercaseString, forKey: "type")
+                managedObject.setValue(self.type, forKey: "type")
                 managedObject.setValue(self.nameField.text!, forKey: "name")
                 managedObject.setValue(self.abbreviateName(self.nameField.text!), forKey: "abbreviatedName")
                 let editedDate = NSDate(dateString: "\(self.yearLabel.text!)-\(self.monthLabel.text!)-\(self.dayLabel.text!)")
@@ -106,10 +110,10 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
             } catch let fetchError as NSError {
                 print(fetchError.localizedDescription)
             }
-        } else {
+        } else { // user is creating a new date
             let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
             let date = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            date.type = typeLabel.text!.lowercaseString
+            date.type = type!
             date.name = nameField.text!
             date.abbreviatedName = abbreviateName(nameField.text!)
             date.date = NSDate(dateString: "\(yearLabel.text!)-\(monthLabel.text!)-\(dayLabel.text!)")
@@ -124,24 +128,46 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     
 // MARK: HELPERS
     
+    func addBarButtonItem() {
+        let saveButton = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "saveButton:")
+        self.navigationItem.setRightBarButtonItem(saveButton, animated: false)
+    }
+    
     func setDelegates() {
         nameField.delegate = self
     }
     
-    func populateEditableValues() {
-        if let typeToEdit = type {
-            typeLabel.text = typeToEdit.capitalizedString
+    func checkType() {
+        if type == nil {
+            type = "birthday"
         }
+    }
+    
+    func setTitle(editing: Bool?) {
+        if editingDate == true {
+            title = "Edit"
+        } else {
+            title = "Add"
+        }
+    }
+    
+    func configureTypeButtons() {
+        birthdayButton.layer.cornerRadius = 20
+        anniversaryButton.layer.cornerRadius = 20
+        holidayButton.layer.cornerRadius = 20
+    }
+    
+    func populateEditableValues() {
+//        if let type = type {
+//            show which type is currently selected
+//        }
         if let nameToEdit = name {
             nameField.text = nameToEdit
         }
         if let dateToEdit = date {
             yearSlider.value = Float(dateToEdit.getYear())
-            yearLabel.text = String(Int(round(yearSlider.value)))
             monthSlider.value = Float(dateToEdit.getMonth())
-            monthLabel.text = String(Int(round(monthSlider.value)))
             daySlider.value = Float(dateToEdit.getDay())
-            dayLabel.text = String(Int(round(daySlider.value)))
         }
     }
     
@@ -151,32 +177,45 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         setUpDaySlider()
     }
     
+    func setUpGenericSlider(slider: ASValueTrackingSlider) {
+        slider.popUpViewCornerRadius = 10
+        slider.popUpViewArrowLength = 7
+        slider.setMaxFractionDigitsDisplayed(0)
+        slider.font = UIFont(name: "AvenirNext-Bold", size: 15)
+        slider.textColor = UIColor.whiteColor()
+        switch type! {
+        case "birthday":
+            slider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+            slider.popUpViewColor = UIColor.birthdayColor()
+        case "anniversary":
+            slider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+            slider.popUpViewColor = UIColor.anniversaryColor()
+        default:
+            slider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+            slider.popUpViewColor = UIColor.holidayColor()
+        }
+        slider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+    }
+    
     func setUpYearSlider() {
         yearSlider.minimumValue = 1900
         yearSlider.maximumValue = 2015
-        yearSlider.popUpViewCornerRadius = 12.0
-        yearSlider.setMaxFractionDigitsDisplayed(0)
         yearSlider.value = 2015
-        yearSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
-        yearSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+        setUpGenericSlider(yearSlider)
     }
     
     func setUpMonthSlider() {
         monthSlider.minimumValue = 1
         monthSlider.maximumValue = 12
-        monthSlider.popUpViewCornerRadius = 12.0
-        monthSlider.setMaxFractionDigitsDisplayed(0)
         monthSlider.value = 1
-        monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+        setUpGenericSlider(monthSlider)
     }
     
     func setUpDaySlider() {
         daySlider.minimumValue = 1
         daySlider.maximumValue = 31
-        daySlider.popUpViewCornerRadius = 12.0
-        daySlider.setMaxFractionDigitsDisplayed(0)
         daySlider.value = 1
-        daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+        setUpGenericSlider(daySlider)
     }
     
     func valueChanged(sender: UISlider) {
