@@ -28,9 +28,9 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var birthdayButton: UIButton!
     @IBOutlet weak var anniversaryButton: UIButton!
     @IBOutlet weak var holidayButton: UIButton!
-    @IBOutlet weak var yearSlider: ASValueTrackingSlider!
-    @IBOutlet weak var monthSlider: ASValueTrackingSlider!
-    @IBOutlet weak var daySlider: ASValueTrackingSlider!
+    @IBOutlet weak var yearSlider: DateSlider!
+    @IBOutlet weak var monthSlider: DateSlider!
+    @IBOutlet weak var daySlider: DateSlider!
 
 // MARK: VIEW SETUP
     
@@ -74,22 +74,31 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     @IBAction func birthdayButton(sender: AnyObject) {
         type = "birthday"
         yearSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+        yearSlider.minimumTrackTintColor = UIColor.birthdayColor()
         monthSlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+        monthSlider.minimumTrackTintColor = UIColor.birthdayColor()
         daySlider.setThumbImage(UIImage(named: "birthday-button.png"), forState: .Normal)
+        daySlider.minimumTrackTintColor = UIColor.birthdayColor()
     }
     
     @IBAction func anniversaryButton(sender: AnyObject) {
         type = "anniversary"
         yearSlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+        yearSlider.minimumTrackTintColor = UIColor.anniversaryColor()
         monthSlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+        monthSlider.minimumTrackTintColor = UIColor.anniversaryColor()
         daySlider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
+        daySlider.minimumTrackTintColor = UIColor.anniversaryColor()
     }
     
     @IBAction func holidayButton(sender: AnyObject) {
         type = "holiday"
         yearSlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+        yearSlider.minimumTrackTintColor = UIColor.holidayColor()
         monthSlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+        monthSlider.minimumTrackTintColor = UIColor.holidayColor()
         daySlider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
+        daySlider.minimumTrackTintColor = UIColor.holidayColor()
     }
     
     func saveButton(sender: UIBarButtonItem) {
@@ -177,7 +186,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         setUpDaySlider()
     }
     
-    func setUpGenericSlider(slider: ASValueTrackingSlider) {
+    func setUpGenericSlider(slider: DateSlider) {
         slider.popUpViewCornerRadius = 10
         slider.popUpViewArrowLength = 7
         slider.setMaxFractionDigitsDisplayed(0)

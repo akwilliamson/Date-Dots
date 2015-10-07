@@ -23,6 +23,6 @@ extension UIColor {
     }
     
     class func holidayColor() -> UIColor {
-        return UIColor(red:  80/255.0, green:  80/255.0, blue:  80/255.0, alpha: 1)
+        return UIColor(red:  250/255.0, green:  190/255.0, blue:  50/255.0, alpha: 1)
     }
 }

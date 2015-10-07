@@ -218,7 +218,7 @@
                                     <action selector="anniversaryButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="nwb-o1-2ms"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ASValueTrackingSlider">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="18" y="274" width="564" height="31"/>
                             </slider>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
@@ -231,15 +231,15 @@
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="ASValueTrackingSlider">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="18" y="214" width="564" height="31"/>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ASValueTrackingSlider">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="18" y="334" width="564" height="31"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv">
                                 <rect key="frame" x="328" y="137" width="40" height="40"/>
-                                <color key="backgroundColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.74509803921568629" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1bG-Ky-xac"/>
                                     <constraint firstAttribute="width" constant="40" id="Kyn-ty-B4j"/>
@@ -262,13 +262,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="8DU-k5-J9G" secondAttribute="trailing" id="FtL-O6-909"/>
                             <constraint firstItem="ePo-6G-7uF" firstAttribute="leading" secondItem="u1Z-l5-H0G" secondAttribute="trailing" constant="8" id="G3X-6p-zxw"/>
                             <constraint firstAttribute="leadingMargin" secondItem="w7i-R0-OwM" secondAttribute="leading" id="HTq-K6-zzs"/>
-                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="CAy-wP-cL3" secondAttribute="bottom" constant="150" id="Ho7-4S-kJ9"/>
                             <constraint firstItem="rm9-PL-aiv" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="JN1-Zk-97d"/>
                             <constraint firstItem="ePo-6G-7uF" firstAttribute="centerX" secondItem="a12-fm-HpS" secondAttribute="centerX" id="LTD-ns-7ZL"/>
                             <constraint firstAttribute="leadingMargin" secondItem="8DU-k5-J9G" secondAttribute="leading" id="NtX-zl-l3I"/>
                             <constraint firstItem="w7i-R0-OwM" firstAttribute="top" secondItem="vhw-nm-zBS" secondAttribute="bottom" constant="30" id="Omt-5x-2IS"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vhw-nm-zBS" secondAttribute="leading" id="RFp-Vy-qCg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hYm-pd-QLU" secondAttribute="trailing" id="W7H-OG-lKq"/>
+                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="ePo-6G-7uF" secondAttribute="bottom" constant="37" id="WlM-5P-yJH"/>
                             <constraint firstAttribute="leadingMargin" secondItem="hYm-pd-QLU" secondAttribute="leading" id="izA-rg-Z3a"/>
                             <constraint firstItem="u1Z-l5-H0G" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="w49-52-xDB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7i-R0-OwM" secondAttribute="trailing" id="wJq-iM-d6g"/>
