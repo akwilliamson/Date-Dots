@@ -11,6 +11,9 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Bold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -197,6 +200,7 @@
                                     <constraint firstAttribute="width" constant="40" id="i5F-dR-CGl"/>
                                     <constraint firstAttribute="height" constant="40" id="zhf-gC-qPZ"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="B">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -211,6 +215,7 @@
                                     <constraint firstAttribute="width" constant="40" id="m7M-OE-FCb"/>
                                     <constraint firstAttribute="height" constant="40" id="yGy-8Z-qD5"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="A">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -218,8 +223,8 @@
                                     <action selector="anniversaryButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="nwb-o1-2ms"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="18" y="274" width="564" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ASValueTrackingSlider">
+                                <rect key="frame" x="18" y="271" width="564" height="31"/>
                             </slider>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="20" y="84" width="560" height="45"/>
@@ -231,11 +236,11 @@
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="18" y="214" width="564" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="ASValueTrackingSlider">
+                                <rect key="frame" x="18" y="211" width="564" height="31"/>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="DateSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="18" y="334" width="564" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ASValueTrackingSlider">
+                                <rect key="frame" x="18" y="331" width="564" height="31"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv">
                                 <rect key="frame" x="328" y="137" width="40" height="40"/>
@@ -244,6 +249,7 @@
                                     <constraint firstAttribute="height" constant="40" id="1bG-Ky-xac"/>
                                     <constraint firstAttribute="width" constant="40" id="Kyn-ty-B4j"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="H">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -268,7 +274,7 @@
                             <constraint firstItem="w7i-R0-OwM" firstAttribute="top" secondItem="vhw-nm-zBS" secondAttribute="bottom" constant="30" id="Omt-5x-2IS"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vhw-nm-zBS" secondAttribute="leading" id="RFp-Vy-qCg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hYm-pd-QLU" secondAttribute="trailing" id="W7H-OG-lKq"/>
-                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="ePo-6G-7uF" secondAttribute="bottom" constant="37" id="WlM-5P-yJH"/>
+                            <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="ePo-6G-7uF" secondAttribute="bottom" constant="34" id="WlM-5P-yJH"/>
                             <constraint firstAttribute="leadingMargin" secondItem="hYm-pd-QLU" secondAttribute="leading" id="izA-rg-Z3a"/>
                             <constraint firstItem="u1Z-l5-H0G" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="w49-52-xDB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7i-R0-OwM" secondAttribute="trailing" id="wJq-iM-d6g"/>

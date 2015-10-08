@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddDateVC: UIViewController, UITextFieldDelegate {
+class AddDateVC: UIViewController, UITextFieldDelegate, ASValueTrackingSliderDataSource {
     
 // MARK: PROPERTIES
     
@@ -18,6 +18,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     var name: String?
     var date: NSDate?
     var editingDate: Bool? // To change view's title
+    let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     
 // MARK: OUTLETS
 
@@ -28,9 +29,9 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var birthdayButton: UIButton!
     @IBOutlet weak var anniversaryButton: UIButton!
     @IBOutlet weak var holidayButton: UIButton!
-    @IBOutlet weak var yearSlider: DateSlider!
-    @IBOutlet weak var monthSlider: DateSlider!
-    @IBOutlet weak var daySlider: DateSlider!
+    @IBOutlet weak var yearSlider: ASValueTrackingSlider!
+    @IBOutlet weak var monthSlider: ASValueTrackingSlider!
+    @IBOutlet weak var daySlider: ASValueTrackingSlider!
 
 // MARK: VIEW SETUP
     
@@ -71,9 +72,9 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func changeSliderStyles(type: String, color: UIColor, sliders: [DateSlider]) {
+    func changeSliderStyles(type: String, color: UIColor, sliders: [ASValueTrackingSlider]) {
         for slider in sliders {
-            slider.setThumbImage(UIImage(named: "\(type)-button.png"), forState: .Normal)
+            slider.thumbTintColor = color
             slider.minimumTrackTintColor = color
             slider.popUpViewColor = color
         }
@@ -128,6 +129,20 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    func slider(slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
+        if slider == monthSlider {
+            return months[Int(value)-1]
+        } else if slider == yearSlider {
+            if value % 100 < 10 {
+                return "'0\(Int(value)%100)"
+            } else {
+                return "'\(Int(value)%100)"
+            }
+        } else {
+            return "\(Int(value))"
+        }
+    }
+    
 // MARK: HELPERS
     
     func addBarButtonItem() {
@@ -137,6 +152,9 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     
     func setDelegates() {
         nameField.delegate = self
+        yearSlider.dataSource = self
+        monthSlider.dataSource = self
+        daySlider.dataSource = self
     }
     
     func checkType() {
@@ -160,9 +178,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
     }
     
     func populateEditableValues() {
-//        if let type = type {
-//            show which type is currently selected
-//        }
+
         if let nameToEdit = name {
             nameField.text = nameToEdit
         }
@@ -179,24 +195,65 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         setUpDaySlider()
     }
     
-    func setUpGenericSlider(slider: DateSlider) {
-        slider.popUpViewCornerRadius = 10
-        slider.popUpViewArrowLength = 7
+    func setUpGenericSlider(slider: ASValueTrackingSlider) {
+        slider.addTarget(self, action: "sliderTouchDown:", forControlEvents: .TouchDown)
+        slider.addTarget(self, action: "sliderTouchUp:", forControlEvents: .TouchUpInside)
+        slider.popUpViewCornerRadius = 8
+        slider.popUpViewArrowLength = 4
         slider.setMaxFractionDigitsDisplayed(0)
         slider.font = UIFont(name: "AvenirNext-Bold", size: 15)
         slider.textColor = UIColor.whiteColor()
         switch type! {
         case "birthday":
-            slider.setSmallImage(UIImage(named: "birthday-button.png")!)
             slider.popUpViewColor = UIColor.birthdayColor()
+            slider.thumbTintColor = UIColor.birthdayColor()
         case "anniversary":
-            slider.setThumbImage(UIImage(named: "anniversary-button.png"), forState: .Normal)
             slider.popUpViewColor = UIColor.anniversaryColor()
+            slider.thumbTintColor = UIColor.anniversaryColor()
         default:
-            slider.setThumbImage(UIImage(named: "holiday-button.png"), forState: .Normal)
             slider.popUpViewColor = UIColor.holidayColor()
+            slider.thumbTintColor = UIColor.holidayColor()
         }
-        slider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
+    }
+    
+    func sliderTouchDown(sender: ASValueTrackingSlider) {
+        
+        let handleView = sender.subviews.last
+        let label = handleView?.viewWithTag(30) as? UILabel
+        if label != nil {
+            label!.text = ""
+        }
+    }
+    
+    func sliderTouchUp(sender: ASValueTrackingSlider) {
+        
+        let handleView = sender.subviews.last
+        var label = handleView?.viewWithTag(30) as? UILabel
+        
+        if label == nil {
+            label = UILabel(frame: handleView!.bounds)
+            label!.tag = 30
+            label!.backgroundColor = UIColor.clearColor()
+            label!.textColor = UIColor.whiteColor()
+            label!.textAlignment = .Center
+            handleView?.addSubview(label!)
+        }
+        var string: String?
+        switch sender {
+        case yearSlider:
+            if sender.value % 100 < 10 {
+                string = "'0\(Int(sender.value)%100)"
+            } else {
+                string = "'\(Int(sender.value)%100)"
+            }
+            label!.text = string
+        case daySlider:
+            string = "\(Int(sender.value))"
+            label!.text = string
+        default:
+            string = months[Int(sender.value)-1]
+            label!.text = string
+        }
     }
     
     func setUpYearSlider() {
@@ -210,6 +267,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         monthSlider.minimumValue = 1
         monthSlider.maximumValue = 12
         monthSlider.value = 1
+        monthSlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
         setUpGenericSlider(monthSlider)
     }
     
@@ -217,6 +275,7 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         daySlider.minimumValue = 1
         daySlider.maximumValue = 31
         daySlider.value = 1
+        daySlider.addTarget(self, action: Selector("valueChanged:"), forControlEvents: .ValueChanged)
         setUpGenericSlider(daySlider)
     }
     
@@ -240,3 +299,5 @@ class AddDateVC: UIViewController, UITextFieldDelegate {
         do { try managedContext.save() } catch {}
     }
 }
+
+

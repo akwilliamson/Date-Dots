@@ -30,7 +30,6 @@
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; settings = {ASSET_TAGS = (); }; };
-		97DC1EC71BC5969300FEE6BE /* DateSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC61BC5969300FEE6BE /* DateSlider.swift */; settings = {ASSET_TAGS = (); }; };
 		97DC58861B3E155A008FA222 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58851B3E155A008FA222 /* Date.swift */; };
 		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; settings = {ASSET_TAGS = (); }; };
@@ -77,7 +76,6 @@
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
-		97DC1EC61BC5969300FEE6BE /* DateSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSlider.swift; sourceTree = "<group>"; };
 		97DC58851B3E155A008FA222 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Date.swift; path = ../Date.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 			isa = PBXGroup;
 			children = (
 				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
-				97DC1EC61BC5969300FEE6BE /* DateSlider.swift */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -399,7 +396,6 @@
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
-				97DC1EC71BC5969300FEE6BE /* DateSlider.swift in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
