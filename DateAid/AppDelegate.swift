@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        application.setStatusBarStyle(.LightContent, animated: false)
         // Show the import contacts view on first launch only
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initialImportVC = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
