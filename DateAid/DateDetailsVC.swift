@@ -13,6 +13,7 @@ class DateDetailsVC: UIViewController {
     
 // MARK: PROPERTIES
 
+    var managedContext: NSManagedObjectContext?
     var date: Date!
 
 // MARK: OUTLETS
@@ -31,11 +32,24 @@ class DateDetailsVC: UIViewController {
         configureAge()
     }
     
-// MARK: MEMORY
+    func configureNavBar() {
+        self.title = date.name!.abbreviateName()
+    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("didReceiveMemoryWarning in DateDetailsVC")
+    func configureFormattedDate() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        let dateString = dateFormatter.stringFromDate(date.date!)
+        dateLabel.text = dateString
+    }
+    
+    func configureDaysUntil() {
+        let numberOfDays = date.date!.daysBetween()
+        daysUntilLabel.text = "\(numberOfDays) days away"
+    }
+    
+    func configureAge() {
+        ageLabel.text = "turning \(date.date!.ageTurning())"
     }
     
 // MARK: ACTIONS
@@ -47,35 +61,7 @@ class DateDetailsVC: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let addDateVC = segue.destinationViewController as! AddDateVC
-        addDateVC.type = date.type
-        addDateVC.name = date.name
-        addDateVC.date = date.date
-        addDateVC.editingDate = true
-    }
-    
-// MARK: HELPERS
-    
-    func configureNavBar() {
-        self.title = abbreviateName(date.name)
-    }
-    
-    func configureFormattedDate() {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd MMM"
-        let dateString = dateFormatter.stringFromDate(date.date)
-        dateLabel.text = dateString
-    }
-    
-    func configureDaysUntil() {
-        let numberOfDays = date.date.daysBetween()
-        daysUntilLabel.text = "\(numberOfDays) days away"
-    }
-    
-    func configureAge() {
-        ageLabel.text = "turning \(date.date.ageTurning())"
-    }
-    
-    func abbreviateName(name: String) -> String {
-        return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
+        addDateVC.isBeingEdited = true
+        addDateVC.dateToSave = date
     }
 }

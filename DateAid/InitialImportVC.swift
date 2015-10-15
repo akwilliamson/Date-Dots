@@ -16,7 +16,7 @@ class InitialImportVC: UIViewController {
     
 // MARK: PROPERTIES
     
-    var managedContext: NSManagedObjectContext!
+    var managedContext: NSManagedObjectContext?
     var addressBook: ABAddressBook!
     
 // MARK: OUTLETS
@@ -29,13 +29,6 @@ class InitialImportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setButtonStyles()
-    }
-    
-// MARK: MEMORY
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("didReceiveMemoryWarning in InitialImportVC")
     }
 
 // MARK: ACTIONS
@@ -103,18 +96,15 @@ class InitialImportVC: UIViewController {
     func addEntitiesForAddressBookBirthdays(person: AnyObject) {
         let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
         if birthdayProperty != nil {
-            
-            let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-            let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
             let actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
-            let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-            let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = formatString
+            
+            let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+            let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
             
             birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
-            birthday.abbreviatedName = abbreviateName(birthday.name)
+            birthday.abbreviatedName = birthday.name!.abbreviateName()
             birthday.date = actualDate
-            birthday.equalizedDate = dateFormatter.stringFromDate(actualDate)
+            birthday.equalizedDate = actualDate.formatCurrentDateIntoString()
             birthday.type = "birthday"
         }
     }
@@ -126,25 +116,22 @@ class InitialImportVC: UIViewController {
             let otherLabel = kABPersonAnniversaryLabel as String
             
             if anniversaryLabel == otherLabel {
-                
-                let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-                let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
                 let actualDate = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
-                let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-                let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = formatString
+                
+                let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
                 
                 anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
-                anniversary.abbreviatedName = abbreviateName(anniversary.name)
+                anniversary.abbreviatedName = anniversary.name!.abbreviateName()
                 anniversary.date = actualDate
-                anniversary.equalizedDate = dateFormatter.stringFromDate(actualDate)
+                anniversary.equalizedDate = actualDate.formatCurrentDateIntoString()
                 anniversary.type = "anniversary"
             }
         }
     }
     
     func saveManagedContext() {
-        do { try managedContext.save()
+        do { try managedContext!.save()
         } catch let fetchError as NSError {
             print(fetchError.localizedDescription)
         }
@@ -154,18 +141,15 @@ class InitialImportVC: UIViewController {
         if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
             let holidaysDictionary = NSDictionary(contentsOfFile: path)!
             for (holidayName, holidayDate) in holidaysDictionary {
-                
-                let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
-                let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
                 let actualDate = holidayDate as! NSDate
-                let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-                let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = formatString
                 
-                holiday.name = holidayName as! String
-                holiday.abbreviatedName = holidayName as! String
+                let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
+                
+                holiday.name = holidayName as? String
+                holiday.abbreviatedName = holidayName as? String
                 holiday.date = actualDate
-                holiday.equalizedDate = dateFormatter.stringFromDate(actualDate)
+                holiday.equalizedDate = actualDate.formatCurrentDateIntoString()
                 holiday.type = "holiday"
             }
         }
@@ -176,11 +160,6 @@ class InitialImportVC: UIViewController {
         importButton.layer.cornerRadius = 75
         skipButton.titleLabel?.textAlignment = .Center
         skipButton.layer.cornerRadius = 50
-    }
-    
-    // Abbreviates an address book name. Ex: Aaron Williamson -> Aaron W.
-    func abbreviateName(name: String) -> String {
-        return name.containsString(" ") ? name[0...((name as NSString).rangeOfString(" ").location + 1)] : (name as String)
     }
 }
 

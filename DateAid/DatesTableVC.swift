@@ -15,7 +15,7 @@ class DatesTableVC: UITableViewController {
     
     var fetchedResultsController: NSFetchedResultsController?
     var fetchedResults = [Date]()
-    let managedContext = CoreDataStack().managedObjectContext
+    var managedContext = CoreDataStack().managedObjectContext
     var datesPredicate: NSPredicate?
     var currentDateString: String?
     var menuIndexPath: Int?
@@ -37,56 +37,9 @@ class DatesTableVC: UITableViewController {
         configureTabBar()
     }
     
-// MARK: MEMORY
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("didReceiveMemoryWarning in DatesTableVC")
-    }
-
-// MARK: TABLE VIEW
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController!.sections![section] as NSFetchedResultsSectionInfo
-        return sectionInfo.numberOfObjects
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
-        
-        let date = fetchedResults[indexPath.row]
-        dateCell.name = date.abbreviatedName
-        let dayTimePeriodFormatter = NSDateFormatter()
-        dayTimePeriodFormatter.dateFormat = "dd MMM"
-        let stringDate = dayTimePeriodFormatter.stringFromDate(date.date)
-        dateCell.date = stringDate
-
-        if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
-            switch date.type {
-            case "birthday":
-                dateCell.nameLabel.textColor = UIColor.birthdayColor()
-            case "anniversary":
-                dateCell.nameLabel.textColor = UIColor.anniversaryColor()
-            default: // "holiday":
-                dateCell.nameLabel.textColor = UIColor.holidayColor()
-            }
-            
-        } else if menuIndexPath! == 1 { // Show birthday cells
-            dateCell.nameLabel.textColor = UIColor.birthdayColor()
-        } else if menuIndexPath! == 2 { // Show anniversary cells
-            dateCell.nameLabel.textColor = UIColor.anniversaryColor()
-        } else {                        // Show holiday cells
-            dateCell.nameLabel.textColor = UIColor.holidayColor()
-        }
-        return dateCell
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("ShowDateDetails", sender: self)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
     }
     
 // MARK: SEGUE
@@ -96,6 +49,12 @@ class DatesTableVC: UITableViewController {
         if segue.identifier == "ShowDateDetails" {
             let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
             dateDetailsVC.date = fetchedResults[indexPath!.row] as Date
+            dateDetailsVC.managedContext = managedContext
+        }
+        if segue.identifier == "CreateNewDate" {
+            let addDateVC = segue.destinationViewController as! AddDateVC
+            addDateVC.isBeingEdited = false
+            addDateVC.managedContext = managedContext
         }
     }
     
@@ -173,3 +132,56 @@ class DatesTableVC: UITableViewController {
         return dateFormatter.stringFromDate(NSDate())
     }
 }
+
+extension DatesTableVC /* UITableViewDataSource */ {
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = fetchedResultsController!.sections![section] as NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
+        
+        let date = fetchedResults[indexPath.row]
+        dateCell.name = date.abbreviatedName!
+        let dayTimePeriodFormatter = NSDateFormatter()
+        dayTimePeriodFormatter.dateFormat = "dd MMM"
+        let stringDate = dayTimePeriodFormatter.stringFromDate(date.date!)
+        dateCell.date = stringDate
+        
+        if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
+            switch date.type!{
+            case "birthday":
+                dateCell.nameLabel.textColor = UIColor.birthdayColor()
+            case "anniversary":
+                dateCell.nameLabel.textColor = UIColor.anniversaryColor()
+            default: // "holiday":
+                dateCell.nameLabel.textColor = UIColor.holidayColor()
+            }
+            
+        } else if menuIndexPath! == 1 { // Show birthday cells
+            dateCell.nameLabel.textColor = UIColor.birthdayColor()
+        } else if menuIndexPath! == 2 { // Show anniversary cells
+            dateCell.nameLabel.textColor = UIColor.anniversaryColor()
+        } else {                        // Show holiday cells
+            dateCell.nameLabel.textColor = UIColor.holidayColor()
+        }
+        return dateCell
+    }
+}
+
+extension DatesTableVC /* UITableViewDelegate */ {
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("ShowDateDetails", sender: self)
+    }
+}
+
+
+
+

@@ -31,6 +31,13 @@ extension NSDate {
         return difference
     }
     
+    func formatCurrentDateIntoString() -> String {
+        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = formatString
+        return dateFormatter.stringFromDate(self)
+    }
+    
     func ageTurning() -> Int {
         let date = getCalendar().components(.Year, fromDate: self, toDate: NSDate(), options: [])
         return date.year + 1

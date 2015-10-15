@@ -32,13 +32,6 @@ class BackTableVC: UITableViewController {
         configureTopViewInteraction(allowed: true)
     }
     
-// MARK: MEMORY
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("didReceiveMemoryWarning in BackTableVC")
-    }
-    
 // MARK: TABLE VIEW
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
