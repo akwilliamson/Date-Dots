@@ -63,5 +63,6 @@ class DateDetailsVC: UIViewController {
         let addDateVC = segue.destinationViewController as! AddDateVC
         addDateVC.isBeingEdited = true
         addDateVC.dateToSave = date
+        addDateVC.managedContext = managedContext
     }
 }

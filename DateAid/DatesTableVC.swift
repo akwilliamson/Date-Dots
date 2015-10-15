@@ -35,6 +35,7 @@ class DatesTableVC: UITableViewController {
         sortFetchedResultsArray()
         configureNavigationBar()
         configureTabBar()
+        print(managedContext)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -90,7 +91,7 @@ class DatesTableVC: UITableViewController {
     func sortFetchedResultsArray() -> [Date] {
         fetchedResults = fetchedResultsController?.fetchedObjects as! [Date]
 
-        currentDateString = formatCurrentDateIntoString(NSDate())
+        currentDateString = NSDate().formatCurrentDateIntoString()
         for fetchedDate in fetchedResults {
             if fetchedDate.equalizedDate < currentDateString! {
                 fetchedResults.removeAtIndex(0)
@@ -123,13 +124,6 @@ class DatesTableVC: UITableViewController {
                 item.image = image.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
             }
         }
-    }
-    
-    func formatCurrentDateIntoString(date: NSDate) -> String {
-        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = formatString
-        return dateFormatter.stringFromDate(NSDate())
     }
 }
 

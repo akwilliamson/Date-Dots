@@ -10,61 +10,41 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
-    // These properties correspond to the stack components. Since they aren't set to anything, an initializer is needed
-    let       managedObjectContext: NSManagedObjectContext
-    let persistentStoreCoordinator: NSPersistentStoreCoordinator
-    let         managedObjectModel: NSManagedObjectModel
-    let            persistentStore: NSPersistentStore?
     
-    // This initializer is responsible for configuring each individual component in this Core Data stack
-    init() {
-        
-        // Load the managed object model from disk into a NSManagedObjectModel object
-        let bundle = NSBundle.mainBundle()
-        let modelURL = bundle.URLForResource("DateAid", withExtension: "momd")
-        managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL!)!
-        
-        // Set the persistent store coordinator
-        persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
-        // Set the managed object context and connect it to the persistent store coordinator
-        managedObjectContext = NSManagedObjectContext()
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        
-        // Access a URL to the application's documents directory
-        // The SQLite databased (simply a file) will be stored in this directory which is the recommended place to store user's data
-        let fileManager = NSFileManager.defaultManager()
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as [NSURL]
-        let documentsURL = urls[0]
-        
-        // Create the persistent store through the persistent store coordinator method
-        let storeURL = documentsURL.URLByAppendingPathComponent("DateAid")
-        let options = [NSMigratePersistentStoresAutomaticallyOption: true]
-        var error: NSError? = nil
-        
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("DateAid")
         do {
-            // Provide a persistent store type, a new URL to persist to, and any extra options
-            persistentStore = try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
-        } catch let error1 as NSError {
-            error = error1
-            persistentStore = nil
+            let options = [NSMigratePersistentStoresAutomaticallyOption : true]
+            try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+        } catch  {
+            print("Error adding persistent store.")
         }
-        
-        if persistentStore == nil {
-            print("Error adding persistent store: \(error)")
-            abort()
-        }
-    }
+        return persistentStoreCoordinator
+    }()
     
-    // A convenience method to save the stack's managed object context with error handling
+    private lazy var applicationDocumentsDirectory: NSURL = {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }()
+    
+    private lazy var managedObjectModel: NSManagedObjectModel = {
+        let modelURL = NSBundle.mainBundle().URLForResource("DateAid", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOfURL: modelURL)!
+    }()
+    
     func saveContext() {
-        var error: NSError? = nil
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
-            } catch let error1 as NSError {
-                error = error1
-                print("Could not save: \(error), \(error?.userInfo)")
+            } catch let error as NSError {
+                print("Could not save: \(error), \(error.userInfo)")
             }
         }
     }
