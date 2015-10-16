@@ -27,34 +27,65 @@ class DateDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavBar()
-        configureFormattedDate()
-        configureDaysUntil()
+        styleLabels()
+        configureCountdown()
+        configureDate()
         configureAge()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        dateLabel.center.y = -50
+        daysUntilLabel.center.y = -50
+        ageLabel.center.y = -50
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.ageLabel.center.y = 84
+        }, completion: nil)
+        
+        UIView.animateWithDuration(1, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.daysUntilLabel.center.y = 84
+        }, completion: nil)
+        
+        UIView.animateWithDuration(1, delay: 0.2, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.dateLabel.center.y = 84
+        }, completion: nil)
+        
+    }
+    
     func configureNavBar() {
-        self.title = date.name!.abbreviateName()
+        title = date.name!.abbreviateName()
     }
     
-    func configureFormattedDate() {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd MMM"
-        let dateString = dateFormatter.stringFromDate(date.date!)
-        dateLabel.text = dateString
+    func styleLabels() {
+        let labelsArray = [dateLabel, daysUntilLabel, ageLabel]
+        for label in labelsArray {
+            label.layer.cornerRadius = 47
+            label.clipsToBounds = true
+            label.textColor = UIColor.whiteColor()
+            switch date.type! {
+            case "birthday":
+                label.backgroundColor = UIColor.birthdayColor()
+            case "anniversary":
+                label.backgroundColor = UIColor.anniversaryColor()
+            case "holiday":
+                label.backgroundColor = UIColor.holidayColor()
+            default:
+                break
+            }
+        }
     }
     
-    func configureDaysUntil() {
+    func configureDate() {
+        dateLabel.text = date!.date!.readableDate()
+    }
+    
+    func configureCountdown() {
         let numberOfDays = date.date!.daysBetween()
-        daysUntilLabel.text = "\(numberOfDays) days away"
+        daysUntilLabel.text = "In \(numberOfDays)\ndays"
     }
     
     func configureAge() {
-        ageLabel.text = "turning \(date.date!.ageTurning())"
-    }
-    
-// MARK: ACTIONS
-    
-    @IBAction func editDate(sender: AnyObject) {
+        ageLabel.text = "Turning\n\(date.date!.ageTurning())"
     }
     
 // MARK: SEGUE

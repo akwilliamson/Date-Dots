@@ -23,12 +23,12 @@ class BackTableVC: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         configureTopViewInteraction(allowed: false)
     }
     
     override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         configureTopViewInteraction(allowed: true)
     }
     

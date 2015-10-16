@@ -14,6 +14,9 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -315,56 +318,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days until:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xb-KT-IjO">
-                                <rect key="frame" x="15" y="186" width="95" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi" userLabel="Countdown Label">
+                                <rect key="frame" x="253" y="84" width="94" height="94"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="94" id="8TZ-ye-EMn"/>
+                                    <constraint firstAttribute="width" constant="94" id="mDV-XV-MJy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Age turning:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3V4-Wq-Wre">
-                                <rect key="frame" x="16" y="231" width="94" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date of:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fD-sh-sMd">
-                                <rect key="frame" x="16" y="134" width="99" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi">
-                                <rect key="frame" x="15" y="210" width="392" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ">
-                                <rect key="frame" x="15" y="260" width="528" height="21"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z">
-                                <rect key="frame" x="15" y="163" width="528" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z">
+                                <rect key="frame" x="491" y="84" width="94" height="94"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="94" id="Sv3-Lg-BcZ"/>
+                                    <constraint firstAttribute="height" constant="94" id="pig-md-UnE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylI-lH-q23">
-                                <rect key="frame" x="23" y="289" width="30" height="30"/>
-                                <state key="normal" title="Edit"/>
-                                <connections>
-                                    <action selector="editDate:" destination="PaR-uw-Bbs" eventType="touchUpInside" id="e6Q-sE-vLG"/>
-                                    <segue destination="i1f-AG-9F2" kind="show" identifier="EditDate" id="kCN-za-ZUV"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ">
+                                <rect key="frame" x="10" y="84" width="94" height="94"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="94" id="Tt1-yR-apF"/>
+                                    <constraint firstAttribute="height" constant="94" id="noD-jn-GD5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mDV-mQ-X2z" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="20" id="ALM-5x-I5R"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="3Ml-Gk-LXZ" secondAttribute="leading" constant="10" id="KEE-ZW-EgD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mDV-mQ-X2z" secondAttribute="trailing" constant="-5" id="Q0s-wj-RRv"/>
+                            <constraint firstItem="gjl-WM-ZEi" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="20" id="SY6-lG-Qsk"/>
+                            <constraint firstItem="gjl-WM-ZEi" firstAttribute="centerX" secondItem="sia-pu-44W" secondAttribute="centerX" id="Xp9-u6-10C"/>
+                            <constraint firstItem="3Ml-Gk-LXZ" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="20" id="qY9-ig-GdE"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Rc7-Ou-PPx">
                         <barButtonItem key="backBarButtonItem" title=" " id="buC-cA-4VW"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="PAp-dk-g6n">
+                            <connections>
+                                <segue destination="i1f-AG-9F2" kind="show" id="uOf-gp-zRy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="ageLabel" destination="3Ml-Gk-LXZ" id="Acd-3M-5mf"/>
@@ -487,8 +489,8 @@
         <image name="people-selected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oNP-ia-Yef"/>
         <segue reference="SXV-Qu-gXZ"/>
-        <segue reference="WGb-MU-B13"/>
+        <segue reference="oNP-ia-Yef"/>
+        <segue reference="uOf-gp-zRy"/>
     </inferredMetricsTieBreakers>
 </document>

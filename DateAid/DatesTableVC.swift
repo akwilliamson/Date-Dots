@@ -38,7 +38,7 @@ class DatesTableVC: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
