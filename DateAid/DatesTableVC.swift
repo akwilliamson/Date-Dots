@@ -35,7 +35,6 @@ class DatesTableVC: UITableViewController {
         sortFetchedResultsArray()
         configureNavigationBar()
         configureTabBar()
-        print(managedContext)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -139,13 +138,10 @@ extension DatesTableVC /* UITableViewDataSource */ {
         
         let date = fetchedResults[indexPath.row]
         dateCell.name = date.abbreviatedName!
-        let dayTimePeriodFormatter = NSDateFormatter()
-        dayTimePeriodFormatter.dateFormat = "dd MMM"
-        let stringDate = dayTimePeriodFormatter.stringFromDate(date.date!)
-        dateCell.date = stringDate
+        dateCell.date = date.date!.readableDate()
         
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
-            switch date.type!{
+            switch date.type! {
             case "birthday":
                 dateCell.nameLabel.textColor = UIColor.birthdayColor()
             case "anniversary":

@@ -38,6 +38,13 @@ extension NSDate {
         return dateFormatter.stringFromDate(self)
     }
     
+    func readableDate() -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        let dateString = dateFormatter.stringFromDate(self)
+        return dateString
+    }
+    
     func ageTurning() -> Int {
         let date = getCalendar().components(.Year, fromDate: self, toDate: NSDate(), options: [])
         return date.year + 1

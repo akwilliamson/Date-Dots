@@ -42,11 +42,31 @@ class AddDateVC: UIViewController {
         changeColorOfSlidersTo(birthdayColor, sliders: [yearSlider, monthSlider, daySlider])
         populateEditableValues()
         setDelegates()
+        yearSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         title = setNavBarTitle()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        addLabelsToSliders([yearSlider, monthSlider, daySlider])
+    }
+    
+    func addLabelsToSliders(sliders: [ValueSlider]) {
+        for slider in sliders {
+            let handleView = slider.subviews.last
+            let label = UILabel(frame: handleView!.bounds)
+            label.backgroundColor = UIColor.clearColor()
+            label.textAlignment = .Center
+            label.textColor = UIColor.whiteColor()
+            label.text = self.slider(slider, stringForValue: slider.value)
+            label.tag = 1
+            handleView?.addSubview(label)
+        }
     }
     
     func setUpDateToSave() {
@@ -110,12 +130,12 @@ class AddDateVC: UIViewController {
         
         dateToSave.date = date
         dateToSave.equalizedDate = equalizedDate
-        save()
+        saveContext()
         
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    func save() {
+    func saveContext() {
         do { try managedContext!.save()
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
@@ -130,11 +150,13 @@ class AddDateVC: UIViewController {
         daySlider.setValues(min: 1, max: 31, value: 1)
     }
     
-    func valueChanged(sender: UISlider) {
-        let toNewValue = round(sender.value)
-        sender.setValue(toNewValue, animated: false)
+    func valueChanged(sender: ValueSlider) {
+//        let toNewValue = round(sender.value)
+//        sender.setValue(toNewValue, animated: false)
+        let handleView = sender.subviews.last
+        let sliderLabel = handleView?.viewWithTag(1) as! UILabel
+        sliderLabel.text = slider(sender, stringForValue: sender.value)
     }
-
 }
 
 extension AddDateVC: UITextFieldDelegate {
@@ -174,7 +196,6 @@ extension AddDateVC: ASValueTrackingSliderDataSource {
             return months[intValue - 1]
         default: // daySlider
             return String(intValue)
-            
         }
     }
 }
