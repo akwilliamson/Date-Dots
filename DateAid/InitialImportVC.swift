@@ -161,6 +161,7 @@ class InitialImportVC: UIViewController {
         skipButton.titleLabel?.textAlignment = .Center
         skipButton.layer.cornerRadius = 50
     }
+    
 }
 
 //    func iOS9AddBirthdays() {

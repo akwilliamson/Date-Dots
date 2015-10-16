@@ -123,7 +123,6 @@ class AddDateVC: UIViewController {
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
-        
         let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
         let date = NSDate(dateString: dateString)
         let equalizedDate = date.formatCurrentDateIntoString()
@@ -151,10 +150,13 @@ class AddDateVC: UIViewController {
     }
     
     func valueChanged(sender: ValueSlider) {
-//        let toNewValue = round(sender.value)
-//        sender.setValue(toNewValue, animated: false)
-        let handleView = sender.subviews.last
-        let sliderLabel = handleView?.viewWithTag(1) as! UILabel
+        let labelToRemove = sender.subviews.last!.subviews.last as! UILabel
+        if labelToRemove.text != "" {
+            labelToRemove.text = ""
+        }
+        let toNewValue = round(sender.value)
+        sender.setValue(toNewValue, animated: false)
+        let sliderLabel = sender.subviews.last?.viewWithTag(1) as! UILabel
         sliderLabel.text = slider(sender, stringForValue: sender.value)
     }
 }
