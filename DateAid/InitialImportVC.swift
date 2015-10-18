@@ -30,6 +30,27 @@ class InitialImportVC: UIViewController {
         super.viewDidLoad()
         setButtonStyles()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        importButton.transform = CGAffineTransformScale(importButton.transform, 0, 0);
+        skipButton.transform = CGAffineTransformScale(skipButton.transform, 0, 0);
+        
+        UIView.animateWithDuration(0.4, animations: {
+            self.importButton.transform = CGAffineTransformMakeScale(1.2, 1.2)
+        }, completion: { finish in
+            UIView.animateWithDuration(0.3) {
+                self.importButton.transform = CGAffineTransformMakeScale(1, 1)
+            }
+        })
+        
+        UIView.animateWithDuration(0.4, delay: 0.2, options: [], animations: { () -> Void in
+            self.skipButton.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            }) { finish in
+                UIView.animateWithDuration(0.3) {
+                    self.skipButton.transform = CGAffineTransformMakeScale(1, 1)
+                }
+            }
+    }
 
 // MARK: ACTIONS
     

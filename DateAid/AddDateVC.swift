@@ -15,7 +15,7 @@ class AddDateVC: UIViewController {
     
     var managedContext: NSManagedObjectContext?
     var dateToSave: Date!
-    var isBeingEdited: Bool?
+    var isBeingEdited: Bool!
     let birthdayColor = UIColor.birthdayColor()
     let anniversaryColor = UIColor.anniversaryColor()
     let holidayColor = UIColor.holidayColor()
@@ -54,16 +54,10 @@ class AddDateVC: UIViewController {
         
         switch dateToSave.type! {
         case "birthday":
-            anniversaryButton.layer.removeAllAnimations()
-            holidayButton.layer.removeAllAnimations()
             animateButton(birthdayButton)
         case "anniversary":
-            birthdayButton.layer.removeAllAnimations()
-            holidayButton.layer.removeAllAnimations()
             animateButton(anniversaryButton)
         case "holiday":
-            birthdayButton.layer.removeAllAnimations()
-            anniversaryButton.layer.removeAllAnimations()
             animateButton(holidayButton)
         default:
             break
@@ -99,7 +93,7 @@ class AddDateVC: UIViewController {
     
     func animateButton(button: UIButton) {
         button.titleLabel!.transform = CGAffineTransformScale(button.transform, 0.3, 0.3);
-        UIControl.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.Repeat, .Autoreverse], animations: { () -> Void in
+        UIControl.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.Repeat, .Autoreverse, .AllowUserInteraction], animations: { () -> Void in
             button.titleLabel!.transform = CGAffineTransformScale(button.transform, 1, 1);
         }, completion: nil)
     }
@@ -149,24 +143,24 @@ class AddDateVC: UIViewController {
     
     @IBAction func birthdayButton(sender: AnyObject) {
         changeColorOfSlidersTo(birthdayColor, sliders: [yearSlider, monthSlider, daySlider])
-        anniversaryButton.layer.removeAllAnimations()
-        holidayButton.layer.removeAllAnimations()
+        anniversaryButton.titleLabel!.layer.removeAllAnimations()
+        holidayButton.titleLabel!.layer.removeAllAnimations()
         animateButton(birthdayButton)
         dateToSave.type = "birthday"
     }
     
     @IBAction func anniversaryButton(sender: AnyObject) {
         changeColorOfSlidersTo(anniversaryColor, sliders: [yearSlider, monthSlider, daySlider])
-        birthdayButton.layer.removeAllAnimations()
-        holidayButton.layer.removeAllAnimations()
+        birthdayButton.titleLabel!.layer.removeAllAnimations()
+        holidayButton.titleLabel!.layer.removeAllAnimations()
         animateButton(anniversaryButton)
         dateToSave.type = "anniversary"
     }
     
     @IBAction func holidayButton(sender: AnyObject) {
         changeColorOfSlidersTo(holidayColor, sliders: [yearSlider, monthSlider, daySlider])
-        birthdayButton.layer.removeAllAnimations()
-        anniversaryButton.layer.removeAllAnimations()
+        birthdayButton.titleLabel!.layer.removeAllAnimations()
+        anniversaryButton.titleLabel!.layer.removeAllAnimations()
         animateButton(holidayButton)
         dateToSave.type = "holiday"
     }
