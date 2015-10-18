@@ -124,6 +124,32 @@ class DatesTableVC: UITableViewController {
             }
         }
     }
+    
+    func configureCell(cell: DateCell, indexPath: NSIndexPath) {
+        
+        let date = fetchedResultsController!.objectAtIndexPath(indexPath) as! Date
+        
+        cell.name = date.abbreviatedName!
+        cell.date = date.date!.readableDate()
+        
+        if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
+            switch date.type! {
+            case "birthday":
+                cell.nameLabel.textColor = UIColor.birthdayColor()
+            case "anniversary":
+                cell.nameLabel.textColor = UIColor.anniversaryColor()
+            default: // "holiday":
+                cell.nameLabel.textColor = UIColor.holidayColor()
+            }
+            
+        } else if menuIndexPath! == 1 { // Show birthday cells
+            cell.nameLabel.textColor = UIColor.birthdayColor()
+        } else if menuIndexPath! == 2 { // Show anniversary cells
+            cell.nameLabel.textColor = UIColor.anniversaryColor()
+        } else {                        // Show holiday cells
+            cell.nameLabel.textColor = UIColor.holidayColor()
+        }
+    }
 }
 
 extension DatesTableVC /* UITableViewDataSource */ {
@@ -172,6 +198,32 @@ extension DatesTableVC /* UITableViewDelegate */ {
     }
 }
 
-
+extension DatesTableVC: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+        case .Update:
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! DateCell
+            configureCell(cell, indexPath: indexPath!)
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        }
+        
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
+}
 
 
