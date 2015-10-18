@@ -23,6 +23,7 @@
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
+		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; settings = {ASSET_TAGS = (); }; };
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
@@ -71,6 +72,7 @@
 		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
+		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
+				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
+				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,

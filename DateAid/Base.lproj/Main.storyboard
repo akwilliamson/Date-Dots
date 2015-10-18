@@ -17,6 +17,7 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -237,7 +238,7 @@
                                 </constraints>
                                 <color key="textColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-pd-QLU" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="18" y="211" width="564" height="31"/>
@@ -260,6 +261,18 @@
                                     <action selector="holidayButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="kTO-fz-L8V"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdh-dN-iHJ">
+                                <rect key="frame" x="0.0" y="371" width="600" height="45"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="mg1-UT-Ot5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                <state key="normal" title="Edit Details"/>
+                                <connections>
+                                    <segue destination="ph2-zO-ERN" kind="show" id="u8v-zp-2zi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.88287168559999996" green="0.88287168559999996" blue="0.88287168559999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -268,6 +281,7 @@
                             <constraint firstItem="vhw-nm-zBS" firstAttribute="top" secondItem="hYm-pd-QLU" secondAttribute="bottom" constant="30" id="9us-9E-dEq"/>
                             <constraint firstItem="ePo-6G-7uF" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="AUE-GU-FD5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vhw-nm-zBS" secondAttribute="trailing" id="DW5-8o-d7B"/>
+                            <constraint firstItem="Kdh-dN-iHJ" firstAttribute="leading" secondItem="a12-fm-HpS" secondAttribute="leadingMargin" constant="-20" id="Fr4-8x-1c3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8DU-k5-J9G" secondAttribute="trailing" id="FtL-O6-909"/>
                             <constraint firstItem="ePo-6G-7uF" firstAttribute="leading" secondItem="u1Z-l5-H0G" secondAttribute="trailing" constant="8" id="G3X-6p-zxw"/>
                             <constraint firstAttribute="leadingMargin" secondItem="w7i-R0-OwM" secondAttribute="leading" id="HTq-K6-zzs"/>
@@ -279,6 +293,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="hYm-pd-QLU" secondAttribute="trailing" id="W7H-OG-lKq"/>
                             <constraint firstItem="hYm-pd-QLU" firstAttribute="top" secondItem="ePo-6G-7uF" secondAttribute="bottom" constant="34" id="WlM-5P-yJH"/>
                             <constraint firstAttribute="leadingMargin" secondItem="hYm-pd-QLU" secondAttribute="leading" id="izA-rg-Z3a"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kdh-dN-iHJ" secondAttribute="trailing" constant="-20" id="j7F-iT-3Km"/>
+                            <constraint firstItem="Kdh-dN-iHJ" firstAttribute="top" secondItem="w7i-R0-OwM" secondAttribute="bottom" constant="10" id="uPa-dF-LFl"/>
                             <constraint firstItem="u1Z-l5-H0G" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="w49-52-xDB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7i-R0-OwM" secondAttribute="trailing" id="wJq-iM-d6g"/>
                         </constraints>
@@ -296,6 +312,7 @@
                         <outlet property="anniversaryButton" destination="ePo-6G-7uF" id="794-Jv-Rvy"/>
                         <outlet property="birthdayButton" destination="u1Z-l5-H0G" id="f3v-hH-aFT"/>
                         <outlet property="daySlider" destination="w7i-R0-OwM" id="iKy-Sz-M8K"/>
+                        <outlet property="editDetailsButton" destination="Kdh-dN-iHJ" id="OZ3-YU-lC1"/>
                         <outlet property="holidayButton" destination="rm9-PL-aiv" id="fD5-eh-2VB"/>
                         <outlet property="monthSlider" destination="vhw-nm-zBS" id="H4o-VD-Nem"/>
                         <outlet property="nameField" destination="8DU-k5-J9G" id="gCB-Yk-4S1"/>
@@ -305,6 +322,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3534" y="-1179"/>
+        </scene>
+        <!--Edit DetailsVC-->
+        <scene sceneID="3nV-8R-Hbc">
+            <objects>
+                <viewController id="ph2-zO-ERN" customClass="EditDetailsVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="22U-3B-esd"/>
+                        <viewControllerLayoutGuide type="bottom" id="UWX-rN-mFn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mq3-Cl-VvF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f08-Ie-3Xi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4259" y="-1179"/>
         </scene>
         <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
