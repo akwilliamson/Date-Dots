@@ -22,6 +22,7 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var daysUntilLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var regionLabel: UILabel!
     
 // MARK: VIEW SETUP
     
@@ -33,10 +34,11 @@ class DateDetailsVC: UIViewController {
         configureDate()
         configureAge()
         if let address = date.address {
-            print(address)
             if let street = address.street {
-                print(street)
                 addressLabel.text = street
+            }
+            if let city = address.city, state = address.state, zip = address.zip {
+                regionLabel.text = "\(city), \(state) \(zip)"
             }
         }
     }

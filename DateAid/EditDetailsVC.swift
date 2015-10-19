@@ -9,9 +9,31 @@
 import UIKit
 
 class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var date: Date!
+    var streetString = ""
+    var regionString = ""
 
+    @IBOutlet weak var addressTextField: AddNameTextField!
+    @IBOutlet weak var regionTextField: AddNameTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let street = date.address?.street {
+            streetString = street
+        }
+        if let city = date.address?.city {
+            regionString += "\(city),"
+        }
+        if let state = date.address?.state {
+            regionString += " \(state)"
+        }
+        if let zip = date.address?.zip {
+            regionString += " \(zip)"
+        }
+        addressTextField.text = streetString
+        regionTextField.text = regionString
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

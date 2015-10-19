@@ -139,6 +139,13 @@ class AddDateVC: UIViewController {
         return isBeingEdited! == true ? "Edit" : "Add"
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EditDetails" {
+            let editDetailsVC = segue.destinationViewController as! EditDetailsVC
+            editDetailsVC.date = dateToSave
+        }
+    }
+    
 // MARK: ACTIONS
     
     @IBAction func birthdayButton(sender: AnyObject) {
