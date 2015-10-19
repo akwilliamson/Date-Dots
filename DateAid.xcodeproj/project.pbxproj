@@ -82,6 +82,7 @@
 		9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V1_V2.xcmappingmodel; sourceTree = "<group>"; };
 		9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9791F78A1BD4CCDF001E82BB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V3.xcdatamodel; sourceTree = "<group>"; };
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
@@ -691,10 +692,11 @@
 		97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */,
 				9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */,
 				97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */,
 			);
-			currentVersion = 97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */;
+			currentVersion = 9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */;
 			path = DateAid.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

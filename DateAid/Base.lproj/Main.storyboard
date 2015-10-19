@@ -529,6 +529,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE1-PL-Yxl">
+                                <rect key="frame" x="15" y="226" width="565" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -536,7 +542,10 @@
                             <constraint firstAttribute="leadingMargin" secondItem="3Ml-Gk-LXZ" secondAttribute="leading" constant="5" id="KEE-ZW-EgD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mDV-mQ-X2z" secondAttribute="trailing" constant="-5" id="Q0s-wj-RRv"/>
                             <constraint firstItem="gjl-WM-ZEi" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="20" id="SY6-lG-Qsk"/>
+                            <constraint firstItem="JE1-PL-Yxl" firstAttribute="leading" secondItem="sia-pu-44W" secondAttribute="leadingMargin" constant="-5" id="T7Y-l3-P9W"/>
+                            <constraint firstItem="JE1-PL-Yxl" firstAttribute="top" secondItem="gjl-WM-ZEi" secondAttribute="bottom" constant="48" id="WgC-Mb-Hpy"/>
                             <constraint firstItem="gjl-WM-ZEi" firstAttribute="centerX" secondItem="sia-pu-44W" secondAttribute="centerX" id="Xp9-u6-10C"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JE1-PL-Yxl" secondAttribute="trailing" id="ld6-KG-6Vl"/>
                             <constraint firstItem="3Ml-Gk-LXZ" firstAttribute="top" secondItem="31a-j6-JAd" secondAttribute="bottom" constant="20" id="qY9-ig-GdE"/>
                         </constraints>
                     </view>
@@ -549,6 +558,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addressLabel" destination="JE1-PL-Yxl" id="JoS-yo-XnE"/>
                         <outlet property="ageLabel" destination="3Ml-Gk-LXZ" id="Acd-3M-5mf"/>
                         <outlet property="dateLabel" destination="mDV-mQ-X2z" id="fLN-Oa-csi"/>
                         <outlet property="daysUntilLabel" destination="gjl-WM-ZEi" id="iof-67-yMB"/>

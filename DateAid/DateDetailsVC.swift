@@ -21,6 +21,7 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var daysUntilLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
     
 // MARK: VIEW SETUP
     
@@ -31,6 +32,13 @@ class DateDetailsVC: UIViewController {
         configureCountdown()
         configureDate()
         configureAge()
+        if let address = date.address {
+            print(address)
+            if let street = address.street {
+                print(street)
+                addressLabel.text = street
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -72,6 +72,8 @@ class InitialImportVC: UIViewController {
             addEntitiesForAddressBookBirthdays(person)
             // Add Date entities for address book anniversaries
             addEntitiesForAddressBookAnniversaries(person)
+            
+            
         }
     }
     
@@ -116,6 +118,7 @@ class InitialImportVC: UIViewController {
     
     func addEntitiesForAddressBookBirthdays(person: AnyObject) {
         let birthdayProperty = ABRecordCopyValue(person, kABPersonBirthdayProperty)
+        
         if birthdayProperty != nil {
             let actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
             
@@ -127,6 +130,35 @@ class InitialImportVC: UIViewController {
             birthday.date = actualDate
             birthday.equalizedDate = actualDate.formatCurrentDateIntoString()
             birthday.type = "birthday"
+            
+            
+            let unmanagedAddresses = ABRecordCopyValue(person, kABPersonAddressProperty)
+            let addresses = (Unmanaged.fromOpaque(unmanagedAddresses.toOpaque()).takeUnretainedValue() as NSObject) as ABMultiValueRef
+            let countOfAddresses = ABMultiValueGetCount(addresses)
+            if countOfAddresses > 0 {
+            
+                for index in 0..<countOfAddresses {
+                    let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+                    let addressForBirthday = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                    
+                    let unmanagedPhone = ABMultiValueCopyValueAtIndex(addresses, index)
+                    let address = (Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
+
+                    if let street = address.valueForKey("Street") as? String {
+                        addressForBirthday.street = street
+                    }
+                    if let city = address.valueForKey("City") as? String {
+                        addressForBirthday.city = city
+                    }
+                    if let state = address.valueForKey("State") as? String {
+                        addressForBirthday.state = state
+                    }
+                    if let zip = address.valueForKey("ZIP") as? NSNumber {
+                        addressForBirthday.zip = zip
+                    }
+                    birthday.address = addressForBirthday
+                }
+            }
         }
     }
     
