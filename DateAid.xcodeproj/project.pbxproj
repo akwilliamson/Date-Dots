@@ -24,6 +24,10 @@
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; settings = {ASSET_TAGS = (); }; };
+		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; settings = {ASSET_TAGS = (); }; };
+		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; settings = {ASSET_TAGS = (); }; };
+		9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F78A1BD4CCDF001E82BB /* Address.swift */; settings = {ASSET_TAGS = (); }; };
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
@@ -73,6 +77,11 @@
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
+		9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePushSettingsVC.swift; sourceTree = "<group>"; };
+		9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V2.xcdatamodel; sourceTree = "<group>"; };
+		9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V1_V2.xcmappingmodel; sourceTree = "<group>"; };
+		9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9791F78A1BD4CCDF001E82BB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
@@ -181,6 +190,8 @@
 		97364CE21AFBF44A0095BC57 /* DateAid */ = {
 			isa = PBXGroup;
 			children = (
+				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
+				9791F78A1BD4CCDF001E82BB /* Address.swift */,
 				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
 				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
 				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
@@ -197,6 +208,7 @@
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
 				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
+				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -204,6 +216,7 @@
 		97364CE31AFBF44A0095BC57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
 				970D93651BC47BE800D7F1FF /* PLists */,
@@ -417,10 +430,13 @@
 				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
+				9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */,
 				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
 				97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */,
 				97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
+				9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */,
+				9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
 				97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
@@ -433,6 +449,7 @@
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
+				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
 			);
@@ -674,6 +691,7 @@
 		97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */,
 				97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */,
 			);
 			currentVersion = 97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */;

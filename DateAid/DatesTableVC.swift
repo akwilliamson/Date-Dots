@@ -35,6 +35,7 @@ class DatesTableVC: UITableViewController {
         sortFetchedResultsArray()
         configureNavigationBar()
         configureTabBar()
+        tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -196,6 +197,7 @@ extension DatesTableVC /* UITableViewDelegate */ {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("ShowDateDetails", sender: self)
     }
+    
 }
 
 extension DatesTableVC: NSFetchedResultsControllerDelegate {

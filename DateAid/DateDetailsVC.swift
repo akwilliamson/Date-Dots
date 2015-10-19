@@ -76,7 +76,8 @@ class DateDetailsVC: UIViewController {
     }
     
     func configureDate() {
-        dateLabel.text = date!.date!.readableDate()
+        let text = date!.date!.readableDate()
+        dateLabel.text = text.stringByReplacingOccurrencesOfString(" ", withString: "\n")
     }
     
     func configureCountdown() {

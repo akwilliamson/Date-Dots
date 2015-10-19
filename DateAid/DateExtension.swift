@@ -40,7 +40,7 @@ extension NSDate {
     
     func readableDate() -> String {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd MMM"
+        dateFormatter.dateFormat = "MMM dd"
         let dateString = dateFormatter.stringFromDate(self)
         return dateString
     }
