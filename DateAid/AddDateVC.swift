@@ -20,6 +20,7 @@ class AddDateVC: UIViewController {
     let anniversaryColor = UIColor.anniversaryColor()
     let holidayColor = UIColor.holidayColor()
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
+    var sliderLabelsAdded = false
     
 // MARK: OUTLETS
 
@@ -43,9 +44,14 @@ class AddDateVC: UIViewController {
         setUpViewColors(dateToSave!.type!)
         populateEditableValues()
         setDelegates()
+        addLabelsToSliders([yearSlider, monthSlider, daySlider])
         yearSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        addLabelsToSliders([yearSlider, monthSlider, daySlider])
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,10 +75,6 @@ class AddDateVC: UIViewController {
         if isBeingEdited == false {
             nameField.becomeFirstResponder()
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        addLabelsToSliders([yearSlider, monthSlider, daySlider])
     }
     
     func setUpViewColors(type: String) {
@@ -101,13 +103,15 @@ class AddDateVC: UIViewController {
     func addLabelsToSliders(sliders: [ValueSlider]) {
         for slider in sliders {
             let handleView = slider.subviews.last
-            let label = UILabel(frame: handleView!.bounds)
-            label.backgroundColor = UIColor.clearColor()
-            label.textAlignment = .Center
-            label.textColor = UIColor.whiteColor()
-            label.text = self.slider(slider, stringForValue: slider.value)
-            label.tag = 1
-            handleView?.addSubview(label)
+            if handleView?.viewWithTag(1) == nil {
+                let label = UILabel(frame: handleView!.bounds)
+                label.backgroundColor = UIColor.clearColor()
+                label.textAlignment = .Center
+                label.textColor = UIColor.whiteColor()
+                label.text = self.slider(slider, stringForValue: slider.value)
+                label.tag = 1
+                handleView?.addSubview(label)
+            }
         }
     }
     
@@ -182,8 +186,12 @@ class AddDateVC: UIViewController {
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
         let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+        print(dateString)
         let date = NSDate(dateString: dateString)
+        print(date)
+        print(date.readableDate())
         let equalizedDate = date.formatCurrentDateIntoString()
+        print(equalizedDate)
         
         dateToSave.date = date
         dateToSave.equalizedDate = equalizedDate
@@ -229,15 +237,21 @@ extension AddDateVC: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
         view.endEditing(true)
         return true
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        yearSlider.userInteractionEnabled = false
+        monthSlider.userInteractionEnabled = false
+    }
+    
     func textFieldDidEndEditing(textField: UITextField) {
-        let name = textField.text!
+        let name = nameField.text!
         dateToSave.name = name
         dateToSave.abbreviatedName = name.abbreviateName()
+        yearSlider.userInteractionEnabled = true
+        monthSlider.userInteractionEnabled = true
     }
     
     func textFieldShouldClear(textField: UITextField) -> Bool {

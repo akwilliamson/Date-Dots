@@ -42,9 +42,10 @@ class DateDetailsVC: UIViewController {
                 regionLabel.text = "\(city), \(state) \(zip)"
             }
         }
+        reminderLabel.text = "Reminder not set"
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
-               reminderLabel.text = "scheduled for \(notification.fireDate)"
+               reminderLabel.text = "Reminder set: \(notification.fireDate!)"
             }
         }
     }

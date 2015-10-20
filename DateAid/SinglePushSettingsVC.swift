@@ -16,6 +16,10 @@ class SinglePushSettingsVC: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var soundLabel: UILabel!
     
+    @IBOutlet weak var daySlider: ValueSlider!
+    @IBOutlet weak var timeSlider: ValueSlider!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dayLabel.layer.cornerRadius = 47
