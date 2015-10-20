@@ -46,5 +46,12 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         
         return notesCell
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EditLocalNotification" {
+            let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
+            singlePushSettingsVC.date = date
+        }
+    }
 
 }

@@ -203,13 +203,13 @@
 				978446901B3A8143003889BD /* DateDetailsVC.swift */,
 				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
 				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
+				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
-				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";

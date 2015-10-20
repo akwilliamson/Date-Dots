@@ -10,6 +10,8 @@ import UIKit
 
 class SinglePushSettingsVC: UIViewController {
     
+    var date: Date!
+    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var soundLabel: UILabel!
@@ -42,4 +44,15 @@ class SinglePushSettingsVC: UIViewController {
             }, completion: nil)
     }
     
+    @IBAction func createNotification(sender: AnyObject) {
+        let date2 = NSDate().dateByAddingTimeInterval(60)
+        let notification = UILocalNotification()
+        notification.alertBody = "Hello there"
+        notification.alertAction = "Dismiss"
+        notification.fireDate = date2
+        notification.soundName = UILocalNotificationDefaultSoundName
+        let objectId = String(date.objectID.URIRepresentation())
+        notification.userInfo = ["date": objectId]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
 }

@@ -23,6 +23,7 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
+    @IBOutlet weak var reminderLabel: UILabel!
     
 // MARK: VIEW SETUP
     
@@ -39,6 +40,11 @@ class DateDetailsVC: UIViewController {
             }
             if let city = address.city, state = address.state, zip = address.zip {
                 regionLabel.text = "\(city), \(state) \(zip)"
+            }
+        }
+        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
+            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+               reminderLabel.text = "scheduled for \(notification.fireDate)"
             }
         }
     }
