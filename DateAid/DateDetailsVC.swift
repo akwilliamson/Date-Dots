@@ -163,9 +163,11 @@ class DateDetailsVC: UIViewController {
 // MARK: SEGUE
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let addDateVC = segue.destinationViewController as! AddDateVC
-        addDateVC.isBeingEdited = true
-        addDateVC.dateToSave = date
-        addDateVC.managedContext = managedContext
+        if segue.identifier == "EditDate" {
+            let addDateVC = segue.destinationViewController as! AddDateVC
+            addDateVC.isBeingEdited = true
+            addDateVC.dateToSave = date
+            addDateVC.managedContext = managedContext
+        }
     }
 }

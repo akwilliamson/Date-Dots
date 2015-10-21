@@ -167,7 +167,6 @@ extension DatesTableVC /* UITableViewDataSource */ {
         let date = fetchedResults[indexPath.row]
         dateCell.name = date.abbreviatedName!
         dateCell.date = date.date!.readableDate()
-        print("\(date.abbreviatedName!) - \(NSCalendar.currentCalendar().startOfDayForDate(date.date!))")
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
             switch date.type! {
             case "birthday":

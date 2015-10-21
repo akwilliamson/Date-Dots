@@ -30,6 +30,7 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Bold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -582,7 +583,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="W3X-ct-031" kind="show" id="BTA-1b-IQX"/>
+                                    <segue destination="617-UG-6zb" kind="show" identifier="ShowNotes" id="t93-S5-ewk"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbX-dZ-ktm">
@@ -728,7 +729,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="buC-cA-4VW"/>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="PAp-dk-g6n">
                             <connections>
-                                <segue destination="i1f-AG-9F2" kind="show" id="uOf-gp-zRy"/>
+                                <segue destination="i1f-AG-9F2" kind="show" identifier="EditDate" id="uOf-gp-zRy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -750,6 +751,82 @@
             </objects>
             <point key="canvasLocation" x="3534" y="-494"/>
         </scene>
+        <!--Notes-->
+        <scene sceneID="1ZR-cE-43s">
+            <objects>
+                <tableViewController id="617-UG-6zb" customClass="NotesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eCF-9U-zSB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="nby-ie-1Hz" style="IBUITableViewCellStyleDefault" id="XBJ-Ek-HMP">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBJ-Ek-HMP" id="xTJ-4M-tqM">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nby-ie-1Hz">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ULx-DK-D8w" kind="show" id="42i-ax-WcR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="617-UG-6zb" id="TRS-zS-bND"/>
+                            <outlet property="delegate" destination="617-UG-6zb" id="gbn-j9-uMo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Notes" id="EJ2-iJ-gYz">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Acd-aq-6WY"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t2a-IV-azd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3532" y="218"/>
+        </scene>
+        <!--Note-->
+        <scene sceneID="aj2-dD-r76">
+            <objects>
+                <viewController id="ULx-DK-D8w" customClass="NoteVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="a7D-rA-smg"/>
+                        <viewControllerLayoutGuide type="bottom" id="eTq-iQ-ajz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RCP-H5-DTc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="leading" secondItem="RCP-H5-DTc" secondAttribute="leading" id="AW9-Yx-TU0"/>
+                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="top" secondItem="a7D-rA-smg" secondAttribute="bottom" id="ayF-4R-LK7"/>
+                            <constraint firstAttribute="trailing" secondItem="Cd2-MJ-0d2" secondAttribute="trailing" id="f7h-Sx-MY3"/>
+                            <constraint firstItem="eTq-iQ-ajz" firstAttribute="top" secondItem="Cd2-MJ-0d2" secondAttribute="bottom" id="uIR-jf-jq5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Note" id="3gG-0k-1Xu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LNm-Ia-QUh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4259" y="218"/>
+        </scene>
         <!--Table View Controller-->
         <scene sceneID="OZu-Wz-qX4">
             <objects>
@@ -760,7 +837,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Da3-hQ-kjj" style="IBUITableViewCellStyleDefault" id="gXO-TB-Gmj">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gXO-TB-Gmj" id="AbL-lU-1nV">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
