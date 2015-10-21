@@ -575,7 +575,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="eFh-QS-fa9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <state key="normal" title="Notes">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -705,7 +705,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gFr-7H-6cE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4226" y="-492"/>
+            <point key="canvasLocation" x="4259" y="-492"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="c4M-xs-cKM">

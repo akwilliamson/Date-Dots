@@ -127,8 +127,8 @@ class InitialImportVC: UIViewController {
             
             birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
             birthday.abbreviatedName = birthday.name!.abbreviateName()
-            birthday.date = actualDate
-            birthday.equalizedDate = actualDate.formatCurrentDateIntoString()
+            birthday.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+            birthday.equalizedDate = actualDate.formatDateIntoString()
             birthday.type = "birthday"
             
             
@@ -177,8 +177,8 @@ class InitialImportVC: UIViewController {
                 
                 anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
                 anniversary.abbreviatedName = anniversary.name!.abbreviateName()
-                anniversary.date = actualDate
-                anniversary.equalizedDate = actualDate.formatCurrentDateIntoString()
+                anniversary.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+                anniversary.equalizedDate = actualDate.formatDateIntoString()
                 anniversary.type = "anniversary"
             }
         }
@@ -202,8 +202,8 @@ class InitialImportVC: UIViewController {
                 
                 holiday.name = holidayName as? String
                 holiday.abbreviatedName = holidayName as? String
-                holiday.date = actualDate
-                holiday.equalizedDate = actualDate.formatCurrentDateIntoString()
+                holiday.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+                holiday.equalizedDate = actualDate.formatDateIntoString()
                 holiday.type = "holiday"
             }
         }

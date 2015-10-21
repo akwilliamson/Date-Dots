@@ -186,12 +186,8 @@ class AddDateVC: UIViewController {
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
         let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-        print(dateString)
-        let date = NSDate(dateString: dateString)
-        print(date)
-        print(date.readableDate())
-        let equalizedDate = date.formatCurrentDateIntoString()
-        print(equalizedDate)
+        let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
+        let equalizedDate = date.formatDateIntoString()
         
         dateToSave.date = date
         dateToSave.equalizedDate = equalizedDate

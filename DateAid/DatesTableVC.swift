@@ -28,6 +28,7 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(NSDate())
         addGestureRecognizers() // For SWRevealVC
         registerNibCells() // For custom Date cell
         setFetchedResultsController()
@@ -91,7 +92,7 @@ class DatesTableVC: UITableViewController {
     func sortFetchedResultsArray() -> [Date] {
         fetchedResults = fetchedResultsController?.fetchedObjects as! [Date]
 
-        currentDateString = NSDate().formatCurrentDateIntoString()
+        currentDateString = NSDate().formatDateIntoString()
         for fetchedDate in fetchedResults {
             if fetchedDate.equalizedDate < currentDateString! {
                 fetchedResults.removeAtIndex(0)
@@ -166,7 +167,7 @@ extension DatesTableVC /* UITableViewDataSource */ {
         let date = fetchedResults[indexPath.row]
         dateCell.name = date.abbreviatedName!
         dateCell.date = date.date!.readableDate()
-        
+        print("\(date.abbreviatedName!) - \(NSCalendar.currentCalendar().startOfDayForDate(date.date!))")
         if menuIndexPath == nil || menuIndexPath! == 0 { // Show all cells and set the right color
             switch date.type! {
             case "birthday":

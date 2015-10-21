@@ -31,7 +31,7 @@ extension NSDate {
         return difference
     }
     
-    func formatCurrentDateIntoString() -> String {
+    func formatDateIntoString() -> String {
         let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = formatString
@@ -68,5 +68,33 @@ extension NSDate {
     
     func getDay() -> Int {
         return getComponents().day
+    }
+    
+    func getHour() -> Int {
+        return getComponents().hour
+    }
+    
+    func getMinute() -> Int {
+        return getComponents().minute
+    }
+    
+    func getSecond() -> Int {
+        return getComponents().second
+    }
+    
+    func setYear(year: Int) -> NSDate {
+        let components = getComponents()
+        components.year = year
+        components.month = self.getMonth()
+        components.day = self.getDay()
+        components.hour = self.getHour()
+        components.minute = self.getMinute()
+        components.second = self.getSecond()
+        var date = getCalendar().dateFromComponents(components)!
+        if date == date.earlierDate(NSDate()) {
+            components.year = year + 1
+            date = getCalendar().dateFromComponents(components)!
+        }
+        return date
     }
 }
