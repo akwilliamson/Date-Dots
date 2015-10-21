@@ -23,7 +23,8 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
-    @IBOutlet weak var reminderLabel: UILabel!
+    @IBOutlet weak var reminderImageContainerView: UIView!
+    @IBOutlet weak var reminderImage: UIImageView!
     
 // MARK: VIEW SETUP
     
@@ -34,6 +35,13 @@ class DateDetailsVC: UIViewController {
         configureCountdown()
         configureDate()
         configureAge()
+        reminderImageContainerView.layer.cornerRadius = 33
+        reminderImageContainerView.clipsToBounds = true
+        reminderImageContainerView.layer.borderWidth = 2
+        reminderImageContainerView.layer.borderColor = UIColor.birthdayColor().CGColor
+        reminderImage.image = reminderImage.image?.imageWithRenderingMode(.AlwaysTemplate)
+        reminderImage.tintColor = UIColor.birthdayColor()
+        
         if let address = date.address {
             if let street = address.street {
                 addressLabel.text = street
@@ -42,10 +50,9 @@ class DateDetailsVC: UIViewController {
                 regionLabel.text = "\(city), \(state) \(zip)"
             }
         }
-        reminderLabel.text = "Reminder not set"
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
-               reminderLabel.text = "Reminder set: \(notification.fireDate!)"
+               reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
             }
         }
     }
@@ -55,6 +62,8 @@ class DateDetailsVC: UIViewController {
         dateLabel.center.y = -50
         daysUntilLabel.center.y = -50
         ageLabel.center.y = -50
+        reminderImageContainerView.center.x = 450
+        
         UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
             self.ageLabel.center.y = 84
         }, completion: nil)
@@ -67,6 +76,9 @@ class DateDetailsVC: UIViewController {
             self.dateLabel.center.y = 84
         }, completion: nil)
         
+        UIView.animateWithDuration(1, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.reminderImageContainerView.center.x = self.view.center.x
+            }, completion: nil)
     }
     
     func configureNavBar() {
