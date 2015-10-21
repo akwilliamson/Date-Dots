@@ -147,6 +147,7 @@ class AddDateVC: UIViewController {
         if segue.identifier == "EditDetails" {
             let editDetailsVC = segue.destinationViewController as! EditDetailsVC
             editDetailsVC.date = dateToSave
+            editDetailsVC.managedContext = managedContext
         }
     }
     

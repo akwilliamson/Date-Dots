@@ -28,8 +28,8 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Bold</string>
+            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
@@ -367,7 +367,9 @@
                                     <constraint firstAttribute="height" constant="45" id="pcX-I8-Ouu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="Notification Settings"/>
+                                <state key="normal" title="Notification Settings">
+                                    <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="qYj-Hm-vrr" kind="show" identifier="EditLocalNotification" id="g7o-yD-2k3"/>
                                 </connections>
@@ -431,6 +433,9 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="ALH-UX-U02"/>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="ify-k5-QjZ">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="saveAddress:" destination="ph2-zO-ERN" id="IuA-lc-KmG"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -1004,8 +1009,8 @@
         <image name="reminder-off" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oNP-ia-Yef"/>
         <segue reference="SXV-Qu-gXZ"/>
-        <segue reference="uOf-gp-zRy"/>
+        <segue reference="oNP-ia-Yef"/>
+        <segue reference="WGb-MU-B13"/>
     </inferredMetricsTieBreakers>
 </document>

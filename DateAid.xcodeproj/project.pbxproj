@@ -33,6 +33,9 @@
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */; settings = {ASSET_TAGS = (); }; };
 		97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteVC.swift */; settings = {ASSET_TAGS = (); }; };
+		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; settings = {ASSET_TAGS = (); }; };
+		97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; settings = {ASSET_TAGS = (); }; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
 		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
@@ -91,6 +94,9 @@
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableVC.swift; sourceTree = "<group>"; };
 		97AD26A21BD77439004C1C7D /* NoteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
+		97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V2_V3.xcmappingmodel; sourceTree = "<group>"; };
+		97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
@@ -198,6 +204,8 @@
 		97364CE21AFBF44A0095BC57 /* DateAid */ = {
 			isa = PBXGroup;
 			children = (
+				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
+				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
 				9791F78A1BD4CCDF001E82BB /* Address.swift */,
 				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
@@ -227,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
+				97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
 				970D93651BC47BE800D7F1FF /* PLists */,
@@ -453,6 +462,8 @@
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
+				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
+				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
 				973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */,
@@ -465,6 +476,7 @@
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
+				97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,7 +720,7 @@
 				9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */,
 				97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */,
 			);
-			currentVersion = 9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */;
+			currentVersion = 979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */;
 			path = DateAid.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

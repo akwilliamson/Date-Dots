@@ -142,19 +142,21 @@ class InitialImportVC: UIViewController {
                     let addressForBirthday = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
                     let unmanagedPhone = ABMultiValueCopyValueAtIndex(addresses, index)
                     let address = (Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
+                    addressForBirthday.street = ""
+                    addressForBirthday.region = ""
                     if let street = address.valueForKey("Street") as? String {
                         addressForBirthday.street = street
                     }
                     if let city = address.valueForKey("City") as? String {
-                        addressForBirthday.city = city
+                        addressForBirthday.region = city
                     }
                     if let state = address.valueForKey("State") as? String {
-                        addressForBirthday.state = state
+                        addressForBirthday.region? += " \(state)"
                     }
                     if let zip = address.valueForKey("ZIP") as? String {
                         if let intZip = Int(zip) {
                             let zipCode = NSNumber(integer: intZip)
-                            addressForBirthday.zip = zipCode
+                            addressForBirthday.region? += " \(zipCode)"
                         }
                     }
                     birthday.address = addressForBirthday

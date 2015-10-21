@@ -64,8 +64,8 @@ class DateDetailsVC: UIViewController {
             if let street = address.street {
                 addressLabel.text = street
             }
-            if let city = address.city, state = address.state, zip = address.zip {
-                regionLabel.text = "\(city), \(state) \(zip)"
+            if let region = address.region {
+                regionLabel.text = region
             }
         }
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {

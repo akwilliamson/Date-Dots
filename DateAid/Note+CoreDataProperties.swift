@@ -1,5 +1,5 @@
 //
-//  Address+CoreDataProperties.swift
+//  Note+CoreDataProperties.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 10/21/15.
@@ -12,10 +12,10 @@
 import Foundation
 import CoreData
 
-extension Address {
+extension Note {
 
-    @NSManaged var street: String?
-    @NSManaged var region: String?
+    @NSManaged var title: String?
+    @NSManaged var body: String?
     @NSManaged var date: Date?
 
 }

@@ -28,7 +28,6 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(NSDate())
         addGestureRecognizers() // For SWRevealVC
         registerNibCells() // For custom Date cell
         setFetchedResultsController()
@@ -37,6 +36,11 @@ class DatesTableVC: UITableViewController {
         configureNavigationBar()
         configureTabBar()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        if tableView.numberOfRowsInSection(0) == 0 {
+            let imageView = UIImageView(image: (UIImage(named: "no-birthdays.png")))
+            imageView.center = self.tableView.center
+            tableView.backgroundView = imageView
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

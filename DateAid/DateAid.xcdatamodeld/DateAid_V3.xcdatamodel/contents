@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="Address" representedClassName="DateAid.Address" syncable="YES">
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="zip" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Date" inverseName="address" inverseEntity="Date" syncable="YES"/>
     </entity>
     <entity name="Date" representedClassName="DateAid.Date" syncable="YES">
@@ -14,9 +12,16 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="date" inverseEntity="Address" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="date" inverseEntity="Note" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="DateAid.Note" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Date" inverseName="notes" inverseEntity="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="-27" positionY="54" width="128" height="120"/>
-        <element name="Date" positionX="-36" positionY="9" width="128" height="135"/>
+        <element name="Address" positionX="-27" positionY="54" width="128" height="90"/>
+        <element name="Date" positionX="-279" positionY="-15" width="128" height="150"/>
+        <element name="Note" positionX="-101" positionY="207" width="128" height="90"/>
     </elements>
 </model>

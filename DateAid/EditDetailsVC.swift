@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var date: Date!
+    var managedContext: NSManagedObjectContext?
     var streetString = ""
     var regionString = ""
 
@@ -23,14 +25,8 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         if let street = date.address?.street {
             streetString = street
         }
-        if let city = date.address?.city {
-            regionString += "\(city),"
-        }
-        if let state = date.address?.state {
-            regionString += " \(state)"
-        }
-        if let zip = date.address?.zip {
-            regionString += " \(zip)"
+        if let region = date.address?.region {
+            regionString = region
         }
         addressTextField.text = streetString
         regionTextField.text = regionString
@@ -47,11 +43,47 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         return notesCell
     }
     
+    @IBAction func saveAddress(sender: AnyObject) {
+        if addressTextField.text?.characters.count > 0 {
+            date.address?.street = addressTextField.text
+        }
+        if regionTextField.text?.characters.count > 0 {
+            date.address?.region = regionTextField.text
+        }
+        saveContext()
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
             singlePushSettingsVC.date = date
         }
     }
+    
+    func saveContext() {
+        do { try managedContext?.save()
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
 
+}
+
+extension EditDetailsVC: UITextFieldDelegate {
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let _ = touches.first {
+            view.endEditing(true)
+        }
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        return false
+    }
 }
