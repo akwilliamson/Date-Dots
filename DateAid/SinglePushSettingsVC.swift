@@ -39,15 +39,11 @@ class SinglePushSettingsVC: UIViewController {
         
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+                print(notification)
                 let fireDate = notification.fireDate!
                 let daysPrior = date!.date!.getDay() - fireDate.getDay()
                 dayLabel.text = "\(daysPrior) days prior"
                 daySlider.value = Float(daysPrior)
-                print(notification.fireDate)
-                print(notification.fireDate?.getDay())
-                print(notification.fireDate?.getHour())
-                print(notification.fireDate?.getMinute())
-                print(notification.fireDate?.getSecond())
             }
         }
     }
@@ -80,7 +76,11 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     @IBAction func createNotification(sender: AnyObject) {
-        
+        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
+            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+                UIApplication.sharedApplication().cancelLocalNotification(notification)
+            }
+        }
         let daysBeforeValue = Int(daySlider.value)
         var timeInterval = -60 * 60 * 24 * daysBeforeValue
         let hourOfDayValue = Int(timeSlider.value)
@@ -88,7 +88,7 @@ class SinglePushSettingsVC: UIViewController {
         timeInterval += secondsToAdd
         let daysBefore = date.date?.dateByAddingTimeInterval(Double(timeInterval))
         let fireDate = daysBefore?.setYear(NSDate().getYear())
-        let notification = UILocalNotification()
+        let localNotification = UILocalNotification()
         var alertString = ""
         if hourOfDayValue < 12 {
             alertString = "Good morning. "
@@ -100,19 +100,17 @@ class SinglePushSettingsVC: UIViewController {
         
         let numberOfDays = date.date!.daysBetween()
         if numberOfDays == 0 {
-            notification.alertBody = alertString + "It's \(date.name!)'s birthday today"
+            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday today"
         } else if numberOfDays == 1 {
-            notification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) day"
+            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) day"
         } else {
-            notification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) days"
+            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) days"
         }
-        notification.alertAction = "Dismiss"
-        notification.fireDate = fireDate!
-        notification.soundName = UILocalNotificationDefaultSoundName
+        localNotification.alertAction = "Dismiss"
+        localNotification.fireDate = fireDate!
+        localNotification.soundName = UILocalNotificationDefaultSoundName
         let objectId = String(date.objectID.URIRepresentation())
-        notification.userInfo = ["date": objectId]
-        print(notification.fireDate)
-        print(notification.alertBody)
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        localNotification.userInfo = ["date": objectId]
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     }
 }

@@ -79,11 +79,12 @@ class DateDetailsVC: UIViewController {
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
                 notificationImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
-                notificationImage.tintColor = UIColor.whiteColor()
                 notificationTimeLabel.text = "\(notification.fireDate!)"
             } else {
                 notificationImage.image = UIImage(named: "reminder-off.png")?.imageWithRenderingMode(.AlwaysTemplate)
+                notificationTimeLabel.text = "Not Set"
             }
+            notificationImage.tintColor = UIColor.whiteColor()
         }
         notificationView.center.y = -200
         notificationView.hidden = false
@@ -153,7 +154,11 @@ class DateDetailsVC: UIViewController {
     
     func configureCountdown() {
         let numberOfDays = date.date!.daysBetween()
-        daysUntilLabel.text = "In \(numberOfDays)\ndays"
+        if numberOfDays == 1 {
+            daysUntilLabel.text = "In \(numberOfDays)\nday"
+        } else {
+            daysUntilLabel.text = "In \(numberOfDays)\ndays"
+        }
     }
     
     func configureAge() {
