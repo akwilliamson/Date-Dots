@@ -36,6 +36,20 @@ class SinglePushSettingsVC: UIViewController {
         timeSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         dayLabel.text = "\(Int(daySlider.value)) days prior"
         timeLabel.text = timeArray[Int(round(timeSlider.value))]
+        
+        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
+            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+                let fireDate = notification.fireDate!
+                let daysPrior = date!.date!.getDay() - fireDate.getDay()
+                dayLabel.text = "\(daysPrior) days prior"
+                daySlider.value = Float(daysPrior)
+                print(notification.fireDate)
+                print(notification.fireDate?.getDay())
+                print(notification.fireDate?.getHour())
+                print(notification.fireDate?.getMinute())
+                print(notification.fireDate?.getSecond())
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,7 +75,6 @@ class SinglePushSettingsVC: UIViewController {
         if sender == daySlider {
             dayLabel.text = "\(Int(daySlider.value)) days prior"
         } else if sender == timeSlider {
-            print(Int(round(timeSlider.value)))
             timeLabel.text = timeArray[Int(round(timeSlider.value))]
         }
     }

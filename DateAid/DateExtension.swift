@@ -55,7 +55,7 @@ extension NSDate {
     }
     
     func getComponents() -> NSDateComponents {
-        return getCalendar().components([.Year, .Month, .Day], fromDate: self)
+        return getCalendar().components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: self)
     }
     
     func getYear() -> Int {

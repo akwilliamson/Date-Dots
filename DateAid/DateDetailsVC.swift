@@ -26,6 +26,13 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var reminderImageContainerView: UIView!
     @IBOutlet weak var reminderImage: UIImageView!
     
+    @IBOutlet weak var notificationView: UIView!
+    
+    @IBOutlet weak var notificationImage: UIImageView!
+    @IBOutlet weak var notificationTimeLabel: UILabel!
+
+    @IBOutlet weak var dismissButton: UIButton!
+    
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
@@ -41,6 +48,17 @@ class DateDetailsVC: UIViewController {
         reminderImageContainerView.layer.borderColor = UIColor.birthdayColor().CGColor
         reminderImage.image = reminderImage.image?.imageWithRenderingMode(.AlwaysTemplate)
         reminderImage.tintColor = UIColor.birthdayColor()
+        reminderImage.userInteractionEnabled = true
+        notificationView.hidden = true
+        notificationView.layer.cornerRadius = 10
+        notificationView.clipsToBounds = true
+        notificationView.layer.borderWidth = 2
+        notificationView.layer.borderColor = UIColor.whiteColor().CGColor
+        dismissButton.layer.cornerRadius = 8
+        dismissButton.clipsToBounds = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("showNotificationView:"))
+        gestureRecognizer.numberOfTapsRequired = 1
+        reminderImage.addGestureRecognizer(gestureRecognizer)
         
         if let address = date.address {
             if let street = address.street {
@@ -55,6 +73,23 @@ class DateDetailsVC: UIViewController {
                reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
             }
         }
+    }
+    
+    func showNotificationView(sender: UITapGestureRecognizer) {
+        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
+            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+                notificationImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
+                notificationImage.tintColor = UIColor.whiteColor()
+                notificationTimeLabel.text = "\(notification.fireDate!)"
+            } else {
+                notificationImage.image = UIImage(named: "reminder-off.png")?.imageWithRenderingMode(.AlwaysTemplate)
+            }
+        }
+        notificationView.center.y = -200
+        notificationView.hidden = false
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.notificationView.center.y = self.view.center.y
+            }, completion: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -102,6 +137,13 @@ class DateDetailsVC: UIViewController {
                 break
             }
         }
+    }
+    
+    @IBAction func dismissButton(sender: AnyObject) {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.notificationView.center.y = 1500
+            }, completion: nil)
+        notificationView.hidden = true
     }
     
     func configureDate() {
