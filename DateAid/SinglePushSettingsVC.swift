@@ -39,11 +39,12 @@ class SinglePushSettingsVC: UIViewController {
         
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
-                print(notification)
                 let fireDate = notification.fireDate!
                 let daysPrior = date!.date!.getDay() - fireDate.getDay()
                 dayLabel.text = "\(daysPrior) days prior"
                 daySlider.value = Float(daysPrior)
+                timeLabel.text = timeArray[fireDate.getHour()]
+                timeSlider.value = Float(fireDate.getHour())
             }
         }
     }

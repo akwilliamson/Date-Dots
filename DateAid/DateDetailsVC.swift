@@ -78,8 +78,22 @@ class DateDetailsVC: UIViewController {
     func showNotificationView(sender: UITapGestureRecognizer) {
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
+                let fireDate = notification.fireDate!
+                let daysPrior = date!.date!.getDay() - fireDate.getDay()
                 notificationImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
-                notificationTimeLabel.text = "\(notification.fireDate!)"
+                var dayString: String?
+                if daysPrior == 1 {
+                    dayString = "\(daysPrior) day prior"
+                } else {
+                    dayString = "\(daysPrior) days prior"
+                }
+                var timeString: String?
+                if fireDate.getHour() < 13 {
+                    timeString = "\(fireDate.getHour()) AM"
+                } else {
+                    timeString = "\(fireDate.getHour() - 12) PM"
+                }
+                notificationTimeLabel.text = "\(dayString!)\nat \(timeString!)"
             } else {
                 notificationImage.image = UIImage(named: "reminder-off.png")?.imageWithRenderingMode(.AlwaysTemplate)
                 notificationTimeLabel.text = "Not Set"
@@ -141,8 +155,8 @@ class DateDetailsVC: UIViewController {
     }
     
     @IBAction func dismissButton(sender: AnyObject) {
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.notificationView.center.y = 1500
+        UIView.animateWithDuration(0.7, delay: 0, options: [], animations: { () -> Void in
+            self.notificationView.layer.opacity = 1
             }, completion: nil)
         notificationView.hidden = true
     }

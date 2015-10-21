@@ -28,8 +28,8 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Bold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-Bold</string>
             <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
@@ -660,10 +660,10 @@
                                             <constraint firstAttribute="height" constant="50" id="TXX-Rl-2mS"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UjI-Bm-qcj">
-                                        <rect key="frame" x="8" y="108" width="524" height="40"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UjI-Bm-qcj">
+                                        <rect key="frame" x="8" y="103" width="524" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="HFb-n7-7gF"/>
+                                            <constraint firstAttribute="height" constant="60" id="rZX-Vh-bi9"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -689,17 +689,16 @@
                                     <constraint firstAttribute="trailing" secondItem="mV5-ws-P8i" secondAttribute="trailing" constant="8" id="1oL-Hm-xoi"/>
                                     <constraint firstAttribute="bottom" secondItem="50U-Ad-ycT" secondAttribute="bottom" constant="13" id="AOh-Ff-D2B"/>
                                     <constraint firstItem="eX8-xz-BN8" firstAttribute="top" secondItem="09a-36-UF4" secondAttribute="top" constant="8" id="FpY-M7-tlc"/>
-                                    <constraint firstItem="UjI-Bm-qcj" firstAttribute="centerX" secondItem="09a-36-UF4" secondAttribute="centerX" id="Mqf-pY-kch"/>
+                                    <constraint firstItem="UjI-Bm-qcj" firstAttribute="leading" secondItem="09a-36-UF4" secondAttribute="leading" constant="8" id="Gur-1U-zDn"/>
                                     <constraint firstItem="mV5-ws-P8i" firstAttribute="centerX" secondItem="09a-36-UF4" secondAttribute="centerX" id="Mwx-nc-Q7T"/>
-                                    <constraint firstItem="UjI-Bm-qcj" firstAttribute="leading" secondItem="09a-36-UF4" secondAttribute="leading" constant="8" id="N5N-4O-GJQ"/>
                                     <constraint firstItem="mV5-ws-P8i" firstAttribute="leading" secondItem="09a-36-UF4" secondAttribute="leading" constant="8" id="NAj-Gg-0mv"/>
-                                    <constraint firstItem="UjI-Bm-qcj" firstAttribute="top" secondItem="mV5-ws-P8i" secondAttribute="bottom" constant="5" id="OYa-Ry-xmW"/>
                                     <constraint firstItem="mV5-ws-P8i" firstAttribute="top" secondItem="eX8-xz-BN8" secondAttribute="bottom" constant="5" id="Qdz-Ey-yRk"/>
+                                    <constraint firstItem="UjI-Bm-qcj" firstAttribute="top" secondItem="mV5-ws-P8i" secondAttribute="bottom" id="ZdH-H6-8fS"/>
                                     <constraint firstItem="eX8-xz-BN8" firstAttribute="centerX" secondItem="09a-36-UF4" secondAttribute="centerX" id="bAn-cc-5yC"/>
-                                    <constraint firstAttribute="trailing" secondItem="UjI-Bm-qcj" secondAttribute="trailing" constant="8" id="dYO-sZ-qWk"/>
                                     <constraint firstItem="50U-Ad-ycT" firstAttribute="leading" secondItem="09a-36-UF4" secondAttribute="leading" constant="13" id="jle-Tf-WHM"/>
                                     <constraint firstItem="50U-Ad-ycT" firstAttribute="centerX" secondItem="09a-36-UF4" secondAttribute="centerX" id="l2p-Gn-lj3"/>
                                     <constraint firstAttribute="trailing" secondItem="50U-Ad-ycT" secondAttribute="trailing" constant="13" id="pfQ-ni-dEf"/>
+                                    <constraint firstAttribute="trailing" secondItem="UjI-Bm-qcj" secondAttribute="trailing" constant="8" id="pu8-Yh-TTX"/>
                                 </constraints>
                             </view>
                         </subviews>
