@@ -9,7 +9,11 @@
 import UIKit
 import CoreData
 
-class AddDateVC: UIViewController {
+protocol SetAddressDelegate {
+    func setAddressProperties(street: String?, region: String?)
+}
+
+class AddDateVC: UIViewController, SetAddressDelegate {
     
 // MARK: PROPERTIES
     
@@ -21,6 +25,8 @@ class AddDateVC: UIViewController {
     let holidayColor = UIColor.holidayColor()
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     var sliderLabelsAdded = false
+    var street: String?
+    var region: String?
     
 // MARK: OUTLETS
 
@@ -34,6 +40,7 @@ class AddDateVC: UIViewController {
     @IBOutlet weak var yearSlider: ValueSlider!
     @IBOutlet weak var monthSlider: ValueSlider!
     @IBOutlet weak var daySlider: ValueSlider!
+    @IBOutlet weak var nameFieldBlankView: UIView!
     
 // MARK: VIEW SETUP
     
@@ -68,6 +75,15 @@ class AddDateVC: UIViewController {
         default:
             break
         }
+    }
+    
+    @IBAction func dismissWarning(sender: AnyObject) {
+        nameFieldBlankView.hidden = true
+    }
+    
+    func setAddressProperties(street: String?, region: String?) {
+        self.street = street
+        self.region = region
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -148,6 +164,7 @@ class AddDateVC: UIViewController {
             let editDetailsVC = segue.destinationViewController as! EditDetailsVC
             editDetailsVC.date = dateToSave
             editDetailsVC.managedContext = managedContext
+            editDetailsVC.delegate = self
         }
     }
     
@@ -186,15 +203,28 @@ class AddDateVC: UIViewController {
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
-        let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-        let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
-        let equalizedDate = date.formatDateIntoString()
         
-        dateToSave.date = date
-        dateToSave.equalizedDate = equalizedDate
-        saveContext()
-        
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        if nameField.text?.characters.count == 0 || nameField.text == nil {
+            nameFieldBlankView.hidden = false
+        } else {
+            let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+            let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
+            let equalizedDate = date.formatDateIntoString()
+
+            dateToSave.date = date
+            dateToSave.equalizedDate = equalizedDate
+            dateToSave.name = nameField.text?.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
+            dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
+            if dateToSave.address == nil {
+                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+                let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                dateToSave.address = newAddress
+            }
+            dateToSave.address?.street = street
+            dateToSave.address?.region = region
+            saveContext()
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
     
     func saveContext() {

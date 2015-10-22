@@ -12,6 +12,7 @@ import CoreData
 class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var date: Date!
+    var delegate: SetAddressDelegate?
     var managedContext: NSManagedObjectContext?
     var streetString = ""
     var regionString = ""
@@ -21,7 +22,6 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let street = date.address?.street {
             streetString = street
         }
@@ -43,14 +43,9 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         return notesCell
     }
     
-    @IBAction func saveAddress(sender: AnyObject) {
-        if addressTextField.text?.characters.count > 0 {
-            date.address?.street = addressTextField.text
-        }
-        if regionTextField.text?.characters.count > 0 {
-            date.address?.region = regionTextField.text
-        }
-        saveContext()
+    @IBAction func done(sender: AnyObject) {
+        delegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -59,14 +54,6 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             singlePushSettingsVC.date = date
         }
     }
-    
-    func saveContext() {
-        do { try managedContext?.save()
-        } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
-        }
-    }
-
 }
 
 extension EditDetailsVC: UITextFieldDelegate {

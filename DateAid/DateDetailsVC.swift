@@ -49,7 +49,6 @@ class DateDetailsVC: UIViewController {
         reminderImage.image = reminderImage.image?.imageWithRenderingMode(.AlwaysTemplate)
         reminderImage.tintColor = UIColor.birthdayColor()
         reminderImage.userInteractionEnabled = true
-        notificationView.hidden = true
         notificationView.layer.cornerRadius = 10
         notificationView.clipsToBounds = true
         notificationView.layer.borderWidth = 2
@@ -62,10 +61,18 @@ class DateDetailsVC: UIViewController {
         
         if let address = date.address {
             if let street = address.street {
-                addressLabel.text = street
+                if street.characters.count > 0 {
+                    addressLabel.text = street
+                } else {
+                    addressLabel.text = "Mailing Address not set"
+                }
             }
             if let region = address.region {
-                regionLabel.text = region
+                if region.characters.count > 0 {
+                    regionLabel.text = region
+                } else {
+                    regionLabel.text = "City, State Zip not set"
+                }
             }
         }
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
@@ -73,6 +80,10 @@ class DateDetailsVC: UIViewController {
                reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
             }
         }
+    }
+    
+    @IBAction func unwindToDateDetails(segue: UIStoryboardSegue) {
+        self.loadView()
     }
     
     func showNotificationView(sender: UITapGestureRecognizer) {
