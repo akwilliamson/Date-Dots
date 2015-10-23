@@ -15,6 +15,8 @@ class DateDetailsVC: UIViewController {
 
     var managedContext: NSManagedObjectContext?
     var date: Date!
+    
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
 
 // MARK: OUTLETS
     
@@ -40,29 +42,18 @@ class DateDetailsVC: UIViewController {
         configureCountdown()
         configureDate()
         configureAge()
+        
+        if let dateType = date.type {
+            reminderImageContainerView.layer.borderColor = colorForType[dateType]?.CGColor
+            reminderImage.tintColor = colorForType[dateType]
+            notesButton.backgroundColor = colorForType[dateType]
+            notificationView.backgroundColor = colorForType[dateType]
+        }
+        
         reminderImageContainerView.layer.cornerRadius = 33
         reminderImageContainerView.clipsToBounds = true
         reminderImageContainerView.layer.borderWidth = 2
         reminderImage.image = reminderImage.image?.imageWithRenderingMode(.AlwaysTemplate)
-        switch date.type! {
-        case "birthday":
-            reminderImageContainerView.layer.borderColor = UIColor.birthdayColor().CGColor
-            reminderImage.tintColor = UIColor.birthdayColor()
-            notesButton.backgroundColor = UIColor.birthdayColor()
-            notificationView.backgroundColor = UIColor.birthdayColor()
-        case "anniversary":
-            reminderImageContainerView.layer.borderColor = UIColor.anniversaryColor().CGColor
-            reminderImage.tintColor = UIColor.anniversaryColor()
-            notesButton.backgroundColor = UIColor.anniversaryColor()
-            notificationView.backgroundColor = UIColor.anniversaryColor()
-        case "holiday":
-            reminderImageContainerView.layer.borderColor = UIColor.holidayColor().CGColor
-            reminderImage.tintColor = UIColor.holidayColor()
-            notesButton.backgroundColor = UIColor.holidayColor()
-            notificationView.backgroundColor = UIColor.holidayColor()
-        default:
-            break
-        }
         reminderImage.userInteractionEnabled = true
         notificationView.layer.cornerRadius = 10
         notificationView.clipsToBounds = true
@@ -70,9 +61,11 @@ class DateDetailsVC: UIViewController {
         notificationView.layer.borderColor = UIColor.whiteColor().CGColor
         dismissButton.layer.cornerRadius = 8
         dismissButton.clipsToBounds = true
+        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("showNotificationView:"))
         gestureRecognizer.numberOfTapsRequired = 1
         reminderImage.addGestureRecognizer(gestureRecognizer)
+        
         if let address = date.address {
             if let street = address.street {
                 if street.characters.count > 0 {
@@ -94,6 +87,19 @@ class DateDetailsVC: UIViewController {
                reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
             }
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
+        animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)
+        animateDropInLabelFor(dateLabel, fromPosition: -50, delay: 0.2)
+        
+        reminderImageContainerView.center.x = 450
+        UIView.animateWithDuration(1, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.reminderImageContainerView.center.x = self.view.center.x
+            }, completion: nil)
     }
     
     @IBAction func unwindToDateDetails(segue: UIStoryboardSegue) {
@@ -133,27 +139,10 @@ class DateDetailsVC: UIViewController {
         }, completion: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        dateLabel.center.y = -50
-        daysUntilLabel.center.y = -50
-        ageLabel.center.y = -50
-        reminderImageContainerView.center.x = 450
-        
-        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.ageLabel.center.y = 84
-        }, completion: nil)
-        
-        UIView.animateWithDuration(1, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.daysUntilLabel.center.y = 84
-        }, completion: nil)
-        
-        UIView.animateWithDuration(1, delay: 0.2, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.dateLabel.center.y = 84
-        }, completion: nil)
-        
-        UIView.animateWithDuration(1, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.reminderImageContainerView.center.x = self.view.center.x
+    func animateDropInLabelFor(label: UILabel, fromPosition: CGFloat, delay: NSTimeInterval) {
+        label.center.y = fromPosition
+        UIView.animateWithDuration(1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            label.center.y = 84
             }, completion: nil)
     }
     
@@ -162,18 +151,10 @@ class DateDetailsVC: UIViewController {
     }
     
     func styleLabels() {
-        let labelsArray = [dateLabel, daysUntilLabel, ageLabel]
-        for label in labelsArray {
-            switch date.type! {
-            case "birthday":
-                label.backgroundColor = UIColor.birthdayColor()
-            case "anniversary":
-                label.backgroundColor = UIColor.anniversaryColor()
-            case "holiday":
-                label.backgroundColor = UIColor.holidayColor()
-            default:
-                break
-            }
+        if let dateType = date.type {
+            ageLabel.backgroundColor = colorForType[dateType]
+            daysUntilLabel.backgroundColor = colorForType[dateType]
+            dateLabel.backgroundColor = colorForType[dateType]
         }
     }
     

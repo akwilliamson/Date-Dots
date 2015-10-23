@@ -14,9 +14,7 @@ class SinglePushSettingsVC: UIViewController {
     
     var date: Date!
     
-    let birthdayColor = UIColor.birthdayColor()
-    let anniversaryColor = UIColor.anniversaryColor()
-    let holidayColor = UIColor.holidayColor()
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM",
                      "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
@@ -112,27 +110,12 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     func setColorsOfLabelsAndSliders() {
-        switch date.type! {
-        case "birthday":
-            dayLabel.backgroundColor = birthdayColor
-            timeLabel.backgroundColor = birthdayColor
-            soundLabel.backgroundColor = birthdayColor
-            daySlider.setColorTo(birthdayColor)
-            timeSlider.setColorTo(birthdayColor)
-        case "anniversary":
-            dayLabel.backgroundColor = anniversaryColor
-            timeLabel.backgroundColor = anniversaryColor
-            soundLabel.backgroundColor = anniversaryColor
-            daySlider.setColorTo(anniversaryColor)
-            timeSlider.setColorTo(anniversaryColor)
-        case "holiday":
-            dayLabel.backgroundColor = holidayColor
-            timeLabel.backgroundColor = holidayColor
-            soundLabel.backgroundColor = holidayColor
-            daySlider.setColorTo(holidayColor)
-            timeSlider.setColorTo(holidayColor)
-        default:
-            break
+        if let dateType = date.type {
+            dayLabel.backgroundColor = colorForType[dateType]
+            timeLabel.backgroundColor = colorForType[dateType]
+            soundLabel.backgroundColor = colorForType[dateType]
+            daySlider.setColorTo(colorForType[dateType]!)
+            timeSlider.setColorTo(colorForType[dateType]!)
         }
     }
     

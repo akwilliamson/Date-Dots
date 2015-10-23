@@ -9,11 +9,12 @@
 import UIKit
 import CoreData
 
-class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class EditDetailsVC: UIViewController {
     
     var date: Date!
     var delegate: SetAddressDelegate?
     var managedContext: NSManagedObjectContext?
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     var streetString = ""
     var regionString = ""
 
@@ -23,38 +24,20 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        switch date.type! {
-        case "birthday":
-            notificationSettingsButton.setTitleColor(UIColor.birthdayColor(), forState: .Normal)
-        case "anniversary":
-            notificationSettingsButton.setTitleColor(UIColor.anniversaryColor(), forState: .Normal)
-        case "holiday":
-            notificationSettingsButton.setTitleColor(UIColor.holidayColor(), forState: .Normal)
-        default:
-            break
-        }
         
-        addressTextField.delegate = self
-        regionTextField.delegate = self
+        if let dateType = date.type {
+            notificationSettingsButton.setTitleColor(colorForType[dateType], forState: .Normal)
+        }
         if let street = date.address?.street {
             streetString = street
         }
         if let region = date.address?.region {
             regionString = region
         }
+        addressTextField.delegate = self
         addressTextField.text = streetString
+        regionTextField.delegate = self
         regionTextField.text = regionString
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let notesCell = tableView.dequeueReusableCellWithIdentifier("NotesCell", forIndexPath: indexPath) 
-        notesCell.textLabel!.text = "This is a note"
-        
-        return notesCell
     }
     
     @IBAction func done(sender: AnyObject) {
@@ -87,4 +70,22 @@ extension EditDetailsVC: UITextFieldDelegate {
     func textFieldShouldClear(textField: UITextField) -> Bool {
         return false
     }
+}
+
+extension EditDetailsVC: UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let notesCell = tableView.dequeueReusableCellWithIdentifier("NotesCell", forIndexPath: indexPath)
+        notesCell.textLabel!.text = "This is a note"
+        
+        return notesCell
+    }
+}
+
+extension EditDetailsVC: UITableViewDelegate {
+
 }
