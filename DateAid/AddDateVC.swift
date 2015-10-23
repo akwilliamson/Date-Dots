@@ -27,6 +27,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     var sliderLabelsAdded = false
     var street: String?
     var region: String?
+    var incomingColor: UIColor!
     
 // MARK: OUTLETS
 
@@ -41,6 +42,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     @IBOutlet weak var monthSlider: ValueSlider!
     @IBOutlet weak var daySlider: ValueSlider!
     @IBOutlet weak var nameFieldBlankView: UIView!
+    @IBOutlet weak var dismissNameFieldBlankButton: UIButton!
     
 // MARK: VIEW SETUP
     
@@ -52,6 +54,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         populateEditableValues()
         setDelegates()
         addLabelsToSliders([yearSlider, monthSlider, daySlider])
+        
         yearSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
@@ -84,13 +87,6 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     func setAddressProperties(street: String?, region: String?) {
         self.street = street
         self.region = region
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if isBeingEdited == false {
-            nameField.becomeFirstResponder()
-        }
     }
     
     func setUpViewColors(type: String) {
@@ -135,7 +131,16 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         if dateToSave == nil {
             let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
             dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            dateToSave.type = "birthday"
+            switch incomingColor! {
+            case birthdayColor:
+                dateToSave.type = "birthday"
+            case anniversaryColor:
+                dateToSave.type = "anniversary"
+            case holidayColor:
+                dateToSave.type = "holiday"
+            default:
+                break
+            }
         }
     }
     
@@ -172,6 +177,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     
     @IBAction func birthdayButton(sender: AnyObject) {
         changeColorOfSlidersTo(birthdayColor, sliders: [yearSlider, monthSlider, daySlider])
+        editDetailsButton.tintColor = birthdayColor
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
         holidayButton.titleLabel!.layer.removeAllAnimations()
         animateButton(birthdayButton)
@@ -180,6 +186,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     
     @IBAction func anniversaryButton(sender: AnyObject) {
         changeColorOfSlidersTo(anniversaryColor, sliders: [yearSlider, monthSlider, daySlider])
+        editDetailsButton.tintColor = anniversaryColor
         birthdayButton.titleLabel!.layer.removeAllAnimations()
         holidayButton.titleLabel!.layer.removeAllAnimations()
         animateButton(anniversaryButton)
@@ -188,6 +195,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     
     @IBAction func holidayButton(sender: AnyObject) {
         changeColorOfSlidersTo(holidayColor, sliders: [yearSlider, monthSlider, daySlider])
+        editDetailsButton.tintColor = holidayColor
         birthdayButton.titleLabel!.layer.removeAllAnimations()
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
         animateButton(holidayButton)

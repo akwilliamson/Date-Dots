@@ -14,7 +14,10 @@ class BackTableVC: UITableViewController {
 // MARK: PROPERTIES
     
     let managedContext = CoreDataStack().managedObjectContext
-    let tableArray = ["All", "Birthdays", "Anniversaries", "Holidays"]
+    let categoryValuesTuple = [("All", UIColor.darkGrayColor()),
+                         ("Birthdays", UIColor.birthdayColor()),
+                     ("Anniversaries", UIColor.anniversaryColor()),
+                          ("Holidays", UIColor.holidayColor())]
     
 // MARK: VIEW SETUP
     
@@ -23,37 +26,19 @@ class BackTableVC: UITableViewController {
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        configureTopViewInteraction(allowed: false)
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        configureTopViewInteraction(allowed: true)
-    }
-    
 // MARK: TABLE VIEW
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableArray.count
+        return categoryValuesTuple.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as UITableViewCell
-        let label = navigationCell.viewWithTag(1) as! UILabel
-        label.text = tableArray[indexPath.row]
         
-        switch tableArray[indexPath.row] {
-        case "All":
-            label.textColor = UIColor.blackColor()
-        case "Birthdays":
-            label.textColor = UIColor.birthdayColor()
-        case "Anniversaries":
-            label.textColor = UIColor.anniversaryColor()
-        default:
-            label.textColor = UIColor.holidayColor()
-        }
+        let categoryLabel = navigationCell.viewWithTag(1) as! UILabel
+        categoryLabel.text = categoryValuesTuple[indexPath.row].0
+        categoryLabel.textColor = categoryValuesTuple[indexPath.row].1
+        
         return navigationCell
     }
     
@@ -62,31 +47,26 @@ class BackTableVC: UITableViewController {
         let destinationVC = navigationVC.topViewController as! DatesTableVC
         
         let indexPath = self.tableView.indexPathForSelectedRow
-        
         switch indexPath!.row {
         case 0:
             destinationVC.menuIndexPath = 0
             destinationVC.datesPredicate = nil
+            destinationVC.typeColorForNewDate = UIColor.birthdayColor()
         case 1:
             destinationVC.menuIndexPath = 1
             destinationVC.datesPredicate = NSPredicate(format: "type = %@", "birthday")
+            destinationVC.typeColorForNewDate = UIColor.birthdayColor()
         case 2:
             destinationVC.menuIndexPath = 2
             destinationVC.datesPredicate = NSPredicate(format: "type = %@", "anniversary")
-        default: // indexPath!.row = 3
+            destinationVC.typeColorForNewDate = UIColor.anniversaryColor()
+        case 3:
             destinationVC.menuIndexPath = 3
             destinationVC.datesPredicate = NSPredicate(format: "type = %@", "holiday")
+            destinationVC.typeColorForNewDate = UIColor.holidayColor()
+        default:
+            break
         }
     }
     
-// MARK: HELPERS
-    
-    func configureTopViewInteraction(allowed allowed: Bool) {
-        if allowed {
-            self.revealViewController().frontViewController.view.userInteractionEnabled = true
-        } else {
-            self.revealViewController().frontViewController.view.userInteractionEnabled = false
-        }
-        self.revealViewController().view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-    }
 }

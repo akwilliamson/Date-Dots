@@ -19,9 +19,23 @@ class EditDetailsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
+    @IBOutlet weak var notificationSettingsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        switch date.type! {
+        case "birthday":
+            notificationSettingsButton.setTitleColor(UIColor.birthdayColor(), forState: .Normal)
+        case "anniversary":
+            notificationSettingsButton.setTitleColor(UIColor.anniversaryColor(), forState: .Normal)
+        case "holiday":
+            notificationSettingsButton.setTitleColor(UIColor.holidayColor(), forState: .Normal)
+        default:
+            break
+        }
+        
+        addressTextField.delegate = self
+        regionTextField.delegate = self
         if let street = date.address?.street {
             streetString = street
         }

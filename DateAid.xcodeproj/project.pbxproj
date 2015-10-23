@@ -44,6 +44,7 @@
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
+		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; settings = {ASSET_TAGS = (); }; };
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; settings = {ASSET_TAGS = (); }; };
 		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; settings = {ASSET_TAGS = (); }; };
@@ -105,6 +106,7 @@
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		97D266991BD95380008F7EF8 /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
@@ -204,14 +206,9 @@
 		97364CE21AFBF44A0095BC57 /* DateAid */ = {
 			isa = PBXGroup;
 			children = (
-				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
-				97AD26A71BD81C59004C1C7D /* Note.swift */,
-				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
-				9791F78A1BD4CCDF001E82BB /* Address.swift */,
-				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
-				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
-				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
 				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
+				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
+				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
 				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
 				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
@@ -221,12 +218,11 @@
 				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
 				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
 				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
-				97364CE31AFBF44A0095BC57 /* Supporting Files */,
+				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
+				97D2669B1BD98FE3008F7EF8 /* Models */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
-				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
-				976BD4F61B2D079200415D65 /* DateCell.swift */,
-				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
+				97364CE31AFBF44A0095BC57 /* Supporting Files */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -263,9 +259,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		97D2669B1BD98FE3008F7EF8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
+				97AD26A71BD81C59004C1C7D /* Note.swift */,
+				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
+				9791F78A1BD4CCDF001E82BB /* Address.swift */,
+				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
+				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		97DC1EC51BC5927F00FEE6BE /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				976BD4F61B2D079200415D65 /* DateCell.swift */,
+				97D266991BD95380008F7EF8 /* CircleLabel.swift */,
 				970807591BC7288100F030D3 /* ValueSlider.swift */,
 				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
 				9708075B1BC7303800F030D3 /* TypeButton.swift */,
@@ -470,6 +481,7 @@
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
+				97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,

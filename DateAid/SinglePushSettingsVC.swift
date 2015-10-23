@@ -10,7 +10,14 @@ import UIKit
 
 class SinglePushSettingsVC: UIViewController {
     
+    let application = UIApplication.sharedApplication()
+    
     var date: Date!
+    
+    let birthdayColor = UIColor.birthdayColor()
+    let anniversaryColor = UIColor.anniversaryColor()
+    let holidayColor = UIColor.holidayColor()
+    
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM",
                      "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
     
@@ -24,62 +31,138 @@ class SinglePushSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dayLabel.layer.cornerRadius = 47
-        dayLabel.clipsToBounds = true
-        timeLabel.layer.cornerRadius = 47
-        timeLabel.clipsToBounds = true
-        soundLabel.layer.cornerRadius = 47
-        soundLabel.clipsToBounds = true
-        daySlider.setValues(min: 0, max: 21, value: 0)
-        timeSlider.setValues(min: 0, max: 23, value: 0)
+        
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         timeSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        dayLabel.text = "\(Int(daySlider.value)) days prior"
-        timeLabel.text = timeArray[Int(round(timeSlider.value))]
         
-        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
-            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
-                let fireDate = notification.fireDate!
-                let daysPrior = date!.date!.getDay() - fireDate.getDay()
-                dayLabel.text = "\(daysPrior) days prior"
-                daySlider.value = Float(daysPrior)
-                timeLabel.text = timeArray[fireDate.getHour()]
-                timeSlider.value = Float(fireDate.getHour())
-            }
-        }
+        populateLabelAndSliderValues()
+        setColorsOfLabelsAndSliders()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        dayLabel.center.y = -50
-        timeLabel.center.y = -50
-        soundLabel.center.y = -50
-        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.dayLabel.center.y = 84
-            }, completion: nil)
         
-        UIView.animateWithDuration(1, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.timeLabel.center.y = 84
-            }, completion: nil)
+        animateDropInLabelFor(dayLabel, fromPosition: -50, delay: 0)
+        animateDropInLabelFor(timeLabel, fromPosition: -50, delay: 0.1)
+        animateDropInLabelFor(soundLabel, fromPosition: -50, delay: 0.2)
+    }
+    
+    func populateLabelAndSliderValues() {
         
-        UIView.animateWithDuration(1, delay: 0.2, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.soundLabel.center.y = 84
-            }, completion: nil)
+        var notificationDidPopulateView: Bool?
+        
+        if let notifications = application.scheduledLocalNotifications {
+            for notification in notifications {
+                if let notificationID = notification.userInfo!["date"] as? String {
+                    let dateObjectID = String(date.objectID.URIRepresentation())
+                    if notificationID == dateObjectID {
+                        if let dayOfNotification = notification.fireDate?.getDay(),
+                            let hourOfNotification = notification.fireDate?.getHour(),
+                            let dayOfDate = date?.date?.getDay() {
+                                
+                                let numberOfDays = dayOfDate - dayOfNotification
+                                dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: numberOfDays)
+                                timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: hourOfNotification)
+                                daySlider.value = Float(numberOfDays)
+                                timeSlider.value = Float(hourOfNotification)
+                                
+                                notificationDidPopulateView = true
+                        }
+                    }
+                }
+            }
+            if notificationDidPopulateView != true { // There were no matching scheduled local notifications, so
+                staticallySetLabelAndSliderValues()
+            }
+        } else { // There were no scheduled local notifications at all, so
+            staticallySetLabelAndSliderValues()
+        }
+    }
+    
+    func daysPriorString(inSlider inSlider: ValueSlider, forDaysPrior: Int?) -> String {
+        var daysPrior: Int
+        let sliderValue = Int(inSlider.value)
+        
+        if let notificationDaysPrior = forDaysPrior { // Notification found, so
+            daysPrior = notificationDaysPrior
+        } else { // No notification found, so
+            daysPrior = sliderValue
+        }
+        return daysPrior == 1 ? "\(daysPrior) day prior" : "\(daysPrior) days prior"
+    }
+    
+    func timePriorString(inSlider inSlider: ValueSlider, forHourOfDay: Int?) -> String {
+        var hourOfDay: Int
+        let sliderValue = Int(round(inSlider.value))
+        
+        if let notificationHourOfDay = forHourOfDay { // Notification found, so
+            hourOfDay = notificationHourOfDay
+        } else { // No notification found, so
+            hourOfDay = sliderValue
+        }
+        return timeArray[hourOfDay]
+    }
+    
+    func staticallySetLabelAndSliderValues() {
+        dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: nil)
+        timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: nil)
+        daySlider.setValues(min: 0, max: 21, value: 0)
+        timeSlider.setValues(min: 0, max: 23, value: 0)
+    }
+    
+    func setColorsOfLabelsAndSliders() {
+        switch date.type! {
+        case "birthday":
+            dayLabel.backgroundColor = birthdayColor
+            timeLabel.backgroundColor = birthdayColor
+            soundLabel.backgroundColor = birthdayColor
+            daySlider.setColorTo(birthdayColor)
+            timeSlider.setColorTo(birthdayColor)
+        case "anniversary":
+            dayLabel.backgroundColor = anniversaryColor
+            timeLabel.backgroundColor = anniversaryColor
+            soundLabel.backgroundColor = anniversaryColor
+            daySlider.setColorTo(anniversaryColor)
+            timeSlider.setColorTo(anniversaryColor)
+        case "holiday":
+            dayLabel.backgroundColor = holidayColor
+            timeLabel.backgroundColor = holidayColor
+            soundLabel.backgroundColor = holidayColor
+            daySlider.setColorTo(holidayColor)
+            timeSlider.setColorTo(holidayColor)
+        default:
+            break
+        }
+    }
+    
+    func animateDropInLabelFor(label: UILabel, fromPosition: CGFloat, delay: NSTimeInterval) {
+        label.center.y = fromPosition
+        UIView.animateWithDuration(1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            label.center.y = 84
+        }, completion: nil)
     }
     
     func valueChanged(sender: ValueSlider) {
-        sender.value = round(sender.value)
-        if sender == daySlider {
-            dayLabel.text = "\(Int(daySlider.value)) days prior"
-        } else if sender == timeSlider {
+        switch sender {
+        case daySlider:
+            dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: nil)
+        case timeSlider:
             timeLabel.text = timeArray[Int(round(timeSlider.value))]
+        default:
+            break
         }
     }
     
     @IBAction func createNotification(sender: AnyObject) {
-        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
-            if notification.userInfo!["date"] as! String == String(date.objectID.URIRepresentation()) {
-                UIApplication.sharedApplication().cancelLocalNotification(notification)
+        if let notifications = application.scheduledLocalNotifications {
+            for notification in notifications {
+                if let notificationID = notification.userInfo!["date"] as? String {
+                    let dateID = String(date.objectID.URIRepresentation())
+                    if notificationID == dateID {
+                        application.cancelLocalNotification(notification)
+                    }
+                }
             }
         }
         let daysBeforeValue = Int(daySlider.value)
@@ -112,6 +195,6 @@ class SinglePushSettingsVC: UIViewController {
         localNotification.soundName = UILocalNotificationDefaultSoundName
         let objectId = String(date.objectID.URIRepresentation())
         localNotification.userInfo = ["date": objectId]
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        application.scheduleLocalNotification(localNotification)
     }
 }

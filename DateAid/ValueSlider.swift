@@ -24,4 +24,10 @@ class ValueSlider: ASValueTrackingSlider {
         self.maximumValue = max
         self.value = value
     }
+    
+    func setColorTo(color: UIColor) {
+        self.thumbTintColor = color
+        self.minimumTrackTintColor = color
+        self.popUpViewColor = color
+    }
 }
