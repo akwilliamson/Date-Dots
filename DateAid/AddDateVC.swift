@@ -13,21 +13,25 @@ protocol SetAddressDelegate {
     func setAddressProperties(street: String?, region: String?)
 }
 
-class AddDateVC: UIViewController, SetAddressDelegate {
+class AddDateVC: UIViewController {
     
 // MARK: PROPERTIES
     
-    var incomingColor: UIColor!
-
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    
+    var managedContext: NSManagedObjectContext?
     var dateToSave: Date!
     var isBeingEdited: Bool!
-    var managedContext: NSManagedObjectContext?
-    let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
-    var sliderLabelsAdded = false
+    var incomingColor: UIColor!
     var street: String?
     var region: String?
+    
+    var buttonForType: [String: TypeButton]!
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
+    
+    let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
+    let fullMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    let fullDays = ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",
+                    "11th","12th","13th","14th","15th","16th","17th","18th","19th","20th",
+                    "21st","22nd","23rd","24th","25th","26th","27th","28th","29th","30th","31st"]
     
 // MARK: OUTLETS
 
@@ -37,7 +41,6 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     @IBOutlet weak var anniversaryButton: TypeButton!
     @IBOutlet weak var holidayButton: TypeButton!
     
-    @IBOutlet weak var yearSlider: ValueSlider!
     @IBOutlet weak var monthSlider: ValueSlider!
     @IBOutlet weak var daySlider: ValueSlider!
     
@@ -46,54 +49,98 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     
     @IBOutlet weak var nameFieldBlankView: UIView!
     
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpDateToSave()
-        setUpSliderValues()
+        title = addOrEdit()
+        buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "holiday": holidayButton]
+        if dateToSave == nil {
+            createDateToSaveEntity()
+        }
+        setInitialValues()
         setUpViewColors(dateToSave!.type!)
-        populateEditableValues()
-        setDelegates()
-        addLabelsToSliders([yearSlider, monthSlider, daySlider])
-        
-        yearSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        setDataSources()
+        addLabelsToSliders([monthSlider, daySlider])
+        setMonthAndDayLabelText()
         monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     override func viewDidLayoutSubviews() {
-        addLabelsToSliders([yearSlider, monthSlider, daySlider])
+        addLabelsToSliders([monthSlider, daySlider])
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        title = setNavBarTitle()
-        
-        switch dateToSave.type! {
-        case "birthday":
-            animateButton(birthdayButton)
-        case "anniversary":
-            animateButton(anniversaryButton)
-        case "holiday":
-            animateButton(holidayButton)
-        default:
-            break
+        if let dateType = dateToSave.type {
+            animateButton(buttonForType[dateType]!)
         }
     }
     
-    @IBAction func dismissWarning(sender: AnyObject) {
-        nameFieldBlankView.hidden = true
+    func addOrEdit() -> String {
+        return isBeingEdited! == true ? "Edit" : "Add"
     }
     
-    func setAddressProperties(street: String?, region: String?) {
-        self.street = street
-        self.region = region
+    func createDateToSaveEntity() {
+        let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+        dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        
+        let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
+        dateToSave.type = incomingColorType
+    }
+    
+    func setInitialValues() {
+        switch isBeingEdited! {
+        case true: // <<<<<<<<<< Remember to add year field
+            nameField.text = dateToSave!.name
+            monthSlider.value = Float(dateToSave!.date!.getMonth())
+            daySlider.value = Float(dateToSave!.date!.getDay())
+        case false:
+            monthSlider.setValues(min: 1, max: 12, value: 1)
+            daySlider.setValues(min: 1, max: 31, value: 1)
+        }
     }
     
     func setUpViewColors(type: String) {
-        changeColorOfSlidersTo(colorForType[type]!, sliders: [yearSlider, monthSlider, daySlider])
+        monthSlider.setColorTo(colorForType[type]!)
+        daySlider.setColorTo(colorForType[type]!)
         editDetailsButton.tintColor = colorForType[type]
+    }
+    
+    func setDataSources() {
+        monthSlider.dataSource = self
+        daySlider.dataSource = self
+    }
+    
+    func addLabelsToSliders(sliders: [ValueSlider]) {
+        for slider in sliders {
+            let thumbView = slider.subviews.last
+            if thumbView?.viewWithTag(1) == nil {
+                let label = UILabel(frame: thumbView!.bounds)
+                label.backgroundColor = UIColor.clearColor()
+                label.textAlignment = .Center
+                label.textColor = UIColor.whiteColor()
+                label.tag = 1
+                switch slider {
+                case monthSlider:
+                    label.text = "M"
+                case daySlider:
+                    label.text = "D"
+                default:
+                    break
+                }
+                thumbView?.addSubview(label)
+            }
+        }
+    }
+    
+    func setMonthAndDayLabelText() {
+        monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+        dayLabel.text = fullDays[Int(daySlider.value)-1]
     }
     
     func animateButton(button: UIButton) {
@@ -101,58 +148,6 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         UIControl.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.Repeat,.Autoreverse,.AllowUserInteraction], animations: { () -> Void in
             button.titleLabel!.transform = CGAffineTransformScale(button.transform, 1, 1);
         }, completion: nil)
-    }
-    
-    func addLabelsToSliders(sliders: [ValueSlider]) {
-        for slider in sliders {
-            let handleView = slider.subviews.last
-            if handleView?.viewWithTag(1) == nil {
-                let label = UILabel(frame: handleView!.bounds)
-                label.backgroundColor = UIColor.clearColor()
-                label.textAlignment = .Center
-                label.textColor = UIColor.whiteColor()
-                label.text = self.slider(slider, stringForValue: slider.value)
-                label.tag = 1
-                handleView?.addSubview(label)
-            }
-        }
-    }
-    
-    func setUpDateToSave() {
-        if dateToSave == nil {
-            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-            dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            switch incomingColor! {
-            case UIColor.birthdayColor():
-                dateToSave.type = "birthday"
-            case UIColor.holidayColor():
-                dateToSave.type = "anniversary"
-            case UIColor.holidayColor():
-                dateToSave.type = "holiday"
-            default:
-                break
-            }
-        }
-    }
-    
-    func populateEditableValues() {
-        if isBeingEdited == true {
-            nameField.text = dateToSave!.name
-            yearSlider.value = Float(dateToSave!.date!.getYear())
-            monthSlider.value = Float(dateToSave!.date!.getMonth())
-            daySlider.value = Float(dateToSave!.date!.getDay())
-        }
-    }
-    
-    func setDelegates() {
-        nameField.delegate = self
-        yearSlider.dataSource = self
-        monthSlider.dataSource = self
-        daySlider.dataSource = self
-    }
-    
-    func setNavBarTitle() -> String {
-        return isBeingEdited! == true ? "Edit" : "Add"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -166,39 +161,29 @@ class AddDateVC: UIViewController, SetAddressDelegate {
     
 // MARK: ACTIONS
     
-    @IBAction func birthdayButton(sender: AnyObject) {
-        changeColorOfSlidersTo(colorForType["birthday"]!, sliders: [yearSlider, monthSlider, daySlider])
-        editDetailsButton.tintColor = colorForType["birthday"]
+    @IBAction func birthdayButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("birthday")
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
         holidayButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(birthdayButton)
-        dateToSave.type = "birthday"
+        animateButton(sender)
     }
     
-    @IBAction func anniversaryButton(sender: AnyObject) {
-        changeColorOfSlidersTo(colorForType["anniversary"]!, sliders: [yearSlider, monthSlider, daySlider])
-        editDetailsButton.tintColor = colorForType["anniversary"]
+    @IBAction func anniversaryButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("anniversary")
         birthdayButton.titleLabel!.layer.removeAllAnimations()
         holidayButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(anniversaryButton)
-        dateToSave.type = "anniversary"
+        animateButton(sender)
     }
     
-    @IBAction func holidayButton(sender: AnyObject) {
-        changeColorOfSlidersTo(colorForType["holiday"]!, sliders: [yearSlider, monthSlider, daySlider])
-        editDetailsButton.tintColor = colorForType["holiday"]
+    @IBAction func holidayButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("holiday")
         birthdayButton.titleLabel!.layer.removeAllAnimations()
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(holidayButton)
-        dateToSave.type = "holiday"
+        animateButton(sender)
     }
     
-    func changeColorOfSlidersTo(color: UIColor, sliders: [ValueSlider]) {
-        for slider in sliders {
-            slider.thumbTintColor = color
-            slider.minimumTrackTintColor = color
-            slider.popUpViewColor = color
-        }
+    @IBAction func dismissWarning(sender: AnyObject) {
+        nameFieldBlankView.hidden = true
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
@@ -206,7 +191,7 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         if nameField.text?.characters.count == 0 || nameField.text == nil {
             nameFieldBlankView.hidden = false
         } else {
-            let dateString = "\(Int(yearSlider.value))-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+            let dateString = "2015-\(Int(monthSlider.value))-\(Int(daySlider.value))" // <<<<<<<<<<<<<<<<<<<<<<<< Fix Year value
             let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
             let equalizedDate = date.formatDateIntoString()
 
@@ -226,6 +211,12 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         }
     }
     
+    // Action Helpers
+    func switchDateTypeAndColorsTo(type: String) {
+        dateToSave.type = type
+        setUpViewColors(type)
+    }
+    
     func saveContext() {
         do { try managedContext!.save()
         } catch let error as NSError {
@@ -233,23 +224,22 @@ class AddDateVC: UIViewController, SetAddressDelegate {
         }
     }
     
-// MARK: HELPERS
-    
-    func setUpSliderValues() {
-        yearSlider.setValues(min: 1900, max: 2015, value: 2015)
-        monthSlider.setValues(min: 1, max: 12, value: 1)
-        daySlider.setValues(min: 1, max: 31, value: 1)
-    }
+// MARK: SELECTORS
     
     func valueChanged(sender: ValueSlider) {
-        let labelToRemove = sender.subviews.last!.subviews.last as! UILabel
-        if labelToRemove.text != "" {
-            labelToRemove.text = ""
+        if sender == monthSlider {
+            monthLabel.text = fullMonths[Int(sender.value)-1]
+        } else {
+            dayLabel.text = fullDays[Int(sender.value)-1]
         }
-        let toNewValue = round(sender.value)
-        sender.setValue(toNewValue, animated: false)
-        let sliderLabel = sender.subviews.last?.viewWithTag(1) as! UILabel
-        sliderLabel.text = slider(sender, stringForValue: sender.value)
+    }
+}
+
+extension AddDateVC: SetAddressDelegate {
+    
+    func setAddressProperties(street: String?, region: String?) {
+        self.street = street
+        self.region = region
     }
 }
 
@@ -268,7 +258,6 @@ extension AddDateVC: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        yearSlider.userInteractionEnabled = false
         monthSlider.userInteractionEnabled = false
     }
     
@@ -276,7 +265,6 @@ extension AddDateVC: UITextFieldDelegate {
         let name = nameField.text!
         dateToSave.name = name
         dateToSave.abbreviatedName = name.abbreviateName()
-        yearSlider.userInteractionEnabled = true
         monthSlider.userInteractionEnabled = true
     }
     
@@ -290,12 +278,12 @@ extension AddDateVC: ASValueTrackingSliderDataSource {
     func slider(slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
         let intValue = Int(value)
         switch slider {
-        case yearSlider:
-            return value % 100 < 10 ? "'0\(intValue % 100)" : "'\(intValue % 100)"
         case monthSlider:
             return months[intValue - 1]
-        default: // daySlider
+        case daySlider:
             return String(intValue)
+        default:
+            return "No String"
         }
     }
 }

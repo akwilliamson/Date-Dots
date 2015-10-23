@@ -34,10 +34,11 @@ class EditDetailsVC: UIViewController {
         if let region = date.address?.region {
             regionString = region
         }
-        addressTextField.delegate = self
         addressTextField.text = streetString
-        regionTextField.delegate = self
         regionTextField.text = regionString
+        
+        addressTextField.delegate = self
+        regionTextField.delegate = self
     }
     
     @IBAction func done(sender: AnyObject) {
