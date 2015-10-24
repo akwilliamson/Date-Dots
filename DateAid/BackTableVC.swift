@@ -15,9 +15,10 @@ class BackTableVC: UITableViewController {
     
     let managedContext = CoreDataStack().managedObjectContext
     let categoryValuesTuple = [("All", UIColor.darkGrayColor()),
-                         ("Birthdays", UIColor.birthdayColor()),
-                     ("Anniversaries", UIColor.anniversaryColor()),
-                          ("Holidays", UIColor.holidayColor())]
+                         ("irthdays", UIColor.birthdayColor()),
+                     ("nniversaries", UIColor.anniversaryColor()),
+                          ("olidays", UIColor.holidayColor())]
+    let categoryAbbreviations = ["","B","A","H"]
     
 // MARK: VIEW SETUP
     
@@ -35,9 +36,20 @@ class BackTableVC: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as UITableViewCell
         
-        let categoryLabel = navigationCell.viewWithTag(1) as! UILabel
-        categoryLabel.text = categoryValuesTuple[indexPath.row].0
-        categoryLabel.textColor = categoryValuesTuple[indexPath.row].1
+        let abbreviation = navigationCell.viewWithTag(1) as! CircleLabel
+        let categoryLabel = navigationCell.viewWithTag(2) as! UILabel
+        let allLabel = navigationCell.viewWithTag(3) as! UILabel
+        
+        if indexPath.row == 0 {
+            abbreviation.hidden = true
+            categoryLabel.hidden = true
+        } else {
+            allLabel.hidden = true
+            abbreviation.text = categoryAbbreviations[indexPath.row]
+            abbreviation.backgroundColor = categoryValuesTuple[indexPath.row].1
+            categoryLabel.text = categoryValuesTuple[indexPath.row].0
+            categoryLabel.textColor = categoryValuesTuple[indexPath.row].1
+        }
         
         return navigationCell
     }

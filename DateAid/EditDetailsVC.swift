@@ -21,6 +21,9 @@ class EditDetailsVC: UIViewController {
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
     @IBOutlet weak var notificationSettingsButton: UIButton!
+    @IBOutlet weak var giftNotesButton: UIButton!
+    @IBOutlet weak var planNotesButton: UIButton!
+    @IBOutlet weak var otherNotesButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +42,13 @@ class EditDetailsVC: UIViewController {
         
         addressTextField.delegate = self
         regionTextField.delegate = self
+        
+        giftNotesButton.contentHorizontalAlignment = .Left
+        giftNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
+        planNotesButton.contentHorizontalAlignment = .Left
+        planNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
+        otherNotesButton.contentHorizontalAlignment = .Left
+        otherNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
     }
     
     @IBAction func done(sender: AnyObject) {
@@ -50,6 +60,19 @@ class EditDetailsVC: UIViewController {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
             singlePushSettingsVC.date = date
+        } else {
+            let noteVC = segue.destinationViewController as! NoteVC
+            noteVC.typeColor = colorForType[date.type!]
+            switch segue.identifier! {
+            case "ShowGifts":
+                noteVC.note = "Gifts"
+            case "ShowPlans":
+                noteVC.note = "Plans"
+            case "ShowOther":
+                noteVC.note = "Other"
+            default:
+                break
+            }
         }
     }
 }
@@ -71,22 +94,4 @@ extension EditDetailsVC: UITextFieldDelegate {
     func textFieldShouldClear(textField: UITextField) -> Bool {
         return false
     }
-}
-
-extension EditDetailsVC: UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let noteCell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath)
-        noteCell.textLabel!.text = "This is a note"
-        
-        return noteCell
-    }
-}
-
-extension EditDetailsVC: UITableViewDelegate {
-
 }
