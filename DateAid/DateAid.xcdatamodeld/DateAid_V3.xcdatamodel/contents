@@ -11,8 +11,8 @@
         <attribute name="equalizedDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="date" inverseEntity="Address" syncable="YES"/>
-        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="date" inverseEntity="Note" syncable="YES"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="date" inverseEntity="Address" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="date" inverseEntity="Note" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName="DateAid.Note" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>

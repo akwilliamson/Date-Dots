@@ -186,6 +186,26 @@ extension DatesTableVC { // UITableViewDataSource
         }
         return dateCell
     }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let objectToDelete = fetchedResultsController?.objectAtIndexPath(indexPath) as! Date
+            print(objectToDelete)
+            managedContext.deleteObject(objectToDelete)
+
+            do { try managedContext.save()
+                print("deleted")
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
 }
 
 extension DatesTableVC { // UITableViewDelegate
