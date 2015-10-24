@@ -51,6 +51,7 @@ class AddDateVC: UIViewController {
     
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var yearField: AddNameTextField!
     
 // MARK: VIEW SETUP
     
@@ -94,14 +95,29 @@ class AddDateVC: UIViewController {
     }
     
     func setInitialValues() {
+        
+        monthSlider.setValues(min: 1, max: 12, value: 1)
+        daySlider.setValues(min: 1, max: 31, value: 1)
+        
         switch isBeingEdited! {
-        case true: // <<<<<<<<<< Remember to add year field
-            nameField.text = dateToSave!.name
-            monthSlider.value = Float(dateToSave!.date!.getMonth())
-            daySlider.value = Float(dateToSave!.date!.getDay())
+        case true:
+            if let date = dateToSave {
+                nameField.text = date.name
+                monthSlider.value = Float(date.date!.getMonth())
+                daySlider.value = Float(date.date!.getDay())
+                monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+                dayLabel.text = fullDays[Int(daySlider.value)-1]
+                if let year = date.date?.getYear() {
+                    if year != 1604 {
+                        yearField.text = String(year)
+                    }
+                }
+            }
         case false:
-            monthSlider.setValues(min: 1, max: 12, value: 1)
-            daySlider.setValues(min: 1, max: 31, value: 1)
+            monthSlider.value = 1.0
+            daySlider.value = 1.0
+            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+            dayLabel.text = fullDays[Int(daySlider.value)-1]
         }
     }
     
@@ -191,7 +207,16 @@ class AddDateVC: UIViewController {
         if nameField.text?.characters.count == 0 || nameField.text == nil {
             nameFieldBlankView.hidden = false
         } else {
-            let dateString = "2015-\(Int(monthSlider.value))-\(Int(daySlider.value))" // <<<<<<<<<<<<<<<<<<<<<<<< Fix Year value
+            var dateString: String
+            if let year = Int(yearField.text!) {
+                if year < NSDate().getYear() {
+                    dateString = "\(year)-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+                } else {
+                    dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+                }
+            } else {
+                dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+            }
             let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
             let equalizedDate = date.formatDateIntoString()
 

@@ -182,7 +182,34 @@ class DateDetailsVC: UIViewController {
     }
     
     func configureAge() {
-        ageLabel.text = "Turning\n\(date.date!.ageTurning())"
+        switch date!.type! {
+        case "birthday":
+            if let year = date.date?.getYear() {
+                if year == 1604 {
+                    ageLabel.text = "Age\nN/A"
+                } else {
+                    ageLabel.text = "Turning\n\(date.date!.ageTurning())"
+                }
+            }
+        case "anniversary":
+            if let year = date.date?.getYear() {
+                if year == 1604 {
+                    ageLabel.text = "Age\nN/A"
+                } else {
+                    ageLabel.text = "Year\n#\(date.date!.ageTurning())"
+                }
+            }
+        case "holiday":
+            if let year = date.date?.getYear() {
+                if year == 1604 {
+                    ageLabel.text = "Age\nN/A"
+                } else {
+                    ageLabel.text = "Year\n#\(date.date!.ageTurning())"
+                }
+            }
+        default:
+            break
+        }
     }
     
 // MARK: SEGUE

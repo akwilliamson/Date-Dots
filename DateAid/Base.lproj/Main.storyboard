@@ -289,7 +289,7 @@
                                 <rect key="frame" x="48" y="501" width="504" height="31"/>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-BM-scR">
-                                <rect key="frame" x="30" y="182" width="89" height="70"/>
+                                <rect key="frame" x="20" y="182" width="89" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="HI3-Db-R1u"/>
                                 </constraints>
@@ -298,7 +298,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5G-ae-FjB" userLabel="Day Label">
-                                <rect key="frame" x="129" y="182" width="89" height="70"/>
+                                <rect key="frame" x="119" y="182" width="89" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="WEe-ul-8WB"/>
                                 </constraints>
@@ -401,7 +401,7 @@
                             <constraint firstItem="OwV-4I-2tz" firstAttribute="top" secondItem="RIG-Dm-u2M" secondAttribute="bottom" constant="102" id="Z5E-ge-K0e"/>
                             <constraint firstItem="A95-RS-bDg" firstAttribute="leading" secondItem="ePo-6G-7uF" secondAttribute="trailing" constant="5" id="hGG-y8-1mR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kdh-dN-iHJ" secondAttribute="trailing" constant="-20" id="j7F-iT-3Km"/>
-                            <constraint firstItem="uma-BM-scR" firstAttribute="leading" secondItem="a12-fm-HpS" secondAttribute="leadingMargin" constant="10" id="lo2-Qv-iPG"/>
+                            <constraint firstItem="uma-BM-scR" firstAttribute="leading" secondItem="a12-fm-HpS" secondAttribute="leadingMargin" id="lo2-Qv-iPG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RIG-Dm-u2M" secondAttribute="trailing" constant="10" id="v7z-8e-Gsa"/>
                             <constraint firstItem="u1Z-l5-H0G" firstAttribute="top" secondItem="8DU-k5-J9G" secondAttribute="bottom" constant="8" id="w49-52-xDB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7i-R0-OwM" secondAttribute="trailing" constant="30" id="wJq-iM-d6g"/>
@@ -435,6 +435,7 @@
                         <outlet property="monthSlider" destination="vhw-nm-zBS" id="H4o-VD-Nem"/>
                         <outlet property="nameField" destination="8DU-k5-J9G" id="gCB-Yk-4S1"/>
                         <outlet property="nameFieldBlankView" destination="RIG-Dm-u2M" id="B6f-Zo-LG6"/>
+                        <outlet property="yearField" destination="A95-RS-bDg" id="oXw-Yr-DvX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
