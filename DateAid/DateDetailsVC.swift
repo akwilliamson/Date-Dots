@@ -191,15 +191,7 @@ class DateDetailsVC: UIViewController {
                     ageLabel.text = "Turning\n\(date.date!.ageTurning())"
                 }
             }
-        case "anniversary":
-            if let year = date.date?.getYear() {
-                if year == 1604 {
-                    ageLabel.text = "Age\nN/A"
-                } else {
-                    ageLabel.text = "Year\n#\(date.date!.ageTurning())"
-                }
-            }
-        case "holiday":
+        case "anniversary", "holiday":
             if let year = date.date?.getYear() {
                 if year == 1604 {
                     ageLabel.text = "Age\nN/A"
@@ -220,6 +212,10 @@ class DateDetailsVC: UIViewController {
             addDateVC.isBeingEdited = true
             addDateVC.dateToSave = date
             addDateVC.managedContext = managedContext
+        }
+        if segue.identifier == "ShowNotes" {
+            let notesTableVC = segue.destinationViewController as! NotesTableVC
+            notesTableVC.typeColor = colorForType[date!.type!]
         }
     }
 }

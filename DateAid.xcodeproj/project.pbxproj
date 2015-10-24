@@ -46,6 +46,8 @@
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
 		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; settings = {ASSET_TAGS = (); }; };
 		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; settings = {ASSET_TAGS = (); }; };
+		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; settings = {ASSET_TAGS = (); }; };
+		97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266A21BDB648D008F7EF8 /* NoteCell.swift */; settings = {ASSET_TAGS = (); }; };
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; settings = {ASSET_TAGS = (); }; };
 		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; settings = {ASSET_TAGS = (); }; };
@@ -109,6 +111,8 @@
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		97D266991BD95380008F7EF8 /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
 		97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
+		97D266A01BDB3341008F7EF8 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
+		97D266A21BDB648D008F7EF8 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 			children = (
 				97361A631B2C0CEF006394E1 /* DateCell.xib */,
 				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
+				97D266A01BDB3341008F7EF8 /* NoteCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
+				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
 				97D266991BD95380008F7EF8 /* CircleLabel.swift */,
 				970807591BC7288100F030D3 /* ValueSlider.swift */,
 				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
@@ -395,6 +401,7 @@
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
+				97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +470,7 @@
 				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
+				97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */,
 				9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */,
 				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
 				97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */,

@@ -482,25 +482,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3vE-wV-mjZ">
                                 <rect key="frame" x="0.0" y="212" width="600" height="313"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" textLabel="yCz-dT-IQ7" style="IBUITableViewCellStyleDefault" id="p03-6k-xmm">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p03-6k-xmm" id="dTI-Vx-VI4">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yCz-dT-IQ7">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="ph2-zO-ERN" id="rlz-7d-okX"/>
                                     <outlet property="delegate" destination="ph2-zO-ERN" id="hDd-V2-dts"/>
@@ -887,9 +868,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="ULx-DK-D8w" kind="show" id="42i-ax-WcR"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -897,15 +875,16 @@
                             <outlet property="delegate" destination="617-UG-6zb" id="gbn-j9-uMo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Notes" id="EJ2-iJ-gYz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Acd-aq-6WY"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Notes" id="EJ2-iJ-gYz"/>
+                    <connections>
+                        <segue destination="ULx-DK-D8w" kind="show" identifier="ShowNote" id="4IE-OH-euH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2a-IV-azd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3532" y="218"/>
         </scene>
-        <!--Note-->
+        <!--NoteVC-->
         <scene sceneID="aj2-dD-r76">
             <objects>
                 <viewController id="ULx-DK-D8w" customClass="NoteVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
@@ -918,7 +897,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -926,13 +905,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="top" secondItem="RCP-H5-DTc" secondAttribute="top" id="5dN-OO-399"/>
                             <constraint firstItem="Cd2-MJ-0d2" firstAttribute="leading" secondItem="RCP-H5-DTc" secondAttribute="leading" id="AW9-Yx-TU0"/>
-                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="top" secondItem="a7D-rA-smg" secondAttribute="bottom" id="ayF-4R-LK7"/>
                             <constraint firstAttribute="trailing" secondItem="Cd2-MJ-0d2" secondAttribute="trailing" id="f7h-Sx-MY3"/>
                             <constraint firstItem="eTq-iQ-ajz" firstAttribute="top" secondItem="Cd2-MJ-0d2" secondAttribute="bottom" id="uIR-jf-jq5"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Note" id="3gG-0k-1Xu"/>
+                    <navigationItem key="navigationItem" id="3gG-0k-1Xu">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="UGS-7I-Msx">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="Cd2-MJ-0d2" id="Kr2-ew-M3f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LNm-Ia-QUh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

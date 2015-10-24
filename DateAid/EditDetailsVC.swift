@@ -76,14 +76,14 @@ extension EditDetailsVC: UITextFieldDelegate {
 extension EditDetailsVC: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 3
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let notesCell = tableView.dequeueReusableCellWithIdentifier("NotesCell", forIndexPath: indexPath)
-        notesCell.textLabel!.text = "This is a note"
+        let noteCell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath)
+        noteCell.textLabel!.text = "This is a note"
         
-        return notesCell
+        return noteCell
     }
 }
 
