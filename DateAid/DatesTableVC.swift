@@ -17,7 +17,8 @@ class DatesTableVC: UITableViewController {
     var datesPredicate: NSPredicate?
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    var typeColorForNewDate = UIColor.birthdayColor()
+    var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
+    let typeStrings = ["birthdays", "anniversaries", "holidays"]
     
     var managedContext = CoreDataStack().managedObjectContext
     var fetchedResultsController: NSFetchedResultsController?
@@ -44,12 +45,6 @@ class DatesTableVC: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        
-        if tableView.numberOfRowsInSection(0) == 0 {
-            let imageView = UIImageView(image: (UIImage(named: "no-birthdays.png")))
-            imageView.center = self.tableView.center
-            tableView.backgroundView = imageView
-        }
     }
     
 // MARK: HELPERS
@@ -141,6 +136,23 @@ extension DatesTableVC { // UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController!.sections![section] as NSFetchedResultsSectionInfo
+            //assuming some_table_data respresent the table data
+            if sectionInfo.numberOfObjects == 0 {
+                
+                let label = UILabel(frame: CGRectMake(0, 0,self.tableView.bounds.size.width,self.tableView.bounds.size.height))
+                if let indexPath = menuIndexPath {
+                    label.text = "No \(typeStrings[indexPath]) added"
+                } else {
+                    label.text = "No dates added"
+                }
+                label.font = UIFont(name: "AvenirNext-Bold", size: 23)
+                label.textColor = UIColor.lightGrayColor()
+                label.textAlignment = .Center
+                label.sizeToFit()
+                self.tableView.backgroundView = label
+                self.tableView.separatorStyle = .None
+            }
+        
         return sectionInfo.numberOfObjects
     }
     
