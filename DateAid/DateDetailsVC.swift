@@ -28,6 +28,7 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var daysUntilLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
+    @IBOutlet weak var envelopeImage: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
     @IBOutlet weak var reminderImage: UIImageView!
@@ -45,7 +46,9 @@ class DateDetailsVC: UIViewController {
         configureCountdown()
         configureDate()
         configureAge()
+        envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
         if let dateType = date.type {
+            envelopeImage.tintColor = colorForType[dateType]
             reminderImage.tintColor = colorForType[dateType]
             reminderLabel.textColor = colorForType[dateType]
             notesButton.backgroundColor = colorForType[dateType]
