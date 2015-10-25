@@ -11,13 +11,18 @@ import UIKit
 class SinglePushSettingsVC: UIViewController {
     
     let application = UIApplication.sharedApplication()
-    
     var date: Date!
-    
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM",
                      "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
+    
+    var previouslyScheduledNotification: UILocalNotification?
+    var alertPrefix: String?
+    var alertSuffix: String?
+    var alertDaysBefore: Double?
+    var alertHourOfDay: Double?
+    var daysBeforeUserInfo: String?
+    var hoursAfterUserInfo: String?
     
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -36,6 +41,10 @@ class SinglePushSettingsVC: UIViewController {
         populateLabelAndSliderValues()
         setColorsOfLabelsAndSliders()
         
+        setAlertBodySuffix(daySlider.value)
+        setAlertBodyPrefix(timeSlider.value)
+        setAlertDaysBeforeInSeconds(daySlider.value)
+        setAlertHourOfDayInSeconds(timeSlider.value)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -48,58 +57,28 @@ class SinglePushSettingsVC: UIViewController {
     
     func populateLabelAndSliderValues() {
         
-        var notificationDidPopulateView: Bool?
-        
         if let notifications = application.scheduledLocalNotifications {
             for notification in notifications {
                 if let notificationID = notification.userInfo!["date"] as? String {
                     let dateObjectID = String(date.objectID.URIRepresentation())
                     if notificationID == dateObjectID {
-                        if let dayOfNotification = notification.fireDate?.getDay(),
-                            let hourOfNotification = notification.fireDate?.getHour(),
-                            let dayOfDate = date?.date?.getDay() {
-                                
-                                let numberOfDays = dayOfDate - dayOfNotification
-                                dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: numberOfDays)
-                                timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: hourOfNotification)
-                                daySlider.value = Float(numberOfDays)
-                                timeSlider.value = Float(hourOfNotification)
-                                
-                                notificationDidPopulateView = true
-                        }
+                        let daysPrior = Int(notification.userInfo!["daysPrior"] as! String)!
+                        let hoursAfter = Int(notification.userInfo!["hoursAfter"] as! String)!
+                        dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: daysPrior)
+                        daySlider.setValues(min: 0, max: 31, value: Float(daysPrior))
+                        timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: hoursAfter)
+                        timeSlider.setValues(min: 0, max: 23, value: Float(hoursAfter))
+                        
+                        previouslyScheduledNotification = notification
                     }
                 }
             }
-            if notificationDidPopulateView != true { // There were no matching scheduled local notifications, so
+            if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
                 staticallySetLabelAndSliderValues()
             }
         } else { // There were no scheduled local notifications at all, so
             staticallySetLabelAndSliderValues()
         }
-    }
-    
-    func daysPriorString(inSlider inSlider: ValueSlider, forDaysPrior: Int?) -> String {
-        var daysPrior: Int
-        let sliderValue = Int(inSlider.value)
-        
-        if let notificationDaysPrior = forDaysPrior { // Notification found, so
-            daysPrior = notificationDaysPrior
-        } else { // No notification found, so
-            daysPrior = sliderValue
-        }
-        return daysPrior == 1 ? "\(daysPrior) day prior" : "\(daysPrior) days prior"
-    }
-    
-    func timePriorString(inSlider inSlider: ValueSlider, forHourOfDay: Int?) -> String {
-        var hourOfDay: Int
-        let sliderValue = Int(round(inSlider.value))
-        
-        if let notificationHourOfDay = forHourOfDay { // Notification found, so
-            hourOfDay = notificationHourOfDay
-        } else { // No notification found, so
-            hourOfDay = sliderValue
-        }
-        return timeArray[hourOfDay]
     }
     
     func staticallySetLabelAndSliderValues() {
@@ -119,6 +98,26 @@ class SinglePushSettingsVC: UIViewController {
         }
     }
     
+    func setAlertBodyPrefix(hourOfDayValue: Float) {
+        if Int(hourOfDayValue) < 12 {
+            alertPrefix = "Good morning. "
+        } else if Int(hourOfDayValue) < 18 {
+            alertPrefix = "Good afternoon. "
+        } else {
+            alertPrefix = "Good evening. "
+        }
+    }
+    
+    func setAlertBodySuffix(daysBefore: Float) {
+        if daysBefore == 0 {
+            alertSuffix = "It's \(date.name!)'s birthday today"
+        } else if daysBefore == 1 {
+            alertSuffix = "It's \(date.name!)'s birthday in 1 day"
+        } else {
+            alertSuffix = "It's \(date.name!)'s birthday in \(daysBefore) days"
+        }
+    }
+    
     func animateDropInLabelFor(label: UILabel, fromPosition: CGFloat, delay: NSTimeInterval) {
         label.center.y = fromPosition
         UIView.animateWithDuration(1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
@@ -129,55 +128,77 @@ class SinglePushSettingsVC: UIViewController {
     func valueChanged(sender: ValueSlider) {
         switch sender {
         case daySlider:
-            dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: nil)
+            dayLabel.text = daysPriorString(inSlider: sender, forDaysPrior: nil)
+            setAlertBodySuffix(sender.value)
+            daysBeforeUserInfo = String(Int(floor(sender.value)))
+            setAlertDaysBeforeInSeconds(sender.value)
         case timeSlider:
-            timeLabel.text = timeArray[Int(round(timeSlider.value))]
+            timeLabel.text = timePriorString(inSlider: sender, forHourOfDay: nil)
+            setAlertBodyPrefix(sender.value)
+            hoursAfterUserInfo = String(Int(floor(sender.value)))
+            setAlertHourOfDayInSeconds(sender.value)
         default:
             break
         }
     }
     
-    @IBAction func createNotification(sender: AnyObject) {
-        if let notifications = application.scheduledLocalNotifications {
-            for notification in notifications {
-                if let notificationID = notification.userInfo!["date"] as? String {
-                    let dateID = String(date.objectID.URIRepresentation())
-                    if notificationID == dateID {
-                        application.cancelLocalNotification(notification)
-                    }
-                }
-            }
-        }
-        let daysBeforeValue = Int(daySlider.value)
-        var timeInterval = -60 * 60 * 24 * daysBeforeValue
-        let hourOfDayValue = Int(timeSlider.value)
-        let secondsToAdd = 60 * 60 * hourOfDayValue
-        timeInterval += secondsToAdd
-        let daysBefore = date.date?.dateByAddingTimeInterval(Double(timeInterval))
-        let fireDate = daysBefore?.setYear(NSDate().getYear())
-        let localNotification = UILocalNotification()
-        var alertString = ""
-        if hourOfDayValue < 12 {
-            alertString = "Good morning. "
-        } else if hourOfDayValue < 18 {
-            alertString = "Good afternoon. "
-        } else {
-            alertString = "Good evening. "
-        }
+    func setAlertDaysBeforeInSeconds(daysBefore: Float) {
+        let daysBeforeValue = Int(daysBefore)
+        daysBeforeUserInfo = String(Int(floor(daysBefore)))
+        alertDaysBefore = Double(-60 * 60 * 24 * daysBeforeValue)
+    }
+    
+    func setAlertHourOfDayInSeconds(hourOfDay: Float) {
+        let hourOfDayValue = Int(floor(hourOfDay))
+        hoursAfterUserInfo = String(Int(floor(hourOfDay)))
+        alertHourOfDay = Double(60 * 60 * hourOfDayValue)
+    }
+    
+    func daysPriorString(inSlider inSlider: ValueSlider, forDaysPrior: Int?) -> String {
+        var daysPrior: Int
+        let sliderValue = Int(inSlider.value)
         
-        let numberOfDays = date.date!.daysBetween()
-        if numberOfDays == 0 {
-            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday today"
-        } else if numberOfDays == 1 {
-            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) day"
-        } else {
-            localNotification.alertBody = alertString + "It's \(date.name!)'s birthday in \(numberOfDays) days"
+        if let notificationDaysPrior = forDaysPrior { // Notification found, so
+            daysPrior = notificationDaysPrior
+        } else { // No notification found, so
+            daysPrior = sliderValue
         }
+        return daysPrior == 1 ? "\(daysPrior) day prior" : "\(daysPrior) days prior"
+    }
+    
+    func timePriorString(inSlider inSlider: ValueSlider, forHourOfDay: Int?) -> String {
+        var hourOfDay: Int
+        let sliderValue = Int(inSlider.value)
+        
+        if let notificationHourOfDay = forHourOfDay { // Notification found, so
+            hourOfDay = notificationHourOfDay
+        } else { // No notification found, so
+            hourOfDay = sliderValue
+        }
+        return timeArray[hourOfDay]
+    }
+    
+    @IBAction func createNotification(sender: AnyObject) {
+        
+        let localNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+        application.registerUserNotificationSettings(localNotificationSettings)
+        
+        if let notification = previouslyScheduledNotification {
+            application.cancelLocalNotification(notification)
+        }
+        let setSecondsBefore = alertDaysBefore! + alertHourOfDay!
+        let fireMonthAndDay = date.date?.dateByAddingTimeInterval(setSecondsBefore)
+        let fireDate = fireMonthAndDay!.setYear(NSDate().getYear())
+        let dateID = String(date.objectID.URIRepresentation())
+        
+        let localNotification = UILocalNotification()
+        localNotification.alertBody = alertPrefix! + alertSuffix!
         localNotification.alertAction = "Dismiss"
-        localNotification.fireDate = fireDate!
+        localNotification.fireDate = fireDate
         localNotification.soundName = UILocalNotificationDefaultSoundName
-        let objectId = String(date.objectID.URIRepresentation())
-        localNotification.userInfo = ["date": objectId]
+        localNotification.userInfo = ["date": dateID, "daysPrior": daysBeforeUserInfo!, "hoursAfter": hoursAfterUserInfo!]
         application.scheduleLocalNotification(localNotification)
+        
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

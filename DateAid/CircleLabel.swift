@@ -30,4 +30,9 @@ class CircleLabel: UILabel {
         self.textColor = UIColor.whiteColor()
         super.drawTextInRect(rect)
     }
+    
+    func setProperties(borderWidth: Float, borderColor: UIColor) {
+        self.layer.borderWidth = CGFloat(borderWidth)
+        self.layer.borderColor = borderColor.CGColor
+    }
 }
