@@ -41,11 +41,14 @@ class SinglePushSettingsVC: UIViewController {
         
         populateLabelAndSliderValues()
         setColorsOfLabelsAndSliders()
-        
         setAlertBodySuffix(daySlider.value)
         setAlertBodyPrefix(timeSlider.value)
         setAlertDaysBeforeInSeconds(daySlider.value)
         setAlertHourOfDayInSeconds(timeSlider.value)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        addLabelsToSliders([daySlider,timeSlider])
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -177,6 +180,28 @@ class SinglePushSettingsVC: UIViewController {
             hourOfDay = sliderValue
         }
         return timeArray[hourOfDay]
+    }
+    
+    func addLabelsToSliders(sliders: [ValueSlider]) {
+        for slider in sliders {
+            let thumbView = slider.subviews.last
+            if thumbView?.viewWithTag(1) == nil {
+                let label = UILabel(frame: thumbView!.bounds)
+                label.backgroundColor = UIColor.clearColor()
+                label.textAlignment = .Center
+                label.textColor = UIColor.whiteColor()
+                label.tag = 1
+                switch slider {
+                case daySlider:
+                    label.text = "D"
+                case timeSlider:
+                    label.text = "H"
+                default:
+                    break
+                }
+                thumbView?.addSubview(label)
+            }
+        }
     }
     
     @IBAction func createNotification(sender: AnyObject) {

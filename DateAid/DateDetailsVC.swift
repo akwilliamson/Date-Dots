@@ -30,9 +30,6 @@ class DateDetailsVC: UIViewController {
     
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
-    
-    @IBOutlet weak var reminderView: UIView!
-    @IBOutlet weak var reminderImageContainerView: UIView!
     @IBOutlet weak var reminderImage: UIImageView!
     @IBOutlet weak var reminderLabel: UILabel!
     
@@ -76,8 +73,16 @@ class DateDetailsVC: UIViewController {
                     let daysPrior = Int(notification.userInfo!["daysPrior"] as! String)!
                     let hourOfDay = Int(notification.userInfo!["hoursAfter"] as! String)!
                     let dayText = (daysPrior == 1) ? "\(daysPrior) day before " : "\(daysPrior) days before "
-                    let hourText = (hourOfDay < 13) ? "at \(hourOfDay)am" : "at \(hourOfDay - 12)pm"
-                    reminderLabel.text = dayText + hourText
+                    switch hourOfDay {
+                    case 0:
+                        reminderLabel.text = dayText + "at midnight"
+                    case 1...11:
+                        reminderLabel.text = dayText + "at \(hourOfDay)am"
+                    case 12:
+                        reminderLabel.text = dayText + "at noon"
+                    default:
+                        reminderLabel.text = dayText + "at \(hourOfDay - 12)pm"
+                    }
                     localNotificationFound = true
                 }
             }
@@ -94,10 +99,11 @@ class DateDetailsVC: UIViewController {
         animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)
         animateDropInLabelFor(dateLabel, fromPosition: -50, delay: 0.2)
-        
-        reminderView.center.x = self.view.frame.width + reminderLabel.frame.width
+        reminderImage.center.x = -300
+        reminderLabel.center.x = -300
         UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
-            self.reminderView.center.x = self.view.center.x
+            self.reminderImage.center.x = self.view.center.x
+            self.reminderLabel.center.x = self.view.center.x
             }, completion: nil)
     }
     

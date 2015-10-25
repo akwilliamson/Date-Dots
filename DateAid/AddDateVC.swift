@@ -66,7 +66,6 @@ class AddDateVC: UIViewController {
         setInitialValues()
         setUpViewColors(dateToSave!.type!)
         setDataSources()
-        addLabelsToSliders([monthSlider, daySlider])
         setMonthAndDayLabelText()
         monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
