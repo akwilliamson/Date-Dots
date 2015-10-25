@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+protocol SetNotificationDelegate {
+    func reloadNotificationView()
+}
+
 class DateDetailsVC: UIViewController {
     
 // MARK: PROPERTIES
@@ -71,7 +75,7 @@ class DateDetailsVC: UIViewController {
                     reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
                     let daysPrior = Int(notification.userInfo!["daysPrior"] as! String)!
                     let hourOfDay = Int(notification.userInfo!["hoursAfter"] as! String)!
-                    let dayText = (daysPrior == 1) ? "\(daysPrior) day before" : "\(daysPrior) days before "
+                    let dayText = (daysPrior == 1) ? "\(daysPrior) day before " : "\(daysPrior) days before "
                     let hourText = (hourOfDay < 13) ? "at \(hourOfDay)am" : "at \(hourOfDay - 12)pm"
                     reminderLabel.text = dayText + hourText
                     localNotificationFound = true
@@ -169,6 +173,7 @@ class DateDetailsVC: UIViewController {
             addDateVC.isBeingEdited = true
             addDateVC.dateToSave = date
             addDateVC.managedContext = managedContext
+            addDateVC.notificationDelegate = self
         }
         if segue.identifier == "ShowNotes" {
             let notesTableVC = segue.destinationViewController as! NotesTableVC
@@ -177,6 +182,16 @@ class DateDetailsVC: UIViewController {
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
             singlePushSettingsVC.date = date
+            singlePushSettingsVC.notificationDelegate = self
         }
     }
 }
+
+extension DateDetailsVC: SetNotificationDelegate {
+    
+    func reloadNotificationView() {
+        setNotificationView()
+    }
+}
+
+

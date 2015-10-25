@@ -12,11 +12,12 @@ import CoreData
 class EditDetailsVC: UIViewController {
     
     var date: Date!
-    var delegate: SetAddressDelegate?
+    var addressDelegate: SetAddressDelegate?
     var managedContext: NSManagedObjectContext?
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     var streetString = ""
     var regionString = ""
+    var notificationDelegate: SetNotificationDelegate?
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
@@ -52,7 +53,7 @@ class EditDetailsVC: UIViewController {
     }
     
     @IBAction func done(sender: AnyObject) {
-        delegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
+        addressDelegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -60,6 +61,7 @@ class EditDetailsVC: UIViewController {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
             singlePushSettingsVC.date = date
+            singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
             let noteVC = segue.destinationViewController as! NoteVC
             noteVC.typeColor = colorForType[date.type!]

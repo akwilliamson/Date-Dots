@@ -23,6 +23,7 @@ class SinglePushSettingsVC: UIViewController {
     var alertHourOfDay: Double?
     var daysBeforeUserInfo: String?
     var hoursAfterUserInfo: String?
+    var notificationDelegate: SetNotificationDelegate?
     
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -198,7 +199,7 @@ class SinglePushSettingsVC: UIViewController {
         localNotification.soundName = UILocalNotificationDefaultSoundName
         localNotification.userInfo = ["date": dateID, "daysPrior": daysBeforeUserInfo!, "hoursAfter": hoursAfterUserInfo!]
         application.scheduleLocalNotification(localNotification)
-        
+        notificationDelegate?.reloadNotificationView()
         self.navigationController?.popViewControllerAnimated(true)
     }
 }

@@ -23,6 +23,7 @@ class AddDateVC: UIViewController {
     var incomingColor: UIColor!
     var street: String?
     var region: String?
+    var notificationDelegate: SetNotificationDelegate?
     
     var buttonForType: [String: TypeButton]!
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
@@ -171,7 +172,7 @@ class AddDateVC: UIViewController {
             let editDetailsVC = segue.destinationViewController as! EditDetailsVC
             editDetailsVC.date = dateToSave
             editDetailsVC.managedContext = managedContext
-            editDetailsVC.delegate = self
+            editDetailsVC.notificationDelegate = notificationDelegate
         }
     }
     
