@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class DatesTableVC: UITableViewController {
+class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
 // MARK: PROPERTIES
     
@@ -39,6 +39,7 @@ class DatesTableVC: UITableViewController {
         addRevealVCGestureRecognizers()
         configureNavigationBar()
         configureTabBar()
+        fetchedResultsController?.delegate = self
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
@@ -193,12 +194,10 @@ extension DatesTableVC { // UITableViewDataSource
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let objectToDelete = fetchedResultsController?.objectAtIndexPath(indexPath) as! Date
-            print(objectToDelete)
-            managedContext.deleteObject(objectToDelete)
-
+            let objectToDelete = fetchedResults[indexPath.row]
+            fetchedResultsController?.managedObjectContext.deleteObject(objectToDelete)
+            print("commitEditingStyle indexPath = \(indexPath)")
             do { try managedContext.save()
-                print("deleted")
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -216,6 +215,26 @@ extension DatesTableVC { // UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("DateDetailsVC", sender: self)
+    }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+            switch type {
+            case .Delete:
+                if let indexPath = indexPath {
+                    print("didChangeObject indexPath = \(indexPath)")
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                }
+            default:
+                return
+            }
+    }
+
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates()
     }
     
 }

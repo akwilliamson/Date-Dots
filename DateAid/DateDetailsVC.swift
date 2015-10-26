@@ -104,7 +104,7 @@ class DateDetailsVC: UIViewController {
         animateDropInLabelFor(dateLabel, fromPosition: -50, delay: 0.2)
         reminderImage.center.x = -300
         reminderLabel.center.x = -300
-        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
             self.reminderImage.center.x = self.view.center.x
             self.reminderLabel.center.x = self.view.center.x
             }, completion: nil)

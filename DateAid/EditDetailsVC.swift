@@ -31,6 +31,9 @@ class EditDetailsVC: UIViewController {
         
         if let dateType = date.type {
             notificationSettingsButton.setTitleColor(colorForType[dateType], forState: .Normal)
+            giftNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
+            planNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
+            otherNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
         }
         if let street = date.address?.street {
             streetString = street
