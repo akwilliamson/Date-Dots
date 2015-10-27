@@ -57,25 +57,25 @@ class BackTableVC: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let navigationVC = segue.destinationViewController as! UINavigationController
         let destinationVC = navigationVC.topViewController as! DatesTableVC
+        let index = self.tableView.indexPathForSelectedRow!.row
         
-        let indexPath = self.tableView.indexPathForSelectedRow
-        switch indexPath!.row {
+        destinationVC.typeColorForNewDate = categoryValuesTuple[index].1
+        destinationVC.menuIndexPath = index
+        
+        switch index {
         case 0:
-            destinationVC.menuIndexPath = 0
-            destinationVC.datesPredicate = nil
+            destinationVC.typePredicate = nil
+            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
             destinationVC.typeColorForNewDate = UIColor.birthdayColor()
         case 1:
-            destinationVC.menuIndexPath = 1
-            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "birthday")
-            destinationVC.typeColorForNewDate = UIColor.birthdayColor()
+            destinationVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
+            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         case 2:
-            destinationVC.menuIndexPath = 2
-            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "anniversary")
-            destinationVC.typeColorForNewDate = UIColor.anniversaryColor()
+            destinationVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
+            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         case 3:
-            destinationVC.menuIndexPath = 3
-            destinationVC.datesPredicate = NSPredicate(format: "type = %@", "holiday")
-            destinationVC.typeColorForNewDate = UIColor.holidayColor()
+            destinationVC.typePredicate = NSPredicate(format: "type = %@", "holiday")
+            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         default:
             break
         }

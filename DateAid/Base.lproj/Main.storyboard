@@ -989,7 +989,7 @@
             </objects>
             <point key="canvasLocation" x="1993" y="-679"/>
         </scene>
-        <!--Calendar-->
+        <!--CalendarVC-->
         <scene sceneID="fG8-zJ-c08">
             <objects>
                 <viewController id="T6T-Gi-w4I" customClass="CalendarVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
@@ -1001,17 +1001,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calendar view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtW-I1-zp2">
-                                <rect key="frame" x="29" y="39" width="132" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XrX-xQ-Vpj" customClass="CVCalendarMenuView" customModule="CVCalendar">
+                                <rect key="frame" x="0.0" y="64" width="600" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="yjr-3n-8ds"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bwt-ms-2QW" customClass="CVCalendarView" customModule="CVCalendar">
+                                <rect key="frame" x="0.0" y="104" width="600" height="351"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XrX-xQ-Vpj" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="0Ue-5T-hnl"/>
+                            <constraint firstItem="XrX-xQ-Vpj" firstAttribute="top" secondItem="Z2U-A8-uGu" secondAttribute="bottom" id="4iv-RY-Cvi"/>
+                            <constraint firstAttribute="trailing" secondItem="XrX-xQ-Vpj" secondAttribute="trailing" id="I1h-cz-XRf"/>
+                            <constraint firstItem="Bwt-ms-2QW" firstAttribute="top" secondItem="XrX-xQ-Vpj" secondAttribute="bottom" id="R6P-hM-VXL"/>
+                            <constraint firstItem="lR3-sY-LMj" firstAttribute="top" secondItem="Bwt-ms-2QW" secondAttribute="bottom" constant="96" id="YnS-h5-13h"/>
+                            <constraint firstAttribute="trailing" secondItem="Bwt-ms-2QW" secondAttribute="trailing" id="hA6-sQ-YdG"/>
+                            <constraint firstItem="Bwt-ms-2QW" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="tni-u1-jaV"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Calendar" id="D5Z-2J-gZ5"/>
+                    <navigationItem key="navigationItem" id="D5Z-2J-gZ5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="calendarView" destination="Bwt-ms-2QW" id="sFq-2e-Npw"/>
+                        <outlet property="menuView" destination="XrX-xQ-Vpj" id="XFy-vX-dXO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wf5-zB-PhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1075,6 +1093,7 @@
         <!--Calendar-->
         <scene sceneID="9fB-Fe-ZmO">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FpU-WQ-cno" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jrm-3o-G2d" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar-outline" id="nwt-Ud-Qch">
                         <userDefinedRuntimeAttributes>
@@ -1091,7 +1110,6 @@
                         <segue destination="T6T-Gi-w4I" kind="relationship" relationship="rootViewController" id="0q3-xT-fo8"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FpU-WQ-cno" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1202" y="9"/>
         </scene>

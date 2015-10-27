@@ -7,15 +7,45 @@
 //
 
 import UIKit
+import CVCalendar
 
 class CalendarVC: UIViewController {
 
+    @IBOutlet weak var menuView: CVCalendarMenuView!
+    @IBOutlet weak var calendarView: CVCalendarView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = CVDate(date: NSDate()).globalDescription
+        
+        menuView.delegate = self
+        calendarView.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        print("didReceiveMemoryWarning in CalendarVC.swift")
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        calendarView.commitCalendarViewUpdate()
+        menuView.commitMenuViewUpdate()
     }
+}
+
+extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
+
+// MARK: Required methods
+    
+    func presentationMode() -> CalendarMode {
+        return .MonthView
+    }
+    
+    func firstWeekday() -> Weekday {
+        return .Sunday
+    }
+    
+    func shouldShowWeekdaysOut() -> Bool {
+        return true
+    }
+    
+    
 }

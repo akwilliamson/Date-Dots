@@ -4,6 +4,7 @@ use_frameworks!
 
 target 'DateAid' do
     pod 'ASValueTrackingSlider'
+    pod 'CVCalendar', '~> 1.2.7'
 end
 
 target 'DateAidTests' do
