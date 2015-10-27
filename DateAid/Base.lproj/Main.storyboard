@@ -1093,7 +1093,6 @@
         <!--Calendar-->
         <scene sceneID="9fB-Fe-ZmO">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FpU-WQ-cno" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jrm-3o-G2d" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar-outline" id="nwt-Ud-Qch">
                         <userDefinedRuntimeAttributes>
@@ -1110,6 +1109,7 @@
                         <segue destination="T6T-Gi-w4I" kind="relationship" relationship="rootViewController" id="0q3-xT-fo8"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FpU-WQ-cno" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1202" y="9"/>
         </scene>

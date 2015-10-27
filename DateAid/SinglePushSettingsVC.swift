@@ -167,7 +167,14 @@ class SinglePushSettingsVC: UIViewController {
         } else { // No notification found, so
             daysPrior = sliderValue
         }
-        return daysPrior == 1 ? "\(daysPrior) day prior" : "\(daysPrior) days prior"
+        switch daysPrior {
+        case 0:
+            return "Day of"
+        case 1:
+            return "\(daysPrior) day prior"
+        default:
+            return "\(daysPrior) days prior"
+        }
     }
     
     func timePriorString(inSlider inSlider: ValueSlider, forHourOfDay: Int?) -> String {

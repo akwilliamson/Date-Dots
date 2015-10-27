@@ -179,7 +179,6 @@ extension DatesTableVC { // UITableViewDataSource
                 }
             }
         }
-        
         return dateCell
     }
     

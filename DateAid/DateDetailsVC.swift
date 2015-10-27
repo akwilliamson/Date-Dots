@@ -75,7 +75,17 @@ class DateDetailsVC: UIViewController {
                     reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
                     let daysPrior = Int(notification.userInfo!["daysPrior"] as! String)!
                     let hourOfDay = Int(notification.userInfo!["hoursAfter"] as! String)!
-                    let dayText = (daysPrior == 1) ? "\(daysPrior) day before " : "\(daysPrior) days before "
+                    let dayText: String!
+                    
+                    switch daysPrior {
+                    case 0:
+                        dayText = "Day of "
+                    case 1:
+                        dayText = "\(daysPrior) day before "
+                    default:
+                        dayText = "\(daysPrior) days before "
+                    }
+                    
                     switch hourOfDay {
                     case 0:
                         reminderLabel.text = dayText + "at midnight"
