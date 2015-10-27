@@ -65,17 +65,13 @@ class BackTableVC: UITableViewController {
         switch index {
         case 0:
             destinationVC.typePredicate = nil
-            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
             destinationVC.typeColorForNewDate = UIColor.birthdayColor()
         case 1:
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
-            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         case 2:
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
-            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         case 3:
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "holiday")
-            destinationVC.soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
         default:
             break
         }

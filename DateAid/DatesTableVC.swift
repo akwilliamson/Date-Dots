@@ -9,21 +9,20 @@
 import UIKit
 import CoreData
 
-class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
+class DatesTableVC: UITableViewController {
     
 // MARK: PROPERTIES
     
     var menuIndexPath: Int?
     var typePredicate: NSPredicate?
-    var soonestPredicate = NSPredicate(format: "equalizedDate > %@", NSDate().formatDateIntoString())
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
     let typeStrings = ["dates", "birthdays", "anniversaries", "holidays"]
-    var soonestDate: Date?
+    
+    var fetchedResults: [Date]?
     
     var managedContext = CoreDataStack().managedObjectContext
-    var fetchedResultsController: NSFetchedResultsController?
     
 // MARK: OUTLETS
     
@@ -33,9 +32,7 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSoonestDate()
-        setFetchControllerWithOptions()
-        performFRCFetch()
+        setAndPerformFetchRequest()
         
         registerDateCellNib()
         addRevealVCGestureRecognizers()
@@ -52,6 +49,27 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
 // MARK: HELPERS
     
+    func setAndPerformFetchRequest() {
+        let datesFetch = NSFetchRequest(entityName: "Date")
+        let datesInOrder = NSSortDescriptor(key: "equalizedDate", ascending: true)
+        let namesInOrder = NSSortDescriptor(key: "name", ascending: true)
+        datesFetch.sortDescriptors = [datesInOrder, namesInOrder]
+        datesFetch.predicate = typePredicate
+        
+        do { fetchedResults = try managedContext.executeFetchRequest(datesFetch) as? [Date]
+            if fetchedResults != nil && fetchedResults?.count > 0 {
+                for date in fetchedResults! {
+                    if date.equalizedDate < NSDate().formatDateIntoString() {
+                        fetchedResults!.removeAtIndex(0)
+                        fetchedResults!.append(date)
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
     func addRevealVCGestureRecognizers() {
         revealViewController().panGestureRecognizer()
         revealViewController().tapGestureRecognizer()
@@ -60,66 +78,6 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     func registerDateCellNib() {
         let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
         tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
-    }
-    
-    func setFetchControllerWithOptions() {
-        fetchedResultsController?.delegate = self
-        
-        let datesFetch = createDateFetchRequestWithSorting()
-        datesFetch.predicate = typePredicate
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: datesFetch, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
-    }
-    
-    func createDateFetchRequestWithSorting() -> NSFetchRequest {
-        let datesFetch = NSFetchRequest(entityName: "Date")
-        let dateSort = NSSortDescriptor(key: "equalizedDate", ascending: true)
-        let nameSort = NSSortDescriptor(key: "name", ascending: true)
-        datesFetch.sortDescriptors = [dateSort, nameSort]
-        
-        return datesFetch
-    }
-    
-    func getSoonestDate() {
-        let dateFetch = createDateFetchRequestWithSorting()
-        dateFetch.fetchLimit = 1
-        
-        if let typePredicate = typePredicate {
-            dateFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [typePredicate, soonestPredicate])
-        } else {
-            dateFetch.predicate = soonestPredicate
-        }
-        performMOCFetch(dateFetch)
-        if soonestDate == nil {
-            getFirstDate()
-        }
-    }
-    
-    func getFirstDate() {
-        let dateFetch = createDateFetchRequestWithSorting()
-        dateFetch.fetchLimit = 1
-        
-        if let typePredicate = typePredicate {
-            dateFetch.predicate = typePredicate
-        }
-        performMOCFetch(dateFetch)
-    }
-    
-    func performMOCFetch(fetch: NSFetchRequest) {
-        do { let result = try managedContext.executeFetchRequest(fetch) as! [Date]
-            if result.count > 0 {
-                soonestDate = result.first
-            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func performFRCFetch() {
-        do { try fetchedResultsController?.performFetch()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
     
     func configureNavigationBar() {
@@ -133,13 +91,6 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
         }
         menuBarButtonItem.target = self.revealViewController()
         menuBarButtonItem.action = Selector("revealToggle:")
-    }
-    
-    func getProperDate(indexPath: NSIndexPath) -> Date {
-        let soonestIndexPath = fetchedResultsController?.indexPathForObject(soonestDate!)
-        let count = fetchedResultsController?.sections?.first?.numberOfObjects
-        let actualIndex = NSIndexPath(forRow: (soonestIndexPath!.row + indexPath.row) % count!, inSection: 0)
-        return fetchedResultsController?.objectAtIndexPath(actualIndex) as! Date
     }
     
     func configureTabBar() {
@@ -174,7 +125,7 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DateDetailsVC" {
             let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
-            dateDetailsVC.date = getProperDate(tableView.indexPathForSelectedRow!)
+            dateDetailsVC.date = fetchedResults![tableView.indexPathForSelectedRow!.row]
             dateDetailsVC.managedContext = managedContext
         }
         if segue.identifier == "AddDateVC" {
@@ -189,39 +140,43 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
 extension DatesTableVC { // UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController!.sections![section]
-            if sectionInfo.numberOfObjects == 0 {
-                addNoDatesLabel()
-            }
-        return sectionInfo.numberOfObjects
+        var numberOfRows = 0
+        if let fetchedResults = fetchedResults {
+            numberOfRows = fetchedResults.count
+        }
+        if numberOfRows == 0 {
+            addNoDatesLabel()
+        }
+        return numberOfRows
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
         
-        let date = getProperDate(indexPath)
-        
-        if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-            dateCell.name = abbreviatedName
-            dateCell.date = readableDate
-        }
-        
-        if let colorIndex = menuIndexPath {
-            switch colorIndex {
-            case 1:
-                dateCell.nameLabel.textColor = colorForType["birthday"]
-            case 2:
-                dateCell.nameLabel.textColor = colorForType["anniversary"]
-            case 3:
-                dateCell.nameLabel.textColor = colorForType["holiday"]
-            default:
+        if let results = fetchedResults {
+            let date = results[indexPath.row]
+            if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
+                dateCell.name = abbreviatedName
+                dateCell.date = readableDate
+            }
+            
+            if let colorIndex = menuIndexPath {
+                switch colorIndex {
+                case 1:
+                    dateCell.nameLabel.textColor = colorForType["birthday"]
+                case 2:
+                    dateCell.nameLabel.textColor = colorForType["anniversary"]
+                case 3:
+                    dateCell.nameLabel.textColor = colorForType["holiday"]
+                default:
+                    if let dateType = date.type {
+                        dateCell.nameLabel.textColor = colorForType[dateType]
+                    }
+                }
+            } else {
                 if let dateType = date.type {
                     dateCell.nameLabel.textColor = colorForType[dateType]
                 }
-            }
-        } else {
-            if let dateType = date.type {
-                dateCell.nameLabel.textColor = colorForType[dateType]
             }
         }
         
@@ -235,17 +190,18 @@ extension DatesTableVC { // UITableViewDataSource
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            let dateToDelete = getProperDate(indexPath)
-            fetchedResultsController?.managedObjectContext.deleteObject(dateToDelete)
+            let dateToDelete = fetchedResults![indexPath.row]
+            managedContext.deleteObject(dateToDelete)
+            fetchedResults?.removeAtIndex(indexPath.row)
             
             do { try managedContext.save()
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
-    
-    
 }
 
 extension DatesTableVC { // UITableViewDelegate
@@ -256,25 +212,6 @@ extension DatesTableVC { // UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("DateDetailsVC", sender: self)
-    }
-    
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.beginUpdates()
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-            switch type {
-            case .Delete:
-                if let indexPath = indexPath {
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                }
-            default:
-                return
-            }
-    }
-
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates()
     }
     
 }
