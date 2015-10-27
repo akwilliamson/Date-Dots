@@ -19,7 +19,7 @@ class DatesTableVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
-    let typeStrings = ["birthdays", "anniversaries", "holidays"]
+    let typeStrings = ["dates", "birthdays", "anniversaries", "holidays"]
     var soonestDate: Date?
     
     var managedContext = CoreDataStack().managedObjectContext
@@ -235,8 +235,8 @@ extension DatesTableVC { // UITableViewDataSource
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            let objectToDelete = fetchedResultsController?.objectAtIndexPath(indexPath) as! NSManagedObject
-            fetchedResultsController?.managedObjectContext.deleteObject(objectToDelete)
+            let dateToDelete = getProperDate(indexPath)
+            fetchedResultsController?.managedObjectContext.deleteObject(dateToDelete)
             
             do { try managedContext.save()
             } catch let error as NSError {
