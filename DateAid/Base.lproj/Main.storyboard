@@ -660,7 +660,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7J-xQ-Rz6" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7J-xQ-Rz6" userLabel="Repeat Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="489" y="84" width="94" height="94"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -715,7 +715,7 @@
                     <connections>
                         <outlet property="dayLabel" destination="uyb-NV-wmr" id="caD-XE-kaV"/>
                         <outlet property="daySlider" destination="TE3-dI-DuS" id="IFH-SU-0jx"/>
-                        <outlet property="soundLabel" destination="N7J-xQ-Rz6" id="Rwh-MH-KSS"/>
+                        <outlet property="repeatLabel" destination="N7J-xQ-Rz6" id="bjT-mY-8rH"/>
                         <outlet property="timeLabel" destination="e2W-Yb-3Bi" id="dWp-76-wHJ"/>
                         <outlet property="timeSlider" destination="QW9-m9-rGR" id="kjg-K3-tx1"/>
                     </connections>

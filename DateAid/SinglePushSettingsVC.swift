@@ -27,7 +27,7 @@ class SinglePushSettingsVC: UIViewController {
     
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var soundLabel: UILabel!
+    @IBOutlet weak var repeatLabel: UILabel!
     
     @IBOutlet weak var daySlider: ValueSlider!
     @IBOutlet weak var timeSlider: ValueSlider!
@@ -41,6 +41,11 @@ class SinglePushSettingsVC: UIViewController {
         
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         timeSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editRepeat:"))
+        gestureRecognizer.numberOfTapsRequired = 1
+        repeatLabel.addGestureRecognizer(gestureRecognizer)
+        repeatLabel.userInteractionEnabled = true
         
         populateLabelAndSliderValues()
         setColorsOfLabelsAndSliders()
@@ -59,7 +64,7 @@ class SinglePushSettingsVC: UIViewController {
         
         animateDropInLabelFor(dayLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(timeLabel, fromPosition: -50, delay: 0.1)
-        animateDropInLabelFor(soundLabel, fromPosition: -50, delay: 0.2)
+        animateDropInLabelFor(repeatLabel, fromPosition: -50, delay: 0.2)
     }
     
     func populateLabelAndSliderValues() {
@@ -75,7 +80,11 @@ class SinglePushSettingsVC: UIViewController {
                         daySlider.setValues(min: 0, max: 31, value: Float(daysPrior))
                         timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: hoursAfter)
                         timeSlider.setValues(min: 0, max: 23, value: Float(hoursAfter))
-                        
+                        if notification.repeatInterval == .Year {
+                            repeatLabel.text = "Yearly"
+                        } else {
+                            repeatLabel.text = "Once"
+                        }
                         previouslyScheduledNotification = notification
                     }
                 }
@@ -91,6 +100,7 @@ class SinglePushSettingsVC: UIViewController {
     func staticallySetLabelAndSliderValues() {
         dayLabel.text = daysPriorString(inSlider: daySlider, forDaysPrior: nil)
         timeLabel.text = timePriorString(inSlider: timeSlider, forHourOfDay: nil)
+        repeatLabel.text = "Yearly"
         daySlider.setValues(min: 0, max: 21, value: 0)
         timeSlider.setValues(min: 0, max: 23, value: 0)
     }
@@ -99,7 +109,7 @@ class SinglePushSettingsVC: UIViewController {
         if let dateType = date.type {
             dayLabel.backgroundColor = colorForType[dateType]
             timeLabel.backgroundColor = colorForType[dateType]
-            soundLabel.backgroundColor = colorForType[dateType]
+            repeatLabel.backgroundColor = colorForType[dateType]
             daySlider.setColorTo(colorForType[dateType]!)
             timeSlider.setColorTo(colorForType[dateType]!)
         }
@@ -214,6 +224,17 @@ class SinglePushSettingsVC: UIViewController {
         }
     }
     
+    func editRepeat(sender: UITapGestureRecognizer) {
+        switch repeatLabel.text! {
+        case "Yearly":
+            repeatLabel.text = "Once"
+        case "Once":
+            repeatLabel.text = "Yearly"
+        default:
+            break
+        }
+    }
+    
     func cancelExistingNotification() {
         if let notification = previouslyScheduledNotification {
             application.cancelLocalNotification(notification)
@@ -233,8 +254,13 @@ class SinglePushSettingsVC: UIViewController {
         let alertAction = "Dismiss"
         let soundName = UILocalNotificationDefaultSoundName
         let userInfo = ["date": dateID, "daysPrior": daysBeforeUserInfo!, "hoursAfter": hoursAfterUserInfo!]
-        
-        let localNotification = LocalNotification(fireDate: fireDate, alertBody: alertBody, alertAction: alertAction, soundName: soundName, userInfo: userInfo)
+        let repeatInterval: NSCalendarUnit?
+        if repeatLabel.text == "Yearly" {
+            repeatInterval = .Year
+        } else {
+            repeatInterval = nil
+        }
+        let localNotification = LocalNotification(fireDate: fireDate, repeatInterval: repeatInterval, alertBody: alertBody, alertAction: alertAction, soundName: soundName, userInfo: userInfo)
         localNotification.schedule()
         
         notificationDelegate?.reloadNotificationView()
