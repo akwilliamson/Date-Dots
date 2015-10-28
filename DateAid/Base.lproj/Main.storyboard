@@ -617,7 +617,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Details" id="z5G-E5-fUA">
                         <barButtonItem key="backBarButtonItem" title=" " id="ALH-UX-U02"/>
-                        <barButtonItem key="rightBarButtonItem" title="Finish" id="ify-k5-QjZ">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ify-k5-QjZ">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="done:" destination="ph2-zO-ERN" id="9Q7-HA-VI2"/>
@@ -816,10 +816,10 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
-                                <rect key="frame" x="275" y="455" width="50" height="50"/>
+                                <rect key="frame" x="280" y="465" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
-                                    <constraint firstAttribute="width" constant="50" id="FmL-yz-vc0"/>
+                                    <constraint firstAttribute="height" constant="40" id="7KE-dk-Wrx"/>
+                                    <constraint firstAttribute="width" constant="40" id="FmL-yz-vc0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
@@ -1152,8 +1152,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="SXV-Qu-gXZ"/>
         <segue reference="cPJ-5X-Yk6"/>
-        <segue reference="byt-8L-e9s"/>
         <segue reference="uOf-gp-zRy"/>
+        <segue reference="g7o-yD-2k3"/>
         <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

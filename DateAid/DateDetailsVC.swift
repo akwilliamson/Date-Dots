@@ -40,32 +40,11 @@ class DateDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNotificationView()
-        configureNavBar()
-        styleLabels()
-        configureCountdown()
-        configureDate()
-        configureAge()
         envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
-        if let dateType = date.type {
-            envelopeImage.tintColor = colorForType[dateType]
-            reminderImage.tintColor = colorForType[dateType]
-            reminderLabel.textColor = colorForType[dateType]
-            notesButton.backgroundColor = colorForType[dateType]
-        }
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editNotification:"))
         gestureRecognizer.numberOfTapsRequired = 1
         reminderImage.addGestureRecognizer(gestureRecognizer)
         reminderImage.userInteractionEnabled = true
-        
-        if let street = date.address?.street {
-            let streetText = (street.characters.count > 0) ? street : "Mailing Address not set"
-            addressLabel.text = streetText
-        }
-        if let region = date.address?.region {
-            let regionText = (region.characters.count > 0) ? region : "City, State Zip not set"
-            regionLabel.text = regionText
-        }
     }
     
     func setNotificationView() {
@@ -108,6 +87,28 @@ class DateDetailsVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setNotificationView()
+        configureNavBar()
+        styleLabels()
+        configureCountdown()
+        configureDate()
+        configureAge()
+        if let dateType = date.type {
+            envelopeImage.tintColor = colorForType[dateType]
+            reminderImage.tintColor = colorForType[dateType]
+            reminderLabel.textColor = colorForType[dateType]
+            notesButton.backgroundColor = colorForType[dateType]
+        }
+        
+        if let street = date.address?.street {
+            let streetText = (street.characters.count > 0) ? street : "Mailing Address not set"
+            addressLabel.text = streetText
+        }
+        if let region = date.address?.region {
+            let regionText = (region.characters.count > 0) ? region : "City, State Zip not set"
+            regionLabel.text = regionText
+        }
         
         animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)

@@ -12,12 +12,15 @@ import CoreData
 class EditDetailsVC: UIViewController {
     
     var date: Date!
-    var addressDelegate: SetAddressDelegate?
     var managedContext: NSManagedObjectContext?
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
     var streetString = ""
     var regionString = ""
+    var addressDelegate: SetAddressDelegate?
     var notificationDelegate: SetNotificationDelegate?
+    var nameOfDate: String?
+    var typeOfDate: String?
+    var dateOfDate: NSDate?
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
@@ -56,8 +59,20 @@ class EditDetailsVC: UIViewController {
     }
     
     @IBAction func done(sender: AnyObject) {
-        addressDelegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
-        self.navigationController?.popViewControllerAnimated(true)
+        date.address?.street = addressTextField.text
+        date.address?.region = regionTextField.text
+        date.type = typeOfDate
+        date.name = nameOfDate
+        date.date = dateOfDate
+        date.equalizedDate = dateOfDate?.formatDateIntoString()
+        date.abbreviatedName = nameOfDate?.abbreviateName()
+        
+        do { try managedContext?.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        let dateDetailsVC = self.navigationController?.viewControllers[1] as! DateDetailsVC
+        self.navigationController?.popToViewController(dateDetailsVC, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

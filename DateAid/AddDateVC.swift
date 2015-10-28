@@ -13,6 +13,10 @@ protocol SetAddressDelegate {
     func setAddressProperties(street: String?, region: String?)
 }
 
+protocol ResetDateDelegate {
+    func resetDate(date: Date)
+}
+
 class AddDateVC: UIViewController {
     
 // MARK: PROPERTIES
@@ -77,6 +81,7 @@ class AddDateVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        
         if let dateType = dateToSave.type {
             animateButton(buttonForType[dateType]!)
         }
@@ -172,6 +177,23 @@ class AddDateVC: UIViewController {
             editDetailsVC.date = dateToSave
             editDetailsVC.managedContext = managedContext
             editDetailsVC.notificationDelegate = notificationDelegate
+            editDetailsVC.addressDelegate = self
+            if let name = nameField.text {
+                editDetailsVC.nameOfDate = name
+            }
+            editDetailsVC.typeOfDate = dateToSave.type
+            
+            var dateString: String
+            if let year = Int(yearField.text!) {
+                if year < NSDate().getYear() {
+                    dateString = "\(year)-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+                } else {
+                    dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+                }
+            } else {
+                dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+            }
+            editDetailsVC.dateOfDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
         }
     }
     
@@ -232,7 +254,7 @@ class AddDateVC: UIViewController {
             dateToSave.address?.street = street
             dateToSave.address?.region = region
             saveContext()
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
         }
     }
     
@@ -265,6 +287,13 @@ extension AddDateVC: SetAddressDelegate {
     func setAddressProperties(street: String?, region: String?) {
         self.street = street
         self.region = region
+    }
+}
+
+extension AddDateVC: ResetDateDelegate {
+    
+    func resetDate(date: Date) {
+        self.dateToSave = date
     }
 }
 
