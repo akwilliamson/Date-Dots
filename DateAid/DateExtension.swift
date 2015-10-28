@@ -41,8 +41,7 @@ extension NSDate {
     func readableDate() -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
-        let dateString = dateFormatter.stringFromDate(self)
-        return dateString
+        return dateFormatter.stringFromDate(self)
     }
     
     func ageTurning() -> Int {

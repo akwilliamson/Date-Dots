@@ -14,7 +14,7 @@ class BackTableVC: UITableViewController {
 // MARK: PROPERTIES
     
     let managedContext = CoreDataStack().managedObjectContext
-    let categoryValuesTuple = [("All", UIColor.darkGrayColor()),
+    let categoryValues = [("All", UIColor.darkGrayColor()),
                          ("irthdays", UIColor.birthdayColor()),
                      ("nniversaries", UIColor.anniversaryColor()),
                           ("olidays", UIColor.holidayColor())]
@@ -30,7 +30,7 @@ class BackTableVC: UITableViewController {
 // MARK: TABLE VIEW
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryValuesTuple.count
+        return categoryValues.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -46,9 +46,9 @@ class BackTableVC: UITableViewController {
         } else {
             allLabel.hidden = true
             abbreviation.text = categoryAbbreviations[indexPath.row]
-            abbreviation.backgroundColor = categoryValuesTuple[indexPath.row].1
-            categoryLabel.text = categoryValuesTuple[indexPath.row].0
-            categoryLabel.textColor = categoryValuesTuple[indexPath.row].1
+            abbreviation.backgroundColor = categoryValues[indexPath.row].1
+            categoryLabel.text = categoryValues[indexPath.row].0
+            categoryLabel.textColor = categoryValues[indexPath.row].1
         }
         
         return navigationCell
@@ -57,12 +57,12 @@ class BackTableVC: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let navigationVC = segue.destinationViewController as! UINavigationController
         let destinationVC = navigationVC.topViewController as! DatesTableVC
-        let index = self.tableView.indexPathForSelectedRow!.row
+        let selectedIndex = self.tableView.indexPathForSelectedRow!.row
         
-        destinationVC.typeColorForNewDate = categoryValuesTuple[index].1
-        destinationVC.menuIndexPath = index
+        destinationVC.typeColorForNewDate = categoryValues[selectedIndex].1
+        destinationVC.menuIndexPath = selectedIndex
         
-        switch index {
+        switch selectedIndex {
         case 0:
             destinationVC.typePredicate = nil
             destinationVC.typeColorForNewDate = UIColor.birthdayColor()

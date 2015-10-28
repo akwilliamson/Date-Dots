@@ -18,15 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         application.setStatusBarStyle(.LightContent, animated: false)
+        
         // Show the import contacts view on first launch only
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initialImportVC = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
-            initialImportVC.managedContext = coreDataStack.managedObjectContext
         let datesTableVC = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
+        
         if let window = self.window {
             if userDefaults.objectForKey("seenInitialView") == nil {
                 userDefaults.setBool(true, forKey: "hasLaunchedOnce")
+                initialImportVC.managedContext = coreDataStack.managedObjectContext
+                
                 window.rootViewController = initialImportVC
             } else {
                 window.rootViewController = datesTableVC

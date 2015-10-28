@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		31448C8049B822999CAFF5D7 /* Pods_DateAid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63A56B83FE889F8489D3F3C /* Pods_DateAid.framework */; };
-		9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970807591BC7288100F030D3 /* ValueSlider.swift */; settings = {ASSET_TAGS = (); }; };
-		9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708075B1BC7303800F030D3 /* TypeButton.swift */; settings = {ASSET_TAGS = (); }; };
-		970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* ColorExtension.swift */; settings = {ASSET_TAGS = (); }; };
-		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; settings = {ASSET_TAGS = (); }; };
+		9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970807591BC7288100F030D3 /* ValueSlider.swift */; };
+		9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708075B1BC7303800F030D3 /* TypeButton.swift */; };
+		970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* ColorExtension.swift */; };
+		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; };
 		97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97361A631B2C0CEF006394E1 /* DateCell.xib */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
 		97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */; };
@@ -24,33 +24,34 @@
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
-		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; settings = {ASSET_TAGS = (); }; };
-		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; settings = {ASSET_TAGS = (); }; };
-		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; settings = {ASSET_TAGS = (); }; };
-		9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F78A1BD4CCDF001E82BB /* Address.swift */; settings = {ASSET_TAGS = (); }; };
+		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
+		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; };
+		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; };
+		9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */; };
+		9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F78A1BD4CCDF001E82BB /* Address.swift */; };
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
-		97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */; settings = {ASSET_TAGS = (); }; };
-		97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteVC.swift */; settings = {ASSET_TAGS = (); }; };
-		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; settings = {ASSET_TAGS = (); }; };
-		97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; settings = {ASSET_TAGS = (); }; };
+		97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */; };
+		97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteVC.swift */; };
+		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; };
+		97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */; };
+		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
 		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
-		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; settings = {ASSET_TAGS = (); }; };
+		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; };
+		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; };
+		97C1DF671BE145380020B9D8 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1DF661BE145380020B9D8 /* LocalNotification.swift */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
-		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; settings = {ASSET_TAGS = (); }; };
-		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; settings = {ASSET_TAGS = (); }; };
-		97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266A21BDB648D008F7EF8 /* NoteCell.swift */; settings = {ASSET_TAGS = (); }; };
-		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; settings = {ASSET_TAGS = (); }; };
+		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; };
+		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; };
+		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; };
+		97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266A21BDB648D008F7EF8 /* NoteCell.swift */; };
+		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; };
 		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
-		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; settings = {ASSET_TAGS = (); }; };
+		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97B5F1A81BD02F3C00CEFFAF /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		97C1DF661BE145380020B9D8 /* LocalNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				97C1DF661BE145380020B9D8 /* LocalNotification.swift */,
 				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
 				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
@@ -485,6 +488,7 @@
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
+				97C1DF671BE145380020B9D8 /* LocalNotification.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,

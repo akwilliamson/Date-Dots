@@ -15,14 +15,12 @@ class DatesTableVC: UITableViewController {
     
     var menuIndexPath: Int?
     var typePredicate: NSPredicate?
-    
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
-    let typeStrings = ["dates", "birthdays", "anniversaries", "holidays"]
-    
     var fetchedResults: [Date]?
-    
     var managedContext = CoreDataStack().managedObjectContext
+    
+    var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
+    let typeStrings = ["dates", "birthdays", "anniversaries", "holidays"]
     
 // MARK: OUTLETS
     
@@ -44,7 +42,7 @@ class DatesTableVC: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        tableView.reloadData() // <<< what is this doing?
     }
     
 // MARK: HELPERS
@@ -57,7 +55,7 @@ class DatesTableVC: UITableViewController {
         datesFetch.predicate = typePredicate
         
         do { fetchedResults = try managedContext.executeFetchRequest(datesFetch) as? [Date]
-            if fetchedResults != nil && fetchedResults?.count > 0 {
+            if fetchedResults!.count > 0 {
                 for date in fetchedResults! {
                     if date.equalizedDate < NSDate().formatDateIntoString() {
                         fetchedResults!.removeAtIndex(0)
@@ -140,14 +138,10 @@ class DatesTableVC: UITableViewController {
 extension DatesTableVC { // UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numberOfRows = 0
-        if let fetchedResults = fetchedResults {
-            numberOfRows = fetchedResults.count
-        }
-        if numberOfRows == 0 {
+        if fetchedResults!.count == 0 {
             addNoDatesLabel()
         }
-        return numberOfRows
+        return fetchedResults!.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

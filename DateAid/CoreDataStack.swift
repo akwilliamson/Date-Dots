@@ -41,8 +41,7 @@ class CoreDataStack {
     
     func saveContext() {
         if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
+            do { try managedObjectContext.save()
             } catch let error as NSError {
                 print("Could not save: \(error), \(error.userInfo)")
             }

@@ -36,6 +36,9 @@ class SinglePushSettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let localNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+        application.registerUserNotificationSettings(localNotificationSettings)
+        
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         timeSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         
@@ -211,26 +214,29 @@ class SinglePushSettingsVC: UIViewController {
         }
     }
     
-    @IBAction func createNotification(sender: AnyObject) {
-        
-        let localNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
-        application.registerUserNotificationSettings(localNotificationSettings)
-        
+    func cancelExistingNotification() {
         if let notification = previouslyScheduledNotification {
             application.cancelLocalNotification(notification)
         }
+    }
+    
+    @IBAction func createNotification(sender: AnyObject) {
+        
+        cancelExistingNotification()
+        
         let setSecondsBefore = alertDaysBefore! + alertHourOfDay!
         let fireMonthAndDay = date.date?.dateByAddingTimeInterval(setSecondsBefore)
-        let fireDate = fireMonthAndDay!.setYear(NSDate().getYear())
         let dateID = String(date.objectID.URIRepresentation())
         
-        let localNotification = UILocalNotification()
-        localNotification.alertBody = alertPrefix! + alertSuffix!
-        localNotification.alertAction = "Dismiss"
-        localNotification.fireDate = fireDate
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        localNotification.userInfo = ["date": dateID, "daysPrior": daysBeforeUserInfo!, "hoursAfter": hoursAfterUserInfo!]
-        application.scheduleLocalNotification(localNotification)
+        let fireDate = fireMonthAndDay!.setYear(NSDate().getYear())
+        let alertBody = alertPrefix! + alertSuffix!
+        let alertAction = "Dismiss"
+        let soundName = UILocalNotificationDefaultSoundName
+        let userInfo = ["date": dateID, "daysPrior": daysBeforeUserInfo!, "hoursAfter": hoursAfterUserInfo!]
+        
+        let localNotification = LocalNotification(fireDate: fireDate, alertBody: alertBody, alertAction: alertAction, soundName: soundName, userInfo: userInfo)
+        localNotification.schedule()
+        
         notificationDelegate?.reloadNotificationView()
         self.navigationController?.popViewControllerAnimated(true)
     }
