@@ -210,7 +210,7 @@ class DateDetailsVC: UIViewController {
 extension DateDetailsVC: SetNotificationDelegate {
     
     func reloadNotificationView() {
-        setNotificationView()
+        self.localNotificationFound = false
     }
 }
 

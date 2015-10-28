@@ -688,6 +688,13 @@
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TE3-dI-DuS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="48" y="222" width="504" height="31"/>
                             </slider>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="8fD-pO-roL">
+                                <rect key="frame" x="275" y="355" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="20T-Ce-OdC"/>
+                                    <constraint firstAttribute="height" constant="50" id="zei-Sw-Cfd"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -699,8 +706,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="TE3-dI-DuS" secondAttribute="trailing" constant="30" id="Zc6-JH-vka"/>
                             <constraint firstItem="TE3-dI-DuS" firstAttribute="top" secondItem="e2W-Yb-3Bi" secondAttribute="bottom" constant="44" id="aqi-gD-fkv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QW9-m9-rGR" secondAttribute="trailing" constant="30" id="dL5-ZQ-YT9"/>
+                            <constraint firstItem="8fD-pO-roL" firstAttribute="centerX" secondItem="QW9-m9-rGR" secondAttribute="centerX" id="eet-3z-GM2"/>
                             <constraint firstItem="QW9-m9-rGR" firstAttribute="top" secondItem="TE3-dI-DuS" secondAttribute="bottom" constant="30" id="hyj-Eq-ENf"/>
                             <constraint firstItem="TE3-dI-DuS" firstAttribute="leading" secondItem="IUJ-yu-2sQ" secondAttribute="leadingMargin" constant="30" id="n3X-xr-ziB"/>
+                            <constraint firstItem="8fD-pO-roL" firstAttribute="top" secondItem="QW9-m9-rGR" secondAttribute="bottom" constant="43" id="pxV-3c-pCb"/>
                             <constraint firstItem="uyb-NV-wmr" firstAttribute="top" secondItem="cn1-7R-v24" secondAttribute="bottom" constant="20" id="uzt-xR-aNZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="N7J-xQ-Rz6" secondAttribute="trailing" constant="-3" id="wFO-wb-gcy"/>
                         </constraints>
@@ -718,6 +727,7 @@
                         <outlet property="repeatLabel" destination="N7J-xQ-Rz6" id="bjT-mY-8rH"/>
                         <outlet property="timeLabel" destination="e2W-Yb-3Bi" id="dWp-76-wHJ"/>
                         <outlet property="timeSlider" destination="QW9-m9-rGR" id="kjg-K3-tx1"/>
+                        <outlet property="trashIcon" destination="8fD-pO-roL" id="ELW-KX-utG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxX-aR-vQo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1148,6 +1158,7 @@
         <image name="people-outline" width="32" height="32"/>
         <image name="people-selected" width="32" height="32"/>
         <image name="reminder-off" width="96" height="96"/>
+        <image name="trash" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SXV-Qu-gXZ"/>

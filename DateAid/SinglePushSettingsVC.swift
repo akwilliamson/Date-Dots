@@ -32,6 +32,7 @@ class SinglePushSettingsVC: UIViewController {
     @IBOutlet weak var daySlider: ValueSlider!
     @IBOutlet weak var timeSlider: ValueSlider!
     
+    @IBOutlet weak var trashIcon: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +43,15 @@ class SinglePushSettingsVC: UIViewController {
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         timeSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editRepeat:"))
-        gestureRecognizer.numberOfTapsRequired = 1
-        repeatLabel.addGestureRecognizer(gestureRecognizer)
+        let repeatRecognizer = UITapGestureRecognizer(target: self, action: Selector("editRepeat:"))
+        repeatRecognizer.numberOfTapsRequired = 1
+        repeatLabel.addGestureRecognizer(repeatRecognizer)
         repeatLabel.userInteractionEnabled = true
+        
+        let trashRecognizer = UITapGestureRecognizer(target: self, action: Selector("deleteNotification:"))
+        trashRecognizer.numberOfTapsRequired = 1
+        trashIcon.addGestureRecognizer(trashRecognizer)
+        trashIcon.userInteractionEnabled = true
         
         populateLabelAndSliderValues()
         setColorsOfLabelsAndSliders()
@@ -90,9 +96,11 @@ class SinglePushSettingsVC: UIViewController {
                 }
             }
             if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
+                trashIcon.hidden = true
                 staticallySetLabelAndSliderValues()
             }
         } else { // There were no scheduled local notifications at all, so
+            trashIcon.hidden = true
             staticallySetLabelAndSliderValues()
         }
     }
@@ -239,6 +247,12 @@ class SinglePushSettingsVC: UIViewController {
         if let notification = previouslyScheduledNotification {
             application.cancelLocalNotification(notification)
         }
+    }
+    
+    func deleteNotification(sender: UITapGestureRecognizer) {
+        cancelExistingNotification()
+        notificationDelegate?.reloadNotificationView() 
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func createNotification(sender: AnyObject) {
