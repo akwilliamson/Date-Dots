@@ -498,7 +498,7 @@
                                     <constraint firstAttribute="height" constant="45" id="pcX-I8-Ouu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                <state key="normal" title="Notification Settings">
+                                <state key="normal" title="Alert Settings">
                                     <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
