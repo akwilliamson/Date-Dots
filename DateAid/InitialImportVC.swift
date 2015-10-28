@@ -18,6 +18,12 @@ class InitialImportVC: UIViewController {
     
     var managedContext: NSManagedObjectContext?
     var addressBook: ABAddressBook!
+    var datesToAdd: [Date]?
+    var datesAlreadyAdded: [Date]?
+    
+    // Left off creating a temporary context but I don't know if/how to put it on a different thread
+    
+    var temporaryContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     
 // MARK: OUTLETS
     
@@ -28,6 +34,7 @@ class InitialImportVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchExistingDates()
         setButtonStyles()
     }
     
@@ -63,6 +70,16 @@ class InitialImportVC: UIViewController {
     
 // MARK: HELPERS
     
+    func fetchExistingDates() {
+        
+        let existingDateFetchRequest = NSFetchRequest(entityName: "Date")
+        
+        do { datesAlreadyAdded = try managedContext?.executeFetchRequest(existingDateFetchRequest) as? [Date]
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
     // The main method to extract and save all initial dates
     func getDatesFromContacts() {
         if !determineStatus() { return }
@@ -72,8 +89,6 @@ class InitialImportVC: UIViewController {
             addEntitiesForAddressBookBirthdays(person)
             // Add Date entities for address book anniversaries
             addEntitiesForAddressBookAnniversaries(person)
-            
-            
         }
     }
     
@@ -122,46 +137,63 @@ class InitialImportVC: UIViewController {
         if birthdayProperty != nil {
             let actualDate = birthdayProperty.takeUnretainedValue() as! NSDate
             
-            let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-            let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+            let name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
+            let abbreviatedName = name.abbreviateName()
+            let date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+            let equalizedDate = date.formatDateIntoString()
+            let type = "birthday"
             
-            birthday.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
-            birthday.abbreviatedName = birthday.name!.abbreviateName()
-            birthday.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
-            birthday.equalizedDate = actualDate.formatDateIntoString()
-            birthday.type = "birthday"
-            
-            
-            let unmanagedAddresses = ABRecordCopyValue(person, kABPersonAddressProperty)
-            let addresses = (Unmanaged.fromOpaque(unmanagedAddresses.toOpaque()).takeUnretainedValue() as NSObject) as ABMultiValueRef
-            let countOfAddresses = ABMultiValueGetCount(addresses)
-            if countOfAddresses > 0 {
-            
-                for index in 0..<countOfAddresses {
-                    let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
-                    let addressForBirthday = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
-                    let unmanagedPhone = ABMultiValueCopyValueAtIndex(addresses, index)
-                    let address = (Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
-                    addressForBirthday.street = ""
-                    addressForBirthday.region = ""
-                    if let street = address.valueForKey("Street") as? String {
-                        addressForBirthday.street = street
-                    }
-                    if let city = address.valueForKey("City") as? String {
-                        addressForBirthday.region = city
-                    }
-                    if let state = address.valueForKey("State") as? String {
-                        addressForBirthday.region? += " \(state)"
-                    }
-                    if let zip = address.valueForKey("ZIP") as? String {
-                        if let intZip = Int(zip) {
-                            let zipCode = NSNumber(integer: intZip)
-                            addressForBirthday.region? += " \(zipCode)"
+            let fetchRequest = NSFetchRequest(entityName: "Date")
+            fetchRequest.predicate = NSPredicate(format: "name = %@ AND date = %@ AND type = %@", name,date,type)
+            fetchRequest.fetchLimit = 1
+            do { let result = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
+                if result?.count == 0 {
+                
+                    let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                    let birthday = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+                    
+                    birthday.name = name
+                    birthday.abbreviatedName = abbreviatedName
+                    birthday.date = date
+                    birthday.equalizedDate = equalizedDate
+                    birthday.type = type
+                    
+                    let unmanagedAddresses = ABRecordCopyValue(person, kABPersonAddressProperty)
+                    let addresses = (Unmanaged.fromOpaque(unmanagedAddresses.toOpaque()).takeUnretainedValue() as NSObject) as ABMultiValueRef
+                    let countOfAddresses = ABMultiValueGetCount(addresses)
+                    if countOfAddresses > 0 {
+                        
+                        for index in 0..<countOfAddresses {
+                            let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+                            let addressForBirthday = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                            let unmanagedPhone = ABMultiValueCopyValueAtIndex(addresses, index)
+                            let address = (Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
+                            addressForBirthday.street = ""
+                            addressForBirthday.region = ""
+                            if let street = address.valueForKey("Street") as? String {
+                                addressForBirthday.street = street
+                            }
+                            if let city = address.valueForKey("City") as? String {
+                                addressForBirthday.region = city
+                            }
+                            if let state = address.valueForKey("State") as? String {
+                                addressForBirthday.region? += " \(state)"
+                            }
+                            if let zip = address.valueForKey("ZIP") as? String {
+                                if let intZip = Int(zip) {
+                                    let zipCode = NSNumber(integer: intZip)
+                                    addressForBirthday.region? += " \(zipCode)"
+                                }
+                            }
+                            birthday.address = addressForBirthday
                         }
                     }
-                    birthday.address = addressForBirthday
+                    
                 }
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
+            
         }
     }
     
@@ -172,16 +204,65 @@ class InitialImportVC: UIViewController {
             let otherLabel = kABPersonAnniversaryLabel as String
             
             if anniversaryLabel == otherLabel {
+                
                 let actualDate = ABMultiValueCopyValueAtIndex(anniversaryDate, index).takeUnretainedValue() as! NSDate
                 
-                let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-                let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
+                let name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
+                let abbreviatedName = name.abbreviateName()
+                let date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+                let equalizedDate = actualDate.formatDateIntoString()
+                let type = "anniversary"
                 
-                anniversary.name = ABRecordCopyCompositeName(person).takeUnretainedValue() as String
-                anniversary.abbreviatedName = anniversary.name!.abbreviateName()
-                anniversary.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
-                anniversary.equalizedDate = actualDate.formatDateIntoString()
-                anniversary.type = "anniversary"
+                let fetchRequest = NSFetchRequest(entityName: "Date")
+                fetchRequest.predicate = NSPredicate(format: "name = %@ AND date = %@ AND type = %@", name,date,type)
+                fetchRequest.fetchLimit = 1
+                
+                do { let result = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
+                    if result?.count == 0 {
+                
+                        let anniversaryEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                        let anniversary = Date(entity: anniversaryEntity!, insertIntoManagedObjectContext: managedContext)
+                        
+                        anniversary.name = name
+                        anniversary.abbreviatedName = abbreviatedName
+                        anniversary.date = date
+                        anniversary.equalizedDate = equalizedDate
+                        anniversary.type = type
+
+                            let unmanagedAddresses = ABRecordCopyValue(person, kABPersonAddressProperty)
+                            let addresses = (Unmanaged.fromOpaque(unmanagedAddresses.toOpaque()).takeUnretainedValue() as NSObject) as ABMultiValueRef
+                            let countOfAddresses = ABMultiValueGetCount(addresses)
+                            if countOfAddresses > 0 {
+                                
+                            for index in 0..<countOfAddresses {
+                                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+                                let addressForBirthday = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                                let unmanagedPhone = ABMultiValueCopyValueAtIndex(addresses, index)
+                                let address = (Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
+                                addressForBirthday.street = ""
+                                addressForBirthday.region = ""
+                                if let street = address.valueForKey("Street") as? String {
+                                    addressForBirthday.street = street
+                                }
+                                if let city = address.valueForKey("City") as? String {
+                                    addressForBirthday.region = city
+                                }
+                                if let state = address.valueForKey("State") as? String {
+                                    addressForBirthday.region? += " \(state)"
+                                }
+                                if let zip = address.valueForKey("ZIP") as? String {
+                                    if let intZip = Int(zip) {
+                                        let zipCode = NSNumber(integer: intZip)
+                                        addressForBirthday.region? += " \(zipCode)"
+                                    }
+                                }
+                                anniversary.address = addressForBirthday
+                            }
+                        }
+                    }
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -199,14 +280,30 @@ class InitialImportVC: UIViewController {
             for (holidayName, holidayDate) in holidaysDictionary {
                 let actualDate = holidayDate as! NSDate
                 
-                let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-                let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
+                let name = holidayName as! String
+                let abbreviatedName = name
+                let date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+                let equalizedDate = actualDate.formatDateIntoString()
+                let type = "holiday"
                 
-                holiday.name = holidayName as? String
-                holiday.abbreviatedName = holidayName as? String
-                holiday.date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
-                holiday.equalizedDate = actualDate.formatDateIntoString()
-                holiday.type = "holiday"
+                let fetchRequest = NSFetchRequest(entityName: "Date")
+                fetchRequest.predicate = NSPredicate(format: "name = %@ AND date = %@ AND type = %@", name,date,type)
+                fetchRequest.fetchLimit = 1
+                
+                do { let result = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
+                    if result?.count == 0 {
+                        let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                        let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
+                        
+                        holiday.name = name
+                        holiday.abbreviatedName = abbreviatedName
+                        holiday.date = date
+                        holiday.equalizedDate = equalizedDate
+                        holiday.type = type
+                    }
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -217,7 +314,6 @@ class InitialImportVC: UIViewController {
         skipButton.titleLabel?.textAlignment = .Center
         skipButton.layer.cornerRadius = 50
     }
-    
 }
 
 //    func iOS9AddBirthdays() {
