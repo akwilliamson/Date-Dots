@@ -197,7 +197,9 @@ class DateDetailsVC: UIViewController {
         }
         if segue.identifier == "ShowNotes" {
             let notesTableVC = segue.destinationViewController as! NotesTableVC
+            notesTableVC.managedContext = managedContext
             notesTableVC.typeColor = colorForType[date!.type!]
+            notesTableVC.date = date
         }
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC

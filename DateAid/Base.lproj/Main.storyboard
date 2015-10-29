@@ -970,8 +970,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3gG-0k-1Xu">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="UGS-7I-Msx">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="UGS-7I-Msx">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="saveNote:" destination="ULx-DK-D8w" id="Ngh-fn-imo"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

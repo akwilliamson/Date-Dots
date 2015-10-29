@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class NotesTableVC: UITableViewController {
 
     var typeColor: UIColor!
+    var managedContext: NSManagedObjectContext?
     let noteTitles = ["Gifts","Plans","Other"]
+    var date: Date!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +48,8 @@ class NotesTableVC: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = tableView.indexPathForSelectedRow!
         let noteVC = segue.destinationViewController as! NoteVC
+        noteVC.managedContext = managedContext
+        noteVC.date = date
         noteVC.note = noteTitles[indexPath.row]
         noteVC.typeColor = typeColor
     }

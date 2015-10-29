@@ -83,6 +83,8 @@ class EditDetailsVC: UIViewController {
         } else {
             let noteVC = segue.destinationViewController as! NoteVC
             noteVC.typeColor = colorForType[date.type!]
+            noteVC.date = date
+            noteVC.managedContext = managedContext
             switch segue.identifier! {
             case "ShowGifts":
                 noteVC.note = "Gifts"
