@@ -33,7 +33,7 @@ class InitialImportVC: UIViewController {
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
         fetchExistingDates()
         setButtonStyles()
     }
@@ -310,9 +310,9 @@ class InitialImportVC: UIViewController {
     
     func setButtonStyles() {
         importButton.titleLabel?.textAlignment = .Center
-        importButton.layer.cornerRadius = 75
+        importButton.layer.cornerRadius = 85
         skipButton.titleLabel?.textAlignment = .Center
-        skipButton.layer.cornerRadius = 50
+        skipButton.layer.cornerRadius = 60
     }
 }
 

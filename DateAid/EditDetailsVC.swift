@@ -78,7 +78,7 @@ class EditDetailsVC: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
-            singlePushSettingsVC.date = date
+            singlePushSettingsVC.dateObject = date
             singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
             let noteVC = segue.destinationViewController as! NoteVC

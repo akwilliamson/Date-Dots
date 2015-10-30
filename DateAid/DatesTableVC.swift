@@ -42,7 +42,8 @@ class DatesTableVC: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData() // <<< what is this doing?
+        setAndPerformFetchRequest()
+        tableView.reloadData()
     }
     
 // MARK: HELPERS

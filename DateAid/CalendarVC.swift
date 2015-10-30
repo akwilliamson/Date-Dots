@@ -18,6 +18,7 @@ class CalendarVC: UIViewController {
         super.viewDidLoad()
         
         title = CVDate(date: NSDate()).globalDescription
+        configureNavigationBar()
         
         menuView.delegate = self
         calendarView.delegate = self
@@ -29,6 +30,15 @@ class CalendarVC: UIViewController {
         calendarView.commitCalendarViewUpdate()
         menuView.commitMenuViewUpdate()
     }
+    
+    func configureNavigationBar() {
+        if let navBar = navigationController?.navigationBar {
+            navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
+            navBar.barTintColor = UIColor.birthdayColor()
+            navBar.tintColor = UIColor.whiteColor()
+        }
+    }
+    
 }
 
 extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
@@ -47,5 +57,92 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
         return true
     }
     
+    func shouldScrollOnOutDayViewSelection() -> Bool {
+        return true
+    }
+    
+    func shouldAutoSelectDayOnMonthChange() -> Bool {
+        return false
+    }
+    
+//    func didSelectDayView(dayView: DayView) { <<<< Use to show any dates with a matching date attribute below the calendar
+//        
+//    }
+    
+//    func presentedDateUpdated(date: Date) { <<<< Use to notify delegate to change navigation title to new month name
+//        
+//    }
+    
+//    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {  <<<< Loop through dates to show dotMarker on date
+//        
+//    }
+    
+//    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {   <<<< loop through dates to set dotMarker color
+//        
+//    }
+    
+    func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
+        return true
+    }
+    
+    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
+        return 2.0
+    }
+}
+
+extension CalendarVC: CVCalendarViewAppearanceDelegate {
+
+    func dayLabelPresentWeekdayHighlightedTextColor() -> UIColor {
+        return UIColor.whiteColor()
+    }
+    
+    func dayLabelPresentWeekdayHighlightedBackgroundColor() -> UIColor {
+        return UIColor.darkGrayColor()
+    }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

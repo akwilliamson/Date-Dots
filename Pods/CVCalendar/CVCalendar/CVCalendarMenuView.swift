@@ -122,21 +122,19 @@ public final class CVCalendarMenuView: UIView {
     }
     
     public func commitMenuViewUpdate() {
-        if let delegate = delegate {
-            let space = 0 as CGFloat
-            let width = self.frame.width / 7 - space
-            let height = self.frame.height
+        let space = 0 as CGFloat
+        let width = self.frame.width / 7 - space
+        let height = self.frame.height
+        
+        var x: CGFloat = 0
+        let y: CGFloat = 0
+        
+        for i in 0..<self.symbolViews!.count {
+            x = CGFloat(i) * width + space
             
-            var x: CGFloat = 0
-            let y: CGFloat = 0
-            
-            for i in 0..<self.symbolViews!.count {
-                x = CGFloat(i) * width + space
-                
-                let frame = CGRectMake(x, y, width, height)
-                let symbol = self.symbolViews![i]
-                symbol.frame = frame
-            }
+            let frame = CGRectMake(x, y, width, height)
+            let symbol = self.symbolViews![i]
+            symbol.frame = frame
         }
     }
 }

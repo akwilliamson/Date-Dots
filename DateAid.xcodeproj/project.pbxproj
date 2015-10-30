@@ -41,7 +41,6 @@
 		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
 		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; };
 		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; };
-		97C1DF671BE145380020B9D8 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1DF661BE145380020B9D8 /* LocalNotification.swift */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
 		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
@@ -107,7 +106,6 @@
 		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97B5F1A81BD02F3C00CEFFAF /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		97C1DF661BE145380020B9D8 /* LocalNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				97C1DF661BE145380020B9D8 /* LocalNotification.swift */,
 				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
 				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
@@ -488,7 +485,6 @@
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
-				97C1DF671BE145380020B9D8 /* LocalNotification.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,

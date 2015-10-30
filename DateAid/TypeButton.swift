@@ -11,6 +11,11 @@ import Foundation
 class TypeButton: UIButton {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.layer.cornerRadius = 20
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = self.bounds.width/2
+        self.clipsToBounds = true
     }
 }

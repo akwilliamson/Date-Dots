@@ -52,7 +52,6 @@ public final class CVAuxiliaryView: UIView {
     }
     
     public override func drawRect(rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
         var path: UIBezierPath!
         
         if let shape = shape {
@@ -100,8 +99,6 @@ extension CVAuxiliaryView {
     }
     
     func rightFlagPath() -> UIBezierPath {
-        let appearance = dayView.calendarView.appearance
-        let offset = appearance.spaceBetweenDayViews!
         
         let flag = UIBezierPath()
         flag.moveToPoint(CGPointMake(bounds.width / 2, bounds.height / 2 - radius))
@@ -131,7 +128,6 @@ extension CVAuxiliaryView {
     }
     
     func rectPath() -> UIBezierPath {
-        let midX = bounds.width / 2
         let midY = bounds.height / 2
         
         let appearance = dayView.calendarView.appearance

@@ -113,8 +113,8 @@ class DateDetailsVC: UIViewController {
         animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)
         animateDropInLabelFor(dateLabel, fromPosition: -50, delay: 0.2)
-        reminderImage.center.x = -300
-        reminderLabel.center.x = -300
+        reminderImage.center.x = 600
+        reminderLabel.center.x = 600
         UIView.animateWithDuration(0.5, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
             self.reminderImage.center.x = self.view.center.x
             self.reminderLabel.center.x = self.view.center.x
@@ -203,7 +203,7 @@ class DateDetailsVC: UIViewController {
         }
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
-            singlePushSettingsVC.date = date
+            singlePushSettingsVC.dateObject = date
             singlePushSettingsVC.notificationDelegate = self
         }
     }

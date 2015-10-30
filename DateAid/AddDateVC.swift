@@ -71,8 +71,11 @@ class AddDateVC: UIViewController {
         setUpViewColors(dateToSave!.type!)
         setDataSources()
         setMonthAndDayLabelText()
+        
         monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -101,8 +104,10 @@ class AddDateVC: UIViewController {
     
     func setInitialValues() {
         
-        monthSlider.setValues(min: 1, max: 12, value: 1)
-        daySlider.setValues(min: 1, max: 31, value: 1)
+        monthSlider.setValues(max: 12, value: 1)
+        monthSlider.minimumValue = 1
+        daySlider.setValues(max: 31, value: 1)
+        daySlider.minimumValue = 1
         
         switch isBeingEdited! {
         case true:
