@@ -179,26 +179,11 @@ class AddDateVC: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditDetails" {
             let editDetailsVC = segue.destinationViewController as! EditDetailsVC
-            editDetailsVC.date = dateToSave
-            editDetailsVC.managedContext = managedContext
-            editDetailsVC.notificationDelegate = notificationDelegate
-            editDetailsVC.addressDelegate = self
-            if let name = nameField.text {
-                editDetailsVC.nameOfDate = name
-            }
-            editDetailsVC.typeOfDate = dateToSave.type
             
-            var dateString: String
-            if let year = Int(yearField.text!) {
-                if year < NSDate().getYear() {
-                    dateString = "\(year)-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-                } else {
-                    dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-                }
-            } else {
-                dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-            }
-            editDetailsVC.dateOfDate = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
+            editDetailsVC.dateObject = dateToSave
+            editDetailsVC.managedContext = managedContext
+            editDetailsVC.addressDelegate = self
+            editDetailsVC.notificationDelegate = notificationDelegate
         }
     }
     

@@ -11,19 +11,16 @@ import CoreData
 
 class EditDetailsVC: UIViewController {
     
-    var date: Date!
+    var dateObject: Date!
     var managedContext: NSManagedObjectContext?
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    var streetString = ""
-    var regionString = ""
     var addressDelegate: SetAddressDelegate?
-    var notificationDelegate: SetNotificationDelegate?
-    var nameOfDate: String?
-    var typeOfDate: String?
-    var dateOfDate: NSDate?
+    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to pass to SinglePushSettingsVC
+    
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
+    
     @IBOutlet weak var notificationSettingsButton: UIButton!
     @IBOutlet weak var giftNotesButton: UIButton!
     @IBOutlet weak var planNotesButton: UIButton!
@@ -32,58 +29,47 @@ class EditDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let dateType = date.type {
-            notificationSettingsButton.setTitleColor(colorForType[dateType], forState: .Normal)
-            giftNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
-            planNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
-            otherNotesButton.setTitleColor(colorForType[dateType], forState: .Normal)
+        setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
+        populateAddressFields(withAddress: dateObject.address)
+    }
+    
+    func setDateTypeColor(onButtons buttons: [UIButton]) {
+        if let dateType = dateObject.type {
+            let color = colorForType[dateType]
+            buttons.forEach() { $0.setTitleColor(color, forState: .Normal) }
         }
-        if let street = date.address?.street {
-            streetString = street
+    }
+    
+    func populateAddressFields(withAddress address: Address?) {
+        if let street = address?.street {
+            addressTextField.text = street
         }
-        if let region = date.address?.region {
-            regionString = region
+        if let region = address?.region {
+            regionTextField.text = region
         }
-        addressTextField.text = streetString
-        regionTextField.text = regionString
-        
-        addressTextField.delegate = self
-        regionTextField.delegate = self
-        
-        giftNotesButton.contentHorizontalAlignment = .Left
-        giftNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
-        planNotesButton.contentHorizontalAlignment = .Left
-        planNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
-        otherNotesButton.contentHorizontalAlignment = .Left
-        otherNotesButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
     }
     
     @IBAction func done(sender: AnyObject) {
-        date.address?.street = addressTextField.text
-        date.address?.region = regionTextField.text
-        date.type = typeOfDate
-        date.name = nameOfDate
-        date.date = dateOfDate
-        date.equalizedDate = dateOfDate?.formatDateIntoString()
-        date.abbreviatedName = nameOfDate?.abbreviateName()
+        dateObject.address?.street = addressTextField.text
+        dateObject.address?.region = regionTextField.text
         
         do { try managedContext?.save()
+            let dateDetailsVC = self.navigationController?.viewControllers[1] as! DateDetailsVC
+            self.navigationController?.popToViewController(dateDetailsVC, animated: true)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-        let dateDetailsVC = self.navigationController?.viewControllers[1] as! DateDetailsVC
-        self.navigationController?.popToViewController(dateDetailsVC, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
-            singlePushSettingsVC.dateObject = date
+            singlePushSettingsVC.dateObject = dateObject
             singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
             let noteVC = segue.destinationViewController as! NoteVC
-            noteVC.typeColor = colorForType[date.type!]
-            noteVC.date = date
+            noteVC.typeColor = colorForType[dateObject.type!]
+            noteVC.date = dateObject
             noteVC.managedContext = managedContext
             switch segue.identifier! {
             case "ShowGifts":

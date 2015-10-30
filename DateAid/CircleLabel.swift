@@ -16,10 +16,6 @@ class CircleLabel: UILabel {
         super.init(coder: aDecoder)!
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     override func drawRect(rect: CGRect) {
         self.layer.cornerRadius = self.bounds.width/2
         self.clipsToBounds = true
