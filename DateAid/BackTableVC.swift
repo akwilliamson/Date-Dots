@@ -14,10 +14,7 @@ class BackTableVC: UITableViewController {
 // MARK: PROPERTIES
     
     let managedContext = CoreDataStack().managedObjectContext
-    let categoryValues = [("All", UIColor.darkGrayColor()),
-                         ("irthdays", UIColor.birthdayColor()),
-                     ("nniversaries", UIColor.anniversaryColor()),
-                          ("olidays", UIColor.holidayColor())]
+    let categoryValues = [("All", UIColor.darkGrayColor()), ("irthdays", UIColor.birthdayColor()), ("nniversaries", UIColor.anniversaryColor()), ("olidays", UIColor.holidayColor())]
     let categoryAbbreviations = ["","B","A","H"]
     
 // MARK: VIEW SETUP

@@ -56,7 +56,7 @@ class AddDateVC: UIViewController {
     
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
-    @IBOutlet weak var yearField: AddNameTextField!
+    @IBOutlet weak var yearField: UITextField!
     
 // MARK: VIEW SETUP
     
