@@ -113,9 +113,9 @@ class SinglePushSettingsVC: UIViewController {
         case 0:
             return "Day of"
         case 1:
-            return "\(forDaysPrior) day prior"
+            return "\(daysPrior) day prior"
         default:
-            return "\(forDaysPrior) days prior"
+            return "\(daysPrior) days prior"
         }
     }
     
