@@ -16,7 +16,7 @@ class EditDetailsVC: UIViewController {
     var addressDelegate: SetAddressDelegate?
     var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to pass to SinglePushSettingsVC
     
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!

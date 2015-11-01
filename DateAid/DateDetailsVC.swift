@@ -20,7 +20,7 @@ class DateDetailsVC: UIViewController {
     var managedContext: NSManagedObjectContext?
     var date: Date!
     var localNotificationFound: Bool?
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
 
 // MARK: OUTLETS
     
@@ -176,7 +176,7 @@ class DateDetailsVC: UIViewController {
                 switch date!.type! {
                 case "birthday":
                     ageLabel.text = "Turning\n\(date.date!.ageTurning())"
-                case "anniversary", "holiday":
+                case "anniversary", "custom":
                     ageLabel.text = "Year\n#\(date.date!.ageTurning())"
                 default:
                     break

@@ -30,7 +30,7 @@ class AddDateVC: UIViewController {
     var notificationDelegate: SetNotificationDelegate?
     
     var buttonForType: [String: TypeButton]!
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     let fullMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -44,7 +44,7 @@ class AddDateVC: UIViewController {
     
     @IBOutlet weak var birthdayButton: TypeButton!
     @IBOutlet weak var anniversaryButton: TypeButton!
-    @IBOutlet weak var holidayButton: TypeButton!
+    @IBOutlet weak var customButton: TypeButton!
     
     @IBOutlet weak var monthSlider: ValueSlider!
     @IBOutlet weak var daySlider: ValueSlider!
@@ -63,7 +63,7 @@ class AddDateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = addOrEdit()
-        buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "holiday": holidayButton]
+        buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "custom": customButton]
         if dateToSave == nil {
             createDateToSaveEntity()
         }
@@ -192,19 +192,19 @@ class AddDateVC: UIViewController {
     @IBAction func birthdayButton(sender: UIButton) {
         switchDateTypeAndColorsTo("birthday")
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
-        holidayButton.titleLabel!.layer.removeAllAnimations()
+        customButton.titleLabel!.layer.removeAllAnimations()
         animateButton(sender)
     }
     
     @IBAction func anniversaryButton(sender: UIButton) {
         switchDateTypeAndColorsTo("anniversary")
         birthdayButton.titleLabel!.layer.removeAllAnimations()
-        holidayButton.titleLabel!.layer.removeAllAnimations()
+        customButton.titleLabel!.layer.removeAllAnimations()
         animateButton(sender)
     }
     
-    @IBAction func holidayButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("holiday")
+    @IBAction func customButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("custom")
         birthdayButton.titleLabel!.layer.removeAllAnimations()
         anniversaryButton.titleLabel!.layer.removeAllAnimations()
         animateButton(sender)
@@ -221,7 +221,7 @@ class AddDateVC: UIViewController {
         } else {
             var dateString: String
             if let year = Int(yearField.text!) {
-                if year < NSDate().getYear() {
+                if year <= NSDate().getYear() {
                     dateString = "\(year)-\(Int(monthSlider.value))-\(Int(daySlider.value))"
                 } else {
                     dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"

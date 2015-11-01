@@ -19,8 +19,8 @@ class DatesTableVC: UITableViewController {
     var managedContext = CoreDataStack().managedObjectContext
     
     var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "holiday": UIColor.holidayColor()]
-    let typeStrings = ["dates", "birthdays", "anniversaries", "holidays"]
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
     
 // MARK: OUTLETS
     
@@ -162,7 +162,7 @@ extension DatesTableVC { // UITableViewDataSource
                 case 2:
                     dateCell.nameLabel.textColor = colorForType["anniversary"]
                 case 3:
-                    dateCell.nameLabel.textColor = colorForType["holiday"]
+                    dateCell.nameLabel.textColor = colorForType["custom"]
                 default:
                     if let dateType = date.type {
                         dateCell.nameLabel.textColor = colorForType[dateType]

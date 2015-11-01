@@ -14,8 +14,8 @@ class BackTableVC: UITableViewController {
 // MARK: PROPERTIES
     
     let managedContext = CoreDataStack().managedObjectContext
-    let categoryValues = [("All", UIColor.darkGrayColor()), ("irthdays", UIColor.birthdayColor()), ("nniversaries", UIColor.anniversaryColor()), ("olidays", UIColor.holidayColor())]
-    let categoryAbbreviations = ["","B","A","H"]
+    let categoryValues = [("All", UIColor.darkGrayColor()), ("irthdays", UIColor.birthdayColor()), ("nniversaries", UIColor.anniversaryColor()), ("ustom", UIColor.customColor())]
+    let categoryAbbreviations = ["","B","A","C"]
     
 // MARK: VIEW SETUP
     
@@ -68,7 +68,7 @@ class BackTableVC: UITableViewController {
         case 2:
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
         case 3:
-            destinationVC.typePredicate = NSPredicate(format: "type = %@", "holiday")
+            destinationVC.typePredicate = NSPredicate(format: "type = %@", "custom")
         default:
             break
         }

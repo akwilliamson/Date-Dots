@@ -63,7 +63,7 @@ class InitialImportVC: UIViewController {
     
     @IBAction func syncContacts(sender: AnyObject) {
         getDatesFromContacts()
-        addEntitiesForHolidaysFromPlist()
+        addEntitiesForCustomDatesFromPlist()
         saveManagedContext()
         self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
@@ -274,17 +274,17 @@ class InitialImportVC: UIViewController {
         }
     }
     
-    func addEntitiesForHolidaysFromPlist() {
-        if let path = NSBundle.mainBundle().pathForResource("Holidays", ofType: "plist") {
-            let holidaysDictionary = NSDictionary(contentsOfFile: path)!
-            for (holidayName, holidayDate) in holidaysDictionary {
-                let actualDate = holidayDate as! NSDate
+    func addEntitiesForCustomDatesFromPlist() {
+        if let path = NSBundle.mainBundle().pathForResource("Custom", ofType: "plist") {
+            let customDictionary = NSDictionary(contentsOfFile: path)!
+            for (customName, customDate) in customDictionary {
+                let actualDate = customDate as! NSDate
                 
-                let name = holidayName as! String
+                let name = customName as! String
                 let abbreviatedName = name
                 let date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
                 let equalizedDate = actualDate.formatDateIntoString()
-                let type = "holiday"
+                let type = "custom"
                 
                 let fetchRequest = NSFetchRequest(entityName: "Date")
                 fetchRequest.predicate = NSPredicate(format: "name = %@ AND date = %@ AND type = %@", name,date,type)
@@ -292,14 +292,14 @@ class InitialImportVC: UIViewController {
                 
                 do { let result = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
                     if result?.count == 0 {
-                        let holidayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-                        let holiday = Date(entity: holidayEntity!, insertIntoManagedObjectContext: managedContext)
+                        let customEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+                        let customDate = Date(entity: customEntity!, insertIntoManagedObjectContext: managedContext)
                         
-                        holiday.name = name
-                        holiday.abbreviatedName = abbreviatedName
-                        holiday.date = date
-                        holiday.equalizedDate = equalizedDate
-                        holiday.type = type
+                        customDate.name = name
+                        customDate.abbreviatedName = abbreviatedName
+                        customDate.date = date
+                        customDate.equalizedDate = equalizedDate
+                        customDate.type = type
                     }
                 } catch let error as NSError {
                     print(error.localizedDescription)
