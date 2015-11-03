@@ -21,17 +21,21 @@ class AddDateVC: UIViewController {
     
 // MARK: PROPERTIES
     
+    // Passed from DatesTableVC for new date
     var managedContext: NSManagedObjectContext?
-    var dateToSave: Date!
     var isBeingEdited: Bool!
     var incomingColor: UIColor!
-    var street: String?
-    var region: String?
+    
+    // Additionally passed from DateDetailsVC for edit date
+    var dateToSave: Date!
     var notificationDelegate: SetNotificationDelegate?
     
-    var buttonForType: [String: TypeButton]!
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     
+    var street: String?
+    var region: String?
+    var buttonForType: [String: TypeButton]!
+    
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     let fullMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     let fullDays = ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",
@@ -50,9 +54,6 @@ class AddDateVC: UIViewController {
     @IBOutlet weak var daySlider: ValueSlider!
     
     @IBOutlet weak var editDetailsButton: UIButton!
-    @IBOutlet weak var dismissNameFieldBlankButton: UIButton!
-    
-    @IBOutlet weak var nameFieldBlankView: UIView!
     
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
@@ -62,24 +63,19 @@ class AddDateVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         title = addOrEdit()
+        createDateToSaveIfThereIsNo(dateToSave)
+        setInitialValuesWhether(isBeingEdited)
+        setButtonAndSliderColors()
+        addValueChangedTargetOn([monthSlider, daySlider])
+        setDataSourceFor([monthSlider, daySlider])
+        
         buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "custom": customButton]
-        if dateToSave == nil {
-            createDateToSaveEntity()
-        }
-        setInitialValues()
-        setUpViewColors(dateToSave!.type!)
-        setDataSources()
-        setMonthAndDayLabelText()
-        
-        monthSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        daySlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        
-
     }
     
     override func viewDidLayoutSubviews() {
-        addLabelsToSliders([monthSlider, daySlider])
+        addLabelOnThumbForSliders()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,79 +90,52 @@ class AddDateVC: UIViewController {
         return isBeingEdited! == true ? "Edit" : "Add"
     }
     
-    func createDateToSaveEntity() {
-        let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-        dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
-        dateToSave.type = incomingColorType
+    func createDateToSaveIfThereIsNo(date: Date?) {
+        if dateToSave == nil {
+            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+            dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            
+            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
+            dateToSave.type = incomingColorType
+        }
     }
     
-    func setInitialValues() {
+    func addValueChangedTargetOn(sliders: [ValueSlider]) {
+        sliders.forEach { $0.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged) }
+    }
+    
+    func setInitialValuesWhether(isBeingEdited: Bool) {
         
-        monthSlider.setValues(max: 12, value: 1)
-        monthSlider.minimumValue = 1
-        daySlider.setValues(max: 31, value: 1)
-        daySlider.minimumValue = 1
-        
-        switch isBeingEdited! {
+        switch isBeingEdited {
         case true:
-            if let date = dateToSave {
-                nameField.text = date.name
-                monthSlider.value = Float(date.date!.getMonth())
-                daySlider.value = Float(date.date!.getDay())
-                monthLabel.text = fullMonths[Int(monthSlider.value)-1]
-                dayLabel.text = fullDays[Int(daySlider.value)-1]
-                if let year = date.date?.getYear() {
-                    if year != 1604 {
-                        yearField.text = String(year)
-                    }
-                }
+            if let name = dateToSave.name, let year = dateToSave.date?.getYear(), let month = dateToSave.date?.getMonth(), let day = dateToSave.date?.getDay() {
+                nameField.text = name
+                monthLabel.text = fullMonths[month-1]
+                dayLabel.text = fullDays[day-1]
+                yearField.text = year != 1604 ? String(year) : nil
+                monthSlider.setValues(max: 12, value: Float(month))
+                daySlider.setValues(max: 31, value: Float(day))
             }
         case false:
-            monthSlider.value = 1.0
-            daySlider.value = 1.0
+            monthSlider.setValues(max: 12, value: 1)
+            daySlider.setValues(max: 31, value: 1)
             monthLabel.text = fullMonths[Int(monthSlider.value)-1]
             dayLabel.text = fullDays[Int(daySlider.value)-1]
         }
+        monthSlider.minimumValue = 1
+        daySlider.minimumValue = 1
     }
     
-    func setUpViewColors(type: String) {
-        monthSlider.setColorTo(colorForType[type]!)
-        daySlider.setColorTo(colorForType[type]!)
-        editDetailsButton.tintColor = colorForType[type]
-    }
-    
-    func setDataSources() {
-        monthSlider.dataSource = self
-        daySlider.dataSource = self
-    }
-    
-    func addLabelsToSliders(sliders: [ValueSlider]) {
-        for slider in sliders {
-            let thumbView = slider.subviews.last
-            if thumbView?.viewWithTag(1) == nil {
-                let label = UILabel(frame: thumbView!.bounds)
-                label.backgroundColor = UIColor.clearColor()
-                label.textAlignment = .Center
-                label.textColor = UIColor.whiteColor()
-                label.tag = 1
-                switch slider {
-                case monthSlider:
-                    label.text = "M"
-                case daySlider:
-                    label.text = "D"
-                default:
-                    break
-                }
-                thumbView?.addSubview(label)
-            }
+    func setButtonAndSliderColors() {
+        if let color = colorForType[dateToSave!.type!] {
+            [monthSlider, daySlider].forEach { $0.setColorTo(color) }
+            editDetailsButton.tintColor = color
         }
     }
     
-    func setMonthAndDayLabelText() {
-        monthLabel.text = fullMonths[Int(monthSlider.value)-1]
-        dayLabel.text = fullDays[Int(daySlider.value)-1]
+    func addLabelOnThumbForSliders() {
+            monthSlider.addLabel("month")
+            daySlider.addLabel("day")
     }
     
     func animateButton(button: UIButton) {
@@ -210,14 +179,10 @@ class AddDateVC: UIViewController {
         animateButton(sender)
     }
     
-    @IBAction func dismissWarning(sender: AnyObject) {
-        nameFieldBlankView.hidden = true
-    }
-    
     @IBAction func saveButton(sender: UIBarButtonItem) {
         
         if nameField.text?.characters.count == 0 || nameField.text == nil {
-            nameFieldBlankView.hidden = false
+            // Do something to warn that the name must be filled out before continuing
         } else {
             var dateString: String
             if let year = Int(yearField.text!) {
@@ -251,13 +216,13 @@ class AddDateVC: UIViewController {
     // Action Helpers
     func switchDateTypeAndColorsTo(type: String) {
         dateToSave.type = type
-        setUpViewColors(type)
+        setButtonAndSliderColors()
     }
     
     func saveContext() {
         do { try managedContext!.save()
         } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
+            print(error.localizedDescription)
         }
     }
     
@@ -318,6 +283,10 @@ extension AddDateVC: UITextFieldDelegate {
 }
 
 extension AddDateVC: ASValueTrackingSliderDataSource {
+    
+    func setDataSourceFor(sliders: [ASValueTrackingSlider]) {
+        sliders.forEach { $0.dataSource = self }
+    }
     
     func slider(slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
         let intValue = Int(value)

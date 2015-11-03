@@ -721,6 +721,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0T9-dr-ZDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="E7U-pw-kpa" userLabel="AS Value Tracking Slider Data Source"/>
             </objects>
             <point key="canvasLocation" x="3529.5" y="-1179"/>
         </scene>
@@ -1898,8 +1899,8 @@
         <image name="trash" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SXV-Qu-gXZ"/>
         <segue reference="cPJ-5X-Yk6"/>
+        <segue reference="SXV-Qu-gXZ"/>
         <segue reference="uOf-gp-zRy"/>
         <segue reference="byt-8L-e9s"/>
         <segue reference="Sh2-MR-qg4"/>

@@ -43,7 +43,7 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        addLabelOnThumbForSlider([daySlider, timeSlider])
+        addLabelOnThumbForSliders()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -166,26 +166,9 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     
-    func addLabelOnThumbForSlider(sliders: [ValueSlider]) {
-        for slider in sliders {
-            let thumbView = slider.subviews.last
-            if thumbView?.viewWithTag(1) == nil {
-                let label = UILabel(frame: thumbView!.bounds)
-                label.backgroundColor = UIColor.clearColor()
-                label.textAlignment = .Center
-                label.textColor = UIColor.whiteColor()
-                label.tag = 1
-                switch slider {
-                case daySlider:
-                    label.text = "D"
-                case timeSlider:
-                    label.text = "H"
-                default:
-                    break
-                }
-                thumbView?.addSubview(label)
-            }
-        }
+    func addLabelOnThumbForSliders() {
+        daySlider.addLabel("day")
+        timeSlider.addLabel("time")
     }
     
     func toggleRepeat() {

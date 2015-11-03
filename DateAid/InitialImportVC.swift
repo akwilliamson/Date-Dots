@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import AddressBook
 import AddressBookUI
-//import Contacts
+import Contacts
 
 class InitialImportVC: UIViewController {
     
@@ -316,30 +316,39 @@ class InitialImportVC: UIViewController {
     }
 }
 
-//    func iOS9AddBirthdays() {
-//        let contacts = CNContactStore()
-//        let birthdayKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNContactBirthdayKey]
-//        let birthdayFetch = CNContactFetchRequest(keysToFetch: birthdayKeys)
 //
+//    func iOS9AddBirthdays() {
+//        
 //        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
 //        let dateFormatter = NSDateFormatter()
 //        dateFormatter.dateFormat = formatString
-//
-//        contacts.enumerateContactsWithFetchRequest(birthdayFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
-//            let fullName = "\(contact.givenName) \(contact.familyName)"
-//            let abbreviatedName = self.abbreviateName(fullName)
-//            if let contactBirthday = contact.birthday {
-//                let birthday = NSCalendar.currentCalendar().dateFromComponents(contactBirthday)
-//                let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: self.managedContext)
-//                let birthdayDate = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: self.managedContext)
-//
-//                birthdayDate.name = fullName
-//                birthdayDate.abbreviatedName = abbreviatedName
-//                birthdayDate.date = birthday!
-//                birthdayDate.equalizedDate = dateFormatter.stringFromDate(birthday!)
-//                birthdayDate.type = "birthday"
+//        if #available(iOS 9.0, *) {
+//            let contacts = CNContactStore()
+//            let birthdayKeys = [CNContactGivenNameKey,CNContactFamilyNameKey,CNContactBirthdayKey]
+//            let birthdayFetch = CNContactFetchRequest(keysToFetch: birthdayKeys)
+//            do { try contacts.enumerateContactsWithFetchRequest(birthdayFetch) { (contact: CNContact, error: UnsafeMutablePointer<ObjCBool>) -> Void in
+//                    let fullName = "\(contact.givenName) \(contact.familyName)"
+//                    let abbreviatedName = abbreviateName(fullName)
+//                    if let contactBirthday = contact.birthday {
+//                        let birthday = NSCalendar.currentCalendar().dateFromComponents(contactBirthday)
+//                        let birthdayEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext)
+//                        let birthdayDate = Date(entity: birthdayEntity!, insertIntoManagedObjectContext: managedContext)
+//                        
+//                        birthdayDate.name = fullName
+//                        birthdayDate.abbreviatedName = abbreviatedName
+//                        birthdayDate.date = birthday!
+//                        birthdayDate.equalizedDate = dateFormatter.stringFromDate(birthday!)
+//                        birthdayDate.type = "birthday"
+//                    }
+//                }
+//            } catch let error as NSError {
+//                print(error.localizedDescription)
 //            }
+//
+//        } else {
+//            // Fallback on earlier versions
 //        }
+//
 //    }
 //
 //    func iOS9AddAnniversaries() {

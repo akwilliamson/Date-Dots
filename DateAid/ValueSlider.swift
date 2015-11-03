@@ -33,4 +33,28 @@ class ValueSlider: ASValueTrackingSlider {
     func integerValue() -> Int {
         return Int(self.value)
     }
+    
+    func addLabel(type: String) {
+        let thumbView = self.subviews.last
+        if thumbView?.viewWithTag(1) == nil {
+            let label = UILabel(frame: thumbView!.bounds)
+            label.backgroundColor = UIColor.clearColor()
+            label.textAlignment = .Center
+            label.textColor = UIColor.whiteColor()
+            label.tag = 1
+            
+            switch type {
+            case "month":
+                label.text = "M"
+            case "day":
+                label.text = "D"
+            case "time":
+                label.text = "T"
+            default:
+                break
+            }
+            thumbView?.addSubview(label)
+        }
+
+    }
 }
