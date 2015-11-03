@@ -14,7 +14,7 @@ class EditDetailsVC: UIViewController {
     var dateObject: Date!
     var managedContext: NSManagedObjectContext?
     var addressDelegate: SetAddressDelegate?
-    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to pass to SinglePushSettingsVC
+    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
 
@@ -28,7 +28,7 @@ class EditDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(dateObject)
         setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
         populateAddressFields(withAddress: dateObject.address)
     }

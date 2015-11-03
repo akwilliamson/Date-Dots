@@ -92,10 +92,10 @@ class AddDateVC: UIViewController {
     
     func createDateToSaveIfThereIsNo(date: Date?) {
         if dateToSave == nil {
+            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
+            
             let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
             dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            
-            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
             dateToSave.type = incomingColorType
         }
     }
@@ -148,75 +148,62 @@ class AddDateVC: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditDetails" {
             let editDetailsVC = segue.destinationViewController as! EditDetailsVC
-            
-            editDetailsVC.dateObject = dateToSave
-            editDetailsVC.managedContext = managedContext
-            editDetailsVC.addressDelegate = self
-            editDetailsVC.notificationDelegate = notificationDelegate
-        }
-    }
-    
-// MARK: ACTIONS
-    
-    @IBAction func birthdayButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("birthday")
-        anniversaryButton.titleLabel!.layer.removeAllAnimations()
-        customButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(sender)
-    }
-    
-    @IBAction func anniversaryButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("anniversary")
-        birthdayButton.titleLabel!.layer.removeAllAnimations()
-        customButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(sender)
-    }
-    
-    @IBAction func customButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("custom")
-        birthdayButton.titleLabel!.layer.removeAllAnimations()
-        anniversaryButton.titleLabel!.layer.removeAllAnimations()
-        animateButton(sender)
-    }
-    
-    @IBAction func saveButton(sender: UIBarButtonItem) {
-        
-        if nameField.text?.characters.count == 0 || nameField.text == nil {
-            // Do something to warn that the name must be filled out before continuing
-        } else {
-            var dateString: String
-            if let year = Int(yearField.text!) {
-                if year <= NSDate().getYear() {
-                    dateString = "\(year)-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-                } else {
-                    dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-                }
+            if nameFieldIsPopulated() {
+                setValuesOnDateToSave()
+                editDetailsVC.dateObject = dateToSave
+                editDetailsVC.managedContext = managedContext
+                editDetailsVC.addressDelegate = self
+                editDetailsVC.notificationDelegate = notificationDelegate
             } else {
-                dateString = "1604-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+                showAlertForNoName()
             }
-            let date = NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
-            let equalizedDate = date.formatDateIntoString()
-
-            dateToSave.date = date
-            dateToSave.equalizedDate = equalizedDate
-            dateToSave.name = nameField.text?.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
-            dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
-            if dateToSave.address == nil {
-                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
-                let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
-                dateToSave.address = newAddress
-            }
-            dateToSave.address?.street = street
-            dateToSave.address?.region = region
-            saveContext()
-            self.navigationController?.popViewControllerAnimated(true)
         }
+    }
+    
+    func nameFieldIsPopulated() -> Bool {
+        if nameField.text?.characters.count == 0 || nameField.text == nil {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func showAlertForNoName() {
+        let alert = UIAlertController(title: "No Name", message: "Please add a name before continuing", preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func setDateFromValues() -> NSDate {
+        var dateString = "-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+        if let year = Int(yearField.text!) {
+            dateString = year <= NSDate().getYear() ? String(year) + dateString : "1604" + dateString
+        } else {
+            dateString = "1604" + dateString
+        }
+        return NSCalendar.currentCalendar().startOfDayForDate(NSDate(dateString: dateString))
     }
     
     // Action Helpers
     func switchDateTypeAndColorsTo(type: String) {
         dateToSave.type = type
         setButtonAndSliderColors()
+    }
+    
+    func setValuesOnDateToSave() {
+        dateToSave.name = nameField.text?.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
+        dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
+        dateToSave.date = setDateFromValues()
+        dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()
+        
+        if dateToSave.address == nil {
+            let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+            let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+            dateToSave.address = newAddress
+        }
+        dateToSave.address?.street = street
+        dateToSave.address?.region = region
     }
     
     func saveContext() {
@@ -299,4 +286,39 @@ extension AddDateVC: ASValueTrackingSliderDataSource {
             return "No String"
         }
     }
+}
+
+// MARK: Actions
+
+extension AddDateVC {
+
+    @IBAction func birthdayButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("birthday")
+        [anniversaryButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        animateButton(sender)
+    }
+    
+    @IBAction func anniversaryButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("anniversary")
+        [birthdayButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        animateButton(sender)
+    }
+    
+    @IBAction func customButton(sender: UIButton) {
+        switchDateTypeAndColorsTo("custom")
+        [birthdayButton, anniversaryButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        animateButton(sender)
+    }
+    
+    @IBAction func saveButton(sender: UIBarButtonItem) {
+        
+        if nameFieldIsPopulated() {
+            setValuesOnDateToSave()
+            saveContext()
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            showAlertForNoName()
+        }
+    }
+    
 }
