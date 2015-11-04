@@ -30,6 +30,14 @@ class SettingsTableVC: UIViewController {
         })
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        animateLabelIntoView(syncSetting, delay: 0)
+        animateLabelIntoView(iCloudSetting, delay: 0.03)
+        animateLabelIntoView(alertSetting, delay: 0.06)
+        animateLabelIntoView(colorSetting, delay: 0.09)
+    }
+    
     func configureNavigationBar() {
         if let navBar = navigationController?.navigationBar {
             navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
@@ -54,6 +62,13 @@ class SettingsTableVC: UIViewController {
                 self.slidAway = false
             }
         }
+    }
+    
+    func animateLabelIntoView(label: CircleLabel, delay: NSTimeInterval) {
+        label.center.x = -200
+        UIView.animateWithDuration(0.4, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { () -> Void in
+            label.center.x = self.originalCenterX! + label.frame.width
+        }, completion: nil)
     }
     
 }
