@@ -25,6 +25,7 @@
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
+		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
 		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; };
 		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; };
@@ -89,6 +90,7 @@
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
+		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
 		9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePushSettingsVC.swift; sourceTree = "<group>"; };
 		9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V2.xcdatamodel; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */,
 				973023D81BD6B6E80087BA54 /* ResponderExtension.swift */,
 				97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */,
+				978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */,
 				9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */,
 				97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */,
+				978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */,
 				97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */,
 				97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,

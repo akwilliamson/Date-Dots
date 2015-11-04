@@ -15,7 +15,6 @@ class TurningVC: UIViewController {
     var fetchedResults: [Date]?
     var filteredResults: [Date]?
     let managedContext = CoreDataStack().managedObjectContext
-    var fetchPredicate: NSPredicate?
 
     @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
@@ -27,13 +26,14 @@ class TurningVC: UIViewController {
         configureNavigationBar()
         registerDateCellNib()
         turningSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        turningSlider.setValues(max: 100, value: 0)
+        turningSlider.setValues(max: 100, value: 1)
+        turningSlider.minimumValue = 1
+        turningSlider.setColorTo(UIColor.birthdayColor())
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
     }
     
     func registerDateCellNib() {
@@ -55,8 +55,6 @@ class TurningVC: UIViewController {
         let datesInOrder = NSSortDescriptor(key: "equalizedDate", ascending: true)
         let namesInOrder = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [datesInOrder, namesInOrder]
-        
-        fetchRequest.predicate = fetchPredicate
         
         do { fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [Date]
             filteredResults = fetchedResults

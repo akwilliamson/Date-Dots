@@ -40,6 +40,10 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1859,58 +1863,153 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zep-GJ-5mM">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="IJk-O8-fT4" customClass="NoteCell" customModule="DateAid" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJk-O8-fT4" id="g7e-IZ-iIu">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="4LR-93-Beh" id="b1h-8Q-S1g"/>
-                                    <outlet property="delegate" destination="4LR-93-Beh" id="OYB-A1-bVc"/>
-                                </connections>
-                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAL-TA-H9o" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="wb8-uq-v71"/>
+                                    <constraint firstAttribute="height" constant="70" id="yjs-zB-B0I"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="wb8-uq-v71"/>
+                                        <exclude reference="yjs-zB-B0I"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="wb8-uq-v71"/>
+                                        <include reference="yjs-zB-B0I"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Colors" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNe-dL-JNh" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="THg-8E-NJW"/>
+                                    <constraint firstAttribute="width" constant="70" id="ZtT-6G-flq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="THg-8E-NJW"/>
+                                        <exclude reference="ZtT-6G-flq"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="THg-8E-NJW"/>
+                                        <include reference="ZtT-6G-flq"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alerts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSD-Jm-wJD" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Uae-vZ-nQa"/>
+                                    <constraint firstAttribute="width" constant="70" id="u8m-VD-llv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Uae-vZ-nQa"/>
+                                        <exclude reference="u8m-VD-llv"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Uae-vZ-nQa"/>
+                                        <include reference="u8m-VD-llv"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCloud" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFu-bR-ipm" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="HrG-Lp-hem"/>
+                                    <constraint firstAttribute="height" constant="70" id="aHX-90-kG8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HrG-Lp-hem"/>
+                                        <exclude reference="aHX-90-kG8"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="HrG-Lp-hem"/>
+                                        <include reference="aHX-90-kG8"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Zep-GJ-5mM" secondAttribute="trailing" id="6K1-dp-iCZ"/>
-                            <constraint firstItem="1WH-ob-kPo" firstAttribute="top" secondItem="Zep-GJ-5mM" secondAttribute="bottom" id="8zi-qv-aBE"/>
-                            <constraint firstItem="Zep-GJ-5mM" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leading" id="IJl-G1-afP"/>
-                            <constraint firstItem="Zep-GJ-5mM" firstAttribute="top" secondItem="ydd-xT-KWX" secondAttribute="bottom" id="nI6-fo-rJg"/>
+                            <constraint firstItem="NAL-TA-H9o" firstAttribute="top" secondItem="ydd-xT-KWX" secondAttribute="bottom" constant="20" id="5Ny-TD-U3T"/>
+                            <constraint firstItem="CNe-dL-JNh" firstAttribute="top" secondItem="uSD-Jm-wJD" secondAttribute="bottom" constant="15" id="Ayp-7E-6xp"/>
+                            <constraint firstItem="QFu-bR-ipm" firstAttribute="top" secondItem="NAL-TA-H9o" secondAttribute="bottom" constant="15" id="MuV-HP-MgA"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="QFu-bR-ipm" secondAttribute="leading" id="TP9-AF-apj"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="CNe-dL-JNh" secondAttribute="leading" id="hdY-Hl-6c6"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="uSD-Jm-wJD" secondAttribute="leading" id="nI3-Oj-ib7"/>
+                            <constraint firstItem="uSD-Jm-wJD" firstAttribute="top" secondItem="QFu-bR-ipm" secondAttribute="bottom" constant="15" id="q0z-aK-mAg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="NAL-TA-H9o" secondAttribute="leading" id="rUT-lg-EBA"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="Zep-GJ-5mM"/>
+                                <exclude reference="NAL-TA-H9o"/>
+                                <exclude reference="CNe-dL-JNh"/>
+                                <exclude reference="uSD-Jm-wJD"/>
+                                <exclude reference="QFu-bR-ipm"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8zi-qv-aBE"/>
-                                <exclude reference="6K1-dp-iCZ"/>
-                                <exclude reference="IJl-G1-afP"/>
-                                <exclude reference="nI6-fo-rJg"/>
+                                <exclude reference="5Ny-TD-U3T"/>
+                                <exclude reference="rUT-lg-EBA"/>
+                                <exclude reference="MuV-HP-MgA"/>
+                                <exclude reference="TP9-AF-apj"/>
+                                <exclude reference="nI3-Oj-ib7"/>
+                                <exclude reference="q0z-aK-mAg"/>
+                                <exclude reference="Ayp-7E-6xp"/>
+                                <exclude reference="hdY-Hl-6c6"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="Zep-GJ-5mM"/>
+                                <include reference="NAL-TA-H9o"/>
+                                <include reference="CNe-dL-JNh"/>
+                                <include reference="uSD-Jm-wJD"/>
+                                <include reference="QFu-bR-ipm"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="8zi-qv-aBE"/>
-                                <include reference="6K1-dp-iCZ"/>
-                                <include reference="IJl-G1-afP"/>
-                                <include reference="nI6-fo-rJg"/>
+                                <include reference="5Ny-TD-U3T"/>
+                                <include reference="rUT-lg-EBA"/>
+                                <include reference="MuV-HP-MgA"/>
+                                <include reference="TP9-AF-apj"/>
+                                <include reference="nI3-Oj-ib7"/>
+                                <include reference="q0z-aK-mAg"/>
+                                <include reference="Ayp-7E-6xp"/>
+                                <include reference="hdY-Hl-6c6"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="dAC-CV-Uii"/>
                     <connections>
-                        <outlet property="tableView" destination="Zep-GJ-5mM" id="Wbr-6C-gje"/>
+                        <outlet property="alertSetting" destination="uSD-Jm-wJD" id="cfr-lN-v3d"/>
+                        <outlet property="colorSetting" destination="CNe-dL-JNh" id="e9a-UC-ueZ"/>
+                        <outlet property="iCloudSetting" destination="QFu-bR-ipm" id="Uni-y9-a8S"/>
+                        <outlet property="syncSetting" destination="NAL-TA-H9o" id="X3q-OM-HUL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oqe-Z9-Cyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1945,11 +2044,11 @@
             </objects>
             <point key="canvasLocation" x="276" y="479"/>
         </scene>
-        <!--Calendar-->
+        <!--Who's turning?-->
         <scene sceneID="9fB-Fe-ZmO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jrm-3o-G2d" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar-outline" id="nwt-Ud-Qch">
+                    <tabBarItem key="tabBarItem" title="Who's turning?" image="calendar-outline" id="nwt-Ud-Qch">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="calendar-selected"/>
                         </userDefinedRuntimeAttributes>

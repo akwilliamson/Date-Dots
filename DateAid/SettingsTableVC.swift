@@ -8,32 +8,26 @@
 
 import UIKit
 
-class SettingsTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    @IBOutlet weak var tableView: UITableView!
+class SettingsTableVC: UIViewController {
+    
+    var slidAway = false
+    var originalCenterX: CGFloat?
+    
+    @IBOutlet weak var syncSetting: CircleLabel!
+    @IBOutlet weak var iCloudSetting: CircleLabel!
+    @IBOutlet weak var alertSetting: CircleLabel!
+    @IBOutlet weak var colorSetting: CircleLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        originalCenterX = syncSetting.center.x
         configureNavigationBar()
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-    }
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath) as! NoteCell
-        
-        cell.nameLabel?.text = "Thing"
-        cell.nameLabel?.textColor = UIColor.darkGrayColor()
-        cell.accessoryType = .DisclosureIndicator
-        
-        return cell
+        [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({
+            let slideGesture = UITapGestureRecognizer(target: self, action: Selector("slideAway:"))
+            slideGesture.numberOfTapsRequired = 1
+            $0.userInteractionEnabled = true
+            $0.addGestureRecognizer(slideGesture)
+        })
     }
     
     func configureNavigationBar() {
@@ -43,4 +37,23 @@ class SettingsTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             navBar.tintColor = UIColor.whiteColor()
         }
     }
+    
+    func slideAway(sender: UITapGestureRecognizer) {
+        if slidAway == false {
+            sender.view?.rotate360Degrees()
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                sender.view?.center.x = self.view.frame.width - self.originalCenterX! - (sender.view?.frame.width)!
+                }) { _ in
+                self.slidAway = true
+            }
+        } else {
+            sender.view?.rotateBack360Degrees()
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                sender.view?.center.x = self.originalCenterX! + (sender.view?.frame.width)!
+                }) { _ in
+                self.slidAway = false
+            }
+        }
+    }
+    
 }
