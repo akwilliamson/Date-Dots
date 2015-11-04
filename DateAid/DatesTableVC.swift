@@ -192,7 +192,6 @@ extension DatesTableVC { // UITableViewDataSource
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }

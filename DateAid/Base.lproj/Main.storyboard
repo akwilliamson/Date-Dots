@@ -1737,10 +1737,10 @@
             </objects>
             <point key="canvasLocation" x="1993" y="-679"/>
         </scene>
-        <!--CalendarVC-->
+        <!--TurningVC-->
         <scene sceneID="fG8-zJ-c08">
             <objects>
-                <viewController id="T6T-Gi-w4I" customClass="CalendarVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="T6T-Gi-w4I" customClass="TurningVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Z2U-A8-uGu"/>
                         <viewControllerLayoutGuide type="bottom" id="lR3-sY-LMj"/>
@@ -1749,44 +1749,102 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XrX-xQ-Vpj" customClass="CVCalendarMenuView" customModule="CVCalendar">
-                                <rect key="frame" x="0.0" y="64" width="600" height="40"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lz-Z2-0NH">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="T6T-Gi-w4I" id="JMs-uz-qkW"/>
+                                    <outlet property="delegate" destination="T6T-Gi-w4I" id="HbO-u0-9ju"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mr-Hr-gKj">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="yjr-3n-8ds"/>
+                                    <constraint firstAttribute="width" constant="30" id="HW1-Aw-6GD"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HW1-Aw-6GD"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="HW1-Aw-6GD"/>
+                                    </mask>
+                                </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bwt-ms-2QW" customClass="CVCalendarView" customModule="CVCalendar">
-                                <rect key="frame" x="0.0" y="104" width="600" height="351"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9mI-3R-l8H" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
+                                <rect key="frame" x="38" y="375" width="524" height="31"/>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XrX-xQ-Vpj" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="0Ue-5T-hnl"/>
-                            <constraint firstItem="XrX-xQ-Vpj" firstAttribute="top" secondItem="Z2U-A8-uGu" secondAttribute="bottom" id="4iv-RY-Cvi"/>
-                            <constraint firstAttribute="trailing" secondItem="XrX-xQ-Vpj" secondAttribute="trailing" id="I1h-cz-XRf"/>
-                            <constraint firstItem="Bwt-ms-2QW" firstAttribute="top" secondItem="XrX-xQ-Vpj" secondAttribute="bottom" id="R6P-hM-VXL"/>
-                            <constraint firstItem="lR3-sY-LMj" firstAttribute="top" secondItem="Bwt-ms-2QW" secondAttribute="bottom" constant="96" id="YnS-h5-13h"/>
-                            <constraint firstAttribute="trailing" secondItem="Bwt-ms-2QW" secondAttribute="trailing" id="hA6-sQ-YdG"/>
-                            <constraint firstItem="Bwt-ms-2QW" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="tni-u1-jaV"/>
+                            <constraint firstItem="1mr-Hr-gKj" firstAttribute="centerX" secondItem="KRK-6J-go8" secondAttribute="centerX" id="0Ql-47-aAb"/>
+                            <constraint firstItem="1lz-Z2-0NH" firstAttribute="top" secondItem="KRK-6J-go8" secondAttribute="topMargin" id="384-dx-DzB"/>
+                            <constraint firstItem="1mr-Hr-gKj" firstAttribute="height" secondItem="KRK-6J-go8" secondAttribute="height" multiplier="0.05" id="8G8-i4-Dgd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9mI-3R-l8H" secondAttribute="trailing" id="9Gy-gA-AwU"/>
+                            <constraint firstItem="1lz-Z2-0NH" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="Iwl-Ss-PNx"/>
+                            <constraint firstItem="9mI-3R-l8H" firstAttribute="top" secondItem="1lz-Z2-0NH" secondAttribute="bottom" constant="25" id="Z2I-P5-VZe"/>
+                            <constraint firstAttribute="trailing" secondItem="1lz-Z2-0NH" secondAttribute="trailing" id="frC-Te-ON9"/>
+                            <constraint firstItem="1mr-Hr-gKj" firstAttribute="top" secondItem="9mI-3R-l8H" secondAttribute="bottom" constant="8" id="jKF-aT-DNv"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="9mI-3R-l8H" secondAttribute="leading" id="qFi-P6-0SF"/>
+                            <constraint firstItem="lR3-sY-LMj" firstAttribute="top" secondItem="1mr-Hr-gKj" secondAttribute="bottom" id="zaM-eQ-pQi"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="1lz-Z2-0NH"/>
+                                <exclude reference="1mr-Hr-gKj"/>
+                                <exclude reference="9mI-3R-l8H"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="384-dx-DzB"/>
+                                <exclude reference="Iwl-Ss-PNx"/>
+                                <exclude reference="frC-Te-ON9"/>
+                                <exclude reference="9Gy-gA-AwU"/>
+                                <exclude reference="Z2I-P5-VZe"/>
+                                <exclude reference="qFi-P6-0SF"/>
+                                <exclude reference="zaM-eQ-pQi"/>
+                                <exclude reference="0Ql-47-aAb"/>
+                                <exclude reference="8G8-i4-Dgd"/>
+                                <exclude reference="jKF-aT-DNv"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="1lz-Z2-0NH"/>
+                                <include reference="1mr-Hr-gKj"/>
+                                <include reference="9mI-3R-l8H"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="384-dx-DzB"/>
+                                <include reference="Iwl-Ss-PNx"/>
+                                <include reference="frC-Te-ON9"/>
+                                <include reference="9Gy-gA-AwU"/>
+                                <include reference="Z2I-P5-VZe"/>
+                                <include reference="qFi-P6-0SF"/>
+                                <include reference="zaM-eQ-pQi"/>
+                                <include reference="0Ql-47-aAb"/>
+                                <include reference="8G8-i4-Dgd"/>
+                                <include reference="jKF-aT-DNv"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="D5Z-2J-gZ5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="calendarView" destination="Bwt-ms-2QW" id="sFq-2e-Npw"/>
-                        <outlet property="menuView" destination="XrX-xQ-Vpj" id="XFy-vX-dXO"/>
+                        <outlet property="tableView" destination="1lz-Z2-0NH" id="r8J-Xr-2iD"/>
+                        <outlet property="turningSlider" destination="9mI-3R-l8H" id="G6K-OQ-qkG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wf5-zB-PhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2014" y="9"/>
+            <point key="canvasLocation" x="2013" y="9"/>
         </scene>
         <!--Settings-->
         <scene sceneID="uUh-eR-5BU">
             <objects>
-                <viewController id="4LR-93-Beh" sceneMemberID="viewController">
+                <viewController id="4LR-93-Beh" customClass="SettingsTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ydd-xT-KWX"/>
                         <viewControllerLayoutGuide type="bottom" id="1WH-ob-kPo"/>
@@ -1801,14 +1859,63 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zep-GJ-5mM">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="IJk-O8-fT4" customClass="NoteCell" customModule="DateAid" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJk-O8-fT4" id="g7e-IZ-iIu">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="4LR-93-Beh" id="b1h-8Q-S1g"/>
+                                    <outlet property="delegate" destination="4LR-93-Beh" id="OYB-A1-bVc"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Zep-GJ-5mM" secondAttribute="trailing" id="6K1-dp-iCZ"/>
+                            <constraint firstItem="1WH-ob-kPo" firstAttribute="top" secondItem="Zep-GJ-5mM" secondAttribute="bottom" id="8zi-qv-aBE"/>
+                            <constraint firstItem="Zep-GJ-5mM" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leading" id="IJl-G1-afP"/>
+                            <constraint firstItem="Zep-GJ-5mM" firstAttribute="top" secondItem="ydd-xT-KWX" secondAttribute="bottom" id="nI6-fo-rJg"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Zep-GJ-5mM"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="8zi-qv-aBE"/>
+                                <exclude reference="6K1-dp-iCZ"/>
+                                <exclude reference="IJl-G1-afP"/>
+                                <exclude reference="nI6-fo-rJg"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Zep-GJ-5mM"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="8zi-qv-aBE"/>
+                                <include reference="6K1-dp-iCZ"/>
+                                <include reference="IJl-G1-afP"/>
+                                <include reference="nI6-fo-rJg"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="dAC-CV-Uii"/>
+                    <connections>
+                        <outlet property="tableView" destination="Zep-GJ-5mM" id="Wbr-6C-gje"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oqe-Z9-Cyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2014" y="701"/>
+            <point key="canvasLocation" x="2013" y="701"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="7a7-XW-WXs">

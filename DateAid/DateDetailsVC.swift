@@ -91,9 +91,9 @@ class DateDetailsVC: UIViewController {
         setNotificationView()
         configureNavBar()
         styleLabels()
+        configureAge()
         configureCountdown()
         configureDate()
-        configureAge()
         if let dateType = date.type {
             envelopeImage.tintColor = colorForType[dateType]
             reminderImage.tintColor = colorForType[dateType]
@@ -156,6 +156,20 @@ class DateDetailsVC: UIViewController {
         }
     }
     
+    func configureAge() {
+        if date.date!.getYear() == 1604 {
+            ageLabel.text = "Age\nN/A"
+        } else {
+            let age: Int
+            if date.date?.daysBetween() == 0 {
+                age = date.date!.ageTurning()-1
+            } else {
+                age = date.date!.ageTurning()
+            }
+            ageLabel.text = date!.type! == "birthday" ? "Turning\n\(age)" : "Year\n#\(age)"
+        }
+    }
+    
     func configureCountdown() {
         if let numberOfDays = date.date?.daysBetween() {
             if numberOfDays == 0 {
@@ -164,23 +178,6 @@ class DateDetailsVC: UIViewController {
                 daysUntilLabel.text = "In \(numberOfDays)\nday"
             } else {
                 daysUntilLabel.text = "In \(numberOfDays)\ndays"
-            }
-        }
-    }
-    
-    func configureAge() {
-        if let year = date.date?.getYear() {
-            if year == 1604 {
-                ageLabel.text = "Age\nN/A"
-            } else {
-                switch date!.type! {
-                case "birthday":
-                    ageLabel.text = "Turning\n\(date.date!.ageTurning())"
-                case "anniversary", "custom":
-                    ageLabel.text = "Year\n#\(date.date!.ageTurning())"
-                default:
-                    break
-                }
             }
         }
     }

@@ -22,6 +22,7 @@
 		97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */; };
 		97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */; };
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
+		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
@@ -49,7 +50,7 @@
 		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; };
 		97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266A21BDB648D008F7EF8 /* NoteCell.swift */; };
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; };
-		97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* CalendarVC.swift */; };
+		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesTableVC.swift; sourceTree = "<group>"; };
 		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
+		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
@@ -114,7 +116,7 @@
 		97D266A01BDB3341008F7EF8 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
 		97D266A21BDB648D008F7EF8 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
-		97DC58891B3E19DD008FA222 /* CalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
 		A2297FC6FB3901C3CE665CBF /* Pods-DateAid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DateAid.release.xcconfig"; path = "Pods/Target Support Files/Pods-DateAid/Pods-DateAid.release.xcconfig"; sourceTree = "<group>"; };
 		E63A56B83FE889F8489D3F3C /* Pods_DateAid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DateAid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,7 +228,8 @@
 				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
 				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
 				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
-				97DC58891B3E19DD008FA222 /* CalendarVC.swift */,
+				97DC58891B3E19DD008FA222 /* TurningVC.swift */,
+				9760AF331BE874850098A1FE /* SettingsTableVC.swift */,
 				97D2669B1BD98FE3008F7EF8 /* Models */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
@@ -478,8 +481,9 @@
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
 				9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */,
 				9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */,
+				9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
-				97DC588A1B3E19DD008FA222 /* CalendarVC.swift in Sources */,
+				97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
