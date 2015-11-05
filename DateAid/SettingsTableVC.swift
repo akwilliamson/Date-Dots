@@ -39,6 +39,10 @@ class SettingsTableVC: UIViewController {
             $0.userInteractionEnabled = true
             $0.addGestureRecognizer(slideGesture)
         })
+        let slideGesture = UITapGestureRecognizer(target: self, action: Selector("terminateAnimation:"))
+        slideGesture.numberOfTapsRequired = 1
+        syncNo.userInteractionEnabled = true
+        syncNo.addGestureRecognizer(slideGesture)
         labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel]
     }
     
@@ -60,14 +64,29 @@ class SettingsTableVC: UIViewController {
     
     func slideAway(sender: UITapGestureRecognizer) {
         if slidAway == false {
+            sender.view!.userInteractionEnabled = false
             sender.view!.rotate360Degrees()
             animateAway(sender.view as! CircleLabel)
+            sender.view!.userInteractionEnabled = true
         } else {
             if sender.view! == syncSetting {
                 contactImporter.syncContacts()
             }
+            sender.view!.userInteractionEnabled = false
             sender.view?.rotateBack360Degrees()
             animateBack(sender.view as! CircleLabel)
+            sender.view!.userInteractionEnabled = true
+        }
+    }
+    
+    func terminateAnimation(sender: UITapGestureRecognizer) {
+        syncLabel.hidden = true
+        syncSetting.backgroundColor = UIColor.lightGrayColor()
+        syncSetting.rotateBack360Degrees()
+        UIView.animateWithDuration(0.5, animations: { _ in
+            self.syncSetting.center.x = self.syncNo.center.x
+            }) { _ in
+                self.slidAway = false
         }
     }
     
@@ -81,12 +100,14 @@ class SettingsTableVC: UIViewController {
     }
     
     func animateAway(view: CircleLabel) {
+        syncNo.userInteractionEnabled = false
         view.backgroundColor = UIColor.confirmColor()
         UIView.animateWithDuration(0.5, animations: { _ in
             view.center.x = self.view.frame.width - (view.center.x)
             }) { _ in
                 self.labelForSetting[view]?.hidden = false
                 self.slidAway = true
+                self.syncNo.userInteractionEnabled = true
         }
     }
     
