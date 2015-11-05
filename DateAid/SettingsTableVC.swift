@@ -13,10 +13,17 @@ class SettingsTableVC: UIViewController {
     var slidAway = false
     var originalCenterX: CGFloat?
     
+    lazy var contactImporter: ContactImporter = {
+        return ContactImporter()
+    }()
+    
     @IBOutlet weak var syncSetting: CircleLabel!
     @IBOutlet weak var iCloudSetting: CircleLabel!
     @IBOutlet weak var alertSetting: CircleLabel!
     @IBOutlet weak var colorSetting: CircleLabel!
+    
+    @IBOutlet weak var syncLabel: UILabel!
+    @IBOutlet weak var iCloudLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +53,44 @@ class SettingsTableVC: UIViewController {
         }
     }
     
+    func showProperLabel(forView view: UIView) {
+        switch view {
+        case syncSetting:
+            syncLabel.hidden = false
+        case iCloudSetting:
+            iCloudLabel.hidden = false
+        default:
+            return
+        }
+    }
+    
+    func hideProperLabel(forView view: UIView) {
+        switch view {
+        case syncSetting:
+            syncLabel.hidden = true
+        case iCloudSetting:
+            iCloudLabel.hidden = true
+        default:
+            return
+        }
+    }
+    
     func slideAway(sender: UITapGestureRecognizer) {
         if slidAway == false {
             sender.view?.rotate360Degrees()
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animateWithDuration(0.5, animations: { _ in
                 sender.view?.center.x = self.view.frame.width - self.originalCenterX! - (sender.view?.frame.width)!
                 }) { _ in
+                self.showProperLabel(forView: sender.view!)
                 self.slidAway = true
             }
         } else {
+            if sender.view! == syncSetting {
+                contactImporter.syncContacts()
+            }
             sender.view?.rotateBack360Degrees()
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            hideProperLabel(forView: sender.view!)
+            UIView.animateWithDuration(0.5, animations: { _ in
                 sender.view?.center.x = self.originalCenterX! + (sender.view?.frame.width)!
                 }) { _ in
                 self.slidAway = false

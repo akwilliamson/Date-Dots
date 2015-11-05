@@ -44,6 +44,7 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1949,9 +1950,22 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Address Book" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vzi-la-6E8">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nfl-sO-hsC">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Vzi-la-6E8" firstAttribute="centerX" secondItem="2DQ-jv-D4s" secondAttribute="centerX" id="35e-jJ-1nf"/>
                             <constraint firstItem="NAL-TA-H9o" firstAttribute="height" secondItem="2DQ-jv-D4s" secondAttribute="height" multiplier="0.13" id="3eV-rL-PyY"/>
                             <constraint firstItem="NAL-TA-H9o" firstAttribute="top" secondItem="Gvg-P0-FTg" secondAttribute="bottom" id="6Uf-AP-TLV"/>
                             <constraint firstItem="xwo-CD-By1" firstAttribute="width" secondItem="Gvg-P0-FTg" secondAttribute="width" id="6Wb-Fa-J4n"/>
@@ -1962,14 +1976,17 @@
                             <constraint firstItem="uSD-Jm-wJD" firstAttribute="width" secondItem="NAL-TA-H9o" secondAttribute="width" id="D4U-c7-PWI"/>
                             <constraint firstAttribute="leadingMargin" secondItem="uSD-Jm-wJD" secondAttribute="leading" id="EXR-c5-CO0"/>
                             <constraint firstItem="uSD-Jm-wJD" firstAttribute="top" secondItem="cfE-18-Dce" secondAttribute="bottom" id="Ixc-8t-z7X"/>
+                            <constraint firstItem="Vzi-la-6E8" firstAttribute="centerY" secondItem="NAL-TA-H9o" secondAttribute="centerY" id="KVB-AV-pGU"/>
                             <constraint firstItem="QFu-bR-ipm" firstAttribute="height" secondItem="NAL-TA-H9o" secondAttribute="height" id="LzU-JD-wzn"/>
                             <constraint firstItem="cfE-18-Dce" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leadingMargin" constant="20" id="Ntm-ed-l2A"/>
                             <constraint firstItem="CNe-dL-JNh" firstAttribute="height" secondItem="NAL-TA-H9o" secondAttribute="height" id="RUo-ov-5N7"/>
+                            <constraint firstItem="nfl-sO-hsC" firstAttribute="top" secondItem="ydd-xT-KWX" secondAttribute="bottom" constant="163" id="Skx-uo-siW"/>
                             <constraint firstItem="cfE-18-Dce" firstAttribute="height" secondItem="Gvg-P0-FTg" secondAttribute="height" id="VUD-CU-xSL"/>
                             <constraint firstAttribute="leadingMargin" secondItem="QFu-bR-ipm" secondAttribute="leading" id="Yh5-kE-0UH"/>
                             <constraint firstItem="Gvg-P0-FTg" firstAttribute="top" secondItem="ydd-xT-KWX" secondAttribute="bottom" id="YmZ-Ly-J5r"/>
                             <constraint firstItem="JRH-Q3-6FF" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leadingMargin" constant="20" id="ZeH-Py-5VQ"/>
                             <constraint firstItem="Gvg-P0-FTg" firstAttribute="height" secondItem="2DQ-jv-D4s" secondAttribute="height" multiplier="0.05" id="a27-BI-QTK"/>
+                            <constraint firstItem="nfl-sO-hsC" firstAttribute="centerX" secondItem="2DQ-jv-D4s" secondAttribute="centerX" id="cWM-fP-6UJ"/>
                             <constraint firstItem="QFu-bR-ipm" firstAttribute="top" secondItem="JRH-Q3-6FF" secondAttribute="bottom" id="eAD-Vc-cnV"/>
                             <constraint firstAttribute="leadingMargin" secondItem="NAL-TA-H9o" secondAttribute="leading" id="fEw-sq-imh"/>
                             <constraint firstItem="xwo-CD-By1" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leadingMargin" constant="20" id="fod-EF-9SR"/>
@@ -1977,6 +1994,7 @@
                             <constraint firstItem="CNe-dL-JNh" firstAttribute="width" secondItem="NAL-TA-H9o" secondAttribute="width" id="ix7-K7-3kI"/>
                             <constraint firstItem="xwo-CD-By1" firstAttribute="top" secondItem="uSD-Jm-wJD" secondAttribute="bottom" id="jss-Pd-XIY"/>
                             <constraint firstItem="Gvg-P0-FTg" firstAttribute="leading" secondItem="2DQ-jv-D4s" secondAttribute="leadingMargin" constant="20" id="lZP-al-WP8"/>
+                            <constraint firstItem="nfl-sO-hsC" firstAttribute="centerY" secondItem="QFu-bR-ipm" secondAttribute="centerY" id="llw-3U-vww"/>
                             <constraint firstItem="JRH-Q3-6FF" firstAttribute="top" secondItem="NAL-TA-H9o" secondAttribute="bottom" id="qas-OK-fI5"/>
                             <constraint firstItem="QFu-bR-ipm" firstAttribute="width" secondItem="NAL-TA-H9o" secondAttribute="width" id="tse-wA-M4b"/>
                             <constraint firstItem="xwo-CD-By1" firstAttribute="height" secondItem="Gvg-P0-FTg" secondAttribute="height" id="tt6-qt-ZIf"/>
@@ -1993,6 +2011,8 @@
                                 <exclude reference="cfE-18-Dce"/>
                                 <exclude reference="xwo-CD-By1"/>
                                 <exclude reference="CNe-dL-JNh"/>
+                                <exclude reference="Vzi-la-6E8"/>
+                                <exclude reference="nfl-sO-hsC"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="YmZ-Ly-J5r"/>
@@ -2001,6 +2021,8 @@
                                 <exclude reference="3eV-rL-PyY"/>
                                 <exclude reference="6Uf-AP-TLV"/>
                                 <exclude reference="fEw-sq-imh"/>
+                                <exclude reference="35e-jJ-1nf"/>
+                                <exclude reference="KVB-AV-pGU"/>
                                 <exclude reference="AEv-xl-hyF"/>
                                 <exclude reference="ZeH-Py-5VQ"/>
                                 <exclude reference="gIN-92-dfu"/>
@@ -2009,6 +2031,9 @@
                                 <exclude reference="Yh5-kE-0UH"/>
                                 <exclude reference="eAD-Vc-cnV"/>
                                 <exclude reference="tse-wA-M4b"/>
+                                <exclude reference="Skx-uo-siW"/>
+                                <exclude reference="cWM-fP-6UJ"/>
+                                <exclude reference="llw-3U-vww"/>
                                 <exclude reference="8Ri-KL-KSW"/>
                                 <exclude reference="Ntm-ed-l2A"/>
                                 <exclude reference="VUD-CU-xSL"/>
@@ -2037,6 +2062,8 @@
                                 <include reference="cfE-18-Dce"/>
                                 <include reference="xwo-CD-By1"/>
                                 <include reference="CNe-dL-JNh"/>
+                                <include reference="Vzi-la-6E8"/>
+                                <include reference="nfl-sO-hsC"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="YmZ-Ly-J5r"/>
@@ -2045,6 +2072,8 @@
                                 <include reference="3eV-rL-PyY"/>
                                 <include reference="6Uf-AP-TLV"/>
                                 <include reference="fEw-sq-imh"/>
+                                <include reference="35e-jJ-1nf"/>
+                                <include reference="KVB-AV-pGU"/>
                                 <include reference="AEv-xl-hyF"/>
                                 <include reference="ZeH-Py-5VQ"/>
                                 <include reference="gIN-92-dfu"/>
@@ -2053,6 +2082,9 @@
                                 <include reference="Yh5-kE-0UH"/>
                                 <include reference="eAD-Vc-cnV"/>
                                 <include reference="tse-wA-M4b"/>
+                                <exclude reference="Skx-uo-siW"/>
+                                <include reference="cWM-fP-6UJ"/>
+                                <include reference="llw-3U-vww"/>
                                 <include reference="8Ri-KL-KSW"/>
                                 <include reference="Ntm-ed-l2A"/>
                                 <include reference="VUD-CU-xSL"/>
@@ -2076,7 +2108,9 @@
                     <connections>
                         <outlet property="alertSetting" destination="uSD-Jm-wJD" id="cfr-lN-v3d"/>
                         <outlet property="colorSetting" destination="CNe-dL-JNh" id="e9a-UC-ueZ"/>
+                        <outlet property="iCloudLabel" destination="nfl-sO-hsC" id="mC4-K2-EjP"/>
                         <outlet property="iCloudSetting" destination="QFu-bR-ipm" id="Uni-y9-a8S"/>
+                        <outlet property="syncLabel" destination="Vzi-la-6E8" id="x0a-T5-cZZ"/>
                         <outlet property="syncSetting" destination="NAL-TA-H9o" id="X3q-OM-HUL"/>
                     </connections>
                 </viewController>

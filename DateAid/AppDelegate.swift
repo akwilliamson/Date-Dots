@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let window = self.window {
             if userDefaults.objectForKey("seenInitialView") == nil {
                 userDefaults.setBool(true, forKey: "hasLaunchedOnce")
-                initialImportVC.managedContext = coreDataStack.managedObjectContext
                 
                 window.rootViewController = initialImportVC
             } else {
