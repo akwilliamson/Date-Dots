@@ -111,7 +111,7 @@ class DatesTableVC: UITableViewController {
         } else {
             label.text = "No dates added"
         }
-        label.font = UIFont(name: "AvenirNext-Bold", size: 23)
+        label.font = UIFont(name: "AvenirNext-Bold", size: 25)
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = .Center
         label.sizeToFit()
