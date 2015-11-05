@@ -200,23 +200,7 @@ class InitialImportVC: UIViewController {
         
         if contactHasABirthday != nil {
             let contactValues = extractValuesForDateFrom(addressBookContact, forType: "birthday", atIndex: nil, optionalContact: nil)
-            let fetchRequest = findMatchingDateObjectFor(contactValues)
-            do { let matchingDate = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
-                if matchingDate?.count == 0 { // No matching date was found in the persistent store so create a new entity
-                    let dateObject = createDateObjectFrom(contactValues)
-                    let addresses = extractAddressesFrom(addressBookContact)
-                    if addresses.count > 0 {
-                        for index in 0..<addresses.count {
-                            
-                            let addressValues = extractAddressValuesFrom(addresses.values, atIndex: index)
-                            let addressObject = createAddressObjectFor(addressValues)
-                            dateObject.address = addressObject
-                        }
-                    }
-                }
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
+            fetchOrCreateEntityWith(contactValues, forContact: addressBookContact)
         }
     }
     
@@ -228,23 +212,27 @@ class InitialImportVC: UIViewController {
             
             if datePropertyLabel == anniversaryLabel {
                 let contactValues = extractValuesForDateFrom(dateProperties, forType: "anniversary", atIndex: index, optionalContact: addressBookContact)
-                let fetchRequest = findMatchingDateObjectFor(contactValues)
-                do { let matchingDate = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
-                    if matchingDate?.count == 0 {
-                        let dateObject = createDateObjectFrom(contactValues)
-                        let addresses = extractAddressesFrom(addressBookContact)
-                        if addresses.count > 0 {
-                            for index in 0..<addresses.count {
-                                let addressValues = extractAddressValuesFrom(addresses.values, atIndex: index)
-                                let addressObject = createAddressObjectFor(addressValues)
-                                dateObject.address = addressObject
-                            }
-                        }
+                fetchOrCreateEntityWith(contactValues, forContact: addressBookContact)
+            }
+        }
+    }
+    
+    func fetchOrCreateEntityWith(contactValues: (name: String, date: NSDate, type: String), forContact addressBookContact: AnyObject) {
+        let fetchRequest = findMatchingDateObjectFor(contactValues)
+        do { let matchingDate = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
+            if matchingDate?.count == 0 {
+                let dateObject = createDateObjectFrom(contactValues)
+                let addresses = extractAddressesFrom(addressBookContact)
+                if addresses.count > 0 {
+                    for index in 0..<addresses.count {
+                        let addressValues = extractAddressValuesFrom(addresses.values, atIndex: index)
+                        let addressObject = createAddressObjectFor(addressValues)
+                        dateObject.address = addressObject
                     }
-                } catch let error as NSError {
-                    print(error.localizedDescription)
                 }
             }
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
     }
     
