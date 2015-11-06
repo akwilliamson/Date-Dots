@@ -159,7 +159,7 @@ extension DatesTableVC { // UITableViewDataSource
         if let results = fetchedResults {
             let date = results[indexPath.row]
             if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.name = abbreviatedName
+                dateCell.name = date.type! == "birthday" ? abbreviatedName : date.name!
                 dateCell.date = readableDate
             }
             

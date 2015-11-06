@@ -54,8 +54,12 @@ class EditDetailsVC: UIViewController {
         dateObject.address?.region = regionTextField.text
         
         do { try managedContext?.save()
-            let dateDetailsVC = self.navigationController?.viewControllers[1] as! DateDetailsVC
-            self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+            if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {
+                self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+            } else {
+                let dateDetailsVC = self.navigationController?.viewControllers[0] as! DatesTableVC
+                self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+            }
         } catch let error as NSError {
             print(error.localizedDescription)
         }

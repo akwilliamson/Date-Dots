@@ -502,7 +502,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <variation key="widthClass=compact">
                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="35"/>
                                 </variation>
@@ -2287,7 +2287,7 @@
         <image name="trash" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cPJ-5X-Yk6"/>
+        <segue reference="oNP-ia-Yef"/>
         <segue reference="SXV-Qu-gXZ"/>
         <segue reference="uOf-gp-zRy"/>
         <segue reference="byt-8L-e9s"/>
