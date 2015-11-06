@@ -9,7 +9,11 @@
 import UIKit
 import CoreData
 
-class DatesTableVC: UITableViewController {
+protocol ReloadDatesTableDelegate {
+    func reloadTableView()
+}
+
+class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
     
 // MARK: PROPERTIES
     
@@ -43,6 +47,9 @@ class DatesTableVC: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setAndPerformFetchRequest()
+    }
+    
+    func reloadTableView() {
         tableView.reloadData()
     }
     
@@ -132,6 +139,7 @@ class DatesTableVC: UITableViewController {
             addDateVC.isBeingEdited = false
             addDateVC.managedContext = managedContext
             addDateVC.incomingColor = typeColorForNewDate
+            addDateVC.reloadDatesTableDelegate = self
         }
     }
 }

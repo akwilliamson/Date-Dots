@@ -13,6 +13,7 @@ class SettingsTableVC: UIViewController {
     var slidAway = false
     var originalCenterX: CGFloat?
     var labelForSetting: [CircleLabel: UILabel]!
+    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     
     lazy var contactImporter: ContactImporter = {
         return ContactImporter()
@@ -43,6 +44,7 @@ class SettingsTableVC: UIViewController {
         slideGesture.numberOfTapsRequired = 1
         syncNo.userInteractionEnabled = true
         syncNo.addGestureRecognizer(slideGesture)
+        reloadDatesTableDelegate = tabBarController?.viewControllers![0].childViewControllers[1].childViewControllers[0] as! DatesTableVC
         labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel]
     }
     
@@ -71,6 +73,7 @@ class SettingsTableVC: UIViewController {
         } else {
             if sender.view! == syncSetting {
                 contactImporter.syncContacts()
+                reloadDatesTableDelegate?.reloadTableView()
             }
             sender.view!.userInteractionEnabled = false
             sender.view?.rotateBack360Degrees()
