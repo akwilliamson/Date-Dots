@@ -66,7 +66,7 @@ class SettingsTableVC: UIViewController {
     
     func slideAway(sender: UITapGestureRecognizer) {
         if slidAway == false {
-            sender.view!.userInteractionEnabled = false
+            [syncSetting, syncNo, iCloudSetting, alertSetting, colorSetting].forEach({ $0.userInteractionEnabled = false })
             sender.view!.rotate360Degrees()
             animateAway(sender.view as! CircleLabel)
             sender.view!.userInteractionEnabled = true
@@ -82,35 +82,16 @@ class SettingsTableVC: UIViewController {
         }
     }
     
-    func terminateAnimation(sender: UITapGestureRecognizer) {
-        syncLabel.hidden = true
-        syncSetting.backgroundColor = UIColor.lightGrayColor()
-        syncSetting.rotateBack360Degrees()
-        UIView.animateWithDuration(0.5, animations: { _ in
-            self.syncSetting.center.x = self.syncNo.center.x
-            }) { _ in
-                self.slidAway = false
-        }
-    }
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
-    }
-    
     func animateAway(view: CircleLabel) {
-        syncNo.userInteractionEnabled = false
         view.backgroundColor = UIColor.confirmColor()
         UIView.animateWithDuration(0.5, animations: { _ in
             view.center.x = self.view.frame.width - (view.center.x)
             }) { _ in
                 self.labelForSetting[view]?.hidden = false
                 self.slidAway = true
-                self.syncNo.userInteractionEnabled = true
+                if view == self.syncSetting {
+                    self.syncNo.userInteractionEnabled = true
+                }
         }
     }
     
@@ -125,8 +106,30 @@ class SettingsTableVC: UIViewController {
                 self.delay(0.5) {
                     view.text = text
                     view.backgroundColor = UIColor.lightGrayColor()
+                    [self.syncSetting, self.syncNo, self.iCloudSetting, self.alertSetting, self.colorSetting].forEach({ $0.userInteractionEnabled = true })
                 }
         }
+    }
+    
+    func terminateAnimation(sender: UITapGestureRecognizer) {
+        syncLabel.hidden = true
+        syncSetting.backgroundColor = UIColor.lightGrayColor()
+        syncSetting.rotateBack360Degrees()
+        UIView.animateWithDuration(0.5, animations: { _ in
+            self.syncSetting.center.x = self.syncNo.center.x
+            }) { _ in
+                self.slidAway = false
+                [self.syncSetting, self.syncNo, self.iCloudSetting, self.alertSetting, self.colorSetting].forEach({ $0.userInteractionEnabled = true })
+        }
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
     
     func animateLabelIntoView(label: CircleLabel, delay: NSTimeInterval, cancelLabel: CircleLabel?) {
