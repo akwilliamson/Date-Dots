@@ -15,6 +15,7 @@ class EditDetailsVC: UIViewController {
     var managedContext: NSManagedObjectContext?
     var addressDelegate: SetAddressDelegate?
     var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
+    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
 
@@ -28,7 +29,7 @@ class EditDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(dateObject)
+        Flurry.logEvent("Edit Details")
         setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
         populateAddressFields(withAddress: dateObject.address)
     }
@@ -50,9 +51,10 @@ class EditDetailsVC: UIViewController {
     }
     
     @IBAction func done(sender: AnyObject) {
+        Flurry.logEvent("Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
-        
+        reloadDatesTableDelegate?.reloadTableView()
         do { try managedContext?.save()
             if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {
                 self.navigationController?.popToViewController(dateDetailsVC, animated: true)

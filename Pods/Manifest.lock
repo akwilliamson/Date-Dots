@@ -1,13 +1,13 @@
 PODS:
   - ASValueTrackingSlider (0.11.2)
-  - CVCalendar (1.2.7)
+  - Flurry-iOS-SDK/FlurrySDK (7.3.0)
 
 DEPENDENCIES:
   - ASValueTrackingSlider
-  - CVCalendar (~> 1.2.7)
+  - Flurry-iOS-SDK/FlurrySDK
 
 SPEC CHECKSUMS:
   ASValueTrackingSlider: 45c9f78252da60de01d8f2afe869aaf90dd978d9
-  CVCalendar: 1ae6ee62dd7fd4c6a6703a43c641e11dfd32276e
+  Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
 
 COCOAPODS: 0.39.0

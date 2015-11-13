@@ -21,6 +21,7 @@ class DateDetailsVC: UIViewController {
     var date: Date!
     var localNotificationFound: Bool?
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
 
 // MARK: OUTLETS
     
@@ -40,6 +41,7 @@ class DateDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("View Date Details")
         envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editNotification:"))
         gestureRecognizer.numberOfTapsRequired = 1
@@ -87,7 +89,6 @@ class DateDetailsVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         setNotificationView()
         configureNavBar()
         styleLabels()
@@ -101,14 +102,7 @@ class DateDetailsVC: UIViewController {
             notesButton.backgroundColor = colorForType[dateType]
         }
         
-        if let street = date.address?.street {
-            let streetText = (street.characters.count > 0) ? street : "Mailing Address not set"
-            addressLabel.text = streetText
-        }
-        if let region = date.address?.region {
-            let regionText = (region.characters.count > 0) ? region : "City, State Zip not set"
-            regionLabel.text = regionText
-        }
+        setAddressLabelsFor(date.address)
         
         animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)
@@ -121,7 +115,25 @@ class DateDetailsVC: UIViewController {
             }, completion: nil)
     }
     
+    func setAddressLabelsFor(address: Address?) {
+        if let street = address?.street {
+            let streetText = (street.characters.count > 0) ? street : "Mailing Address not set"
+            addressLabel.text = streetText
+            addressLabel.textColor = UIColor.grayColor()
+        } else {
+            addressLabel.textColor = UIColor.lightGrayColor()
+        }
+        if let region = address?.region {
+            let regionText = (region.characters.count > 0) ? region : "City, State Zip not set"
+            regionLabel.text = regionText
+            regionLabel.textColor = UIColor.grayColor()
+        } else {
+            regionLabel.textColor = UIColor.lightGrayColor()
+        }
+    }
+    
     func editNotification(sender: UITapGestureRecognizer) {
+        Flurry.logEvent("Notification Bell Tapped")
         self.performSegueWithIdentifier("ShowNotification", sender: self)
     }
     
@@ -138,7 +150,7 @@ class DateDetailsVC: UIViewController {
     
     func configureNavBar() {
         if let abbreviatedName = date.name?.abbreviateName() {
-            title = abbreviatedName
+            title = date.type! == "birthday" ? abbreviatedName : date.name!
         }
     }
     
@@ -191,6 +203,7 @@ class DateDetailsVC: UIViewController {
             addDateVC.dateToSave = date
             addDateVC.managedContext = managedContext
             addDateVC.notificationDelegate = self
+            addDateVC.reloadDatesTableDelegate = reloadDatesTableDelegate
         }
         if segue.identifier == "ShowNotes" {
             let notesTableVC = segue.destinationViewController as! NotesTableVC

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AddressBook
 
 class InitialImportVC: UIViewController {
     
@@ -45,7 +46,32 @@ class InitialImportVC: UIViewController {
     }
     
     @IBAction func syncContacts(sender: AnyObject) {
-        contactImporter.syncContacts()
-        self.performSegueWithIdentifier("HomeScreen", sender: self)
+        let status = ABAddressBookGetAuthorizationStatus()
+        switch ABAddressBookGetAuthorizationStatus() {
+        case .Authorized:
+            Flurry.logEvent("Sync Contacts")
+            contactImporter.syncContacts(status: status)
+            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        case .NotDetermined:
+            ABAddressBookRequestAccessWithCompletion(nil) { (granted: Bool, error: CFError!) in
+                if granted {
+                    Flurry.logEvent("Sync Contacts")
+                    self.contactImporter.syncContacts(status: .Authorized)
+                    self.performSegueWithIdentifier("HomeScreen", sender: self)
+                } else {
+                    Flurry.logEvent("Sync Not Authorized")
+                    self.contactImporter.syncContacts(status: status)
+                    self.performSegueWithIdentifier("HomeScreen", sender: self)
+                }
+            }
+        case .Restricted, .Denied:
+            Flurry.logEvent("Sync Not Authorized")
+            self.contactImporter.syncContacts(status: status)
+            self.performSegueWithIdentifier("HomeScreen", sender: self)
+        }
+    }
+    
+    @IBAction func skipImport(sender: AnyObject) {
+        Flurry.logEvent("Skip Import")
     }
 }

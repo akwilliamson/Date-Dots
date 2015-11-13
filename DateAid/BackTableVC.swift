@@ -21,6 +21,7 @@ class BackTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("Back Table Shown")
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
@@ -61,13 +62,17 @@ class BackTableVC: UITableViewController {
         
         switch selectedIndex {
         case 0:
+            Flurry.logEvent("View All")
             destinationVC.typePredicate = nil
             destinationVC.typeColorForNewDate = UIColor.birthdayColor()
         case 1:
+            Flurry.logEvent("View Birthdays")
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
         case 2:
+            Flurry.logEvent("View Anniversaries")
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
         case 3:
+            Flurry.logEvent("View Custom")
             destinationVC.typePredicate = NSPredicate(format: "type = %@", "custom")
         default:
             break

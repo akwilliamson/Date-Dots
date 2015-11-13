@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A54DB3AD10A9A55C85A3AABA'
+               BlueprintIdentifier = '362867F94608EDECC239E490'
                BlueprintName = 'ASValueTrackingSlider'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'ASValueTrackingSlider.framework'>
+               BuildableName = 'libASValueTrackingSlider.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

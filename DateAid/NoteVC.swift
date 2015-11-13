@@ -21,6 +21,7 @@ class NoteVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("Note Details", withParameters: ["forNote:" : note])
         title = note
         textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
         
@@ -57,6 +58,7 @@ class NoteVC: UIViewController {
     }
     
     @IBAction func saveNote(sender: AnyObject) {
+        Flurry.logEvent("Save Note")
         noteToSave?.body = textView.text
         print(noteToSave)
         print(noteToSave?.date)

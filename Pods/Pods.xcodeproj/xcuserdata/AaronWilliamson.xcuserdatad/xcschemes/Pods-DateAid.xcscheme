@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C966F0A284CA3880A37486B9'
+               BlueprintIdentifier = 'A7461EB5454956C9475C6864'
                BlueprintName = 'Pods-DateAid'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_DateAid.framework'>
+               BuildableName = 'libPods-DateAid.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

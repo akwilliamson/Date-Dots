@@ -65,6 +65,7 @@ class AddDateVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("View Add Date")
         title = addOrEdit()
         setInitialValuesWhether(isBeingEdited)
         setButtonAndSliderColors()
@@ -159,6 +160,7 @@ class AddDateVC: UIViewController {
                 editDetailsVC.managedContext = managedContext
                 editDetailsVC.addressDelegate = self
                 editDetailsVC.notificationDelegate = notificationDelegate
+                editDetailsVC.reloadDatesTableDelegate = reloadDatesTableDelegate
             } else {
                 showAlertForNoName()
             }
@@ -179,14 +181,17 @@ class AddDateVC: UIViewController {
             dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
             dateToSave.date = setDateFromValues()
             dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()
-            
             if dateToSave.address == nil {
                 let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
                 let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
                 dateToSave.address = newAddress
             }
-            dateToSave.address?.street = street
-            dateToSave.address?.region = region
+            if let street = street {
+                dateToSave.address?.street = street
+            }
+            if let region = region {
+                dateToSave.address?.region = region
+            }
         } else {
             let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
             let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
@@ -196,6 +201,15 @@ class AddDateVC: UIViewController {
             dateToSave!.date = setDateFromValues()
             dateToSave!.equalizedDate = dateToSave!.date?.formatDateIntoString()
             dateToSave!.type = incomingColorType
+            
+            if dateToSave!.address == nil {
+                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
+                let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                dateToSave!.address = newAddress
+            }
+            dateToSave!.address?.street = street
+            dateToSave!.address?.region = region
+            
         }
     }
     
@@ -312,7 +326,7 @@ extension AddDateVC {
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
-        
+        Flurry.logEvent("Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
             saveContext()

@@ -19,12 +19,17 @@ struct ContactImporter {
     var datesToAdd: [Date]?
     var datesAlreadyAdded: [Date]?
     
-    mutating func syncContacts() {
+    mutating func syncContacts(status status: ABAuthorizationStatus) {
         managedContext = CoreDataStack().managedObjectContext
-        fetchExistingDates()
-        getDatesFromContacts()
-        addCustomEntitiesForPlistDates()
-        saveManagedContext()
+        if status == .Authorized {
+            fetchExistingDates()
+            getDatesFromContacts()
+            addCustomEntitiesForPlistDates()
+            saveManagedContext()
+        } else {
+            addCustomEntitiesForPlistDates()
+            saveManagedContext()
+        }
     }
     
    private mutating func fetchExistingDates() {
@@ -36,27 +41,8 @@ struct ContactImporter {
     }
     
     private mutating func getDatesFromContacts() {
-        if userHasAuthorizedAddressBookAccess() == true {
-            createAnAddressBook()
-            createDateEntitiesFrom(addressBook)
-        }
-    }
-    
-    private func userHasAuthorizedAddressBookAccess() -> Bool {
-        switch ABAddressBookGetAuthorizationStatus() {
-        case .Authorized:
-            return true
-        case .NotDetermined:
-            var userDidAuthorize: Bool!
-            ABAddressBookRequestAccessWithCompletion(nil) { (granted: Bool, error: CFError!) in
-                if granted { userDidAuthorize = true } else { userDidAuthorize = false }
-            }
-            return userDidAuthorize
-        case .Restricted:
-            return false
-        case .Denied:
-            return false
-        }
+        createAnAddressBook()
+        createDateEntitiesFrom(addressBook)
     }
     
     private mutating func createAnAddressBook() {

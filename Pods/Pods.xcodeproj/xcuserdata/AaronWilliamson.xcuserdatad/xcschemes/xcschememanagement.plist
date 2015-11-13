@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>CVCalendar.xcscheme</key>
+		<key>Flurry-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>380B15244C4E9FC5F5681F59253B2FC4</key>
+		<key>B0D11334C5005D7FF23C3BC0FE86B92A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA14B622689766F6B8A4F42FD9DE552F</key>
+		<key>D079C0B8D193CBDF60F39822F384E43F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E2C0203246A1C1BCC9DD3103734E3751</key>
+		<key>EE1DE4B3E5304F0664DC3A1A549FA333</key>
 		<dict>
 			<key>primary</key>
 			<true/>

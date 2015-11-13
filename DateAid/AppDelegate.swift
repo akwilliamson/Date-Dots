@@ -11,13 +11,15 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let tabBarAppearance = UITabBarItem.appearance()
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
         
         application.setStatusBarStyle(.LightContent, animated: false)
         
@@ -27,9 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let datesTableVC = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
         
         if let window = self.window {
-            if userDefaults.objectForKey("seenInitialView") == nil {
+            if userDefaults.objectForKey("hasLaunchedOnce") == nil {
                 userDefaults.setBool(true, forKey: "hasLaunchedOnce")
-                
                 window.rootViewController = initialImportVC
             } else {
                 window.rootViewController = datesTableVC

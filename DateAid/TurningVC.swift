@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CVCalendar
 import CoreData
 
 class TurningVC: UIViewController {
@@ -15,12 +14,14 @@ class TurningVC: UIViewController {
     var fetchedResults: [Date]?
     var filteredResults: [Date]?
     let managedContext = CoreDataStack().managedObjectContext
+    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
 
     @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("Turning VC")
         title = "Who's turning 1?"
         fetchDatesIfNotBeenFetched()
         configureNavigationBar()
@@ -31,6 +32,11 @@ class TurningVC: UIViewController {
         turningSlider.setColorTo(UIColor.birthdayColor())
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == 1 })
         tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchDatesIfNotBeenFetched()
     }
 
     override func viewDidLayoutSubviews() {
@@ -106,8 +112,12 @@ extension TurningVC: UITableViewDataSource {
         if let results = filteredResults {
             let date = results[indexPath.row]
             if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.name = abbreviatedName
+                dateCell.name = date.type! == "birthday" ? abbreviatedName : date.name!
                 dateCell.date = readableDate
+                
+                if let dateType = date.type {
+                    dateCell.nameLabel.textColor = colorForType[dateType]
+                }
             }
         }
         return dateCell

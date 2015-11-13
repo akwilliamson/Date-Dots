@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AddressBook
 
 class SettingsTableVC: UIViewController {
     
@@ -27,11 +28,14 @@ class SettingsTableVC: UIViewController {
     
     @IBOutlet weak var syncLabel: UILabel!
     @IBOutlet weak var iCloudLabel: UILabel!
+    @IBOutlet weak var alertsLabel: UILabel!
+    @IBOutlet weak var colorsLabel: UILabel!
     
     @IBOutlet weak var marginToViewEdge: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Flurry.logEvent("Settings")
         originalCenterX = syncSetting.center.x
         configureNavigationBar()
         [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({
@@ -45,7 +49,7 @@ class SettingsTableVC: UIViewController {
         syncNo.userInteractionEnabled = true
         syncNo.addGestureRecognizer(slideGesture)
         reloadDatesTableDelegate = tabBarController?.viewControllers![0].childViewControllers[1].childViewControllers[0] as! DatesTableVC
-        labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel]
+        labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel, alertSetting: alertsLabel, colorSetting: colorsLabel]
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -72,8 +76,26 @@ class SettingsTableVC: UIViewController {
             sender.view!.userInteractionEnabled = true
         } else {
             if sender.view! == syncSetting {
-                contactImporter.syncContacts()
-                reloadDatesTableDelegate?.reloadTableView()
+                let status = ABAddressBookGetAuthorizationStatus()
+                contactImporter.syncContacts(status: status)
+                if status == .Authorized {
+                    reloadDatesTableDelegate?.reloadTableView()
+                } else {
+                    let alertController = UIAlertController (title: "Contacts Unaccessible", message: "Permission to access your address book is necessary before syncing contacts.", preferredStyle: .Alert)
+                    
+                    let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                        let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                        if let url = settingsUrl {
+                            UIApplication.sharedApplication().openURL(url)
+                        }
+                    }
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+                    
+                    alertController.addAction(settingsAction)
+                    alertController.addAction(cancelAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
             }
             sender.view!.userInteractionEnabled = false
             sender.view?.rotateBack360Degrees()
@@ -135,7 +157,7 @@ class SettingsTableVC: UIViewController {
     func animateLabelIntoView(label: CircleLabel, delay: NSTimeInterval, cancelLabel: CircleLabel?) {
         cancelLabel?.hidden = true
         label.center.x = -self.view.frame.width - label.frame.height
-        UIView.animateWithDuration(0.4, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { () -> Void in
             label.center.x = self.syncNo.center.x
             }) { _ in
                 cancelLabel?.hidden = false
