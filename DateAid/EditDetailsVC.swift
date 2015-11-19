@@ -30,6 +30,7 @@ class EditDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Edit Details")
+        AppAnalytics.logEvent("Edit Details")
         setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
         populateAddressFields(withAddress: dateObject.address)
     }
@@ -52,8 +53,10 @@ class EditDetailsVC: UIViewController {
     
     @IBAction func done(sender: AnyObject) {
         Flurry.logEvent("Save Date on EditDetailsVC")
+        AppAnalytics.logEvent("Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
+        addressDelegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
         reloadDatesTableDelegate?.reloadTableView()
         do { try managedContext?.save()
             if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {

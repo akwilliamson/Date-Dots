@@ -26,6 +26,9 @@
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
+		978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 978C22FE1BFC3668000075D5 /* NavigationCell.xib */; };
+		978C23011BFC3699000075D5 /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23001BFC3699000075D5 /* NavigationCell.swift */; };
+		978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
 		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; };
 		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; };
@@ -96,6 +99,9 @@
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		978C22FE1BFC3668000075D5 /* NavigationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCell.xib; sourceTree = "<group>"; };
+		978C23001BFC3699000075D5 /* NavigationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
+		978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
 		9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePushSettingsVC.swift; sourceTree = "<group>"; };
 		9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V2.xcdatamodel; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 		970D93631BC47B9500D7F1FF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */,
 				970D93611BC4765900D7F1FF /* ColorExtension.swift */,
 				97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */,
 				97D185B61B3B51E8009E576E /* ImageExtension.swift */,
@@ -183,16 +190,6 @@
 				97AEAC0F1B2EA74A00ADF181 /* Custom.plist */,
 			);
 			name = PLists;
-			sourceTree = "<group>";
-		};
-		970D93661BC47C0C00D7F1FF /* Xibs */ = {
-			isa = PBXGroup;
-			children = (
-				97361A631B2C0CEF006394E1 /* DateCell.xib */,
-				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
-				97D266A01BDB3341008F7EF8 /* NoteCell.xib */,
-			);
-			name = Xibs;
 			sourceTree = "<group>";
 		};
 		970D93671BC47C2100D7F1FF /* SWRevealVC */ = {
@@ -252,12 +249,12 @@
 		97364CE31AFBF44A0095BC57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
 				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
 				97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
 				970D93651BC47BE800D7F1FF /* PLists */,
-				970D93661BC47C0C00D7F1FF /* Xibs */,
 				97F212E71B1D90EA00E88C43 /* Frameworks */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 			);
@@ -281,6 +278,51 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		978C23021BFC36A0000075D5 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				978C23001BFC3699000075D5 /* NavigationCell.swift */,
+				978C22FE1BFC3668000075D5 /* NavigationCell.xib */,
+				976BD4F61B2D079200415D65 /* DateCell.swift */,
+				97361A631B2C0CEF006394E1 /* DateCell.xib */,
+				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
+				97D266A01BDB3341008F7EF8 /* NoteCell.xib */,
+			);
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		978C23031BFC3799000075D5 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				97D266991BD95380008F7EF8 /* CircleLabel.swift */,
+			);
+			name = Labels;
+			sourceTree = "<group>";
+		};
+		978C23041BFC379E000075D5 /* Sliders */ = {
+			isa = PBXGroup;
+			children = (
+				970807591BC7288100F030D3 /* ValueSlider.swift */,
+			);
+			name = Sliders;
+			sourceTree = "<group>";
+		};
+		978C23051BFC37A4000075D5 /* Text Fields */ = {
+			isa = PBXGroup;
+			children = (
+				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
+			);
+			name = "Text Fields";
+			sourceTree = "<group>";
+		};
+		978C23061BFC37AB000075D5 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				9708075B1BC7303800F030D3 /* TypeButton.swift */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,12 +340,11 @@
 		97DC1EC51BC5927F00FEE6BE /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
-				976BD4F61B2D079200415D65 /* DateCell.swift */,
-				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
-				97D266991BD95380008F7EF8 /* CircleLabel.swift */,
-				970807591BC7288100F030D3 /* ValueSlider.swift */,
-				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
-				9708075B1BC7303800F030D3 /* TypeButton.swift */,
+				978C23021BFC36A0000075D5 /* Table View Cells */,
+				978C23031BFC3799000075D5 /* Labels */,
+				978C23041BFC379E000075D5 /* Sliders */,
+				978C23051BFC37A4000075D5 /* Text Fields */,
+				978C23061BFC37AB000075D5 /* Buttons */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -382,6 +423,7 @@
 				TargetAttributes = {
 					97364CDF1AFBF44A0095BC57 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5GJ9V4N76W;
 					};
 					97364CF71AFBF44A0095BC57 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -414,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */,
+				978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */,
 				97AEAC101B2EA74A00ADF181 /* Custom.plist in Resources */,
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
@@ -503,12 +546,14 @@
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
+				978C23011BFC3699000075D5 /* NavigationCell.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
 				97618DC91BEB19CD0051ED3D /* ContactImporter.swift in Sources */,
 				973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */,
+				978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
@@ -657,11 +702,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.datedots.Datedots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)";
@@ -676,12 +724,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.datedots.Datedots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";

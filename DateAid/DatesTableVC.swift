@@ -13,7 +13,7 @@ protocol ReloadDatesTableDelegate {
     func reloadTableView()
 }
 
-class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
+class DatesTableVC: UITableViewController {
     
 // MARK: PROPERTIES
     
@@ -21,6 +21,7 @@ class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
     var typePredicate: NSPredicate?
     var fetchedResults: [Date]?
     var managedContext = CoreDataStack().managedObjectContext
+    var sidebarMenuOpen: Bool?
     
     // Search
     var filteredResults = [Date]()
@@ -39,34 +40,20 @@ class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Main View")
+        AppAnalytics.logEvent("Swiped to Delete")
         setAndPerformFetchRequest()
         
         registerDateCellNib()
         addRevealVCGestureRecognizers()
         configureNavigationBar()
         configureTabBar()
-        resultSearchController = UISearchController(searchResultsController: nil)
-        resultSearchController.searchResultsUpdater = self
-        resultSearchController.dimsBackgroundDuringPresentation = false
-        resultSearchController.searchBar.sizeToFit()
-        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
-        definesPresentationContext = true
-        tableView.tableHeaderView = resultSearchController.searchBar
-        tableView.reloadData()
+        addSearchBar()
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        resultSearchController = UISearchController(searchResultsController: nil)
-        resultSearchController.searchResultsUpdater = self
-        resultSearchController.dimsBackgroundDuringPresentation = false
-        resultSearchController.searchBar.sizeToFit()
-        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
-        definesPresentationContext = true
-        tableView.tableHeaderView = resultSearchController.searchBar
-        tableView.reloadData()
-
+        addSearchBar()
         setAndPerformFetchRequest()
     }
     
@@ -75,12 +62,18 @@ class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
         super.viewWillDisappear(true)
     }
     
-    func reloadTableView() {
-        setAndPerformFetchRequest()
+// MARK: HELPERS
+    
+    func addSearchBar() {
+        resultSearchController = UISearchController(searchResultsController: nil)
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
+        definesPresentationContext = true
+        tableView.tableHeaderView = resultSearchController.searchBar
         tableView.reloadData()
     }
-    
-// MARK: HELPERS
     
     func setAndPerformFetchRequest() {
         let datesFetch = NSFetchRequest(entityName: "Date")
@@ -161,9 +154,9 @@ class DatesTableVC: UITableViewController, ReloadDatesTableDelegate {
         if segue.identifier == "DateDetailsVC" {
             let dateDetailsVC = segue.destinationViewController as! DateDetailsVC
             if resultSearchController.active == true {
-                dateDetailsVC.date = filteredResults[tableView.indexPathForSelectedRow!.row]
+                dateDetailsVC.dateObject = filteredResults[tableView.indexPathForSelectedRow!.row]
             } else {
-                dateDetailsVC.date = fetchedResults![tableView.indexPathForSelectedRow!.row]
+                dateDetailsVC.dateObject = fetchedResults![tableView.indexPathForSelectedRow!.row]
             }
             dateDetailsVC.managedContext = managedContext
             dateDetailsVC.reloadDatesTableDelegate = self
@@ -262,6 +255,7 @@ extension DatesTableVC { // UITableViewDataSource
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             Flurry.logEvent("Swiped to Delete")
+            AppAnalytics.logEvent("Swiped to Delete")
             let dateToDelete = fetchedResults![indexPath.row]
             managedContext.deleteObject(dateToDelete)
             fetchedResults?.removeAtIndex(indexPath.row)
@@ -288,6 +282,43 @@ extension DatesTableVC { // UITableViewDelegate
     
 }
 
+extension DatesTableVC: SWRevealViewControllerDelegate {
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return sidebarMenuOpen == true ? nil : indexPath
+    }
+
+    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition){
+        if position == .Left {
+             self.view.userInteractionEnabled = true
+            sidebarMenuOpen = false
+        } else {
+             self.view.userInteractionEnabled = false
+            sidebarMenuOpen = true
+        }
+    }
+    
+    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
+        if position == .Left {
+             self.view.userInteractionEnabled = true
+            sidebarMenuOpen = false
+        } else {
+             self.view.userInteractionEnabled = false
+            sidebarMenuOpen = true
+        }
+    }
+    
+}
+
+extension DatesTableVC: ReloadDatesTableDelegate {
+
+    func reloadTableView() {
+        setAndPerformFetchRequest()
+        tableView.reloadData()
+    }
+    
+}
+
 extension DatesTableVC: UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -299,12 +330,3 @@ extension DatesTableVC: UISearchResultsUpdating {
     }
     
 }
-
-
-
-
-
-
-
-
-

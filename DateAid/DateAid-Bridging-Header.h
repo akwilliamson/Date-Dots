@@ -5,3 +5,4 @@
 #import "SWRevealViewController.h"
 #import "ASValueTrackingSlider.h"
 #import "Flurry.h"
+#import "AppAnalytics/Appanalytics.h"

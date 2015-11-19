@@ -4,6 +4,7 @@
 target 'DateAid' do
     pod 'ASValueTrackingSlider'
     pod 'Flurry-iOS-SDK/FlurrySDK'
+    pod 'AppAnalytics'
 end
 
 target 'DateAidTests' do

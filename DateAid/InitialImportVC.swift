@@ -46,32 +46,30 @@ class InitialImportVC: UIViewController {
     }
     
     @IBAction func syncContacts(sender: AnyObject) {
+        self.logEvents(forString: "Sync Contacts")
         let status = ABAddressBookGetAuthorizationStatus()
         switch ABAddressBookGetAuthorizationStatus() {
         case .Authorized:
-            Flurry.logEvent("Sync Contacts")
             contactImporter.syncContacts(status: status)
             self.performSegueWithIdentifier("HomeScreen", sender: self)
         case .NotDetermined:
             ABAddressBookRequestAccessWithCompletion(nil) { (granted: Bool, error: CFError!) in
                 if granted {
-                    Flurry.logEvent("Sync Contacts")
                     self.contactImporter.syncContacts(status: .Authorized)
                     self.performSegueWithIdentifier("HomeScreen", sender: self)
                 } else {
-                    Flurry.logEvent("Sync Not Authorized")
                     self.contactImporter.syncContacts(status: status)
                     self.performSegueWithIdentifier("HomeScreen", sender: self)
                 }
             }
         case .Restricted, .Denied:
-            Flurry.logEvent("Sync Not Authorized")
             self.contactImporter.syncContacts(status: status)
             self.performSegueWithIdentifier("HomeScreen", sender: self)
         }
     }
     
     @IBAction func skipImport(sender: AnyObject) {
-        Flurry.logEvent("Skip Import")
+        self.logEvents(forString: "Skip Import")
+        self.performSegueWithIdentifier("HomeScreen", sender: self)
     }
 }

@@ -36,6 +36,7 @@ class SettingsTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Settings")
+        AppAnalytics.logEvent("Settings")
         originalCenterX = syncSetting.center.x
         configureNavigationBar()
         [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({

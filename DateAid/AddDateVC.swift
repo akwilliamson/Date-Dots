@@ -66,6 +66,7 @@ class AddDateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("View Add Date")
+        AppAnalytics.logEvent("View Add Date")
         title = addOrEdit()
         setInitialValuesWhether(isBeingEdited)
         setButtonAndSliderColors()
@@ -209,7 +210,6 @@ class AddDateVC: UIViewController {
             }
             dateToSave!.address?.street = street
             dateToSave!.address?.region = region
-            
         }
     }
     
@@ -327,6 +327,7 @@ extension AddDateVC {
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
         Flurry.logEvent("Save Date on AddDateVC")
+        AppAnalytics.logEvent("Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
             saveContext()

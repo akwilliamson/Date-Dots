@@ -19,6 +19,7 @@ class NotesTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Notes Main View")
+        AppAnalytics.logEvent("Notes Main View")
         let noteCellNib = UINib(nibName: "NoteCell", bundle: nil)
         tableView.registerNib(noteCellNib, forCellReuseIdentifier: "NoteCell")
         tableView.tableFooterView = UIView(frame: CGRectZero)

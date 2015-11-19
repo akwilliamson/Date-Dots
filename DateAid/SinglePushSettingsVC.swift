@@ -32,6 +32,7 @@ class SinglePushSettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Push Notification Setting")
+        AppAnalytics.logEvent("Push Notification Setting")
         checkIfUserHasEnabledLocalNotifications()
         
         addValueChangedTargetOn([daySlider, timeSlider])
@@ -216,6 +217,7 @@ class SinglePushSettingsVC: UIViewController {
     
     @IBAction func createNotification(sender: AnyObject) {
         Flurry.logEvent("Create Notification")
+        AppAnalytics.logEvent("Create Notification")
         
         deletePreviousNotification()
         

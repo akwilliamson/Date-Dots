@@ -18,7 +18,7 @@ class DateDetailsVC: UIViewController {
 // MARK: PROPERTIES
 
     var managedContext: NSManagedObjectContext?
-    var date: Date!
+    var dateObject: Date!
     var localNotificationFound: Bool?
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
@@ -42,17 +42,24 @@ class DateDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("View Date Details")
+        AppAnalytics.logEvent("View Date Details")
         envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editNotification:"))
-        gestureRecognizer.numberOfTapsRequired = 1
-        reminderImage.addGestureRecognizer(gestureRecognizer)
+        
+        let reminderGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editNotification:"))
+        reminderGestureRecognizer.numberOfTapsRequired = 1
+        reminderImage.addGestureRecognizer(reminderGestureRecognizer)
         reminderImage.userInteractionEnabled = true
+        
+        let addressGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("editAddress:"))
+        addressGestureRecognizer.numberOfTapsRequired = 1
+        envelopeImage.addGestureRecognizer(addressGestureRecognizer)
+        envelopeImage.userInteractionEnabled = true
     }
     
     func setNotificationView() {
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! {
             if let notificationID = notification.userInfo!["date"] as? String {
-                if notificationID == String(date.objectID.URIRepresentation()) {
+                if notificationID == String(dateObject.objectID.URIRepresentation()) {
                     reminderImage.image = UIImage(named: "reminder-on.png")?.imageWithRenderingMode(.AlwaysTemplate)
                     let daysPrior = Int(notification.userInfo!["daysPrior"] as! String)!
                     let hourOfDay = Int(notification.userInfo!["hoursAfter"] as! String)!
@@ -95,14 +102,14 @@ class DateDetailsVC: UIViewController {
         configureAge()
         configureCountdown()
         configureDate()
-        if let dateType = date.type {
+        if let dateType = dateObject.type {
             envelopeImage.tintColor = colorForType[dateType]
             reminderImage.tintColor = colorForType[dateType]
             reminderLabel.textColor = colorForType[dateType]
             notesButton.backgroundColor = colorForType[dateType]
         }
         
-        setAddressLabelsFor(date.address)
+        setAddressLabelsFor(dateObject.address?.street, region: dateObject.address?.region)
         
         animateDropInLabelFor(ageLabel, fromPosition: -50, delay: 0)
         animateDropInLabelFor(daysUntilLabel, fromPosition: -50, delay: 0.1)
@@ -115,26 +122,29 @@ class DateDetailsVC: UIViewController {
             }, completion: nil)
     }
     
-    func setAddressLabelsFor(address: Address?) {
-        if let street = address?.street {
-            let streetText = (street.characters.count > 0) ? street : "Mailing Address not set"
+    func setAddressLabelsFor(street: String?, region: String?) {
+        if let street = street {
+            let streetText = (street.characters.count > 0) ? street : "No Address"
             addressLabel.text = streetText
-            addressLabel.textColor = UIColor.grayColor()
-        } else {
-            addressLabel.textColor = UIColor.lightGrayColor()
+            addressLabel.textColor = streetText == "No Address" ? UIColor.lightGrayColor() : UIColor.grayColor()
         }
-        if let region = address?.region {
-            let regionText = (region.characters.count > 0) ? region : "City, State Zip not set"
+        if let region = region {
+            let regionText = (region.characters.count > 0) ? region : "No Locality"
             regionLabel.text = regionText
-            regionLabel.textColor = UIColor.grayColor()
-        } else {
-            regionLabel.textColor = UIColor.lightGrayColor()
+            regionLabel.textColor = regionText == "No Locality" ? UIColor.lightGrayColor() : UIColor.grayColor()
         }
     }
     
     func editNotification(sender: UITapGestureRecognizer) {
         Flurry.logEvent("Notification Bell Tapped")
+        AppAnalytics.logEvent("Notification Bell Tapped")
         self.performSegueWithIdentifier("ShowNotification", sender: self)
+    }
+    
+    func editAddress(sender: UITapGestureRecognizer) {
+        Flurry.logEvent("Envelope Tapped")
+        AppAnalytics.logEvent("Envelope Tapped")
+        self.performSegueWithIdentifier("ShowAddress", sender: self)
     }
     
     func animateDropInLabelFor(label: UILabel, fromPosition: CGFloat, delay: NSTimeInterval) {
@@ -149,13 +159,13 @@ class DateDetailsVC: UIViewController {
     }
     
     func configureNavBar() {
-        if let abbreviatedName = date.name?.abbreviateName() {
-            title = date.type! == "birthday" ? abbreviatedName : date.name!
+        if let abbreviatedName = dateObject.name?.abbreviateName() {
+            title = dateObject.type! == "birthday" ? abbreviatedName : dateObject.name!
         }
     }
     
     func styleLabels() {
-        if let dateType = date.type {
+        if let dateType = dateObject.type {
             ageLabel.backgroundColor = colorForType[dateType]
             daysUntilLabel.backgroundColor = colorForType[dateType]
             dateLabel.backgroundColor = colorForType[dateType]
@@ -163,27 +173,27 @@ class DateDetailsVC: UIViewController {
     }
 
     func configureDate() {
-        if let readableDate = date?.date?.readableDate() {
+        if let readableDate = dateObject?.date?.readableDate() {
             dateLabel.text = readableDate.stringByReplacingOccurrencesOfString(" ", withString: "\n")
         }
     }
     
     func configureAge() {
-        if date.date!.getYear() == 1604 {
+        if dateObject.date!.getYear() == 1604 {
             ageLabel.text = "Age\nN/A"
         } else {
             let age: Int
-            if date.date?.daysBetween() == 0 {
-                age = date.date!.ageTurning()-1
+            if dateObject.date?.daysBetween() == 0 {
+                age = dateObject.date!.ageTurning()-1
             } else {
-                age = date.date!.ageTurning()
+                age = dateObject.date!.ageTurning()
             }
-            ageLabel.text = date!.type! == "birthday" ? "Turning\n\(age)" : "Year\n#\(age)"
+            ageLabel.text = dateObject!.type! == "birthday" ? "Turning\n\(age)" : "Year\n#\(age)"
         }
     }
     
     func configureCountdown() {
-        if let numberOfDays = date.date?.daysBetween() {
+        if let numberOfDays = dateObject.date?.daysBetween() {
             if numberOfDays == 0 {
                 daysUntilLabel.text = "Today"
             } else if numberOfDays == 1 {
@@ -200,7 +210,7 @@ class DateDetailsVC: UIViewController {
         if segue.identifier == "EditDate" {
             let addDateVC = segue.destinationViewController as! AddDateVC
             addDateVC.isBeingEdited = true
-            addDateVC.dateToSave = date
+            addDateVC.dateToSave = dateObject
             addDateVC.managedContext = managedContext
             addDateVC.notificationDelegate = self
             addDateVC.reloadDatesTableDelegate = reloadDatesTableDelegate
@@ -208,13 +218,20 @@ class DateDetailsVC: UIViewController {
         if segue.identifier == "ShowNotes" {
             let notesTableVC = segue.destinationViewController as! NotesTableVC
             notesTableVC.managedContext = managedContext
-            notesTableVC.typeColor = colorForType[date!.type!]
-            notesTableVC.date = date
+            notesTableVC.typeColor = colorForType[dateObject!.type!]
+            notesTableVC.date = dateObject
         }
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
-            singlePushSettingsVC.dateObject = date
+            singlePushSettingsVC.dateObject = dateObject
             singlePushSettingsVC.notificationDelegate = self
+        }
+        if segue.identifier == "ShowAddress" {
+            let editDetailsVC = segue.destinationViewController as! EditDetailsVC
+            editDetailsVC.dateObject = dateObject
+            editDetailsVC.managedContext = managedContext
+            editDetailsVC.addressDelegate = self
+            editDetailsVC.reloadDatesTableDelegate = reloadDatesTableDelegate
         }
     }
 }
@@ -224,6 +241,14 @@ extension DateDetailsVC: SetNotificationDelegate {
     func reloadNotificationView() {
         self.localNotificationFound = false
     }
+}
+
+extension DateDetailsVC: SetAddressDelegate {
+
+    func setAddressProperties(street: String?, region: String?) {
+        setAddressLabelsFor(street, region: region)
+    }
+    
 }
 
 

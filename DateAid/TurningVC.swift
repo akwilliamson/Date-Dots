@@ -22,6 +22,7 @@ class TurningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Flurry.logEvent("Turning VC")
+        AppAnalytics.logEvent("Turning VC")
         title = "Who's turning 1?"
         fetchDatesIfNotBeenFetched()
         configureNavigationBar()
