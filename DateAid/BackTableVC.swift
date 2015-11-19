@@ -7,15 +7,13 @@
 //
 
 import Foundation
-import CoreData
 
 class BackTableVC: UITableViewController {
     
 // MARK: PROPERTIES
     
-    let managedContext = CoreDataStack().managedObjectContext
     let categoryNames = ["All", "Birthdays", "Anniversaries", "Custom"]
-    let categoryColors = [UIColor.darkGrayColor(), UIColor.birthdayColor(), UIColor.anniversaryColor(),UIColor.customColor()]
+    let categoryColors = [UIColor.grayColor(), UIColor.birthdayColor(), UIColor.anniversaryColor(),UIColor.customColor()]
     
 // MARK: VIEW SETUP
     
@@ -47,32 +45,28 @@ class BackTableVC: UITableViewController {
         return navigationCell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("ShowDatesTableVC", sender: self)
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let navigationVC = segue.destinationViewController as! UINavigationController
-        let destinationVC = navigationVC.topViewController as! DatesTableVC
+        let datesTableVC = navigationVC.topViewController as! DatesTableVC
         let selectedIndex = self.tableView.indexPathForSelectedRow!.row
         
-        destinationVC.typeColorForNewDate = categoryColors[selectedIndex]
-        destinationVC.menuIndexPath = selectedIndex
+        datesTableVC.typeColorForNewDate = categoryColors[selectedIndex]
+        datesTableVC.menuIndexPath = selectedIndex
         
         switch selectedIndex {
         case 0:
             self.logEvents(forString: "View All")
-            destinationVC.typePredicate = nil
-            destinationVC.typeColorForNewDate = UIColor.birthdayColor()
+            datesTableVC.typePredicate = nil
+            datesTableVC.typeColorForNewDate = UIColor.birthdayColor()
         case 1:
             self.logEvents(forString: "View Birthdays")
-            destinationVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
+            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
         case 2:
             self.logEvents(forString: "View Anniversaries")
-            destinationVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
+            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
         case 3:
             self.logEvents(forString: "View Custom")
-            destinationVC.typePredicate = NSPredicate(format: "type = %@", "custom")
+            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "custom")
         default:
             break
         }

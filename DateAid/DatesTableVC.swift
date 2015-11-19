@@ -25,7 +25,7 @@ class DatesTableVC: UITableViewController {
     
     // Search
     var filteredResults = [Date]()
-    var resultSearchController: UISearchController!
+    var resultSearchController = UISearchController()
     
     var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
@@ -39,10 +39,8 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Main View")
-        AppAnalytics.logEvent("Swiped to Delete")
+        self.logEvents(forString: "Main View")
         setAndPerformFetchRequest()
-        
         registerDateCellNib()
         addRevealVCGestureRecognizers()
         configureNavigationBar()
@@ -253,9 +251,9 @@ extension DatesTableVC { // UITableViewDataSource
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if editingStyle == .Delete {
-            Flurry.logEvent("Swiped to Delete")
-            AppAnalytics.logEvent("Swiped to Delete")
+            self.logEvents(forString: "Swiped to Delete")
             let dateToDelete = fetchedResults![indexPath.row]
             managedContext.deleteObject(dateToDelete)
             fetchedResults?.removeAtIndex(indexPath.row)
@@ -266,6 +264,7 @@ extension DatesTableVC { // UITableViewDataSource
             }
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
+        
     }
 }
 
@@ -282,33 +281,33 @@ extension DatesTableVC { // UITableViewDelegate
     
 }
 
-extension DatesTableVC: SWRevealViewControllerDelegate {
-    
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return sidebarMenuOpen == true ? nil : indexPath
-    }
-
-    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition){
-        if position == .Left {
-             self.view.userInteractionEnabled = true
-            sidebarMenuOpen = false
-        } else {
-             self.view.userInteractionEnabled = false
-            sidebarMenuOpen = true
-        }
-    }
-    
-    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
-        if position == .Left {
-             self.view.userInteractionEnabled = true
-            sidebarMenuOpen = false
-        } else {
-             self.view.userInteractionEnabled = false
-            sidebarMenuOpen = true
-        }
-    }
-    
-}
+//extension DatesTableVC: SWRevealViewControllerDelegate {
+//    
+//    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+//        return sidebarMenuOpen == true ? nil : indexPath
+//    }
+//
+//    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition) {
+//        if position == .Left {
+//             self.view.userInteractionEnabled = true
+//            sidebarMenuOpen = false
+//        } else {
+//             self.view.userInteractionEnabled = false
+//            sidebarMenuOpen = true
+//        }
+//    }
+//    
+//    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
+//        if position == .Left {
+//             self.view.userInteractionEnabled = true
+//            sidebarMenuOpen = false
+//        } else {
+//             self.view.userInteractionEnabled = false
+//            sidebarMenuOpen = true
+//        }
+//    }
+//    
+//}
 
 extension DatesTableVC: ReloadDatesTableDelegate {
 

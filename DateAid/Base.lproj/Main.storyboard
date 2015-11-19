@@ -200,6 +200,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="ShowDates" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -207,9 +210,6 @@
                             <outlet property="delegate" destination="6sN-oB-xmV" id="SqK-1I-3cH"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <segue destination="Uns-kb-TbM" kind="show" identifier="ShowDatesTableVC" id="efr-XN-kF7"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7NB-m7-c5i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2298,10 +2298,10 @@
         <image name="trash" width="96" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="efr-XN-kF7"/>
+        <segue reference="8kR-B2-YHG"/>
         <segue reference="WGb-MU-B13"/>
-        <segue reference="TPq-ng-Nxl"/>
         <segue reference="byt-8L-e9s"/>
+        <segue reference="TPq-ng-Nxl"/>
         <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -227,17 +227,10 @@
 				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
-				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
-				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
-				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
-				978446901B3A8143003889BD /* DateDetailsVC.swift */,
-				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
-				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
-				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
-				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
-				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
-				97DC58891B3E19DD008FA222 /* TurningVC.swift */,
-				9760AF331BE874850098A1FE /* SettingsTableVC.swift */,
+				977ED8BE1BFDA3D500BC7EB9 /* Onboarding */,
+				977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */,
+				977ED8C01BFDA3F400BC7EB9 /* Turning Tab */,
+				977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */,
 				97D2669B1BD98FE3008F7EF8 /* Models */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
@@ -276,6 +269,45 @@
 				97364CFD1AFBF44A0095BC57 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		977ED8BE1BFDA3D500BC7EB9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */ = {
+			isa = PBXGroup;
+			children = (
+				97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */,
+				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
+				978446901B3A8143003889BD /* DateDetailsVC.swift */,
+				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
+				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
+				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
+				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
+				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
+			);
+			name = "Dates Tab";
+			sourceTree = "<group>";
+		};
+		977ED8C01BFDA3F400BC7EB9 /* Turning Tab */ = {
+			isa = PBXGroup;
+			children = (
+				97DC58891B3E19DD008FA222 /* TurningVC.swift */,
+			);
+			name = "Turning Tab";
+			sourceTree = "<group>";
+		};
+		977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */ = {
+			isa = PBXGroup;
+			children = (
+				9760AF331BE874850098A1FE /* SettingsTableVC.swift */,
+			);
+			name = "Settings Tab";
 			sourceTree = "<group>";
 		};
 		978C23021BFC36A0000075D5 /* Table View Cells */ = {
@@ -326,13 +358,13 @@
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				97618DC81BEB19CD0051ED3D /* ContactImporter.swift */,
 				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
 				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
 				9791F78A1BD4CCDF001E82BB /* Address.swift */,
 				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
 				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
-				97618DC81BEB19CD0051ED3D /* ContactImporter.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
