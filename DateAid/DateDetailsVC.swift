@@ -33,8 +33,8 @@ class DateDetailsVC: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
     
-    @IBOutlet weak var reminderImage: SlideImageView!
-    @IBOutlet weak var reminderLabel: SlideLabel!
+    @IBOutlet weak var reminderImage: UIImageView!
+    @IBOutlet weak var reminderLabel: UILabel!
     
     @IBOutlet weak var notesButton: UIButton!
     
@@ -47,16 +47,16 @@ class DateDetailsVC: UIViewController {
 
         envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
         
-        self.addTapGestureRecognizer(onImageView: reminderImage, forAction: "editNotification:")
-        self.addTapGestureRecognizer(onImageView: envelopeImage, forAction: "editAddress:")
+        self.addTapGestureRecognizer(onImageView: reminderImage, forAction: "segueToNotification:")
+        self.addTapGestureRecognizer(onImageView: envelopeImage, forAction: "segueToAddress:")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         setColorTheme(forType: dateObject.type)
-        setNotificationView()
-        populateViews()
+        populateDateViews()
+        populateAlertViews()
         animateViews()
     }
     
@@ -64,114 +64,6 @@ class DateDetailsVC: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
         tapGestureRecognizer.numberOfTapsRequired = 1
         imageView.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    func populateViews() {
-        populateNavBarTitle(forDate: dateObject)
-        
-        populateAgeLabel(forDate: dateObject)
-        populateDaysUntilLabel(forDate: dateObject)
-        populateDateLabel(forDate: dateObject)
-        
-        populateAddressLabels(forDate: dateObject)
-    }
-    
-    func animateViews() {
-        ageLabel.animateDropIn(withDelay: 0)
-        daysUntilLabel.animateDropIn(withDelay: 0.1)
-        dateLabel.animateDropIn(withDelay: 0.2)
-        
-        reminderImage.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
-        reminderLabel.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
-    }
-    
-    func textForDaysPrior(daysPrior: Int) -> String {
-        switch daysPrior {
-        case 0:
-            return "Day of "
-        case 1:
-            return "\(daysPrior) day before "
-        default:
-            return "\(daysPrior) days before "
-        }
-    }
-    
-    func textForHourOfDay(hourOfDay: Int) -> String {
-        switch hourOfDay {
-        case 0:
-            return "at midnight"
-        case 1...11:
-            return "at \(hourOfDay)am"
-        case 12:
-            return "at noon"
-        default:
-            return "at \(hourOfDay - 12)pm"
-        }
-    }
-    
-    func setNotificationView() {
-        guard let notifications = UIApplication.sharedApplication().scheduledLocalNotifications else { return }
-        for notification in notifications {
-            
-            guard let notificationID = notification.userInfo!["date"] as? String else { return }
-            let dateObjectURL = String(dateObject.objectID.URIRepresentation())
-            
-            if notificationID == dateObjectURL {
-                localNotificationFound = true
-                
-                guard let daysPrior = Int(notification.userInfo?["daysPrior"] as! String) else { return }
-                guard let hourOfDay = Int(notification.userInfo?["hoursAfter"] as! String) else { return }
-                
-                let daysPriorText = self.textForDaysPrior(daysPrior)
-                let hourOfDayText = self.textForHourOfDay(hourOfDay)
-                
-                setReminderTextAndImage(toImage: "reminder-on.png", withText: daysPriorText + hourOfDayText)
-            }
-        }
-        if localNotificationFound != true {
-            setReminderTextAndImage(toImage: "reminder-off.png", withText: "Alert Not Set")
-        }
-    }
-    
-    func setReminderTextAndImage(toImage imageString: String, withText text: String) {
-        reminderLabel.text = text
-        reminderImage.image = UIImage(named: imageString)?.imageWithRenderingMode(.AlwaysTemplate)
-    }
-    
-    func populateAddressLabels(forDate date: Date) {
-        if let address = date.address {
-            self.populateAddressText(forLabel: addressLabel, withText: address.street)
-            self.populateAddressText(forLabel: regionLabel, withText: address.region)
-        }
-    }
-    
-    func populateAddressText(forLabel label: UILabel, withText text: String?) {
-        if let text = text {
-            label.text = text
-            label.textColor = UIColor.grayColor()
-        } else {
-            label.textColor = UIColor.lightGrayColor()
-        }
-    }
-    
-    func editNotification(sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Notification Bell Tapped")
-        self.performSegueWithIdentifier("ShowNotification", sender: self)
-    }
-    
-    func editAddress(sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Envelope Tapped")
-        self.performSegueWithIdentifier("ShowAddress", sender: self)
-    }
-    
-    @IBAction func unwindToDateDetails(segue: UIStoryboardSegue) {
-        self.loadView()
-    }
-    
-    func populateNavBarTitle(forDate date: Date) {
-        if let abbreviatedName = date.name?.abbreviateName() {
-            title = date.type! == "birthday" ? abbreviatedName : dateObject.name!
-        }
     }
     
     func setColorTheme(forType type: String?) {
@@ -182,10 +74,21 @@ class DateDetailsVC: UIViewController {
             notesButton.backgroundColor = colorForType[type]
         }
     }
-
-    func populateDateLabel(forDate date: Date) {
-        if let readableDate = date.date?.readableDate() {
-            dateLabel.text = readableDate.stringByReplacingOccurrencesOfString(" ", withString: "\n")
+    
+    func populateDateViews() {
+        populateNavBarTitle(forDate: dateObject)
+        
+        populateAgeLabel(forDate: dateObject)
+        populateDaysUntilLabel(forDate: dateObject)
+        populateDateLabel(forDate: dateObject)
+        
+        populateAddressLabels(forDate: dateObject)
+    }
+    
+    
+    func populateNavBarTitle(forDate date: Date) {
+        if let abbreviatedName = date.name?.abbreviateName() {
+            title = date.type! == "birthday" ? abbreviatedName : dateObject.name!
         }
     }
     
@@ -215,7 +118,105 @@ class DateDetailsVC: UIViewController {
         }
     }
     
+    func populateDateLabel(forDate date: Date) {
+        if let readableDate = date.date?.readableDate() {
+            dateLabel.text = readableDate.stringByReplacingOccurrencesOfString(" ", withString: "\n")
+        }
+    }
+    
+    func populateAddressLabels(forDate date: Date) {
+        if let address = date.address {
+            self.populateAddressText(forLabel: addressLabel, withText: address.street)
+            self.populateAddressText(forLabel: regionLabel, withText: address.region)
+        }
+    }
+    
+    func populateAddressText(forLabel label: UILabel, withText text: String?) {
+        if let text = text {
+            label.text = text
+            label.textColor = UIColor.grayColor()
+        } else {
+            label.textColor = UIColor.lightGrayColor()
+        }
+    }
+    
+    func populateAlertViews() {
+        guard let notifications = UIApplication.sharedApplication().scheduledLocalNotifications else { return }
+        
+        for notification in notifications {
+            guard let notificationID = notification.userInfo!["date"] as? String else { return }
+            let dateObjectURL = String(dateObject.objectID.URIRepresentation())
+            
+            if notificationID == dateObjectURL {
+                localNotificationFound = true
+                
+                guard let daysPrior = Int(notification.userInfo?["daysPrior"] as! String) else { return }
+                guard let hourOfDay = Int(notification.userInfo?["hoursAfter"] as! String) else { return }
+                
+                let daysPriorText = self.textForDaysPrior(daysPrior)
+                let hourOfDayText = self.textForHourOfDay(hourOfDay)
+                
+                self.setAlertTextAndImage(toImage: "reminder-on.png", withText: daysPriorText + hourOfDayText)
+            }
+        }
+        if localNotificationFound != true {
+            self.setAlertTextAndImage(toImage: "reminder-off.png", withText: "Alert Not Set")
+        }
+    }
+    
+    func textForDaysPrior(daysPrior: Int) -> String {
+        switch daysPrior {
+        case 0:
+            return "Day of "
+        case 1:
+            return "\(daysPrior) day before "
+        default:
+            return "\(daysPrior) days before "
+        }
+    }
+    
+    func textForHourOfDay(hourOfDay: Int) -> String {
+        switch hourOfDay {
+        case 0:
+            return "at midnight"
+        case 1...11:
+            return "at \(hourOfDay)am"
+        case 12:
+            return "at noon"
+        default:
+            return "at \(hourOfDay - 12)pm"
+        }
+    }
+    
+    func setAlertTextAndImage(toImage imageString: String, withText text: String) {
+        reminderLabel.text = text
+        reminderImage.image = UIImage(named: imageString)?.imageWithRenderingMode(.AlwaysTemplate)
+    }
+    
+    func animateViews() {
+        ageLabel.animateDropIn(withDelay: 0)
+        daysUntilLabel.animateDropIn(withDelay: 0.1)
+        dateLabel.animateDropIn(withDelay: 0.2)
+        
+        reminderImage.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
+        reminderLabel.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
+    }
+    
+    func segueToNotification(sender: UITapGestureRecognizer) {
+        self.logEvents(forString: "Notification Bell Tapped")
+        self.performSegueWithIdentifier("ShowNotification", sender: self)
+    }
+    
+    func segueToAddress(sender: UITapGestureRecognizer) {
+        self.logEvents(forString: "Envelope Tapped")
+        self.performSegueWithIdentifier("ShowAddress", sender: self)
+    }
+    
 // MARK: SEGUE
+    
+    @IBAction func unwindToDateDetails(segue: UIStoryboardSegue) {
+        self.loadView()
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EditDate" {

@@ -15,8 +15,7 @@ class SinglePushSettingsVC: UIViewController {
     
     let application = UIApplication.sharedApplication()
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
-    let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM",
-                     "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
+    let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM", "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
     
     var previouslyScheduledNotification: UILocalNotification?
     
@@ -31,8 +30,7 @@ class SinglePushSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Push Notification Setting")
-        AppAnalytics.logEvent("Push Notification Setting")
+        self.logEvents(forString: "Push Notification Setting")
         checkIfUserHasEnabledLocalNotifications()
         
         addValueChangedTargetOn([daySlider, timeSlider])

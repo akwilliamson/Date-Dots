@@ -1277,26 +1277,6 @@
                                     <segue destination="617-UG-6zb" kind="show" identifier="ShowNotes" id="t93-S5-ewk"/>
                                 </connections>
                             </button>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO" customClass="SlideImageView" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="275" y="425" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
-                                    <constraint firstAttribute="width" constant="50" id="FmL-yz-vc0"/>
-                                    <constraint firstAttribute="width" secondItem="WWf-U1-hEO" secondAttribute="height" multiplier="1:1" id="MG0-xb-dWL"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="MG0-xb-dWL"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="7KE-dk-Wrx"/>
-                                        <exclude reference="FmL-yz-vc0"/>
-                                        <include reference="MG0-xb-dWL"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
                                 <rect key="frame" x="278" y="262" width="46" height="32"/>
                                 <constraints>
@@ -1316,7 +1296,7 @@
                                     <rect key="frame" x="178" y="262" width="46" height="32"/>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o" customClass="SlideLabel" customModule="DateAid" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
                                 <rect key="frame" x="262" y="465" width="77" height="50"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <nil key="highlightedColor"/>
@@ -1402,6 +1382,26 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
+                                <rect key="frame" x="275" y="425" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
+                                    <constraint firstAttribute="width" constant="50" id="FmL-yz-vc0"/>
+                                    <constraint firstAttribute="width" secondItem="WWf-U1-hEO" secondAttribute="height" multiplier="1:1" id="MG0-xb-dWL"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="MG0-xb-dWL"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="7KE-dk-Wrx"/>
+                                        <exclude reference="FmL-yz-vc0"/>
+                                        <include reference="MG0-xb-dWL"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1618,8 +1618,8 @@
                         <outlet property="envelopeImage" destination="CwL-Jv-hIu" id="qR1-zc-qLh"/>
                         <outlet property="notesButton" destination="zck-0H-3Tc" id="ndS-Qp-1g6"/>
                         <outlet property="regionLabel" destination="FxD-SH-WEl" id="426-uv-QIm"/>
-                        <outlet property="reminderImage" destination="WWf-U1-hEO" id="rd5-b8-zGJ"/>
-                        <outlet property="reminderLabel" destination="CZv-WW-Y3o" id="f9i-kh-KA6"/>
+                        <outlet property="reminderImage" destination="WWf-U1-hEO" id="yLb-ky-yw2"/>
+                        <outlet property="reminderLabel" destination="CZv-WW-Y3o" id="ffj-8D-MYw"/>
                         <segue destination="qYj-Hm-vrr" kind="show" identifier="ShowNotification" id="byt-8L-e9s"/>
                         <segue destination="ph2-zO-ERN" kind="show" identifier="ShowAddress" id="TPq-ng-Nxl"/>
                     </connections>

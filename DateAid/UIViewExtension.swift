@@ -34,4 +34,11 @@ extension UIView {
         self.layer.addAnimation(rotateAnimation, forKey: nil)
     }
     
+    func animateSlideIn(withDuration duration: NSTimeInterval, toPosition newPosition: CGFloat) {
+        self.center.x = 600
+        UIView.animateWithDuration(duration, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.center.x = newPosition
+            self.center.x = newPosition
+            }, completion: nil)
+    }
 }

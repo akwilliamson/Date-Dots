@@ -31,7 +31,6 @@ class AddDateVC: UIViewController {
     var dateToSave: Date?
     var notificationDelegate: SetNotificationDelegate?
     
-    
     var street: String?
     var region: String?
     var buttonForType: [String: TypeButton]!
