@@ -31,4 +31,11 @@ class CircleLabel: UILabel {
         self.layer.borderWidth = CGFloat(borderWidth)
         self.layer.borderColor = borderColor.CGColor
     }
+    
+    func animateDropIn(withDelay delay: NSTimeInterval) {
+        self.center.y = -50
+        UIView.animateWithDuration(1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            self.center.y = 84
+            }, completion: nil)
+    }
 }

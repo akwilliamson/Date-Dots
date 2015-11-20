@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 protocol SetAddressDelegate {
-    func setAddressProperties(street: String?, region: String?)
+    func repopulateAddressFor(dateObject date: Date)
 }
 
 protocol ResetDateDelegate {
@@ -243,10 +243,11 @@ class AddDateVC: UIViewController {
 
 extension AddDateVC: SetAddressDelegate {
     
-    func setAddressProperties(street: String?, region: String?) {
-        self.street = street
-        self.region = region
+    func repopulateAddressFor(dateObject date: Date) {
+        self.street = date.address?.street
+        self.region = date.address?.region
     }
+
 }
 
 extension AddDateVC: ResetDateDelegate {
@@ -326,8 +327,7 @@ extension AddDateVC {
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
-        Flurry.logEvent("Save Date on AddDateVC")
-        AppAnalytics.logEvent("Save Date on AddDateVC")
+        self.logEvents(forString: "Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
             saveContext()

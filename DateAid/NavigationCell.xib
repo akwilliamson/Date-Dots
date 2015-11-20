@@ -64,7 +64,7 @@
                 <outlet property="navigationIcon" destination="gzf-gr-WTh" id="kKV-Eg-XGf"/>
                 <outlet property="navigationTitle" destination="W8k-uK-Wqu" id="Bps-Zd-oyb"/>
             </connections>
-            <point key="canvasLocation" x="412.5" y="369"/>
+            <point key="canvasLocation" x="194.5" y="240"/>
         </tableViewCell>
     </objects>
 </document>

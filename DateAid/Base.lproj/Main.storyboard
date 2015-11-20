@@ -201,7 +201,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="ShowDates" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
+                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1277,7 +1277,7 @@
                                     <segue destination="617-UG-6zb" kind="show" identifier="ShowNotes" id="t93-S5-ewk"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO" customClass="SlideImageView" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="275" y="425" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
@@ -1297,7 +1297,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
                                 <rect key="frame" x="278" y="262" width="46" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="CwL-Jv-hIu" secondAttribute="height" multiplier="14:9" id="or7-z7-vud"/>
@@ -1316,7 +1316,7 @@
                                     <rect key="frame" x="178" y="262" width="46" height="32"/>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o" customClass="SlideLabel" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="262" y="465" width="77" height="50"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <nil key="highlightedColor"/>
@@ -1328,7 +1328,7 @@
                                     <constraint firstAttribute="height" constant="35" id="Zi6-qx-jKF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
@@ -1343,7 +1343,7 @@
                                     <constraint firstAttribute="height" constant="35" id="61p-1Q-Tzb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
@@ -1612,14 +1612,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressLabel" destination="JE1-PL-Yxl" id="JoS-yo-XnE"/>
-                        <outlet property="ageLabel" destination="3Ml-Gk-LXZ" id="Acd-3M-5mf"/>
-                        <outlet property="dateLabel" destination="mDV-mQ-X2z" id="fLN-Oa-csi"/>
-                        <outlet property="daysUntilLabel" destination="gjl-WM-ZEi" id="iof-67-yMB"/>
+                        <outlet property="ageLabel" destination="3Ml-Gk-LXZ" id="EZO-Se-5Hd"/>
+                        <outlet property="dateLabel" destination="mDV-mQ-X2z" id="F9r-4t-4UG"/>
+                        <outlet property="daysUntilLabel" destination="gjl-WM-ZEi" id="dM6-sB-tPB"/>
                         <outlet property="envelopeImage" destination="CwL-Jv-hIu" id="qR1-zc-qLh"/>
                         <outlet property="notesButton" destination="zck-0H-3Tc" id="ndS-Qp-1g6"/>
                         <outlet property="regionLabel" destination="FxD-SH-WEl" id="426-uv-QIm"/>
-                        <outlet property="reminderImage" destination="WWf-U1-hEO" id="D77-nd-3Am"/>
-                        <outlet property="reminderLabel" destination="CZv-WW-Y3o" id="n3C-K1-eGT"/>
+                        <outlet property="reminderImage" destination="WWf-U1-hEO" id="rd5-b8-zGJ"/>
+                        <outlet property="reminderLabel" destination="CZv-WW-Y3o" id="f9i-kh-KA6"/>
                         <segue destination="qYj-Hm-vrr" kind="show" identifier="ShowNotification" id="byt-8L-e9s"/>
                         <segue destination="ph2-zO-ERN" kind="show" identifier="ShowAddress" id="TPq-ng-Nxl"/>
                     </connections>
@@ -2299,9 +2299,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8kR-B2-YHG"/>
-        <segue reference="WGb-MU-B13"/>
         <segue reference="byt-8L-e9s"/>
         <segue reference="TPq-ng-Nxl"/>
+        <segue reference="uOf-gp-zRy"/>
         <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

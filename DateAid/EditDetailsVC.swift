@@ -56,7 +56,7 @@ class EditDetailsVC: UIViewController {
         AppAnalytics.logEvent("Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
-        addressDelegate?.setAddressProperties(addressTextField.text, region: regionTextField.text)
+        addressDelegate?.repopulateAddressFor(dateObject: dateObject)
         reloadDatesTableDelegate?.reloadTableView()
         do { try managedContext?.save()
             if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {

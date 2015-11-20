@@ -281,34 +281,6 @@ extension DatesTableVC { // UITableViewDelegate
     
 }
 
-//extension DatesTableVC: SWRevealViewControllerDelegate {
-//    
-//    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-//        return sidebarMenuOpen == true ? nil : indexPath
-//    }
-//
-//    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition) {
-//        if position == .Left {
-//             self.view.userInteractionEnabled = true
-//            sidebarMenuOpen = false
-//        } else {
-//             self.view.userInteractionEnabled = false
-//            sidebarMenuOpen = true
-//        }
-//    }
-//    
-//    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
-//        if position == .Left {
-//             self.view.userInteractionEnabled = true
-//            sidebarMenuOpen = false
-//        } else {
-//             self.view.userInteractionEnabled = false
-//            sidebarMenuOpen = true
-//        }
-//    }
-//    
-//}
-
 extension DatesTableVC: ReloadDatesTableDelegate {
 
     func reloadTableView() {
@@ -329,3 +301,31 @@ extension DatesTableVC: UISearchResultsUpdating {
     }
     
 }
+
+//extension DatesTableVC: SWRevealViewControllerDelegate {
+//
+//    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+//        return sidebarMenuOpen == true ? nil : indexPath
+//    }
+//
+//    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition) {
+//        if position == .Left {
+//             self.view.userInteractionEnabled = true
+//            sidebarMenuOpen = false
+//        } else {
+//             self.view.userInteractionEnabled = false
+//            sidebarMenuOpen = true
+//        }
+//    }
+//
+//    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
+//        if position == .Left {
+//             self.view.userInteractionEnabled = true
+//            sidebarMenuOpen = false
+//        } else {
+//             self.view.userInteractionEnabled = false
+//            sidebarMenuOpen = true
+//        }
+//    }
+//
+//}

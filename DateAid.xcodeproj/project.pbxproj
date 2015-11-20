@@ -10,6 +10,8 @@
 		9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970807591BC7288100F030D3 /* ValueSlider.swift */; };
 		9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708075B1BC7303800F030D3 /* TypeButton.swift */; };
 		970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* ColorExtension.swift */; };
+		971544CF1BFEAAA700A7660A /* SlideLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971544CE1BFEAAA700A7660A /* SlideLabel.swift */; };
+		971544D11BFEAC2C00A7660A /* SlideImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971544D01BFEAC2C00A7660A /* SlideImageView.swift */; };
 		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; };
 		97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97361A631B2C0CEF006394E1 /* DateCell.xib */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
@@ -77,6 +79,8 @@
 		970807591BC7288100F030D3 /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
 		9708075B1BC7303800F030D3 /* TypeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeButton.swift; sourceTree = "<group>"; };
 		970D93611BC4765900D7F1FF /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		971544CE1BFEAAA700A7660A /* SlideLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideLabel.swift; sourceTree = "<group>"; };
+		971544D01BFEAC2C00A7660A /* SlideImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideImageView.swift; sourceTree = "<group>"; };
 		973023D81BD6B6E80087BA54 /* ResponderExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderExtension.swift; sourceTree = "<group>"; };
 		97361A631B2C0CEF006394E1 /* DateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
 		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,36 +327,24 @@
 			name = "Table View Cells";
 			sourceTree = "<group>";
 		};
-		978C23031BFC3799000075D5 /* Labels */ = {
+		978C23031BFC3799000075D5 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
 				97D266991BD95380008F7EF8 /* CircleLabel.swift */,
+				971544CE1BFEAAA700A7660A /* SlideLabel.swift */,
+				971544D01BFEAC2C00A7660A /* SlideImageView.swift */,
 			);
-			name = Labels;
+			name = UIViews;
 			sourceTree = "<group>";
 		};
-		978C23041BFC379E000075D5 /* Sliders */ = {
-			isa = PBXGroup;
-			children = (
-				970807591BC7288100F030D3 /* ValueSlider.swift */,
-			);
-			name = Sliders;
-			sourceTree = "<group>";
-		};
-		978C23051BFC37A4000075D5 /* Text Fields */ = {
+		978C23041BFC379E000075D5 /* UIControls */ = {
 			isa = PBXGroup;
 			children = (
 				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
-			);
-			name = "Text Fields";
-			sourceTree = "<group>";
-		};
-		978C23061BFC37AB000075D5 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
 				9708075B1BC7303800F030D3 /* TypeButton.swift */,
+				970807591BC7288100F030D3 /* ValueSlider.swift */,
 			);
-			name = Buttons;
+			name = UIControls;
 			sourceTree = "<group>";
 		};
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
@@ -373,10 +365,8 @@
 			isa = PBXGroup;
 			children = (
 				978C23021BFC36A0000075D5 /* Table View Cells */,
-				978C23031BFC3799000075D5 /* Labels */,
-				978C23041BFC379E000075D5 /* Sliders */,
-				978C23051BFC37A4000075D5 /* Text Fields */,
-				978C23061BFC37AB000075D5 /* Buttons */,
+				978C23031BFC3799000075D5 /* UIViews */,
+				978C23041BFC379E000075D5 /* UIControls */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -590,6 +580,7 @@
 				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
 				97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */,
+				971544CF1BFEAAA700A7660A /* SlideLabel.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */,
@@ -597,6 +588,7 @@
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
+				971544D11BFEAC2C00A7660A /* SlideImageView.swift in Sources */,
 				97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
