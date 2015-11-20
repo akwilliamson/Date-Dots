@@ -51,28 +51,31 @@ class AddDateVC: UIViewController {
     @IBOutlet weak var anniversaryButton: TypeButton!
     @IBOutlet weak var customButton: TypeButton!
     
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var yearField: UITextField!
+    
     @IBOutlet weak var monthSlider: ValueSlider!
     @IBOutlet weak var daySlider: ValueSlider!
     
     @IBOutlet weak var editDetailsButton: UIButton!
     
-    @IBOutlet weak var monthLabel: UILabel!
-    @IBOutlet weak var dayLabel: UILabel!
-    @IBOutlet weak var yearField: UITextField!
-    
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("View Add Date")
-        AppAnalytics.logEvent("View Add Date")
+        
+        self.logEvents(forString: "View Add Date")
         title = addOrEdit()
-        setInitialValuesWhether(isBeingEdited)
-        setButtonAndSliderColors()
-        addValueChangedTargetOn([monthSlider, daySlider])
-        setDataSourceFor([monthSlider, daySlider])
+        
         buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "custom": customButton]
         buttonForColor = [UIColor.birthdayColor(): birthdayButton, UIColor.anniversaryColor(): anniversaryButton, UIColor.customColor(): customButton]
+        
+        setColorTheme(forType: dateToSave?.type)
+        setDataSourceFor([monthSlider, daySlider])
+        addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
+        
+        setInitialValues(forDate: dateToSave, whether: isBeingEdited)
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,73 +85,61 @@ class AddDateVC: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        startAnimatingTypeButton()
-    }
-    
-    func startAnimatingTypeButton() {
-        if let dateType = dateToSave?.type {
-            animateButton(buttonForType[dateType]!)
-        } else {
-            animateButton(buttonForColor[incomingColor]!)
-        }
+        animateButtonInAndOut(forDateType: dateToSave?.type)
     }
     
     func addOrEdit() -> String {
         return isBeingEdited! == true ? "Edit" : "Add"
     }
     
-    func setInitialValuesWhether(isBeingEdited: Bool) {
-        monthSlider.minimumValue = 1
-        daySlider.minimumValue = 1
-        
-        switch isBeingEdited {
-        case true:
-            if let name = dateToSave?.name, let year = dateToSave?.date?.getYear(), let month = dateToSave?.date?.getMonth(), let day = dateToSave?.date?.getDay() {
-                nameField.text = name
-                monthLabel.text = fullMonths[month-1]
-                dayLabel.text = fullDays[day-1]
-                yearField.text = year != 1604 ? String(year) : nil
-                monthSlider.setValues(max: 12, value: Float(month))
-                daySlider.setValues(max: 31, value: Float(day))
-            }
-        case false:
-            monthSlider.setValues(max: 12, value: 1)
-            daySlider.setValues(max: 31, value: 1)
-            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
-            dayLabel.text = fullDays[Int(daySlider.value)-1]
+    func setColorTheme(forType type: String?) {
+        if let dateType = type {
+            let color = colorForType[dateType] != nil ? colorForType[dateType] : incomingColor
+            
+            [monthSlider, daySlider].forEach { $0.setColorTo(color) }
+            editDetailsButton.tintColor = color
         }
-    }
-    
-    func setButtonAndSliderColors() {
-        if let dateType = dateToSave?.type {
-            if let color = colorForType[dateType] {
-                [monthSlider, daySlider].forEach { $0.setColorTo(color) }
-                editDetailsButton.tintColor = color
-            }
-        } else {
-            [monthSlider, daySlider].forEach { $0.setColorTo(incomingColor) }
-            editDetailsButton.tintColor = incomingColor
-        }
-    }
-    
-    func addValueChangedTargetOn(sliders: [ValueSlider]) {
-        sliders.forEach { $0.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged) }
     }
     
     func setDataSourceFor(sliders: [ASValueTrackingSlider]) {
         sliders.forEach { $0.dataSource = self }
     }
     
-    func addLabelOnThumbForSliders() {
-            monthSlider.addLabel("month")
-            daySlider.addLabel("day")
+    func addTarget(onSliders sliders: [ValueSlider], forAction action: String) {
+        sliders.forEach { $0.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged) }
     }
     
-    func animateButton(button: UIButton) {
-        button.titleLabel!.transform = CGAffineTransformScale(button.transform, 0.3, 0.3);
-        UIControl.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.Repeat,.Autoreverse,.AllowUserInteraction], animations: { () -> Void in
-            button.titleLabel!.transform = CGAffineTransformScale(button.transform, 1, 1);
-        }, completion: nil)
+    func setInitialValues(forDate date: Date?, whether isBeingEdited: Bool) {
+
+        switch isBeingEdited {
+        case true:
+            if let name = date?.name, let year = date?.date?.getYear(), let month = date?.date?.getMonth(), let day = date?.date?.getDay() {
+                monthSlider.setValues(max: 12, value: Float(month))
+                daySlider.setValues(max: 31, value: Float(day))
+                nameField.text = name
+                yearField.text = year != 1604 ? String(year) : nil
+                monthLabel.text = fullMonths[month-1]
+                dayLabel.text = fullDays[day-1]
+            }
+        case false:
+            monthSlider.setValues(max: 12, value: 1)
+            daySlider.setValues(max: 31, value: 1)
+            monthLabel.text = "Jan"
+            dayLabel.text = "1st"
+        }
+    }
+    
+    func addLabelOnThumbForSliders() {
+        monthSlider.addLabelOnThumb(withText: "M")
+        daySlider.addLabelOnThumb(withText: "D")
+    }
+    
+    func animateButtonInAndOut(forDateType dateType: String?) {
+        if let dateType = dateType {
+            (buttonForType[dateType]!).animateInAndOut()
+        } else {
+            (buttonForColor[incomingColor]!).animateInAndOut()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -176,11 +167,22 @@ class AddDateVC: UIViewController {
     }
     
     func setValuesOnDateToSave() {
+        
+        if dateToSave == nil {
+            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
+            dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            
+            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
+            dateToSave!.type = incomingColorType
+        }
+        
         if let dateToSave = dateToSave {
+            
             dateToSave.name = nameField.text?.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
             dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
             dateToSave.date = setDateFromValues()
             dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()
+            
             if dateToSave.address == nil {
                 let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
                 let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
@@ -192,24 +194,8 @@ class AddDateVC: UIViewController {
             if let region = region {
                 dateToSave.address?.region = region
             }
-        } else {
-            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
-            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-            dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            dateToSave!.name = nameField.text?.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
-            dateToSave!.abbreviatedName = dateToSave!.name?.abbreviateName()
-            dateToSave!.date = setDateFromValues()
-            dateToSave!.equalizedDate = dateToSave!.date?.formatDateIntoString()
-            dateToSave!.type = incomingColorType
-            
-            if dateToSave!.address == nil {
-                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
-                let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
-                dateToSave!.address = newAddress
-            }
-            dateToSave!.address?.street = street
-            dateToSave!.address?.region = region
         }
+        
     }
     
     func setDateFromValues() -> NSDate {
@@ -303,26 +289,26 @@ extension AddDateVC: ASValueTrackingSliderDataSource {
 extension AddDateVC {
 
     @IBAction func birthdayButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("birthday")
         [anniversaryButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
-        animateButton(sender)
+        switchDateTypeAndColorsTo("birthday")
+        sender.animateInAndOut()
     }
     
     @IBAction func anniversaryButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("anniversary")
         [birthdayButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
-        animateButton(sender)
+        switchDateTypeAndColorsTo("anniversary")
+        sender.animateInAndOut()
     }
     
     @IBAction func customButton(sender: UIButton) {
-        switchDateTypeAndColorsTo("custom")
         [birthdayButton, anniversaryButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
-        animateButton(sender)
+        switchDateTypeAndColorsTo("custom")
+        sender.animateInAndOut()
     }
     
     func switchDateTypeAndColorsTo(type: String) {
         dateToSave?.type = type
-        setButtonAndSliderColors()
+        setColorTheme(forType: type)
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {
@@ -343,5 +329,4 @@ extension AddDateVC {
             print(error.localizedDescription)
         }
     }
-    
 }

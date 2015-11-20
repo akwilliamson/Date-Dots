@@ -29,8 +29,7 @@ class EditDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Edit Details")
-        AppAnalytics.logEvent("Edit Details")
+        self.logEvents(forString: "Edit Details")
         setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
         populateAddressFields(withAddress: dateObject.address)
     }
@@ -52,8 +51,7 @@ class EditDetailsVC: UIViewController {
     }
     
     @IBAction func done(sender: AnyObject) {
-        Flurry.logEvent("Save Date on EditDetailsVC")
-        AppAnalytics.logEvent("Save Date on EditDetailsVC")
+        self.logEvents(forString: "Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
         addressDelegate?.repopulateAddressFor(dateObject: dateObject)

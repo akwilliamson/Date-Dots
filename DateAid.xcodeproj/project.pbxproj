@@ -58,6 +58,7 @@
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; };
 		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
+		97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F6C9601BFEF34400511572 /* UIButtonExtension.swift */; };
 		B71EDE88684DE83764D5934B /* libPods-DateAid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 957FD8B73A9A16683BB6A965 /* libPods-DateAid.a */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +134,7 @@
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
+		97F6C9601BFEF34400511572 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		A2297FC6FB3901C3CE665CBF /* Pods-DateAid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DateAid.release.xcconfig"; path = "Pods/Target Support Files/Pods-DateAid/Pods-DateAid.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,6 +181,7 @@
 				973023D81BD6B6E80087BA54 /* ResponderExtension.swift */,
 				97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */,
 				978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */,
+				97F6C9601BFEF34400511572 /* UIButtonExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
+				97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
 				97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */,

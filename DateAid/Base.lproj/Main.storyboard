@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" id="a9T-sy-env" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="a9T-sy-env" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9T-sy-env" id="6QW-ES-oSf">
@@ -2300,8 +2300,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="8kR-B2-YHG"/>
         <segue reference="byt-8L-e9s"/>
-        <segue reference="TPq-ng-Nxl"/>
         <segue reference="uOf-gp-zRy"/>
+        <segue reference="u8v-zp-2zi"/>
         <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

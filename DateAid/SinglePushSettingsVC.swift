@@ -166,8 +166,8 @@ class SinglePushSettingsVC: UIViewController {
     
     
     func addLabelOnThumbForSliders() {
-        daySlider.addLabel("day")
-        timeSlider.addLabel("time")
+        daySlider.addLabelOnThumb(withText: "D")
+        timeSlider.addLabelOnThumb(withText: "T")
     }
     
     func toggleRepeat() {
@@ -214,8 +214,7 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     @IBAction func createNotification(sender: AnyObject) {
-        Flurry.logEvent("Create Notification")
-        AppAnalytics.logEvent("Create Notification")
+        self.logEvents(forString: "Create Notification")
         
         deletePreviousNotification()
         

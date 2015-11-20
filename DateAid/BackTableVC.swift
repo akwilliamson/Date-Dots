@@ -19,15 +19,15 @@ class BackTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logEvents(forString: "Back Table Shown")
+//        self.logEvents(forString: "Back Table Shown")
 //        registerNibCell(withName: "NavigationCell")
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
-//    func registerNibCell(withName name: String) {
-//        let navigationCellNib = UINib(nibName: name, bundle: nil)
-//        tableView.registerNib(navigationCellNib, forCellReuseIdentifier: name)
-//    }
+    func registerNibCell(withName name: String) {
+        let navigationCellNib = UINib(nibName: name, bundle: nil)
+        tableView.registerNib(navigationCellNib, forCellReuseIdentifier: name)
+    }
     
 // MARK: TABLE VIEW
     

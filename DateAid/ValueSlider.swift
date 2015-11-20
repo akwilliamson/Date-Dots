@@ -20,8 +20,9 @@ class ValueSlider: ASValueTrackingSlider {
     }
     
     func setValues(max max: Float, value: Float) {
-        self.maximumValue = max
+        self.minimumValue = 1
         self.value = value
+        self.maximumValue = max
     }
     
     func setColorTo(color: UIColor) {
@@ -34,7 +35,7 @@ class ValueSlider: ASValueTrackingSlider {
         return Int(self.value)
     }
     
-    func addLabel(type: String) {
+    func addLabelOnThumb(withText type: String) {
         let thumbView = self.subviews.last
         if thumbView?.viewWithTag(1) == nil {
             let label = UILabel(frame: thumbView!.bounds)
@@ -43,16 +44,8 @@ class ValueSlider: ASValueTrackingSlider {
             label.textColor = UIColor.whiteColor()
             label.tag = 1
             
-            switch type {
-            case "month":
-                label.text = "M"
-            case "day":
-                label.text = "D"
-            case "time":
-                label.text = "T"
-            default:
-                break
-            }
+            label.text = type
+
             thumbView?.addSubview(label)
         }
 
