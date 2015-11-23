@@ -190,9 +190,14 @@ extension DatesTableVC { // UITableViewDataSource
         
         let date = resultSearchController.active == true ? filteredResults[indexPath.row] : fetchedResults![indexPath.row]
         
-        if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate() {
-            dateCell.firstName = date.type! == "birthday" ? firstName : date.name!
-            if let lastName = date.name?.lastName() { dateCell.lastName = lastName } else { dateCell.lastName = "" }
+        if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate(), let lastName = date.name?.lastName() {
+            if date.type! == "custom" {
+                dateCell.firstName = date.name!
+                dateCell.lastName = ""
+            } else {
+                dateCell.firstName = firstName
+                dateCell.lastName = lastName
+            }
             dateCell.date = readableDate
         }
         

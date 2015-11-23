@@ -26,10 +26,10 @@ extension String {
         let lastNameString: String?
         let components = self.componentsSeparatedByString(" ")
         if components.count == 2 || components.count == 3 {
-            guard let lastName = components.last else { return nil }
+            guard let lastName = components.last else { return "" }
             lastNameString = lastName
         } else {
-            lastNameString = nil
+            lastNameString = ""
         }
         return lastNameString
     }
