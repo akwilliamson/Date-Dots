@@ -44,11 +44,9 @@ class DateDetailsVC: UIViewController {
         super.viewDidLoad()
         
         self.logEvents(forString: "View Date Details")
+        self.addGestureRecognizers()
 
         envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
-        
-        self.addTapGestureRecognizer(onImageView: reminderImage, forAction: "segueToNotification:")
-        self.addTapGestureRecognizer(onImageView: envelopeImage, forAction: "segueToAddress:")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -60,10 +58,19 @@ class DateDetailsVC: UIViewController {
         animateViews()
     }
     
-    func addTapGestureRecognizer(onImageView imageView: UIImageView, forAction action: String) {
+    func addGestureRecognizers() {
+        self.addTapGestureRecognizer(onView: envelopeImage, forAction: "segueToAddress:")
+        self.addTapGestureRecognizer(onView: reminderImage, forAction: "segueToNotification:")
+        
+        self.addTapGestureRecognizer(onView: addressLabel, forAction: "segueToAddress:")
+        self.addTapGestureRecognizer(onView: regionLabel, forAction: "segueToAddress:")
+        self.addTapGestureRecognizer(onView: reminderLabel, forAction: "segueToNotification:")
+    }
+    
+    func addTapGestureRecognizer(onView view: UIView, forAction action: String) {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
         tapGestureRecognizer.numberOfTapsRequired = 1
-        imageView.addGestureRecognizer(tapGestureRecognizer)
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func setColorTheme(forType dateType: String?) {
@@ -94,7 +101,7 @@ class DateDetailsVC: UIViewController {
     
     func populateAgeLabel(forDate date: Date) {
         if date.date!.getYear() == 1604 {
-            ageLabel.text = "Age\nN/A"
+            ageLabel.text = "?"
         } else {
             let age: Int
             if date.date?.daysBetween() == 0 {
@@ -102,7 +109,7 @@ class DateDetailsVC: UIViewController {
             } else {
                 age = date.date!.ageTurning()
             }
-            ageLabel.text = date.type! == "birthday" ? "Turning\n\(age)" : "Year\n#\(age)"
+            ageLabel.text = date.type! == "birthday" ? "\(age)" : "#\(age)"
         }
     }
     
@@ -203,12 +210,12 @@ class DateDetailsVC: UIViewController {
     }
     
     func segueToNotification(sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Notification Bell Tapped")
+        self.logEvents(forString: "Notification Gesture Tapped")
         self.performSegueWithIdentifier("ShowNotification", sender: self)
     }
     
     func segueToAddress(sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Envelope Tapped")
+        self.logEvents(forString: "Address Gesture Tapped")
         self.performSegueWithIdentifier("ShowAddress", sender: self)
     }
     

@@ -25,7 +25,7 @@ extension String {
     func lastName() -> String? {
         let lastNameString: String?
         let components = self.componentsSeparatedByString(" ")
-        if components.count > 1 {
+        if components.count == 2 || components.count == 3 {
             guard let lastName = components.last else { return nil }
             lastNameString = lastName
         } else {
