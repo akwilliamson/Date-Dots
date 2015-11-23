@@ -17,4 +17,33 @@ extension String {
     func abbreviateName() -> String {
         return self.containsString(" ") ? self[0...((self as NSString).rangeOfString(" ").location + 1)] : (self as String)
     }
+    
+    func firstName() -> String {
+        return self.containsString(" ") ? self[0...((self as NSString).rangeOfString(" ").location)] : (self as String)
+    }
+    
+    func lastName() -> String? {
+        let lastNameString: String?
+        let components = self.componentsSeparatedByString(" ")
+        if components.count > 1 {
+            guard let lastName = components.last else { return nil }
+            lastNameString = lastName
+        } else {
+            lastNameString = nil
+        }
+        return lastNameString
+    }
+    
+    func associatedColor() -> UIColor {
+        switch self {
+        case "birthday":
+            return UIColor.birthdayColor()
+        case "anniversary":
+            return UIColor.anniversaryColor()
+        case "custom":
+            return UIColor.customColor()
+        default:
+            return UIColor.customColor()
+        }
+    }
 }

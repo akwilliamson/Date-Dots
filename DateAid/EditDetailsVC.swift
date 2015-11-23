@@ -13,31 +13,31 @@ class EditDetailsVC: UIViewController {
     
     var dateObject: Date!
     var managedContext: NSManagedObjectContext?
-    var addressDelegate: SetAddressDelegate?
-    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
-    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    var addressDelegate: SetAddressDelegate?
+    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
+    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
     
-    @IBOutlet weak var notificationSettingsButton: UIButton!
     @IBOutlet weak var giftNotesButton: UIButton!
     @IBOutlet weak var planNotesButton: UIButton!
     @IBOutlet weak var otherNotesButton: UIButton!
     
+    @IBOutlet weak var notificationSettingsButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.logEvents(forString: "Edit Details")
-        setDateTypeColor(onButtons: [notificationSettingsButton, giftNotesButton, planNotesButton, otherNotesButton])
+        setColorTheme(forType: dateObject.type)
         populateAddressFields(withAddress: dateObject.address)
     }
     
-    func setDateTypeColor(onButtons buttons: [UIButton]) {
-        if let dateType = dateObject.type {
-            let color = colorForType[dateType]
-            buttons.forEach() { $0.setTitleColor(color, forState: .Normal) }
+    func setColorTheme(forType dateType: String?) {
+        if let dateType = dateType {
+            let color = dateType.associatedColor()
+            [giftNotesButton, planNotesButton, otherNotesButton, notificationSettingsButton].forEach() { $0.setTitleColor(color, forState: .Normal) }
         }
     }
     
@@ -56,12 +56,13 @@ class EditDetailsVC: UIViewController {
         dateObject.address?.region = regionTextField.text
         addressDelegate?.repopulateAddressFor(dateObject: dateObject)
         reloadDatesTableDelegate?.reloadTableView()
+        
         do { try managedContext?.save()
             if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {
                 self.navigationController?.popToViewController(dateDetailsVC, animated: true)
             } else {
-                let dateDetailsVC = self.navigationController?.viewControllers[0] as! DatesTableVC
-                self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+                let datesTableVC = self.navigationController?.viewControllers[0] as! DatesTableVC
+                self.navigationController?.popToViewController(datesTableVC, animated: true)
             }
         } catch let error as NSError {
             print(error.localizedDescription)
@@ -75,16 +76,15 @@ class EditDetailsVC: UIViewController {
             singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
             let noteVC = segue.destinationViewController as! NoteVC
-            noteVC.typeColor = colorForType[dateObject.type!]
-            noteVC.date = dateObject
+            noteVC.dateObject = dateObject
             noteVC.managedContext = managedContext
             switch segue.identifier! {
             case "ShowGifts":
-                noteVC.note = "Gifts"
+                noteVC.noteTitle = "Gifts"
             case "ShowPlans":
-                noteVC.note = "Plans"
+                noteVC.noteTitle = "Plans"
             case "ShowOther":
-                noteVC.note = "Other"
+                noteVC.noteTitle = "Other"
             default:
                 break
             }

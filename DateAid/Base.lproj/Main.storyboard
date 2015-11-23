@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="a9T-sy-env" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" id="a9T-sy-env" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9T-sy-env" id="6QW-ES-oSf">
@@ -231,7 +231,7 @@
                     <navigationItem key="navigationItem" id="yk7-8C-YI1">
                         <barButtonItem key="backBarButtonItem" title=" " id="P6Y-uy-ne3"/>
                         <barButtonItem key="leftBarButtonItem" image="filter" id="FDs-gR-GhE"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gaM-zp-ZWe">
+                        <barButtonItem key="rightBarButtonItem" image="add" style="plain" id="gaM-zp-ZWe">
                             <connections>
                                 <segue destination="i1f-AG-9F2" kind="show" identifier="AddDateVC" id="WGb-MU-B13"/>
                             </connections>
@@ -1684,8 +1684,11 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ULx-DK-D8w" id="R5q-Pf-1kW"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2285,6 +2288,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="22" height="22"/>
         <image name="calendar-outline" width="32" height="32"/>
         <image name="calendar-selected" width="32" height="32"/>
         <image name="cog-outline" width="32" height="32"/>
@@ -2299,9 +2303,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8kR-B2-YHG"/>
-        <segue reference="byt-8L-e9s"/>
-        <segue reference="uOf-gp-zRy"/>
+        <segue reference="WGb-MU-B13"/>
         <segue reference="u8v-zp-2zi"/>
         <segue reference="Sh2-MR-qg4"/>
+        <segue reference="byt-8L-e9s"/>
     </inferredMetricsTieBreakers>
 </document>

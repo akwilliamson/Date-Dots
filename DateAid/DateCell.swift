@@ -10,16 +10,27 @@ import UIKit
 
 class DateCell: UITableViewCell {
     
-    @IBOutlet var nameLabel: UILabel!
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     
-    var name: String = "" {
+    var firstName: String = "" {
         didSet {
-            if (name != oldValue) {
-                nameLabel.text = name
+            if (firstName != oldValue) {
+                firstNameLabel.text = firstName
             }
         }
     }
+    
+    var lastName: String = "" {
+        didSet {
+            if (lastName != oldValue) {
+                lastNameLabel.text = lastName
+            }
+        }
+    }
+    
     var date: String = "" {
         didSet {
             if (date != oldValue) {

@@ -19,8 +19,8 @@ class BackTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.logEvents(forString: "Back Table Shown")
-//        registerNibCell(withName: "NavigationCell")
+        self.logEvents(forString: "Back Table Shown")
+        registerNibCell(withName: "NavigationCell")
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     

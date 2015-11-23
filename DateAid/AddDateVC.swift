@@ -33,8 +33,6 @@ class AddDateVC: UIViewController {
     
     var street: String?
     var region: String?
-    var buttonForType: [String: TypeButton]!
-    var buttonForColor: [UIColor: TypeButton]!
     
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
@@ -68,10 +66,8 @@ class AddDateVC: UIViewController {
         self.logEvents(forString: "View Add Date")
         title = addOrEdit()
         
-        buttonForType = ["birthday": birthdayButton, "anniversary": anniversaryButton, "custom": customButton]
-        buttonForColor = [UIColor.birthdayColor(): birthdayButton, UIColor.anniversaryColor(): anniversaryButton, UIColor.customColor(): customButton]
+        setColorTheme(forDateType: dateToSave?.type)
         
-        setColorTheme(forType: dateToSave?.type)
         setDataSourceFor([monthSlider, daySlider])
         addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
         
@@ -92,12 +88,10 @@ class AddDateVC: UIViewController {
         return isBeingEdited! == true ? "Edit" : "Add"
     }
     
-    func setColorTheme(forType type: String?) {
-        if let dateType = type {
-            let color = colorForType[dateType] != nil ? colorForType[dateType] : incomingColor
-            
-            [monthSlider, daySlider].forEach { $0.setColorTo(color) }
-            editDetailsButton.tintColor = color
+    func setColorTheme(forDateType dateType: String?) {
+        if let typeColor = dateType != nil ? dateType?.associatedColor() : incomingColor {
+            [monthSlider, daySlider].forEach { $0.setColorTo(typeColor) }
+            editDetailsButton.tintColor = typeColor
         }
     }
     
@@ -135,10 +129,22 @@ class AddDateVC: UIViewController {
     }
     
     func animateButtonInAndOut(forDateType dateType: String?) {
-        if let dateType = dateType {
-            (buttonForType[dateType]!).animateInAndOut()
-        } else {
-            (buttonForColor[incomingColor]!).animateInAndOut()
+        if let typeColor = dateType != nil ? dateType?.associatedColor() : incomingColor {
+            let button = getProperButton(forTypeColor: typeColor)
+            button.animateInAndOut()
+        }
+    }
+    
+    func getProperButton(forTypeColor typeColor: UIColor) -> TypeButton {
+        switch typeColor {
+        case UIColor.birthdayColor():
+            return birthdayButton
+        case UIColor.anniversaryColor():
+            return anniversaryButton
+        case UIColor.customColor():
+            return customButton
+        default:
+            return customButton
         }
     }
     
@@ -169,11 +175,11 @@ class AddDateVC: UIViewController {
     func setValuesOnDateToSave() {
         
         if dateToSave == nil {
-            let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-            dateToSave = Date(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            guard let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!) else { return }
+            dateToSave = Date(entity: entity, insertIntoManagedObjectContext: managedContext)
             
-            let incomingColorType = colorForType.allKeysForValue(incomingColor).first!
-            dateToSave!.type = incomingColorType
+            let typeForIncomingColor = colorForType.allKeysForValue(incomingColor).first!
+            dateToSave?.type = typeForIncomingColor
         }
         
         if let dateToSave = dateToSave {
@@ -184,8 +190,8 @@ class AddDateVC: UIViewController {
             dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()
             
             if dateToSave.address == nil {
-                let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
-                let newAddress = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+                guard let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!) else { return }
+                let newAddress = Address(entity: addressEntity, insertIntoManagedObjectContext: managedContext)
                 dateToSave.address = newAddress
             }
             if let street = street {
@@ -308,7 +314,7 @@ extension AddDateVC {
     
     func switchDateTypeAndColorsTo(type: String) {
         dateToSave?.type = type
-        setColorTheme(forType: type)
+        setColorTheme(forDateType: type)
     }
     
     @IBAction func saveButton(sender: UIBarButtonItem) {

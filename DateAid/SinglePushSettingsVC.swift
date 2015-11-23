@@ -234,7 +234,6 @@ class SinglePushSettingsVC: UIViewController {
         if let repeatInterval = repeatInterval {
             notification.repeatInterval = repeatInterval
         }
-        
         application.scheduleLocalNotification(notification)
     }
 }

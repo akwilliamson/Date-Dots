@@ -28,7 +28,6 @@ class DatesTableVC: UITableViewController {
     var resultSearchController = UISearchController()
     
     var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
     
 // MARK: OUTLETS
@@ -41,7 +40,7 @@ class DatesTableVC: UITableViewController {
         super.viewDidLoad()
         self.logEvents(forString: "Main View")
         setAndPerformFetchRequest()
-        registerDateCellNib()
+        registerNibCell(withName: "DateCell")
         addRevealVCGestureRecognizers()
         configureNavigationBar()
         configureTabBar()
@@ -99,9 +98,9 @@ class DatesTableVC: UITableViewController {
         revealViewController().tapGestureRecognizer()
     }
     
-    func registerDateCellNib() {
-        let dateCellNib = UINib(nibName: "DateCell", bundle: nil)
-        tableView.registerNib(dateCellNib, forCellReuseIdentifier: "DateCell")
+    func registerNibCell(withName name: String) {
+        let dateCellNib = UINib(nibName: name, bundle: nil)
+        tableView.registerNib(dateCellNib, forCellReuseIdentifier: name)
     }
     
     func configureNavigationBar() {
@@ -188,60 +187,16 @@ extension DatesTableVC { // UITableViewDataSource
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let dateCell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateCell
-        let date: Date
         
-        if resultSearchController.active == true {
-            date = filteredResults[indexPath.row]
-            if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.name = date.type! == "birthday" ? abbreviatedName : date.name!
-                dateCell.date = readableDate
-            }
-            
-            if let colorIndex = menuIndexPath {
-                switch colorIndex {
-                case 1:
-                    dateCell.nameLabel.textColor = colorForType["birthday"]
-                case 2:
-                    dateCell.nameLabel.textColor = colorForType["anniversary"]
-                case 3:
-                    dateCell.nameLabel.textColor = colorForType["custom"]
-                default:
-                    if let dateType = date.type {
-                        dateCell.nameLabel.textColor = colorForType[dateType]
-                    }
-                }
-            } else {
-                if let dateType = date.type {
-                    dateCell.nameLabel.textColor = colorForType[dateType]
-                }
-            }
-            
-        } else if let results = fetchedResults {
-            date = results[indexPath.row]
-            if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.name = date.type! == "birthday" ? abbreviatedName : date.name!
-                dateCell.date = readableDate
-            }
-            
-            if let colorIndex = menuIndexPath {
-                switch colorIndex {
-                case 1:
-                    dateCell.nameLabel.textColor = colorForType["birthday"]
-                case 2:
-                    dateCell.nameLabel.textColor = colorForType["anniversary"]
-                case 3:
-                    dateCell.nameLabel.textColor = colorForType["custom"]
-                default:
-                    if let dateType = date.type {
-                        dateCell.nameLabel.textColor = colorForType[dateType]
-                    }
-                }
-            } else {
-                if let dateType = date.type {
-                    dateCell.nameLabel.textColor = colorForType[dateType]
-                }
-            }
+        let date = resultSearchController.active == true ? filteredResults[indexPath.row] : fetchedResults![indexPath.row]
+        
+        if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate() {
+            dateCell.firstName = date.type! == "birthday" ? firstName : date.name!
+            if let lastName = date.name?.lastName() { dateCell.lastName = lastName } else { dateCell.lastName = "" }
+            dateCell.date = readableDate
         }
+        
+        dateCell.firstNameLabel.textColor = date.type?.associatedColor()
         
         return dateCell
     }

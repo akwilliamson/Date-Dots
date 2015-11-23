@@ -14,15 +14,18 @@ class NotesTableVC: UITableViewController {
     var typeColor: UIColor!
     var managedContext: NSManagedObjectContext?
     let noteTitles = ["Gifts","Plans","Other"]
-    var date: Date!
+    var dateObject: Date!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Notes Main View")
-        AppAnalytics.logEvent("Notes Main View")
-        let noteCellNib = UINib(nibName: "NoteCell", bundle: nil)
-        tableView.registerNib(noteCellNib, forCellReuseIdentifier: "NoteCell")
+        self.logEvents(forString: "Notes Main View")
+        registerNibCell(withName: "NoteCell")
         tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func registerNibCell(withName name: String) {
+        let noteCellNib = UINib(nibName: name, bundle: nil)
+        tableView.registerNib(noteCellNib, forCellReuseIdentifier: name)
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,9 +35,8 @@ class NotesTableVC: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as! NoteCell
 
-        cell.nameLabel!.text = noteTitles[indexPath.row]
-        cell.nameLabel!.textColor = typeColor
-        cell.accessoryType = .DisclosureIndicator
+        cell.nameLabel?.text = noteTitles[indexPath.row]
+        cell.nameLabel?.textColor = typeColor
         
         return cell
     }
@@ -48,11 +50,10 @@ class NotesTableVC: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = tableView.indexPathForSelectedRow!
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
         let noteVC = segue.destinationViewController as! NoteVC
         noteVC.managedContext = managedContext
-        noteVC.date = date
-        noteVC.note = noteTitles[indexPath.row]
-        noteVC.typeColor = typeColor
+        noteVC.dateObject = dateObject
+        noteVC.noteTitle = noteTitles[indexPath.row]
     }
 }

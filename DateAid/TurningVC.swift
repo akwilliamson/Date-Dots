@@ -113,11 +113,11 @@ extension TurningVC: UITableViewDataSource {
         if let results = filteredResults {
             let date = results[indexPath.row]
             if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.name = date.type! == "birthday" ? abbreviatedName : date.name!
+                dateCell.firstName = date.type! == "birthday" ? abbreviatedName : date.name!
                 dateCell.date = readableDate
                 
                 if let dateType = date.type {
-                    dateCell.nameLabel.textColor = colorForType[dateType]
+                    dateCell.firstNameLabel.textColor = colorForType[dateType]
                 }
             }
         }

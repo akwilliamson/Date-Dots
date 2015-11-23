@@ -11,72 +11,69 @@ import CoreData
 
 class NoteVC: UIViewController {
 
-    var note: String!
-    var noteToSave: Note?
-    var typeColor: UIColor!
     var managedContext: NSManagedObjectContext?
-    var date: Date!
+    var noteObject: Note?
+    var dateObject: Date?
+    var noteTitle: String!
     
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Note Details", withParameters: ["forNote:" : note])
-        AppAnalytics.logEvent("Note Details", parameters: ["forNote:" : note])
-        title = note
-        textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        Flurry.logEvent("Note Details", withParameters: ["forNote:" : noteTitle])
+        AppAnalytics.logEvent("Note Details", parameters: ["forNote:" : noteTitle])
+        title = noteTitle
         
-        textView.delegate = self
-        if date.notes!.count > 0 {
-            for noteInSet in date.notes! {
-                let extractedNote = noteInSet as! Note
-                if extractedNote.title == note {
-                    noteToSave = extractedNote
-                    textView.text = noteToSave?.body
+        if dateObject?.notes?.count > 0 {
+            guard let notesForDate = dateObject?.notes else { return }
+            for noteForDate in notesForDate {
+                let dateNote = noteForDate as! Note
+                if dateNote.title == noteTitle {
+                    noteObject = dateNote
+                    textView.text = noteObject?.body
                 }
             }
-            if noteToSave == nil {
-                setPlaceholderText()
+            if noteObject == nil {
+                setPlaceholderText(inView: textView)
             }
         } else {
-            setPlaceholderText()
+            setPlaceholderText(inView: textView)
         }
     }
     
-    func setPlaceholderText() {
-        textView.textColor = UIColor.lightGrayColor()
-        textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-        switch note {
+    func setPlaceholderText(inView view: UITextView) {
+        view.textColor = UIColor.lightGrayColor()
+        switch noteTitle {
         case "Gifts":
-            textView.text = "A place for gift ideas"
+            view.text = "A place for gift ideas"
         case "Plans":
-            textView.text = "A place for event plans"
+            view.text = "A place for event plans"
         case "Other":
-            textView.text = "A place for any other notes"
+            view.text = "A place for any other notes"
         default:
             break
         }
     }
     
     @IBAction func saveNote(sender: AnyObject) {
-        Flurry.logEvent("Save Note")
-        AppAnalytics.logEvent("Save Note")
-        noteToSave?.body = textView.text
-        print(noteToSave)
-        print(noteToSave?.date)
+        self.logEvents(forString: "Save Note")
+        noteObject?.body = textView.text
         saveContext()
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     func saveContext() {
-        if noteToSave == nil {
-            let entity = NSEntityDescription.entityForName("Note", inManagedObjectContext: managedContext!)
-            noteToSave = Note(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            noteToSave?.title = title
-            noteToSave?.body = textView.text
-            let notes = date.notes!.mutableCopy() as! NSMutableSet
-            notes.addObject(noteToSave!)
-            date.notes = notes.copy() as? NSSet
+        if noteObject == nil {
+            guard let entity = NSEntityDescription.entityForName("Note", inManagedObjectContext: managedContext!) else { return }
+            noteObject = Note(entity: entity, insertIntoManagedObjectContext: managedContext)
+            
+            noteObject?.title = title
+            noteObject?.body = textView.text
+            
+            guard let noteObject = noteObject else { return }
+            let notes = dateObject?.notes?.mutableCopy() as! NSMutableSet
+            notes.addObject(noteObject)
+            dateObject?.notes = notes.copy() as? NSSet
         }
         
         do { try managedContext?.save()
@@ -91,13 +88,13 @@ extension NoteVC: UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.textColor == UIColor.lightGrayColor() {
             textView.text = nil
-            textView.textColor = typeColor
+            textView.textColor = dateObject?.type?.associatedColor()
         }
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         if textView.text.isEmpty {
-            setPlaceholderText()
+            setPlaceholderText(inView: textView)
         }
     }
 }

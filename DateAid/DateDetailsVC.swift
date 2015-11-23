@@ -66,12 +66,12 @@ class DateDetailsVC: UIViewController {
         imageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func setColorTheme(forType type: String?) {
-        if let type = type {
-            [dateLabel, daysUntilLabel, ageLabel].forEach({ $0.backgroundColor = colorForType[type] })
-            [envelopeImage, reminderImage].forEach({ $0.tintColor = colorForType[type] })
-            reminderLabel.textColor = colorForType[type]
-            notesButton.backgroundColor = colorForType[type]
+    func setColorTheme(forType dateType: String?) {
+        if let dateType = dateType {
+            [dateLabel, daysUntilLabel, ageLabel].forEach({ $0.backgroundColor = colorForType[dateType] })
+            [envelopeImage, reminderImage].forEach({ $0.tintColor = colorForType[dateType] })
+            reminderLabel.textColor = colorForType[dateType]
+            notesButton.backgroundColor = colorForType[dateType]
         }
     }
     
@@ -231,7 +231,7 @@ class DateDetailsVC: UIViewController {
             let notesTableVC = segue.destinationViewController as! NotesTableVC
             notesTableVC.managedContext = managedContext
             notesTableVC.typeColor = colorForType[dateObject!.type!]
-            notesTableVC.date = dateObject
+            notesTableVC.dateObject = dateObject
         }
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
