@@ -96,6 +96,7 @@ class DatesTableVC: UITableViewController {
     func addRevealVCGestureRecognizers() {
         revealViewController().panGestureRecognizer()
         revealViewController().tapGestureRecognizer()
+        revealViewController().delegate = self
     }
     
     func registerNibCell(withName name: String) {
@@ -234,11 +235,14 @@ extension DatesTableVC { // UITableViewDelegate
         return 80
     }
     
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return sidebarMenuOpen == true ? nil : indexPath
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         resultSearchController.searchBar.hidden = true
         self.performSegueWithIdentifier("DateDetailsVC", sender: self)
     }
-    
 }
 
 extension DatesTableVC: ReloadDatesTableDelegate {
@@ -262,30 +266,16 @@ extension DatesTableVC: UISearchResultsUpdating {
     
 }
 
-//extension DatesTableVC: SWRevealViewControllerDelegate {
-//
-//    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-//        return sidebarMenuOpen == true ? nil : indexPath
-//    }
-//
-//    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition) {
-//        if position == .Left {
-//             self.view.userInteractionEnabled = true
-//            sidebarMenuOpen = false
-//        } else {
-//             self.view.userInteractionEnabled = false
-//            sidebarMenuOpen = true
-//        }
-//    }
-//
-//    func revealController(revealController: SWRevealViewController!,  didMoveToPosition position: FrontViewPosition){
-//        if position == .Left {
-//             self.view.userInteractionEnabled = true
-//            sidebarMenuOpen = false
-//        } else {
-//             self.view.userInteractionEnabled = false
-//            sidebarMenuOpen = true
-//        }
-//    }
-//
-//}
+extension DatesTableVC: SWRevealViewControllerDelegate {
+
+    func revealController(revealController: SWRevealViewController!,  willMoveToPosition position: FrontViewPosition) {
+        if position == .Left {
+             self.view.userInteractionEnabled = true
+            sidebarMenuOpen = false
+        } else {
+             self.view.userInteractionEnabled = false
+            sidebarMenuOpen = true
+        }
+    }
+
+}
