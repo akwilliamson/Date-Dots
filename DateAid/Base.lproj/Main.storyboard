@@ -43,9 +43,6 @@
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-DemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -201,7 +198,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
+                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="ShowDatesTableVC" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -277,7 +274,7 @@
                                     <outlet property="delegate" destination="i1f-AG-9F2" id="FNq-6y-A4L"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="208" y="164" width="56" height="56"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -286,7 +283,7 @@
                                     <constraint firstAttribute="height" constant="56" id="zhf-gC-qPZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <state key="normal" title="B">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -305,7 +302,7 @@
                                     <action selector="birthdayButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="kJ9-Ze-1XK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="272" y="164" width="56" height="56"/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.396078431372549" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -314,7 +311,7 @@
                                     <constraint firstAttribute="height" constant="56" id="yGy-8Z-qD5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <state key="normal" title="A">
+                                <state key="normal" image="heart">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <variation key="default">
@@ -333,7 +330,7 @@
                                     <action selector="anniversaryButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="nwb-o1-2ms"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv" userLabel="Custom Button" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv" userLabel="Custom Button" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="336" y="164" width="56" height="56"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.74509803921568629" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -341,7 +338,7 @@
                                     <constraint firstAttribute="width" secondItem="rm9-PL-aiv" secondAttribute="height" multiplier="1:1" id="xEG-wh-4bC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <state key="normal" title="C">
+                                <state key="normal" image="calendar">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <variation key="default">
@@ -382,7 +379,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdh-dN-iHJ">
                                 <rect key="frame" x="0.0" y="515" width="600" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Edit Details"/>
                                 <connections>
                                     <segue destination="ph2-zO-ERN" kind="show" identifier="EditDetails" id="u8v-zp-2zi"/>
@@ -830,7 +827,7 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uU-m9-sFz">
                                 <rect key="frame" x="0.0" y="515" width="600" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Alert Settings">
                                     <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -1502,47 +1499,47 @@
                                 <exclude reference="Lc1-Su-K8e"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="kHF-Ow-Gx9"/>
-                                <exclude reference="MMf-Jf-4Bj"/>
-                                <exclude reference="UIB-tV-zex"/>
-                                <exclude reference="kLf-bi-g32"/>
                                 <exclude reference="1OV-0F-oCm"/>
                                 <exclude reference="2BM-gm-0xZ"/>
                                 <exclude reference="4Te-nO-QFA"/>
                                 <exclude reference="h6d-2R-QBh"/>
                                 <exclude reference="zuY-mK-d9U"/>
+                                <exclude reference="LNP-WN-p5E"/>
+                                <exclude reference="Uhv-rw-rPg"/>
+                                <exclude reference="khp-49-tEx"/>
+                                <exclude reference="qOe-uI-teR"/>
+                                <exclude reference="JDr-Eb-qhf"/>
+                                <exclude reference="K9C-hR-MMl"/>
+                                <exclude reference="zet-7W-6qq"/>
+                                <exclude reference="KAo-dW-CdB"/>
+                                <exclude reference="enf-rR-oJD"/>
+                                <exclude reference="og2-hb-WGf"/>
                                 <exclude reference="YV8-bv-CbG"/>
                                 <exclude reference="uJg-jB-37s"/>
                                 <exclude reference="xif-JF-5lV"/>
+                                <exclude reference="kHF-Ow-Gx9"/>
+                                <exclude reference="MMf-Jf-4Bj"/>
+                                <exclude reference="UIB-tV-zex"/>
+                                <exclude reference="kLf-bi-g32"/>
+                                <exclude reference="KFD-AO-1to"/>
+                                <exclude reference="cGP-iw-k5q"/>
+                                <exclude reference="jM8-Hh-hDn"/>
+                                <exclude reference="tlh-CO-sKU"/>
                                 <exclude reference="08u-Wi-QnB"/>
                                 <exclude reference="763-mb-3yS"/>
                                 <exclude reference="8d2-ae-bza"/>
                                 <exclude reference="9JN-r1-Jwj"/>
                                 <exclude reference="DiP-Ba-8b4"/>
                                 <exclude reference="jYT-CK-3jY"/>
-                                <exclude reference="KFD-AO-1to"/>
-                                <exclude reference="cGP-iw-k5q"/>
-                                <exclude reference="jM8-Hh-hDn"/>
-                                <exclude reference="tlh-CO-sKU"/>
-                                <exclude reference="LNP-WN-p5E"/>
-                                <exclude reference="Uhv-rw-rPg"/>
-                                <exclude reference="khp-49-tEx"/>
-                                <exclude reference="qOe-uI-teR"/>
-                                <exclude reference="KAo-dW-CdB"/>
-                                <exclude reference="enf-rR-oJD"/>
-                                <exclude reference="og2-hb-WGf"/>
-                                <exclude reference="JDr-Eb-qhf"/>
-                                <exclude reference="K9C-hR-MMl"/>
-                                <exclude reference="zet-7W-6qq"/>
                                 <exclude reference="4lG-k0-E12"/>
                                 <exclude reference="VZz-v8-mhr"/>
                                 <exclude reference="YjQ-3K-uKZ"/>
+                                <exclude reference="AX7-fy-E6i"/>
+                                <exclude reference="VY5-q4-msB"/>
                                 <exclude reference="0Pt-85-2kX"/>
                                 <exclude reference="aKS-is-S9E"/>
                                 <exclude reference="kGU-Cv-N2m"/>
                                 <exclude reference="wbk-wM-EFO"/>
-                                <exclude reference="AX7-fy-E6i"/>
-                                <exclude reference="VY5-q4-msB"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1554,51 +1551,51 @@
                                 <include reference="Lc1-Su-K8e"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="kHF-Ow-Gx9"/>
-                                <include reference="MMf-Jf-4Bj"/>
-                                <include reference="UIB-tV-zex"/>
-                                <include reference="kLf-bi-g32"/>
                                 <include reference="1OV-0F-oCm"/>
                                 <include reference="2BM-gm-0xZ"/>
                                 <exclude reference="4Te-nO-QFA"/>
                                 <include reference="h6d-2R-QBh"/>
                                 <include reference="zuY-mK-d9U"/>
+                                <include reference="LNP-WN-p5E"/>
+                                <include reference="Uhv-rw-rPg"/>
+                                <include reference="khp-49-tEx"/>
+                                <include reference="qOe-uI-teR"/>
+                                <include reference="JDr-Eb-qhf"/>
+                                <include reference="K9C-hR-MMl"/>
+                                <include reference="zet-7W-6qq"/>
+                                <include reference="KAo-dW-CdB"/>
+                                <include reference="enf-rR-oJD"/>
+                                <include reference="og2-hb-WGf"/>
                                 <include reference="YV8-bv-CbG"/>
                                 <include reference="uJg-jB-37s"/>
                                 <include reference="xif-JF-5lV"/>
+                                <include reference="kHF-Ow-Gx9"/>
+                                <include reference="MMf-Jf-4Bj"/>
+                                <include reference="UIB-tV-zex"/>
+                                <include reference="kLf-bi-g32"/>
+                                <include reference="KFD-AO-1to"/>
+                                <exclude reference="cGP-iw-k5q"/>
+                                <include reference="jM8-Hh-hDn"/>
+                                <include reference="tlh-CO-sKU"/>
                                 <include reference="08u-Wi-QnB"/>
                                 <include reference="763-mb-3yS"/>
                                 <include reference="8d2-ae-bza"/>
                                 <include reference="9JN-r1-Jwj"/>
                                 <include reference="DiP-Ba-8b4"/>
                                 <include reference="jYT-CK-3jY"/>
-                                <include reference="KFD-AO-1to"/>
-                                <exclude reference="cGP-iw-k5q"/>
-                                <include reference="jM8-Hh-hDn"/>
-                                <include reference="tlh-CO-sKU"/>
-                                <include reference="LNP-WN-p5E"/>
-                                <include reference="Uhv-rw-rPg"/>
-                                <include reference="khp-49-tEx"/>
-                                <include reference="qOe-uI-teR"/>
-                                <include reference="KAo-dW-CdB"/>
-                                <include reference="enf-rR-oJD"/>
-                                <include reference="og2-hb-WGf"/>
-                                <include reference="JDr-Eb-qhf"/>
-                                <include reference="K9C-hR-MMl"/>
-                                <include reference="zet-7W-6qq"/>
                                 <exclude reference="1hZ-Oc-H4A"/>
                                 <include reference="4lG-k0-E12"/>
                                 <include reference="VZz-v8-mhr"/>
                                 <exclude reference="WgJ-l7-StV"/>
                                 <exclude reference="YjQ-3K-uKZ"/>
+                                <include reference="AX7-fy-E6i"/>
+                                <include reference="VY5-q4-msB"/>
+                                <exclude reference="e8t-hn-lkd"/>
                                 <include reference="0Pt-85-2kX"/>
                                 <exclude reference="Yv1-xS-uBF"/>
                                 <include reference="aKS-is-S9E"/>
                                 <include reference="kGU-Cv-N2m"/>
                                 <include reference="wbk-wM-EFO"/>
-                                <include reference="AX7-fy-E6i"/>
-                                <include reference="VY5-q4-msB"/>
-                                <exclude reference="e8t-hn-lkd"/>
                             </mask>
                         </variation>
                     </view>
@@ -2289,6 +2286,7 @@
     </scenes>
     <resources>
         <image name="add" width="22" height="22"/>
+        <image name="calendar" width="100" height="100"/>
         <image name="calendar-outline" width="32" height="32"/>
         <image name="calendar-selected" width="32" height="32"/>
         <image name="cog-outline" width="32" height="32"/>
@@ -2296,6 +2294,7 @@
         <image name="disclosure" width="50" height="80"/>
         <image name="envelope" width="225" height="161"/>
         <image name="filter" width="50" height="50"/>
+        <image name="heart" width="100" height="100"/>
         <image name="people-outline" width="32" height="32"/>
         <image name="people-selected" width="32" height="32"/>
         <image name="reminder-off" width="96" height="96"/>
@@ -2303,9 +2302,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8kR-B2-YHG"/>
-        <segue reference="TPq-ng-Nxl"/>
-        <segue reference="byt-8L-e9s"/>
         <segue reference="uOf-gp-zRy"/>
+        <segue reference="u8v-zp-2zi"/>
         <segue reference="Sh2-MR-qg4"/>
+        <segue reference="g7o-yD-2k3"/>
     </inferredMetricsTieBreakers>
 </document>

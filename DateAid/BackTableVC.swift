@@ -45,6 +45,10 @@ class BackTableVC: UITableViewController {
         return navigationCell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("ShowDatesTableVC", sender: self)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let navigationVC = segue.destinationViewController as! UINavigationController
         let datesTableVC = navigationVC.topViewController as! DatesTableVC

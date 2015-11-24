@@ -72,6 +72,7 @@ class AddDateVC: UIViewController {
         addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
         
         setInitialValues(forDate: dateToSave, whether: isBeingEdited)
+        addImagesToButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -86,6 +87,23 @@ class AddDateVC: UIViewController {
     
     func addOrEdit() -> String {
         return isBeingEdited! == true ? "Edit" : "Add"
+    }
+    
+    func addImagesToButtons() {
+        let birthdayImage = UIImage(named: "balloon.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        birthdayButton.setImage(birthdayImage, forState: .Normal)
+        birthdayButton.tintColor = UIColor.whiteColor()
+        birthdayButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        
+        let anniversaryImage = UIImage(named: "heart.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        anniversaryButton.setImage(anniversaryImage, forState: .Normal)
+        anniversaryButton.tintColor = UIColor.whiteColor()
+        anniversaryButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        
+        let customImage = UIImage(named: "calendar.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        customButton.setImage(customImage, forState: .Normal)
+        customButton.tintColor = UIColor.whiteColor()
+        customButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
     }
     
     func setColorTheme(forDateType dateType: String?) {
@@ -295,19 +313,19 @@ extension AddDateVC: ASValueTrackingSliderDataSource {
 extension AddDateVC {
 
     @IBAction func birthdayButton(sender: UIButton) {
-        [anniversaryButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        [anniversaryButton, customButton].forEach { $0.stopAnimating() }
         switchDateTypeAndColorsTo("birthday")
         sender.animateInAndOut()
     }
     
     @IBAction func anniversaryButton(sender: UIButton) {
-        [birthdayButton, customButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        [birthdayButton, customButton].forEach { $0.stopAnimating() }
         switchDateTypeAndColorsTo("anniversary")
         sender.animateInAndOut()
     }
     
     @IBAction func customButton(sender: UIButton) {
-        [birthdayButton, anniversaryButton].forEach { $0.titleLabel!.layer.removeAllAnimations() }
+        [birthdayButton, anniversaryButton].forEach { $0.stopAnimating() }
         switchDateTypeAndColorsTo("custom")
         sender.animateInAndOut()
     }
