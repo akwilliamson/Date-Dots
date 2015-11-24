@@ -143,14 +143,25 @@ class SinglePushSettingsVC: UIViewController {
         return alertPrefix
     }
     
+    func setAlertSuffix(forDateObject dateObject: Date) -> String {
+        switch dateObject.type! {
+        case "birthday":
+            return "It's \(dateObject.name!)'s birthday "
+        case "anniversary":
+            return "It's \(dateObject.name!)'s anniversary "
+        default:
+            return "\(dateObject.name!) is in "
+        }
+    }
+    
     func setAlertMessage(forCountdown daysBefore: Float) -> String {
-        var alertSuffix = "It's \(dateObject!.name!)'s birthday "
+        var alertSuffix = setAlertSuffix(forDateObject: dateObject!)
         if daysBefore == 0 {
             alertSuffix.appendContentsOf("today")
         } else if daysBefore == 1 {
             alertSuffix.appendContentsOf("in 1 day")
         } else {
-            alertSuffix.appendContentsOf("\(daysBefore) days")
+            alertSuffix.appendContentsOf("\(Int(daysBefore)) days")
         }
         return alertSuffix
     }

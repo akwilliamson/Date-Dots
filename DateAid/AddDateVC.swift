@@ -58,6 +58,11 @@ class AddDateVC: UIViewController {
     
     @IBOutlet weak var editDetailsButton: UIButton!
     
+    @IBOutlet weak var minusMonthLabel: UIImageView!
+    @IBOutlet weak var plusMonthLabel: UIImageView!
+    @IBOutlet weak var minusDayLabel: UIImageView!
+    @IBOutlet weak var plusDayLabel: UIImageView!
+    
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
@@ -67,12 +72,55 @@ class AddDateVC: UIViewController {
         title = addOrEdit()
         
         setColorTheme(forDateType: dateToSave?.type)
+        addColoredArrows()
         
         setDataSourceFor([monthSlider, daySlider])
         addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
         
         setInitialValues(forDate: dateToSave, whether: isBeingEdited)
         addImagesToButtons()
+        addGestureRecognizers()
+    }
+    
+    func addGestureRecognizers() {
+        self.addTapGestureRecognizer(onView: minusMonthLabel, forAction: "minusMonth:")
+        self.addTapGestureRecognizer(onView: plusMonthLabel, forAction: "plusMonth:")
+        self.addTapGestureRecognizer(onView: minusDayLabel, forAction: "minusDay:")
+        self.addTapGestureRecognizer(onView: plusDayLabel, forAction: "plusDay:")
+    }
+    
+    func addTapGestureRecognizer(onView view: UIView, forAction action: String) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func minusMonth(sender: UITapGestureRecognizer) {
+        if monthSlider.value > monthSlider.minimumValue {
+            monthSlider.value -= 1
+            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+        }
+    }
+    
+    func plusMonth(sender: UITapGestureRecognizer) {
+        if monthSlider.value < monthSlider.maximumValue {
+            monthSlider.value += 1
+            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+        }
+    }
+    
+    func minusDay(sender: UITapGestureRecognizer) {
+        if daySlider.value > daySlider.minimumValue {
+            daySlider.value -= 1
+            dayLabel.text = fullDays[Int(daySlider.value)-1]
+        }
+    }
+    
+    func plusDay(sender: UITapGestureRecognizer) {
+        if daySlider.value < daySlider.maximumValue {
+            daySlider.value += 1
+            dayLabel.text = fullDays[Int(daySlider.value)-1]
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -86,7 +134,7 @@ class AddDateVC: UIViewController {
     }
     
     func addOrEdit() -> String {
-        return isBeingEdited! == true ? "Edit" : "Add"
+        return isBeingEdited! == true ? "Edit Date" : "Add Date"
     }
     
     func addImagesToButtons() {
@@ -117,6 +165,23 @@ class AddDateVC: UIViewController {
             [monthSlider, daySlider].forEach { $0.setColorTo(typeColor) }
             editDetailsButton.tintColor = typeColor
         }
+    }
+    
+    func addColoredArrows() {
+        let downArrow = UIImage(named: "down-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        let upArrow = UIImage(named: "up-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        
+        minusMonthLabel.image = downArrow
+        minusMonthLabel.tintColor = UIColor.lightGrayColor()
+        
+        plusMonthLabel.image = upArrow
+        plusMonthLabel.tintColor = UIColor.lightGrayColor()
+        
+        minusDayLabel.image = downArrow
+        minusDayLabel.tintColor = UIColor.lightGrayColor()
+        
+        plusDayLabel.image = upArrow
+        plusDayLabel.tintColor = UIColor.lightGrayColor()
     }
     
     func setDataSourceFor(sliders: [ASValueTrackingSlider]) {
