@@ -92,18 +92,24 @@ class AddDateVC: UIViewController {
     func addImagesToButtons() {
         let birthdayImage = UIImage(named: "balloon.png")?.imageWithRenderingMode(.AlwaysTemplate)
         birthdayButton.setImage(birthdayImage, forState: .Normal)
-        birthdayButton.tintColor = UIColor.whiteColor()
-        birthdayButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        birthdayButton.tintColor = UIColor.birthdayColor()
+        birthdayButton.layer.borderColor = UIColor.birthdayColor().CGColor
         
         let anniversaryImage = UIImage(named: "heart.png")?.imageWithRenderingMode(.AlwaysTemplate)
         anniversaryButton.setImage(anniversaryImage, forState: .Normal)
-        anniversaryButton.tintColor = UIColor.whiteColor()
-        anniversaryButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        anniversaryButton.tintColor = UIColor.anniversaryColor()
+        anniversaryButton.layer.borderColor = UIColor.anniversaryColor().CGColor
         
         let customImage = UIImage(named: "calendar.png")?.imageWithRenderingMode(.AlwaysTemplate)
         customButton.setImage(customImage, forState: .Normal)
-        customButton.tintColor = UIColor.whiteColor()
-        customButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        customButton.tintColor = UIColor.customColor()
+        customButton.layer.borderColor = UIColor.customColor().CGColor
+        
+        [birthdayButton, anniversaryButton, customButton].forEach({
+            $0.layer.borderWidth = 2
+            $0.adjustsImageWhenHighlighted = false
+            $0.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+        })
     }
     
     func setColorTheme(forDateType dateType: String?) {
