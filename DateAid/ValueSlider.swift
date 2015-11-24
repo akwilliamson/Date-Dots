@@ -21,8 +21,8 @@ class ValueSlider: ASValueTrackingSlider {
     
     func setValues(max max: Float, value: Float) {
         self.minimumValue = 1
-        self.value = value
         self.maximumValue = max
+        self.value = value
     }
     
     func setColorTo(color: UIColor) {

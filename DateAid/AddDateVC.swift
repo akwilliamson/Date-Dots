@@ -58,10 +58,10 @@ class AddDateVC: UIViewController {
     
     @IBOutlet weak var editDetailsButton: UIButton!
     
-    @IBOutlet weak var minusMonthLabel: UIImageView!
-    @IBOutlet weak var plusMonthLabel: UIImageView!
-    @IBOutlet weak var minusDayLabel: UIImageView!
-    @IBOutlet weak var plusDayLabel: UIImageView!
+    @IBOutlet weak var minusMonthLabel: UIButton!
+    @IBOutlet weak var plusMonthLabel: UIButton!
+    @IBOutlet weak var minusDayLabel: UIButton!
+    @IBOutlet weak var plusDayLabel: UIButton!
     
 // MARK: VIEW SETUP
     
@@ -171,16 +171,16 @@ class AddDateVC: UIViewController {
         let downArrow = UIImage(named: "down-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
         let upArrow = UIImage(named: "up-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
         
-        minusMonthLabel.image = downArrow
+        minusMonthLabel.setImage(downArrow, forState: .Normal)
         minusMonthLabel.tintColor = UIColor.lightGrayColor()
         
-        plusMonthLabel.image = upArrow
+        plusMonthLabel.setImage(upArrow, forState: .Normal)
         plusMonthLabel.tintColor = UIColor.lightGrayColor()
         
-        minusDayLabel.image = downArrow
+        minusDayLabel.setImage(downArrow, forState: .Normal)
         minusDayLabel.tintColor = UIColor.lightGrayColor()
         
-        plusDayLabel.image = upArrow
+        plusDayLabel.setImage(upArrow, forState: .Normal)
         plusDayLabel.tintColor = UIColor.lightGrayColor()
     }
     
@@ -193,10 +193,10 @@ class AddDateVC: UIViewController {
     }
     
     func setInitialValues(forDate date: Date?, whether isBeingEdited: Bool) {
-
         switch isBeingEdited {
         case true:
             if let name = date?.name, let year = date?.date?.getYear(), let month = date?.date?.getMonth(), let day = date?.date?.getDay() {
+                
                 monthSlider.setValues(max: 12, value: Float(month))
                 daySlider.setValues(max: 31, value: Float(day))
                 nameField.text = name
