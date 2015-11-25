@@ -35,8 +35,7 @@ class SettingsTableVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Settings")
-        AppAnalytics.logEvent("Settings")
+        self.logEvents(forString: "Settings")
         originalCenterX = syncSetting.center.x
         configureNavigationBar()
         [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({
@@ -51,6 +50,9 @@ class SettingsTableVC: UIViewController {
         syncNo.addGestureRecognizer(slideGesture)
         reloadDatesTableDelegate = tabBarController?.viewControllers![0].childViewControllers[1].childViewControllers[0] as! DatesTableVC
         labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel, alertSetting: alertsLabel, colorSetting: colorsLabel]
+        iCloudSetting.backgroundColor = UIColor.birthdayColor()
+        alertSetting.backgroundColor = UIColor.anniversaryColor()
+        colorSetting.backgroundColor = UIColor.customColor()u
     }
     
     override func viewWillAppear(animated: Bool) {
