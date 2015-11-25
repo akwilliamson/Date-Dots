@@ -18,21 +18,63 @@ class TurningVC: UIViewController {
 
     @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var downArrow: UIButton!
+    @IBOutlet weak var upArrow: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Flurry.logEvent("Turning VC")
-        AppAnalytics.logEvent("Turning VC")
         title = "Who's turning 1?"
-        fetchDatesIfNotBeenFetched()
+        self.logEvents(forString: "Turning VC")
         configureNavigationBar()
         registerDateCellNib()
+        fetchDatesIfNotBeenFetched()
+        addColoredArrows()
         turningSlider.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
         turningSlider.setValues(max: 100, value: 1)
         turningSlider.minimumValue = 1
         turningSlider.setColorTo(UIColor.birthdayColor())
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == 1 })
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        self.addTapGestureRecognizer(onView: downArrow, forAction: "minusDay:")
+        self.addTapGestureRecognizer(onView: upArrow, forAction: "plusDay:")
+    }
+    
+    func addColoredArrows() {
+        let downArrowImage = UIImage(named: "down-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        let upArrowImage = UIImage(named: "up-arrow.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        
+        downArrow.setImage(downArrowImage, forState: .Normal)
+        downArrow.tintColor = UIColor.lightGrayColor()
+        
+        upArrow.setImage(upArrowImage, forState: .Normal)
+        upArrow.tintColor = UIColor.lightGrayColor()
+    }
+    
+    func addTapGestureRecognizer(onView view: UIView, forAction action: String) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func minusDay(sender: UITapGestureRecognizer) {
+        if turningSlider.value > turningSlider.minimumValue {
+            turningSlider.value -= 1
+            title = "Who's turning \(Int(turningSlider.value))?"
+            filteredResults?.removeAll()
+            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(turningSlider.value) })
+            tableView.reloadData()
+        }
+    }
+    
+    func plusDay(sender: UITapGestureRecognizer) {
+        if turningSlider.value < turningSlider.maximumValue {
+            turningSlider.value += 1
+            title = "Who's turning \(Int(turningSlider.value))?"
+            filteredResults?.removeAll()
+            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(turningSlider.value) })
+            tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,7 +131,6 @@ class TurningVC: UIViewController {
         title = "Who's turning \(Int(sender.value))?"
         filteredResults?.removeAll()
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(sender.value) })
-        
         tableView.reloadData()
     }
     
@@ -99,7 +140,7 @@ class TurningVC: UIViewController {
 extension TurningVC: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredResults!.count == 0 {
+        if filteredResults?.count == 0 {
             addNoDatesLabel(thereAreNoDates: true)
         } else {
             addNoDatesLabel(thereAreNoDates: false)
@@ -112,15 +153,14 @@ extension TurningVC: UITableViewDataSource {
         
         if let results = filteredResults {
             let date = results[indexPath.row]
-            if let abbreviatedName = date.abbreviatedName, let readableDate = date.date?.readableDate() {
-                dateCell.firstName = date.type! == "birthday" ? abbreviatedName : date.name!
+            if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate(), let lastName = date.name?.lastName() {
+                dateCell.firstName = firstName
+                dateCell.lastName = lastName
                 dateCell.date = readableDate
-                
-                if let dateType = date.type {
-                    dateCell.firstNameLabel.textColor = colorForType[dateType]
-                }
+                dateCell.firstNameLabel.textColor = date.type?.associatedColor()
             }
         }
+        dateCell.selectionStyle = .None
         return dateCell
     }
 }
@@ -130,6 +170,7 @@ extension TurningVC: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80
     }
+    
 }
 
 

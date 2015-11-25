@@ -78,7 +78,8 @@ class SinglePushSettingsVC: UIViewController {
         })
         if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
             setLabelAndSliderValues(viaNotification: nil)
-            trashIcon.hidden = true
+            trashIcon.image = UIImage(named: "reminder-off.png")?.imageWithRenderingMode(.AlwaysTemplate)
+            trashIcon.tintColor = dateObject.type!.associatedColor()
         }
     }
     
@@ -207,6 +208,7 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     func valueChanged(sender: ValueSlider) {
+        
         setLabelValues(forDaysPrior: daySlider.value, at: timeSlider.value)
     }
     

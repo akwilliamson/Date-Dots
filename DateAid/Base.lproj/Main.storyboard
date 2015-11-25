@@ -1868,18 +1868,51 @@
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9mI-3R-l8H" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="38" y="375" width="524" height="31"/>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-WX-FT3">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="4J1-dV-p5C"/>
+                                    <constraint firstAttribute="width" constant="25" id="U1m-Ar-Etn"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="U1m-Ar-Etn"/>
+                                        <exclude reference="4J1-dV-p5C"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="U1m-Ar-Etn"/>
+                                        <include reference="4J1-dV-p5C"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-sL-9BV">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1mr-Hr-gKj" firstAttribute="centerX" secondItem="KRK-6J-go8" secondAttribute="centerX" id="0Ql-47-aAb"/>
                             <constraint firstItem="1lz-Z2-0NH" firstAttribute="top" secondItem="KRK-6J-go8" secondAttribute="topMargin" id="384-dx-DzB"/>
                             <constraint firstItem="1mr-Hr-gKj" firstAttribute="height" secondItem="KRK-6J-go8" secondAttribute="height" multiplier="0.05" id="8G8-i4-Dgd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9mI-3R-l8H" secondAttribute="trailing" id="9Gy-gA-AwU"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="wiv-WX-FT3" secondAttribute="leading" id="C5I-Fj-aH8"/>
                             <constraint firstItem="1lz-Z2-0NH" firstAttribute="leading" secondItem="KRK-6J-go8" secondAttribute="leading" id="Iwl-Ss-PNx"/>
+                            <constraint firstItem="xKc-sL-9BV" firstAttribute="centerY" secondItem="9mI-3R-l8H" secondAttribute="centerY" id="RGx-cq-V8U"/>
+                            <constraint firstItem="xKc-sL-9BV" firstAttribute="height" secondItem="wiv-WX-FT3" secondAttribute="height" id="Ydy-gp-k2y"/>
                             <constraint firstItem="9mI-3R-l8H" firstAttribute="top" secondItem="1lz-Z2-0NH" secondAttribute="bottom" constant="25" id="Z2I-P5-VZe"/>
+                            <constraint firstItem="xKc-sL-9BV" firstAttribute="width" secondItem="wiv-WX-FT3" secondAttribute="width" id="abe-31-qd8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xKc-sL-9BV" secondAttribute="trailing" id="duI-R6-P9i"/>
                             <constraint firstAttribute="trailing" secondItem="1lz-Z2-0NH" secondAttribute="trailing" id="frC-Te-ON9"/>
+                            <constraint firstItem="xKc-sL-9BV" firstAttribute="leading" secondItem="9mI-3R-l8H" secondAttribute="trailing" constant="2" id="gvz-PJ-csB">
+                                <variation key="widthClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="1mr-Hr-gKj" firstAttribute="top" secondItem="9mI-3R-l8H" secondAttribute="bottom" constant="8" id="jKF-aT-DNv"/>
+                            <constraint firstItem="wiv-WX-FT3" firstAttribute="centerY" secondItem="9mI-3R-l8H" secondAttribute="centerY" id="ph7-HX-6H0"/>
                             <constraint firstAttribute="leadingMargin" secondItem="9mI-3R-l8H" secondAttribute="leading" id="qFi-P6-0SF"/>
+                            <constraint firstItem="9mI-3R-l8H" firstAttribute="leading" secondItem="wiv-WX-FT3" secondAttribute="trailing" constant="-2" id="w8q-HO-aZn">
+                                <variation key="widthClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="lR3-sY-LMj" firstAttribute="top" secondItem="1mr-Hr-gKj" secondAttribute="bottom" id="zaM-eQ-pQi"/>
                         </constraints>
                         <variation key="default">
@@ -1887,18 +1920,27 @@
                                 <exclude reference="1lz-Z2-0NH"/>
                                 <exclude reference="1mr-Hr-gKj"/>
                                 <exclude reference="9mI-3R-l8H"/>
+                                <exclude reference="wiv-WX-FT3"/>
+                                <exclude reference="xKc-sL-9BV"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="zaM-eQ-pQi"/>
                                 <exclude reference="384-dx-DzB"/>
                                 <exclude reference="Iwl-Ss-PNx"/>
                                 <exclude reference="frC-Te-ON9"/>
+                                <exclude reference="C5I-Fj-aH8"/>
+                                <exclude reference="ph7-HX-6H0"/>
+                                <exclude reference="Z2I-P5-VZe"/>
+                                <exclude reference="qFi-P6-0SF"/>
+                                <exclude reference="w8q-HO-aZn"/>
+                                <exclude reference="zaM-eQ-pQi"/>
                                 <exclude reference="0Ql-47-aAb"/>
                                 <exclude reference="8G8-i4-Dgd"/>
                                 <exclude reference="jKF-aT-DNv"/>
-                                <exclude reference="9Gy-gA-AwU"/>
-                                <exclude reference="Z2I-P5-VZe"/>
-                                <exclude reference="qFi-P6-0SF"/>
+                                <exclude reference="RGx-cq-V8U"/>
+                                <exclude reference="Ydy-gp-k2y"/>
+                                <exclude reference="abe-31-qd8"/>
+                                <exclude reference="duI-R6-P9i"/>
+                                <exclude reference="gvz-PJ-csB"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1906,26 +1948,37 @@
                                 <include reference="1lz-Z2-0NH"/>
                                 <include reference="1mr-Hr-gKj"/>
                                 <include reference="9mI-3R-l8H"/>
+                                <include reference="wiv-WX-FT3"/>
+                                <include reference="xKc-sL-9BV"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="zaM-eQ-pQi"/>
                                 <include reference="384-dx-DzB"/>
                                 <include reference="Iwl-Ss-PNx"/>
                                 <include reference="frC-Te-ON9"/>
+                                <include reference="C5I-Fj-aH8"/>
+                                <include reference="ph7-HX-6H0"/>
+                                <include reference="Z2I-P5-VZe"/>
+                                <exclude reference="qFi-P6-0SF"/>
+                                <include reference="w8q-HO-aZn"/>
+                                <include reference="zaM-eQ-pQi"/>
                                 <include reference="0Ql-47-aAb"/>
                                 <include reference="8G8-i4-Dgd"/>
                                 <include reference="jKF-aT-DNv"/>
-                                <include reference="9Gy-gA-AwU"/>
-                                <include reference="Z2I-P5-VZe"/>
-                                <include reference="qFi-P6-0SF"/>
+                                <include reference="RGx-cq-V8U"/>
+                                <include reference="Ydy-gp-k2y"/>
+                                <include reference="abe-31-qd8"/>
+                                <include reference="duI-R6-P9i"/>
+                                <include reference="gvz-PJ-csB"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="D5Z-2J-gZ5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="downArrow" destination="wiv-WX-FT3" id="g5Q-4f-8bI"/>
                         <outlet property="tableView" destination="1lz-Z2-0NH" id="r8J-Xr-2iD"/>
                         <outlet property="turningSlider" destination="9mI-3R-l8H" id="G6K-OQ-qkG"/>
+                        <outlet property="upArrow" destination="xKc-sL-9BV" id="gbQ-PA-sN6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wf5-zB-PhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
