@@ -52,7 +52,7 @@ class SettingsTableVC: UIViewController {
         labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel, alertSetting: alertsLabel, colorSetting: colorsLabel]
         iCloudSetting.backgroundColor = UIColor.birthdayColor()
         alertSetting.backgroundColor = UIColor.anniversaryColor()
-        colorSetting.backgroundColor = UIColor.customColor()u
+        colorSetting.backgroundColor = UIColor.customColor()
     }
     
     override func viewWillAppear(animated: Bool) {

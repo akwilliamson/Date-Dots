@@ -38,6 +38,10 @@ class DateDetailsVC: UIViewController {
     
     @IBOutlet weak var notesButton: UIButton!
     
+    @IBOutlet weak var leftDecorationImage: UIImageView!
+    @IBOutlet weak var rightDecorationImage: UIImageView!
+    
+    
 // MARK: VIEW SETUP
     
     override func viewDidLoad() {
@@ -53,6 +57,7 @@ class DateDetailsVC: UIViewController {
         super.viewWillAppear(animated)
         
         setColorTheme(forType: dateObject.type)
+        setdecorationImages(forType: dateObject.type)
         populateDateViews()
         populateAlertViews()
         animateViews()
@@ -79,6 +84,20 @@ class DateDetailsVC: UIViewController {
             [envelopeImage, reminderImage].forEach({ $0.tintColor = colorForType[dateType] })
             reminderLabel.textColor = colorForType[dateType]
             notesButton.backgroundColor = colorForType[dateType]
+        }
+    }
+    
+    func setdecorationImages(forType dateType: String?) {
+        guard let dateType = dateType else { return }
+        switch dateType {
+        case "birthday":
+            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "balloon.png") })
+        case "anniversary":
+            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "heart.png") })
+        case "custom":
+            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "calendar.png") })
+        default:
+            break
         }
     }
     
