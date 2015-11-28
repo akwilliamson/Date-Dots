@@ -15,14 +15,16 @@ class NoteVC: UIViewController {
     var noteObject: Note?
     var dateObject: Date?
     var noteTitle: String!
+    let placeHolderTextForTitle = ["Gifts":"gift ideas", "Plans":"event plans", "Other":"any other notes"]
     
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = noteTitle
+        
         Flurry.logEvent("Note Details", withParameters: ["forNote:" : noteTitle])
         AppAnalytics.logEvent("Note Details", parameters: ["forNote:" : noteTitle])
-        title = noteTitle
         
         if dateObject?.notes?.count > 0 {
             guard let notesForDate = dateObject?.notes else { return }
@@ -42,17 +44,8 @@ class NoteVC: UIViewController {
     }
     
     func setPlaceholderText(inView view: UITextView) {
+        view.text = "A place for \(placeHolderTextForTitle[noteTitle])"
         view.textColor = UIColor.lightGrayColor()
-        switch noteTitle {
-        case "Gifts":
-            view.text = "A place for gift ideas"
-        case "Plans":
-            view.text = "A place for event plans"
-        case "Other":
-            view.text = "A place for any other notes"
-        default:
-            break
-        }
     }
     
     @IBAction func saveNote(sender: AnyObject) {
@@ -66,11 +59,11 @@ class NoteVC: UIViewController {
         if noteObject == nil {
             guard let entity = NSEntityDescription.entityForName("Note", inManagedObjectContext: managedContext!) else { return }
             noteObject = Note(entity: entity, insertIntoManagedObjectContext: managedContext)
-            
-            noteObject?.title = title
-            noteObject?.body = textView.text
-            
             guard let noteObject = noteObject else { return }
+            
+            noteObject.title = title
+            noteObject.body = textView.text
+            
             let notes = dateObject?.notes?.mutableCopy() as! NSMutableSet
             notes.addObject(noteObject)
             dateObject?.notes = notes.copy() as? NSSet

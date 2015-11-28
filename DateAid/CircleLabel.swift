@@ -38,4 +38,26 @@ class CircleLabel: UILabel {
             self.center.y = 84
             }, completion: nil)
     }
+    
+    func slideRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: ()) {
+        UIView.animateWithDuration(duration, animations: { _ in
+            self.center.x = view.frame.width - (self.center.x)
+            }) { _ in
+                closure
+        }
+    }
+    
+    func addTapGestureRecognizer(forAction action: String) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func animate(intoView view: UIView, toPosition position: CGFloat, withDelay delay: NSTimeInterval) {
+        self.center.x = -view.frame.width - self.frame.height
+        UIView.animateWithDuration(0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { _ in
+            self.center.x = position
+            }) { _ in
+        }
+    }
 }

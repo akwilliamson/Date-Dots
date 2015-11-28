@@ -65,10 +65,9 @@ class DateDetailsVC: UIViewController {
     
     func addGestureRecognizers() {
         self.addTapGestureRecognizer(onView: envelopeImage, forAction: "segueToAddress:")
-        self.addTapGestureRecognizer(onView: reminderImage, forAction: "segueToNotification:")
-        
         self.addTapGestureRecognizer(onView: addressLabel, forAction: "segueToAddress:")
         self.addTapGestureRecognizer(onView: regionLabel, forAction: "segueToAddress:")
+        self.addTapGestureRecognizer(onView: reminderImage, forAction: "segueToNotification:")
         self.addTapGestureRecognizer(onView: reminderLabel, forAction: "segueToNotification:")
     }
     
