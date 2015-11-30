@@ -10,6 +10,7 @@
 		9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970807591BC7288100F030D3 /* ValueSlider.swift */; };
 		9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708075B1BC7303800F030D3 /* TypeButton.swift */; };
 		970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* ColorExtension.swift */; };
+		9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9725927B1C0D005200BE37BB /* AlertControllerExtension.swift */; };
 		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; };
 		97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97361A631B2C0CEF006394E1 /* DateCell.xib */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
@@ -79,6 +80,7 @@
 		970807591BC7288100F030D3 /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
 		9708075B1BC7303800F030D3 /* TypeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeButton.swift; sourceTree = "<group>"; };
 		970D93611BC4765900D7F1FF /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		9725927B1C0D005200BE37BB /* AlertControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertControllerExtension.swift; sourceTree = "<group>"; };
 		973023D81BD6B6E80087BA54 /* ResponderExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderExtension.swift; sourceTree = "<group>"; };
 		97361A631B2C0CEF006394E1 /* DateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
 		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */,
+				9725927B1C0D005200BE37BB /* AlertControllerExtension.swift */,
 				970D93611BC4765900D7F1FF /* ColorExtension.swift */,
 				97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */,
 				97D185B61B3B51E8009E576E /* ImageExtension.swift */,
@@ -573,6 +576,7 @@
 				978C23011BFC3699000075D5 /* NavigationCell.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
+				9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
 				97618DC91BEB19CD0051ED3D /* ContactImporter.swift in Sources */,

@@ -25,7 +25,6 @@ class TurningVC: UIViewController {
         super.viewDidLoad()
         title = "Who's turning 1?"
         self.logEvents(forString: "Turning VC")
-        configureNavigationBar()
         registerDateCellNib()
         fetchDatesIfNotBeenFetched()
         addColoredArrows()
@@ -102,14 +101,6 @@ class TurningVC: UIViewController {
             tableView.backgroundView = label
         } else {
             tableView.backgroundView = nil
-        }
-    }
-    
-    func configureNavigationBar() {
-        if let navBar = navigationController?.navigationBar {
-            navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
-            navBar.barTintColor = UIColor.birthdayColor()
-            navBar.tintColor = UIColor.whiteColor()
         }
     }
     

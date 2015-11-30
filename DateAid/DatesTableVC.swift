@@ -43,7 +43,6 @@ class DatesTableVC: UITableViewController {
         registerNibCell(withName: "DateCell")
         addRevealVCGestureRecognizers()
         configureNavigationBar()
-        configureTabBar()
         addSearchBar()
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
@@ -108,25 +107,8 @@ class DatesTableVC: UITableViewController {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MMMM d"
         title = formatter.stringFromDate(NSDate())
-        if let navBar = navigationController?.navigationBar {
-            navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
-            navBar.barTintColor = UIColor.birthdayColor()
-            navBar.tintColor = UIColor.whiteColor()
-        }
         menuBarButtonItem.target = self.revealViewController()
         menuBarButtonItem.action = Selector("revealToggle:")
-    }
-    
-    func configureTabBar() {
-        if let tabBar = tabBarController?.tabBar {
-            tabBar.barTintColor = UIColor.birthdayColor()
-            tabBar.tintColor = UIColor.whiteColor()
-            for item in tabBar.items! {
-                if let image = item.image {
-                    item.image = image.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
-                }
-            }
-        }
     }
     
     func addNoDatesLabel() {

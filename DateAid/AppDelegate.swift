@@ -14,32 +14,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let tabBarAppearance = UITabBarItem.appearance()
+    let tabBarAppearance = UITabBar.appearance()
+    let tabBarItemAppearance = UITabBarItem.appearance()
+    let navBarAppearance = UINavigationBar.appearance()
     lazy var coreDataStack = CoreDataStack()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        startAnalyticSessions()
+        styleNavigationBar()
+        styleTabBar()
+        showInitialImportOnFirstLaunch()
+        
+        return true
+    }
+    
+    func startAnalyticSessions() {
         Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
         AppAnalytics.initWithAppKey("SsKD7Ojo2Fh7qjVoCqSCHLWIReKCItvZ")
-        
-        application.setStatusBarStyle(.LightContent, animated: false)
-        
-        // Show the import contacts view on first launch only
+    }
+    
+    func showInitialImportOnFirstLaunch() {
+        guard let window = self.window else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialImportVC = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
-        let datesTableVC = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
         
-        if let window = self.window {
-            if userDefaults.objectForKey("hasLaunchedOnce") == nil {
-                userDefaults.setBool(true, forKey: "hasLaunchedOnce")
-                window.rootViewController = initialImportVC
-            } else {
-                window.rootViewController = datesTableVC
-            }
+        if userDefaults.objectForKey("hasLaunchedOnce") == nil {
+            userDefaults.setBool(true, forKey: "hasLaunchedOnce")
+            window.rootViewController = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
+        } else {
+            window.rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
         }
-        tabBarAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
-
-        return true
+    }
+    
+    func styleNavigationBar() {
+        navBarAppearance.barTintColor = UIColor.birthdayColor()
+        navBarAppearance.tintColor = UIColor.whiteColor()
+        navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
+    }
+    
+    func styleTabBar() {
+        tabBarAppearance.barTintColor = UIColor.birthdayColor()
+        tabBarAppearance.tintColor = UIColor.whiteColor()
+        tabBarItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        tabBarItemAppearance.image?.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
     }
 
     func applicationWillResignActive(application: UIApplication) {

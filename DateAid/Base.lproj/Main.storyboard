@@ -2536,7 +2536,6 @@
                         <outlet property="iCloudCancel" destination="WuJ-fU-uz6" id="FxJ-fB-14M"/>
                         <outlet property="iCloudLabel" destination="nfl-sO-hsC" id="mC4-K2-EjP"/>
                         <outlet property="iCloudSetting" destination="QFu-bR-ipm" id="Uni-y9-a8S"/>
-                        <outlet property="marginToViewEdge" destination="bBM-nf-O9Z" id="Mgr-Ik-Pmc"/>
                         <outlet property="syncCancel" destination="MSl-kP-e5n" id="g0J-Hd-TED"/>
                         <outlet property="syncLabel" destination="Vzi-la-6E8" id="x0a-T5-cZZ"/>
                         <outlet property="syncSetting" destination="NAL-TA-H9o" id="X3q-OM-HUL"/>
