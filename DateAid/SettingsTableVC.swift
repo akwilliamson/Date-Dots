@@ -34,6 +34,8 @@ class SettingsTableVC: UIViewController {
     @IBOutlet weak var alertSetting: CircleLabel!
     @IBOutlet weak var colorSetting: CircleLabel!
     
+    @IBOutlet var allCircleLabels: Array<CircleLabel>!
+    
     @IBOutlet weak var marginToViewEdge: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -84,8 +86,7 @@ class SettingsTableVC: UIViewController {
     }
     
     func disableLabelInteractions() {
-        [syncCancel, iCloudCancel, alertCancel, colorCancel].forEach({ $0.userInteractionEnabled = false })
-        [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({ $0.userInteractionEnabled = false })
+        allCircleLabels?.forEach({ $0.userInteractionEnabled = false })
     }
     
     func slideRightOrLeft(sender: UITapGestureRecognizer) {
@@ -147,7 +148,7 @@ class SettingsTableVC: UIViewController {
                 self.delay(0.5) {
                     label.text = text
                     label.backgroundColor = UIColor.lightGrayColor()
-                    [self.syncSetting, self.syncCancel, self.iCloudSetting, self.alertSetting, self.colorSetting].forEach({ $0.userInteractionEnabled = true })
+                    self.allCircleLabels.forEach({ $0.userInteractionEnabled = true })
                 }
         }
     }
@@ -160,17 +161,8 @@ class SettingsTableVC: UIViewController {
             self.syncSetting.center.x = self.syncCancel.center.x
             }) { _ in
                 self.settingsLabelIsActive = false
-                [self.syncSetting, self.syncCancel, self.iCloudSetting, self.alertSetting, self.colorSetting].forEach({ $0.userInteractionEnabled = true })
+                self.allCircleLabels.forEach({ $0.userInteractionEnabled = true })
         }
-    }
-    
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
     }
     
 }
