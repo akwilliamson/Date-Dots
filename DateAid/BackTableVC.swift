@@ -10,12 +10,8 @@ import Foundation
 
 class BackTableVC: UITableViewController {
     
-// MARK: PROPERTIES
-    
-    let categoryNames = ["All", "Birthdays", "Anniversaries", "Custom"]
-    let categoryColors = [UIColor.grayColor(), UIColor.birthdayColor(), UIColor.anniversaryColor(),UIColor.customColor()]
-    
-// MARK: VIEW SETUP
+    let dateTypeCategories = ["All", "Birthdays", "Anniversaries", "Custom"]
+    let dateTypePredicates: [String?] = [nil, "birthday", "anniversary", "custom"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +25,16 @@ class BackTableVC: UITableViewController {
         tableView.registerNib(navigationCellNib, forCellReuseIdentifier: name)
     }
     
-// MARK: TABLE VIEW
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryNames.count
+        return dateTypeCategories.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let navigationCell = tableView.dequeueReusableCellWithIdentifier("NavigationCell", forIndexPath: indexPath) as! NavigationCell
         
         navigationCell.setIcon(forIndexPath: indexPath)
-        navigationCell.navigationTitle.text = categoryNames[indexPath.row]
-        navigationCell.navigationTitle.textColor = categoryColors[indexPath.row]
+        navigationCell.navigationTitle.text = dateTypeCategories[indexPath.row]
+        navigationCell.navigationTitle.textColor = dateTypeCategories[indexPath.row].associatedColor()
         
         return navigationCell
     }
@@ -50,30 +44,16 @@ class BackTableVC: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let navigationVC = segue.destinationViewController as! UINavigationController
-        let datesTableVC = navigationVC.topViewController as! DatesTableVC
-        let selectedIndex = self.tableView.indexPathForSelectedRow!.row
+        guard let selectedIndex = self.tableView.indexPathForSelectedRow?.row else { return }
+        self.logEvents(forString: "View \(dateTypeCategories[selectedIndex])")
         
-        datesTableVC.typeColorForNewDate = categoryColors[selectedIndex]
+        guard let navigationVC = segue.destinationViewController as? UINavigationController else { return }
+        guard let datesTableVC = navigationVC.topViewController as? DatesTableVC else { return }
+        
+        let predicate: NSPredicate? = dateTypePredicates[selectedIndex] != nil ? NSPredicate(format: "type = %@", dateTypePredicates[selectedIndex]!) : nil
         datesTableVC.menuIndexPath = selectedIndex
+        datesTableVC.typePredicate = predicate
+        datesTableVC.typeColorForNewDate = dateTypeCategories[selectedIndex].associatedColor()
         
-        switch selectedIndex {
-        case 0:
-            self.logEvents(forString: "View All")
-            datesTableVC.typePredicate = nil
-            datesTableVC.typeColorForNewDate = UIColor.birthdayColor()
-        case 1:
-            self.logEvents(forString: "View Birthdays")
-            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "birthday")
-        case 2:
-            self.logEvents(forString: "View Anniversaries")
-            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "anniversary")
-        case 3:
-            self.logEvents(forString: "View Custom")
-            datesTableVC.typePredicate = NSPredicate(format: "type = %@", "custom")
-        default:
-            break
-        }
     }
-    
 }

@@ -12,8 +12,8 @@ import AddressBook
 class SettingsTableVC: UIViewController {
     
     var settingsLabelIsActive = false
-    var labelForSetting: [CircleLabel: UILabel]!
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
+    var settingsLabelColor: UIColor?
     
     lazy var contactImporter: ContactImporter = {
         return ContactImporter()
@@ -34,14 +34,16 @@ class SettingsTableVC: UIViewController {
     @IBOutlet weak var alertSetting: CircleLabel!
     @IBOutlet weak var colorSetting: CircleLabel!
     
-    @IBOutlet var allCircleLabels: Array<CircleLabel>!
+    @IBOutlet var allSettingsLabels: Array<CircleLabel>!
+    @IBOutlet var allTextLabels: Array<UILabel>!
+    @IBOutlet var allCancelLabels: Array<CircleLabel>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.logEvents(forString: "Settings")
         addGestureRecognizers()
+        setIndicesForLabels()
         reloadDatesTableDelegate = tabBarController?.viewControllers?[0].childViewControllers[1].childViewControllers[0] as? DatesTableVC
-        labelForSetting = [syncSetting: syncLabel, iCloudSetting: iCloudLabel, alertSetting: alertsLabel, colorSetting: colorsLabel]
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -51,49 +53,56 @@ class SettingsTableVC: UIViewController {
         delay(1) { self.toggleCancelLabels(shouldBeHidden: false) }
     }
     
-    func addGestureRecognizers() {
-        [syncSetting, iCloudSetting, alertSetting, colorSetting].forEach({
-            $0.addTapGestureRecognizer(forAction: "slideRightOrLeft:")
-        })
-        syncCancel.addTapGestureRecognizer(forAction: "terminateAnimation:")
+    func setIndicesForLabels() {
+        for (index, label) in allSettingsLabels.enumerate() { label.index = index }
+        for (index, label) in allCancelLabels.enumerate() { label.index = index }
     }
     
-    func animateSettingsLabelsIntoView() {
-        syncSetting.animate(intoView: view, toPosition: syncCancel.center.x, withDelay: 0)
-        iCloudSetting.animate(intoView: view, toPosition: iCloudCancel.center.x, withDelay: 0.03)
-        alertSetting.animate(intoView: view, toPosition: alertCancel.center.x, withDelay: 0.06)
-        colorSetting.animate(intoView: view, toPosition: colorCancel.center.x, withDelay: 0.09)
+    func addGestureRecognizers() {
+        allSettingsLabels.forEach({
+            $0.addTapGestureRecognizer(forAction: "slideRightOrLeft:", inController: self)
+        })
+        allCancelLabels.forEach({
+            $0.addTapGestureRecognizer(forAction: "cancelButtonPressed:", inController: self)
+        })
     }
     
     func toggleCancelLabels(shouldBeHidden hidden: Bool) {
-        [syncCancel, iCloudCancel, alertCancel, colorCancel].forEach({ $0.hidden = hidden })
+        allCancelLabels.forEach({ $0.hidden = hidden })
     }
     
-    func disableLabelInteractions() {
-        allCircleLabels?.forEach({ $0.userInteractionEnabled = false })
+    func animateSettingsLabelsIntoView() {
+        var delay: NSTimeInterval = 0
+        allSettingsLabels.forEach({ $0.animate(intoView: view, toPosition: syncCancel.center.x, withDelay: delay); delay += 0.03 })
     }
     
     func slideRightOrLeft(sender: UITapGestureRecognizer) {
         guard let labelSelected = sender.view as? CircleLabel else { return }
         if settingsLabelIsActive == false {
-            disableLabelInteractions()
-            labelSelected.rotate360Degrees()
-            labelSelected.slideRight(forDuration: 0.5, inView: view, closure: animateRightCompletion(labelSelected))
-            labelSelected.userInteractionEnabled = true
+            rollToTheRight(forLabel: labelSelected)
         } else {
-            if labelSelected == syncSetting {
-                let status = ABAddressBookGetAuthorizationStatus()
-                contactImporter.syncContacts(status: status)
-                if status == .Authorized {
-                    reloadDatesTableDelegate?.reloadTableView()
-                } else {
-                    self.showContactsUnaccessibleAlert()
-                }
-            }
-            labelSelected.userInteractionEnabled = false
-            labelSelected.rotateBack360Degrees()
-            slideLeft(labelSelected)
-            labelSelected.userInteractionEnabled = true
+            performAction(forLabel: labelSelected)
+            rollToTheLeft(forLabel: labelSelected)
+        }
+    }
+    
+    func performAction(forLabel labelSelected: CircleLabel) {
+        switch labelSelected {
+        case syncSetting:
+            syncAddressBook()
+        // 3 more cases in here eventually
+        default:
+            break
+        }
+    }
+    
+    func syncAddressBook() {
+        let status = ABAddressBookGetAuthorizationStatus()
+        self.contactImporter.syncContacts(status: status)
+        if status == .Authorized {
+            self.reloadDatesTableDelegate?.reloadTableView()
+        } else {
+            self.showContactsUnaccessibleAlert()
         }
     }
     
@@ -103,40 +112,58 @@ class SettingsTableVC: UIViewController {
         UIAlertController.generate(self, title: title, message: message)
     }
     
-    func animateRightCompletion(label: CircleLabel) {
-        label.backgroundColor = UIColor.confirmColor()
-        self.labelForSetting[label]?.hidden = false
-        settingsLabelIsActive = true
-        if label == self.syncSetting {
+    func rollToTheRight(forLabel labelSelected: CircleLabel) {
+        self.settingsLabelIsActive = true
+        toggleLabelInteractions(false)
+        settingsLabelColor = labelSelected.backgroundColor
+        labelSelected.rollRight(forDuration: 0.5, inView: view, closure: rollRightCompletion(labelSelected))
+        toggleLabelInteractions(true)
+    }
+    
+    func rollToTheLeft(forLabel labelSelected: CircleLabel) {
+        toggleLabelInteractions(false)
+        self.allTextLabels[labelSelected.index].hidden = true
+        labelSelected.rollLeft(forDuration: 0.5, toPosition: syncCancel.center.x) { (label, text) -> () in
+            self.rollLeftCompletion(label, text: text)
+        }
+        toggleLabelInteractions(true)
+        self.settingsLabelIsActive = false
+    }
+    
+    func toggleLabelInteractions(enabled: Bool) {
+        self.allSettingsLabels?.forEach({ $0.userInteractionEnabled = enabled })
+        self.allCancelLabels?.forEach({ $0.userInteractionEnabled = enabled })
+    }
+    
+    func rollRightCompletion(labelSelected: CircleLabel) {
+        labelSelected.backgroundColor = UIColor.confirmColor()
+        self.allTextLabels[labelSelected.index].hidden = false
+        if labelSelected == self.syncSetting {
             self.syncCancel.userInteractionEnabled = true
         }
     }
     
-    func slideLeft(label: CircleLabel) {
-        let text = label.text!
-        labelForSetting[label]?.hidden = true
-        UIView.animateWithDuration(0.5, animations: { _ in
-            label.center.x = self.syncCancel.center.x
-            label.text = "✓"
-            }) { _ in
-                self.settingsLabelIsActive = false
-                self.delay(0.5) {
-                    label.text = text
-                    label.backgroundColor = UIColor.lightGrayColor()
-                    self.allCircleLabels.forEach({ $0.userInteractionEnabled = true })
-                }
+    func rollLeftCompletion(labelSelected: CircleLabel, text: String) {
+        self.delay(0.5) {
+            labelSelected.backgroundColor = self.settingsLabelColor
+            labelSelected.text = text
+            self.toggleLabelInteractions(true)
         }
     }
     
-    func terminateAnimation(sender: UITapGestureRecognizer) {
-        syncLabel.hidden = true
-        syncSetting.backgroundColor = UIColor.lightGrayColor()
-        syncSetting.rotateBack360Degrees()
+    func cancelButtonPressed(sender: UITapGestureRecognizer) {
+        guard let labelSelected = sender.view as? CircleLabel else { return }
+        let settingsTextLabel = allTextLabels[labelSelected.index]
+        settingsTextLabel.hidden = true
+        let settingsLabel = allSettingsLabels[labelSelected.index]
+        settingsLabel.backgroundColor = settingsLabelColor
+        settingsLabel.rotateBack360Degrees()
+        
         UIView.animateWithDuration(0.5, animations: { _ in
-            self.syncSetting.center.x = self.syncCancel.center.x
+            settingsLabel.center.x = self.syncCancel.center.x
             }) { _ in
                 self.settingsLabelIsActive = false
-                self.allCircleLabels.forEach({ $0.userInteractionEnabled = true })
+                self.toggleLabelInteractions(true)
         }
     }
     

@@ -51,6 +51,12 @@ class DatesTableVC: UITableViewController {
         super.viewWillAppear(animated)
         addSearchBar()
         setAndPerformFetchRequest()
+        
+        for item in tabBarController!.tabBar.items! {
+            if let image = item.image {
+                item.image = image.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
+            }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -59,17 +65,6 @@ class DatesTableVC: UITableViewController {
     }
     
 // MARK: HELPERS
-    
-    func addSearchBar() {
-        resultSearchController = UISearchController(searchResultsController: nil)
-        resultSearchController.searchResultsUpdater = self
-        resultSearchController.dimsBackgroundDuringPresentation = false
-        resultSearchController.searchBar.sizeToFit()
-        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
-        definesPresentationContext = true
-        tableView.tableHeaderView = resultSearchController.searchBar
-        tableView.reloadData()
-    }
     
     func setAndPerformFetchRequest() {
         let datesFetch = NSFetchRequest(entityName: "Date")
@@ -90,6 +85,17 @@ class DatesTableVC: UITableViewController {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+    }
+    
+    func addSearchBar() {
+        resultSearchController = UISearchController(searchResultsController: nil)
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
+        definesPresentationContext = true
+        tableView.tableHeaderView = resultSearchController.searchBar
+        tableView.reloadData()
     }
     
     func addRevealVCGestureRecognizers() {

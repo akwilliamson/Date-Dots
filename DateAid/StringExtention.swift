@@ -36,14 +36,16 @@ extension String {
     
     func associatedColor() -> UIColor {
         switch self {
-        case "birthday":
+        case "all", "All":
+            return UIColor.grayColor()
+        case "birthday", "Birthdays":
             return UIColor.birthdayColor()
-        case "anniversary":
+        case "anniversary", "Anniversaries":
             return UIColor.anniversaryColor()
-        case "custom":
+        case "custom", "Custom":
             return UIColor.customColor()
         default:
-            return UIColor.customColor()
+            return UIColor.birthdayColor()
         }
     }
 }

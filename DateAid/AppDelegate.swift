@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.barTintColor = UIColor.birthdayColor()
         tabBarAppearance.tintColor = UIColor.whiteColor()
         tabBarItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
-        tabBarItemAppearance.image?.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
     }
 
     func applicationWillResignActive(application: UIApplication) {

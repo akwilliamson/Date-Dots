@@ -12,6 +12,8 @@ import QuartzCore
 
 class CircleLabel: UILabel {
     
+    var index: Int!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -39,7 +41,8 @@ class CircleLabel: UILabel {
             }, completion: nil)
     }
     
-    func slideRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: ()) {
+    func rollRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: ()) {
+        self.rotate360Degrees()
         UIView.animateWithDuration(duration, animations: { _ in
             self.center.x = view.frame.width - (self.center.x)
             }) { _ in
@@ -47,8 +50,19 @@ class CircleLabel: UILabel {
         }
     }
     
-    func addTapGestureRecognizer(forAction action: String) {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
+    func rollLeft(forDuration duration: NSTimeInterval, toPosition position: CGFloat, closure: (CircleLabel, String) -> ()) {
+        self.rotateBack360Degrees()
+        let text = self.text!
+        UIView.animateWithDuration(duration, animations: { _ in
+            self.center.x = position
+            self.text = "✓"
+            }) { _ in
+                closure(self, text)
+        }
+    }
+    
+    func addTapGestureRecognizer(forAction action: String, inController controller: UIViewController) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: controller, action: Selector(action))
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.addGestureRecognizer(tapGestureRecognizer)
     }
