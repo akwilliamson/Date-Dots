@@ -93,7 +93,12 @@ class SinglePushSettingsVC: UIViewController {
         } else {
             setLabelValues(forDaysPrior: 0, at: 0)
             setSliderValues(forDaysPrior: 0, at: 0)
-            repeatLabel.text = "Yearly"
+            print((NSUserDefaults.standardUserDefaults().objectForKey("alertYearly") as! Bool))
+            if NSUserDefaults.standardUserDefaults().objectForKey("alertYearly") as? Bool == false {
+                repeatLabel.text = "Once"
+            } else {
+                repeatLabel.text = "Yearly"
+            }
         }
     }
     

@@ -41,12 +41,12 @@ class CircleLabel: UILabel {
             }, completion: nil)
     }
     
-    func rollRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: ()) {
+    func rollRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: (CircleLabel) -> ()) {
         self.rotate360Degrees()
         UIView.animateWithDuration(duration, animations: { _ in
             self.center.x = view.frame.width - (self.center.x)
             }) { _ in
-                closure
+                closure(self)
         }
     }
     
