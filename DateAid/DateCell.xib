@@ -36,7 +36,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HN3-iN-q8m">
                         <rect key="frame" x="8" y="0.0" width="495" height="79"/>
                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="75"/>
-                        <color key="textColor" white="0.66666666669999997" alpha="0.089999999999999997" colorSpace="calibratedWhite"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>

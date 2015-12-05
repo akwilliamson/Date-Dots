@@ -26,9 +26,11 @@ class SettingsTableVC: UIViewController {
     @IBOutlet weak var colorCancel: CircleLabel!
     
     @IBOutlet weak var syncLabel: UILabel!
-    @IBOutlet weak var iCloudLabel: UILabel!
+    @IBOutlet weak var synciCloudLabel: UILabel!
+    @IBOutlet weak var synciCloudComingSoonLabel: UILabel!
     @IBOutlet weak var alertsLabel: UILabel!
     @IBOutlet weak var colorsLabel: UILabel!
+    @IBOutlet weak var customizeColorsComingSoonLabel: UILabel!
     
     @IBOutlet weak var syncSetting: CircleLabel!
     @IBOutlet weak var iCloudSetting: CircleLabel!
@@ -155,15 +157,15 @@ class SettingsTableVC: UIViewController {
         self.settingsLabelIsActive = true
         toggleLabelInteractions(false)
         settingsLabelColor = labelSelected.backgroundColor
+        enableProperLabelsForUserInteraction(labelSelected, enabled: false)
         labelSelected.rollRight(forDuration: 0.5, inView: view) { (labelSelected) -> () in
             self.rollRightCompletion(labelSelected)
         }
-        toggleLabelInteractions(true)
     }
     
     func rollToTheLeft(forLabel labelSelected: CircleLabel) {
         toggleLabelInteractions(false)
-        self.allTextLabels[labelSelected.index].hidden = true
+        allTextLabels.forEach({ $0.hidden = true })
         self.showOrHidSettingsInfo(forIndex: labelSelected.index, hide: true)
         labelSelected.rollLeft(forDuration: 0.5, toPosition: syncCancel.center.x) { (label, text) -> () in
             self.rollLeftCompletion(label, text: text)
@@ -179,18 +181,40 @@ class SettingsTableVC: UIViewController {
     
     func rollRightCompletion(labelSelected: CircleLabel) {
         labelSelected.backgroundColor = UIColor.confirmColor()
-        self.allTextLabels[labelSelected.index].hidden = false
+        enableProperLabelsForUserInteraction(labelSelected, enabled: true)
         showOrHidSettingsInfo(forIndex: labelSelected.index, hide: false)
-        if labelSelected == self.syncSetting {
-            self.syncCancel.userInteractionEnabled = true
+    }
+    
+    func enableProperLabelsForUserInteraction(labelSelected: CircleLabel, enabled: Bool) {
+        labelSelected.userInteractionEnabled = enabled
+        switch labelSelected.index {
+        case 0:
+            syncCancel.userInteractionEnabled = enabled
+        case 1:
+            iCloudCancel.userInteractionEnabled = enabled
+        case 2:
+            alertCancel.userInteractionEnabled = enabled
+        case 3:
+            colorCancel.userInteractionEnabled = enabled
+        default:
+            break
         }
     }
     
     func showOrHidSettingsInfo(forIndex index: Int, hide: Bool) {
         switch index {
+        case 0:
+            syncLabel.hidden = hide
+        case 1:
+            synciCloudLabel.hidden = hide
+            synciCloudComingSoonLabel.hidden = hide
         case 2:
+            alertsLabel.hidden = hide
             alertOnceButton.hidden = hide
             alertYearlyButton.hidden = hide
+        case 3:
+            colorsLabel.hidden = hide
+            customizeColorsComingSoonLabel.hidden = hide
         default:
             break
         }
@@ -216,8 +240,7 @@ class SettingsTableVC: UIViewController {
     
     func cancelButtonPressed(sender: UITapGestureRecognizer) {
         guard let labelSelected = sender.view as? CircleLabel else { return }
-        let settingsTextLabel = allTextLabels[labelSelected.index]
-        settingsTextLabel.hidden = true
+        allTextLabels.forEach({ $0.hidden = true })
         self.showOrHidSettingsInfo(forIndex: labelSelected.index, hide: true)
         let settingsLabel = allSettingsLabels[labelSelected.index]
         settingsLabel.backgroundColor = settingsLabelColor
