@@ -53,7 +53,6 @@ class BackTableVC: UITableViewController {
         let predicate: NSPredicate? = dateTypePredicates[selectedIndex] != nil ? NSPredicate(format: "type = %@", dateTypePredicates[selectedIndex]!) : nil
         datesTableVC.menuIndexPath = selectedIndex
         datesTableVC.typePredicate = predicate
-        datesTableVC.typeColorForNewDate = dateTypeCategories[selectedIndex].associatedColor()
-        
+        datesTableVC.dateTypeForNewDate = dateTypeCategories[selectedIndex]
     }
 }

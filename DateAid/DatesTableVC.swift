@@ -27,7 +27,7 @@ class DatesTableVC: UITableViewController {
     var filteredResults = [Date]()
     var resultSearchController = UISearchController()
     
-    var typeColorForNewDate = UIColor.birthdayColor() // nil menu index path defaults to birthday color
+    var dateTypeForNewDate = "birthday" // nil menu index path defaults to birthday type for add new date segue
     let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
     
 // MARK: OUTLETS
@@ -151,7 +151,7 @@ class DatesTableVC: UITableViewController {
             let addDateVC = segue.destinationViewController as! AddDateVC
             addDateVC.isBeingEdited = false
             addDateVC.managedContext = managedContext
-            addDateVC.incomingColor = typeColorForNewDate
+            addDateVC.dateType = dateTypeForNewDate
             addDateVC.reloadDatesTableDelegate = self
         }
     }

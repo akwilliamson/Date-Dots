@@ -24,8 +24,9 @@ class AddDateVC: UIViewController {
     // Passed from DatesTableVC for new date
     var managedContext: NSManagedObjectContext?
     var isBeingEdited: Bool!
-    var incomingColor: UIColor!
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
+    
+    var dateType: String!
     
     // Additionally passed from DateDetailsVC for edit date
     var dateToSave: Date?
@@ -129,7 +130,6 @@ class AddDateVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
         animateButtonInAndOut(forDateType: dateToSave?.type)
     }
     
@@ -161,7 +161,7 @@ class AddDateVC: UIViewController {
     }
     
     func setColorTheme(forDateType dateType: String?) {
-        if let typeColor = dateType != nil ? dateType?.associatedColor() : incomingColor {
+        if let typeColor = dateType != nil ? dateType?.associatedColor() : dateType?.associatedColor() {
             [monthSlider, daySlider].forEach { $0.setColorTo(typeColor) }
             editDetailsButton.tintColor = typeColor
         }
@@ -218,7 +218,7 @@ class AddDateVC: UIViewController {
     }
     
     func animateButtonInAndOut(forDateType dateType: String?) {
-        if let typeColor = dateType != nil ? dateType?.associatedColor() : incomingColor {
+        if let typeColor = dateType != nil ? dateType?.associatedColor() : UIColor.birthdayColor() {
             let button = getProperButton(forTypeColor: typeColor)
             button.animateInAndOut()
         }
@@ -267,7 +267,7 @@ class AddDateVC: UIViewController {
             guard let entity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!) else { return }
             dateToSave = Date(entity: entity, insertIntoManagedObjectContext: managedContext)
             
-            let typeForIncomingColor = colorForType.allKeysForValue(incomingColor).first!
+            let typeForIncomingColor = colorForType.allKeysForValue(dateType.associatedColor()).first!
             dateToSave?.type = typeForIncomingColor
         }
         
@@ -402,7 +402,7 @@ extension AddDateVC {
     }
     
     func switchDateTypeAndColorsTo(type: String) {
-        dateToSave?.type = type
+        dateType = type
         setColorTheme(forDateType: type)
     }
     
