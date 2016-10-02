@@ -37,7 +37,7 @@ class EditDetailsVC: UIViewController {
     func setColorTheme(forType dateType: String?) {
         if let dateType = dateType {
             let color = dateType.associatedColor()
-            [giftNotesButton, planNotesButton, otherNotesButton, notificationSettingsButton].forEach() { $0.setTitleColor(color, forState: .Normal) }
+            [giftNotesButton, planNotesButton, otherNotesButton, notificationSettingsButton].forEach() { $0.setTitleColor(color, for: UIControlState()) }
         }
     }
     
@@ -50,7 +50,7 @@ class EditDetailsVC: UIViewController {
         }
     }
     
-    @IBAction func done(sender: AnyObject) {
+    @IBAction func done(_ sender: AnyObject) {
         self.logEvents(forString: "Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
@@ -69,13 +69,13 @@ class EditDetailsVC: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditLocalNotification" {
-            let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
+            let singlePushSettingsVC = segue.destination as! SinglePushSettingsVC
             singlePushSettingsVC.dateObject = dateObject
             singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
-            let noteVC = segue.destinationViewController as! NoteVC
+            let noteVC = segue.destination as! NoteVC
             noteVC.dateObject = dateObject
             noteVC.managedContext = managedContext
             switch segue.identifier! {
@@ -94,19 +94,19 @@ class EditDetailsVC: UIViewController {
 
 extension EditDetailsVC: UITextFieldDelegate {
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let _ = touches.first {
             view.endEditing(true)
         }
-        super.touchesBegan(touches, withEvent: event)
+        super.touchesBegan(touches, with: event)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
     
-    func textFieldShouldClear(textField: UITextField) -> Bool {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         return false
     }
 }

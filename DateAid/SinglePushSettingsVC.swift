@@ -13,7 +13,7 @@ class SinglePushSettingsVC: UIViewController {
     var dateObject: Date!
     var notificationDelegate: SetNotificationDelegate?
     
-    let application = UIApplication.sharedApplication()
+    let application = UIApplication.shared
     let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM", "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
     
@@ -45,22 +45,22 @@ class SinglePushSettingsVC: UIViewController {
         addLabelOnThumbForSliders()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animateDropInFor([dayLabel, timeLabel, repeatLabel], withDelays: [0, 0.1, 0.2])
     }
     
     func checkIfUserHasEnabledLocalNotifications() {
-        let localNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+        let localNotificationSettings = UIUserNotificationSettings(types: [.alert, .sound], categories: nil)
         application.registerUserNotificationSettings(localNotificationSettings)
     }
     
-    func addValueChangedTargetOn(sliders: [ValueSlider]) {
-        sliders.forEach { $0.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged) }
+    func addValueChangedTargetOn(_ sliders: [ValueSlider]) {
+        sliders.forEach { $0.addTarget(self, action: #selector(SinglePushSettingsVC.valueChanged(_:)), for: .valueChanged) }
     }
     
-    func addSingleTapGestureRecognizerOn(views: [UIView], forActions: [String]) {
-        for (index, view) in views.enumerate() {
+    func addSingleTapGestureRecognizerOn(_ views: [UIView], forActions: [String]) {
+        for (index, view) in views.enumerated() {
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(forActions[index]))
             gestureRecognizer.numberOfTapsRequired = 1
             view.addGestureRecognizer(gestureRecognizer)
@@ -71,14 +71,14 @@ class SinglePushSettingsVC: UIViewController {
         let allLocalNotifications = application.scheduledLocalNotifications
         
         allLocalNotifications?.forEach({
-            if $0.userInfo!["date"] as? String == String(dateObject.objectID.URIRepresentation()) { // There was a scheduled notification for incoming date so,
+            if $0.userInfo!["date"] as? String == String(describing: dateObject.objectID.uriRepresentation()) { // There was a scheduled notification for incoming date so,
                 setLabelAndSliderValues(viaNotification: $0)
                 previouslyScheduledNotification = $0
             }
         })
         if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
             setLabelAndSliderValues(viaNotification: nil)
-            trashIcon.image = UIImage(named: "reminder-off.png")?.imageWithRenderingMode(.AlwaysTemplate)
+            trashIcon.image = UIImage(named: "reminder-off.png")?.withRenderingMode(.alwaysTemplate)
             trashIcon.tintColor = dateObject.type!.associatedColor()
         }
     }
@@ -89,12 +89,12 @@ class SinglePushSettingsVC: UIViewController {
             let notificationHourOfDay = Float(notification.userInfo!["hoursAfter"] as! String)!
             setLabelValues(forDaysPrior: notificationDaysPrior, at: notificationHourOfDay)
             setSliderValues(forDaysPrior: notificationDaysPrior, at: notificationHourOfDay)
-            repeatLabel.text = notification.repeatInterval == .Year ? "Yearly" : "Once"
+            repeatLabel.text = notification.repeatInterval == .year ? "Yearly" : "Once"
         } else {
             setLabelValues(forDaysPrior: 0, at: 0)
             setSliderValues(forDaysPrior: 0, at: 0)
-            print((NSUserDefaults.standardUserDefaults().objectForKey("alertYearly") as! Bool))
-            if NSUserDefaults.standardUserDefaults().objectForKey("alertYearly") as? Bool == false {
+            print((UserDefaults.standard.object(forKey: "alertYearly") as! Bool))
+            if UserDefaults.standard.object(forKey: "alertYearly") as? Bool == false {
                 repeatLabel.text = "Once"
             } else {
                 repeatLabel.text = "Yearly"
@@ -112,7 +112,7 @@ class SinglePushSettingsVC: UIViewController {
         timeSlider.setValues(max: 23, value: hourOfDay)
     }
     
-    func setDayLabelString(forDaysPrior forDaysPrior: Float) -> String {
+    func setDayLabelString(forDaysPrior: Float) -> String {
         let daysPrior = Int(forDaysPrior)
         switch daysPrior {
         case 0:
@@ -132,7 +132,7 @@ class SinglePushSettingsVC: UIViewController {
     func setLabelAndSliderColors() {
         if let color = colorForType[dateObject!.type!] {
             [dayLabel, timeLabel, repeatLabel].forEach { $0.backgroundColor = color }
-            [daySlider, timeSlider].forEach() { $0.setColorTo(color) }
+            [daySlider, timeSlider].forEach() { $0!.setColorTo(color) }
             trashIcon.tintColor = color
         }
     }
@@ -140,11 +140,11 @@ class SinglePushSettingsVC: UIViewController {
     func setAlertGreeting(forHourOfDay hourOfDay: Float) -> String {
         var alertPrefix = "Good "
         if Int(hourOfDay) < 12 {
-            alertPrefix.appendContentsOf("morning. ")
+            alertPrefix.append("morning. ")
         } else if Int(hourOfDay) < 18 {
-            alertPrefix.appendContentsOf(" afternoon. ")
+            alertPrefix.append(" afternoon. ")
         } else {
-            alertPrefix.appendContentsOf("evening. ")
+            alertPrefix.append("evening. ")
         }
         return alertPrefix
     }
@@ -163,19 +163,19 @@ class SinglePushSettingsVC: UIViewController {
     func setAlertMessage(forCountdown daysBefore: Float) -> String {
         var alertSuffix = setAlertSuffix(forDateObject: dateObject!)
         if daysBefore == 0 {
-            alertSuffix.appendContentsOf("today")
+            alertSuffix.append("today")
         } else if daysBefore == 1 {
-            alertSuffix.appendContentsOf("in 1 day")
+            alertSuffix.append("in 1 day")
         } else {
-            alertSuffix.appendContentsOf("\(Int(daysBefore)) days")
+            alertSuffix.append("\(Int(daysBefore)) days")
         }
         return alertSuffix
     }
     
-    func animateDropInFor(labels: [UILabel], withDelays delays: [NSTimeInterval]) {
-        for (index, label) in labels.enumerate() {
+    func animateDropInFor(_ labels: [UILabel], withDelays delays: [TimeInterval]) {
+        for (index, label) in labels.enumerated() {
             label.center.y = -50
-            UIView.animateWithDuration(1, delay: delays[index], usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+            UIView.animate(withDuration: 1, delay: delays[index], usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
                 label.center.y = 84
                 }, completion: nil)
         }
@@ -203,7 +203,7 @@ class SinglePushSettingsVC: UIViewController {
             application.cancelLocalNotification(notification)
         }
         notificationDelegate?.reloadNotificationView()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setAlertBody() -> String {
@@ -212,7 +212,7 @@ class SinglePushSettingsVC: UIViewController {
         return greeting + message
     }
     
-    func valueChanged(sender: ValueSlider) {
+    func valueChanged(_ sender: ValueSlider) {
         
         setLabelValues(forDaysPrior: daySlider.value, at: timeSlider.value)
     }
@@ -225,13 +225,13 @@ class SinglePushSettingsVC: UIViewController {
         return Double(60 * 60 * timeSlider.integerValue())
     }
     
-    func setFireDate() -> NSDate {
+    func setFireDate() -> Foundation.Date {
         let inSeconds = secondsBeforeForDaysBefore() + secondsForHourOfDay()
-        let fireMonthAndDay = dateObject.date?.dateByAddingTimeInterval(inSeconds)
-        return fireMonthAndDay!.setYear(NSDate().getYear()) // Is this right? e.g. for a birthday that's already passed should I be passing in the next year?
+        let fireMonthAndDay = dateObject.date?.addingTimeInterval(inSeconds)
+        return fireMonthAndDay!.setYear(Foundation.Date().getYear()) // Is this right? e.g. for a birthday that's already passed should I be passing in the next year?
     }
     
-    @IBAction func createNotification(sender: AnyObject) {
+    @IBAction func createNotification(_ sender: AnyObject) {
         self.logEvents(forString: "Create Notification")
         
         deletePreviousNotification()
@@ -241,8 +241,8 @@ class SinglePushSettingsVC: UIViewController {
         let alertBody = setAlertBody()
         let alertAction = "Dismiss"
         let soundName = UILocalNotificationDefaultSoundName
-        let userInfo = ["date": String(dateObject.objectID.URIRepresentation()), "daysPrior": String(daySlider.integerValue()), "hoursAfter": String(timeSlider.integerValue())]
-        let repeatInterval: NSCalendarUnit? = repeatLabel.text == "Yearly" ? .Year : nil
+        let userInfo = ["date": String(describing: dateObject.objectID.uriRepresentation()), "daysPrior": String(daySlider.integerValue()), "hoursAfter": String(timeSlider.integerValue())]
+        let repeatInterval: NSCalendar.Unit? = repeatLabel.text == "Yearly" ? .year : nil
 
         notification.fireDate = fireDate
         notification.alertBody = alertBody

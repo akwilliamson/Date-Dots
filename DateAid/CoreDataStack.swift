@@ -12,31 +12,31 @@ import CoreData
 class CoreDataStack {
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
         return managedObjectContext
     }()
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+    fileprivate lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("DateAid")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("DateAid")
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
-            try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
         } catch  {
             print("Error adding persistent store.")
         }
         return persistentStoreCoordinator
     }()
     
-    private lazy var applicationDocumentsDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    fileprivate lazy var applicationDocumentsDirectory: URL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
     
-    private lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = NSBundle.mainBundle().URLForResource("DateAid", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+    fileprivate lazy var managedObjectModel: NSManagedObjectModel = {
+        let modelURL = Bundle.main.url(forResource: "DateAid", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     func saveContext() {

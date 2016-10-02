@@ -11,20 +11,20 @@ import Foundation
 extension String {
     
     subscript (r: Range<Int>) -> String {
-        return substringWithRange(Range(start: startIndex.advancedBy(r.startIndex), end: startIndex.advancedBy(r.endIndex)))
+        return substring(with: (characters.index(startIndex, offsetBy: r.lowerBound) ..< characters.index(startIndex, offsetBy: r.upperBound)))
     }
     
     func abbreviateName() -> String {
-        return self.containsString(" ") ? self[0...((self as NSString).rangeOfString(" ").location + 1)] : (self as String)
+        return self.contains(" ") ? self[0...((self as NSString).range(of: " ").location + 1)] : (self as String)
     }
     
     func firstName() -> String {
-        return self.containsString(" ") ? self[0...((self as NSString).rangeOfString(" ").location)] : (self as String)
+        return self.contains(" ") ? self[0...((self as NSString).range(of: " ").location)] : (self as String)
     }
     
     func lastName() -> String? {
         let lastNameString: String?
-        let components = self.componentsSeparatedByString(" ")
+        let components = self.components(separatedBy: " ")
         if components.count == 2 || components.count == 3 {
             guard let lastName = components.last else { return "" }
             lastNameString = lastName
@@ -37,7 +37,7 @@ extension String {
     func associatedColor() -> UIColor {
         switch self {
         case "all", "All":
-            return UIColor.grayColor()
+            return UIColor.gray
         case "birthday", "Birthdays":
             return UIColor.birthdayColor()
         case "anniversary", "Anniversaries":

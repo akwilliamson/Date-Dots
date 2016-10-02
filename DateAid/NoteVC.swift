@@ -8,6 +8,26 @@
 
 import UIKit
 import CoreData
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NoteVC: UIViewController {
 
@@ -45,27 +65,27 @@ class NoteVC: UIViewController {
     
     func setPlaceholderText(inView view: UITextView) {
         view.text = "A place for \(placeHolderTextForTitle[noteTitle])"
-        view.textColor = UIColor.lightGrayColor()
+        view.textColor = UIColor.lightGray
     }
     
-    @IBAction func saveNote(sender: AnyObject) {
+    @IBAction func saveNote(_ sender: AnyObject) {
         self.logEvents(forString: "Save Note")
         noteObject?.body = textView.text
         saveContext()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func saveContext() {
         if noteObject == nil {
-            guard let entity = NSEntityDescription.entityForName("Note", inManagedObjectContext: managedContext!) else { return }
-            noteObject = Note(entity: entity, insertIntoManagedObjectContext: managedContext)
+            guard let entity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext!) else { return }
+            noteObject = Note(entity: entity, insertInto: managedContext)
             guard let noteObject = noteObject else { return }
             
             noteObject.title = title
             noteObject.body = textView.text
             
             let notes = dateObject?.notes?.mutableCopy() as! NSMutableSet
-            notes.addObject(noteObject)
+            notes.add(noteObject)
             dateObject?.notes = notes.copy() as? NSSet
         }
         
@@ -78,14 +98,14 @@ class NoteVC: UIViewController {
 
 extension NoteVC: UITextViewDelegate {
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.textColor == UIColor.lightGrayColor() {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = dateObject?.type?.associatedColor()
         }
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             setPlaceholderText(inView: textView)
         }

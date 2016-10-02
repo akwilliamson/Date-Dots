@@ -14,7 +14,7 @@ class SettingsTableVC: UIViewController {
     var settingsLabelIsActive = false
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     var settingsLabelColor: UIColor?
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     
     lazy var contactImporter: ContactImporter = {
         return ContactImporter()
@@ -53,7 +53,7 @@ class SettingsTableVC: UIViewController {
         reloadDatesTableDelegate = tabBarController?.viewControllers?[0].childViewControllers[1].childViewControllers[0] as? DatesTableVC
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         toggleCancelLabels(shouldBeHidden: true)
         animateSettingsLabelsIntoView()
@@ -62,9 +62,9 @@ class SettingsTableVC: UIViewController {
     
     func alertToggle(selectedButton onButton: UIButton, offButton: UIButton) {
         
-        guard let alertYearly = userDefaults.objectForKey("alertYearly") as? Bool else {
+        guard let alertYearly = userDefaults.object(forKey: "alertYearly") as? Bool else {
             onButton.backgroundColor = UIColor.anniversaryColor()
-            offButton.backgroundColor = UIColor.lightGrayColor()
+            offButton.backgroundColor = UIColor.lightGray
             onButton.layer.cornerRadius = 5
             onButton.clipsToBounds = true
             offButton.layer.cornerRadius = 5
@@ -74,10 +74,10 @@ class SettingsTableVC: UIViewController {
         
         if alertYearly == true {
             onButton.backgroundColor = UIColor.anniversaryColor()
-            offButton.backgroundColor = UIColor.lightGrayColor()
+            offButton.backgroundColor = UIColor.lightGray
         } else {
             offButton.backgroundColor = UIColor.anniversaryColor()
-            onButton.backgroundColor = UIColor.lightGrayColor()
+            onButton.backgroundColor = UIColor.lightGray
         }
         onButton.layer.cornerRadius = 5
         onButton.clipsToBounds = true
@@ -86,8 +86,8 @@ class SettingsTableVC: UIViewController {
     }
     
     func setIndicesForLabels() {
-        for (index, label) in allSettingsLabels.enumerate() { label.index = index }
-        for (index, label) in allCancelLabels.enumerate() { label.index = index }
+        for (index, label) in allSettingsLabels.enumerated() { label.index = index }
+        for (index, label) in allCancelLabels.enumerated() { label.index = index }
     }
     
     func addGestureRecognizers() {
@@ -100,15 +100,15 @@ class SettingsTableVC: UIViewController {
     }
     
     func toggleCancelLabels(shouldBeHidden hidden: Bool) {
-        allCancelLabels.forEach({ $0.hidden = hidden })
+        allCancelLabels.forEach({ $0.isHidden = hidden })
     }
     
     func animateSettingsLabelsIntoView() {
-        var delay: NSTimeInterval = 0
+        var delay: TimeInterval = 0
         allSettingsLabels.forEach({ $0.animate(intoView: view, toPosition: syncCancel.center.x, withDelay: delay); delay += 0.03 })
     }
     
-    func slideRightOrLeft(sender: UITapGestureRecognizer) {
+    func slideRightOrLeft(_ sender: UITapGestureRecognizer) {
         guard let labelSelected = sender.view as? CircleLabel else { return }
         if settingsLabelIsActive == false {
             rollToTheRight(forLabel: labelSelected)
@@ -132,7 +132,7 @@ class SettingsTableVC: UIViewController {
     func syncAddressBook() {
         let status = ABAddressBookGetAuthorizationStatus()
         self.contactImporter.syncContacts(status: status)
-        if status == .Authorized {
+        if status == .authorized {
             self.reloadDatesTableDelegate?.reloadTableView()
         } else {
             self.showContactsUnaccessibleAlert()
@@ -141,9 +141,9 @@ class SettingsTableVC: UIViewController {
     
     func saveAlertRepeatPreference() {
         if alertYearlyButton.backgroundColor == UIColor.anniversaryColor() {
-            userDefaults.setBool(true, forKey: "alertYearly")
+            userDefaults.set(true, forKey: "alertYearly")
         } else {
-            userDefaults.setBool(false, forKey: "alertYearly")
+            userDefaults.set(false, forKey: "alertYearly")
         }
     }
     
@@ -165,7 +165,7 @@ class SettingsTableVC: UIViewController {
     
     func rollToTheLeft(forLabel labelSelected: CircleLabel) {
         toggleLabelInteractions(false)
-        allTextLabels.forEach({ $0.hidden = true })
+        allTextLabels.forEach({ $0.isHidden = true })
         self.showOrHidSettingsInfo(forIndex: labelSelected.index, hide: true)
         labelSelected.rollLeft(forDuration: 0.5, toPosition: syncCancel.center.x) { (label, text) -> () in
             self.rollLeftCompletion(label, text: text)
@@ -174,28 +174,28 @@ class SettingsTableVC: UIViewController {
         self.settingsLabelIsActive = false
     }
     
-    func toggleLabelInteractions(enabled: Bool) {
-        self.allSettingsLabels?.forEach({ $0.userInteractionEnabled = enabled })
-        self.allCancelLabels?.forEach({ $0.userInteractionEnabled = enabled })
+    func toggleLabelInteractions(_ enabled: Bool) {
+        self.allSettingsLabels?.forEach({ $0.isUserInteractionEnabled = enabled })
+        self.allCancelLabels?.forEach({ $0.isUserInteractionEnabled = enabled })
     }
     
-    func rollRightCompletion(labelSelected: CircleLabel) {
+    func rollRightCompletion(_ labelSelected: CircleLabel) {
         labelSelected.backgroundColor = UIColor.confirmColor()
         enableProperLabelsForUserInteraction(labelSelected, enabled: true)
         showOrHidSettingsInfo(forIndex: labelSelected.index, hide: false)
     }
     
-    func enableProperLabelsForUserInteraction(labelSelected: CircleLabel, enabled: Bool) {
-        labelSelected.userInteractionEnabled = enabled
+    func enableProperLabelsForUserInteraction(_ labelSelected: CircleLabel, enabled: Bool) {
+        labelSelected.isUserInteractionEnabled = enabled
         switch labelSelected.index {
         case 0:
-            syncCancel.userInteractionEnabled = enabled
+            syncCancel.isUserInteractionEnabled = enabled
         case 1:
-            iCloudCancel.userInteractionEnabled = enabled
+            iCloudCancel.isUserInteractionEnabled = enabled
         case 2:
-            alertCancel.userInteractionEnabled = enabled
+            alertCancel.isUserInteractionEnabled = enabled
         case 3:
-            colorCancel.userInteractionEnabled = enabled
+            colorCancel.isUserInteractionEnabled = enabled
         default:
             break
         }
@@ -204,33 +204,33 @@ class SettingsTableVC: UIViewController {
     func showOrHidSettingsInfo(forIndex index: Int, hide: Bool) {
         switch index {
         case 0:
-            syncLabel.hidden = hide
+            syncLabel.isHidden = hide
         case 1:
-            synciCloudLabel.hidden = hide
-            synciCloudComingSoonLabel.hidden = hide
+            synciCloudLabel.isHidden = hide
+            synciCloudComingSoonLabel.isHidden = hide
         case 2:
-            alertsLabel.hidden = hide
-            alertOnceButton.hidden = hide
-            alertYearlyButton.hidden = hide
+            alertsLabel.isHidden = hide
+            alertOnceButton.isHidden = hide
+            alertYearlyButton.isHidden = hide
         case 3:
-            colorsLabel.hidden = hide
-            customizeColorsComingSoonLabel.hidden = hide
+            colorsLabel.isHidden = hide
+            customizeColorsComingSoonLabel.isHidden = hide
         default:
             break
         }
     }
     
-    @IBAction func alertYearlySelected(sender: AnyObject) {
+    @IBAction func alertYearlySelected(_ sender: AnyObject) {
         alertYearlyButton.backgroundColor = UIColor.anniversaryColor()
-        alertOnceButton.backgroundColor = UIColor.lightGrayColor()
+        alertOnceButton.backgroundColor = UIColor.lightGray
     }
     
-    @IBAction func alertOnceSelected(sender: AnyObject) {
+    @IBAction func alertOnceSelected(_ sender: AnyObject) {
         alertOnceButton.backgroundColor = UIColor.anniversaryColor()
-        alertYearlyButton.backgroundColor = UIColor.lightGrayColor()
+        alertYearlyButton.backgroundColor = UIColor.lightGray
     }
     
-    func rollLeftCompletion(labelSelected: CircleLabel, text: String) {
+    func rollLeftCompletion(_ labelSelected: CircleLabel, text: String) {
         self.delay(0.5) {
             labelSelected.backgroundColor = self.settingsLabelColor
             labelSelected.text = text
@@ -238,19 +238,19 @@ class SettingsTableVC: UIViewController {
         }
     }
     
-    func cancelButtonPressed(sender: UITapGestureRecognizer) {
+    func cancelButtonPressed(_ sender: UITapGestureRecognizer) {
         guard let labelSelected = sender.view as? CircleLabel else { return }
-        allTextLabels.forEach({ $0.hidden = true })
+        allTextLabels.forEach({ $0.isHidden = true })
         self.showOrHidSettingsInfo(forIndex: labelSelected.index, hide: true)
         let settingsLabel = allSettingsLabels[labelSelected.index]
         settingsLabel.backgroundColor = settingsLabelColor
         settingsLabel.rotateBack360Degrees()
         
-        UIView.animateWithDuration(0.5, animations: { _ in
+        UIView.animate(withDuration: 0.5, animations: { _ in
             settingsLabel.center.x = self.syncCancel.center.x
-            }) { _ in
+            }, completion: { _ in
                 self.settingsLabelIsActive = false
                 self.toggleLabelInteractions(true)
-        }
+        }) 
     }
 }

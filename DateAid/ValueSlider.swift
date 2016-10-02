@@ -16,16 +16,16 @@ class ValueSlider: ASValueTrackingSlider {
         self.popUpViewArrowLength = 4
         self.setMaxFractionDigitsDisplayed(0)
         self.font = UIFont(name: "AvenirNext-Bold", size: 15)
-        self.textColor = UIColor.whiteColor()
+        self.textColor = UIColor.white
     }
     
-    func setValues(max max: Float, value: Float) {
+    func setValues(max: Float, value: Float) {
         self.minimumValue = 1
         self.maximumValue = max
         self.value = value
     }
     
-    func setColorTo(color: UIColor) {
+    func setColorTo(_ color: UIColor) {
         self.thumbTintColor = color
         self.minimumTrackTintColor = color
         self.popUpViewColor = color
@@ -39,9 +39,9 @@ class ValueSlider: ASValueTrackingSlider {
         let thumbView = self.subviews.last
         if thumbView?.viewWithTag(1) == nil {
             let label = UILabel(frame: thumbView!.bounds)
-            label.backgroundColor = UIColor.clearColor()
-            label.textAlignment = .Center
-            label.textColor = UIColor.whiteColor()
+            label.backgroundColor = UIColor.clear
+            label.textAlignment = .center
+            label.textColor = UIColor.white
             label.tag = 1
             
             label.text = type

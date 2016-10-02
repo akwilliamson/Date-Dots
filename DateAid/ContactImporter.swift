@@ -19,9 +19,9 @@ struct ContactImporter {
     var datesToAdd: [Date]?
     var datesAlreadyAdded: [Date]?
     
-    mutating func syncContacts(status status: ABAuthorizationStatus) {
+    mutating func syncContacts(status: ABAuthorizationStatus) {
         managedContext = CoreDataStack().managedObjectContext
-        if status == .Authorized {
+        if status == .authorized {
             fetchExistingDates()
             getDatesFromContacts()
             addCustomEntitiesForPlistDates()
@@ -32,20 +32,20 @@ struct ContactImporter {
         }
     }
     
-   private mutating func fetchExistingDates() {
+   fileprivate mutating func fetchExistingDates() {
         let existingDateFetchRequest = NSFetchRequest(entityName: "Date")
-        do { datesAlreadyAdded = try managedContext?.executeFetchRequest(existingDateFetchRequest) as? [Date]
+        do { datesAlreadyAdded = try managedContext?.fetch(existingDateFetchRequest) as? [Date]
         } catch let error as NSError {
             print(error.localizedDescription)
         }
     }
     
-    private mutating func getDatesFromContacts() {
+    fileprivate mutating func getDatesFromContacts() {
         createAnAddressBook()
         createDateEntitiesFrom(addressBook)
     }
     
-    private mutating func createAnAddressBook() {
+    fileprivate mutating func createAnAddressBook() {
         if self.addressBook != nil { // If an addressBook exists, then exit
             return
         } else { // If not, create one
@@ -55,7 +55,7 @@ struct ContactImporter {
         }
     }
     
-    private func createDateEntitiesFrom(addressBook: ABAddressBook?) {
+    fileprivate func createDateEntitiesFrom(_ addressBook: ABAddressBook?) {
         if addressBook != nil {
             let contacts = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray as [ABRecord]
             for contact in contacts {
@@ -65,7 +65,7 @@ struct ContactImporter {
         }
     }
     
-    private func addBirthdayEntityFor(addressBookContact: AnyObject) {
+    fileprivate func addBirthdayEntityFor(_ addressBookContact: AnyObject) {
         let contactHasABirthday = ABRecordCopyValue(addressBookContact, kABPersonBirthdayProperty)
         
         if contactHasABirthday != nil {
@@ -74,8 +74,8 @@ struct ContactImporter {
         }
     }
     
-    private func addAnniversaryEntityFor(addressBookContact: AnyObject) {
-        let dateProperties: ABMultiValueRef = ABRecordCopyValue(addressBookContact, kABPersonDateProperty).takeUnretainedValue()
+    fileprivate func addAnniversaryEntityFor(_ addressBookContact: AnyObject) {
+        let dateProperties: ABMultiValue = ABRecordCopyValue(addressBookContact, kABPersonDateProperty).takeUnretainedValue()
         for index in 0..<ABMultiValueGetCount(dateProperties) {
             let datePropertyLabel = (ABMultiValueCopyLabelAtIndex(dateProperties, index)).takeRetainedValue() as String
             let anniversaryLabel = kABPersonAnniversaryLabel as String
@@ -87,13 +87,13 @@ struct ContactImporter {
         }
     }
     
-    private func addCustomEntitiesForPlistDates() {
-        if let path = NSBundle.mainBundle().pathForResource("Custom", ofType: "plist") {
+    fileprivate func addCustomEntitiesForPlistDates() {
+        if let path = Bundle.main.path(forResource: "Custom", ofType: "plist") {
             let customDictionary = NSDictionary(contentsOfFile: path)!
             for (customName, customDate) in customDictionary {
-                let actualDate = customDate as! NSDate
+                let actualDate = customDate as! Foundation.Date
                 let name = customName as! String
-                let date = NSCalendar.currentCalendar().startOfDayForDate(actualDate)
+                let date = Calendar.current.startOfDay(for: actualDate)
                 let type = "custom"
                 let contactValues = (name, date, type)
                 fetchOrCreateEntityWith(contactValues, forContact: nil)
@@ -101,26 +101,26 @@ struct ContactImporter {
         }
     }
     
-    private func extractValuesForDateFrom(contact: AnyObject, forType type: String, atIndex index: CFIndex?, optionalContact: AnyObject?) -> (name: String, date: NSDate, type: String) {
-        var storedDate: NSDate!
+    fileprivate func extractValuesForDateFrom(_ contact: AnyObject, forType type: String, atIndex index: CFIndex?, optionalContact: AnyObject?) -> (name: String, date: Foundation.Date, type: String) {
+        var storedDate: Foundation.Date!
         var contactName: String!
         if type == "birthday" {
-            storedDate = ABRecordCopyValue(contact, kABPersonBirthdayProperty).takeUnretainedValue() as! NSDate
+            storedDate = ABRecordCopyValue(contact, kABPersonBirthdayProperty).takeUnretainedValue() as! Foundation.Date
             contactName = ABRecordCopyCompositeName(contact).takeUnretainedValue() as String
         } else if type == "anniversary" {
-            storedDate = ABMultiValueCopyValueAtIndex(contact, index!).takeUnretainedValue() as! NSDate
+            storedDate = ABMultiValueCopyValueAtIndex(contact, index!).takeUnretainedValue() as! Foundation.Date
             contactName = ABRecordCopyCompositeName(optionalContact).takeUnretainedValue() as String
         }
         
-        let contactDate = NSCalendar.currentCalendar().startOfDayForDate(storedDate)
+        let contactDate = Calendar.current.startOfDay(for: storedDate)
         let contactType = type
         
         return (contactName, contactDate, contactType)
     }
     
-    private func fetchOrCreateEntityWith(contactValues: (name: String, date: NSDate, type: String), forContact addressBookContact: AnyObject?) {
+    fileprivate func fetchOrCreateEntityWith(_ contactValues: (name: String, date: Foundation.Date, type: String), forContact addressBookContact: AnyObject?) {
         let fetchRequest = findMatchingDateObjectFor(contactValues)
-        do { let matchingDate = try managedContext?.executeFetchRequest(fetchRequest) as? [Date]
+        do { let matchingDate = try managedContext?.fetch(fetchRequest) as? [Date]
             if matchingDate?.count == 0 {
                 let dateObject = createDateObjectFrom(contactValues)
                 if let addressBookContact = addressBookContact {
@@ -139,7 +139,7 @@ struct ContactImporter {
         }
     }
     
-    private func findMatchingDateObjectFor(contact: (name: String, date: NSDate, type: String)) -> NSFetchRequest {
+    fileprivate func findMatchingDateObjectFor(_ contact: (name: String, date: Foundation.Date, type: String)) -> NSFetchRequest<AnyObject> {
         let matchingDateRequest = NSFetchRequest(entityName: "Date")
         matchingDateRequest.predicate = NSPredicate(format: "name = %@ AND date = %@ AND type = %@", contact.name, contact.date, contact.type)
         matchingDateRequest.fetchLimit = 1
@@ -147,9 +147,9 @@ struct ContactImporter {
         return matchingDateRequest
     }
     
-    private func createDateObjectFrom(contact: (name: String, date: NSDate, type: String)) -> Date {
-        let dateEntity = NSEntityDescription.entityForName("Date", inManagedObjectContext: managedContext!)
-        let dateObject = Date(entity: dateEntity!, insertIntoManagedObjectContext: managedContext)
+    fileprivate func createDateObjectFrom(_ contact: (name: String, date: Foundation.Date, type: String)) -> Date {
+        let dateEntity = NSEntityDescription.entity(forEntityName: "Date", in: managedContext!)
+        let dateObject = Date(entity: dateEntity!, insertInto: managedContext)
         
         dateObject.name = contact.name
         dateObject.abbreviatedName = contact.name.abbreviateName()
@@ -160,47 +160,47 @@ struct ContactImporter {
         return dateObject
     }
     
-    private func extractAddressesFrom(contact: AnyObject) -> (values: ABMultiValueRef, count: CFIndex) {
+    fileprivate func extractAddressesFrom(_ contact: AnyObject) -> (values: ABMultiValue, count: CFIndex) {
         let unmanagedAddresses = ABRecordCopyValue(contact, kABPersonAddressProperty)
-        let addresses = (Unmanaged.fromOpaque(unmanagedAddresses.toOpaque()).takeUnretainedValue() as NSObject) as ABMultiValueRef
+        let addresses = (Unmanaged.fromOpaque((unmanagedAddresses?.toOpaque())!).takeUnretainedValue() as NSObject) as ABMultiValue
         let numberOfAddresses = ABMultiValueGetCount(addresses)
         
         return (addresses, numberOfAddresses)
     }
     
-    private func extractAddressValuesFrom(addresses: ABMultiValueRef, atIndex index: CFIndex) -> (street: String, region: String) {
+    fileprivate func extractAddressValuesFrom(_ addresses: ABMultiValue, atIndex index: CFIndex) -> (street: String, region: String) {
         var street = ""
         var region = ""
         
         let unmanagedAddress = ABMultiValueCopyValueAtIndex(addresses, index)
-        let address = (Unmanaged.fromOpaque(unmanagedAddress.toOpaque()).takeUnretainedValue() as NSObject) as! NSDictionary
+        let address = (Unmanaged.fromOpaque((unmanagedAddress?.toOpaque())!).takeUnretainedValue() as NSObject) as! NSDictionary
         
-        if let streetValue = address.valueForKey("Street") as? String {
+        if let streetValue = address.value(forKey: "Street") as? String {
             street = streetValue
         }
-        if let cityValue = address.valueForKey("City") as? String {
+        if let cityValue = address.value(forKey: "City") as? String {
             region = cityValue
         }
-        if let stateValue = address.valueForKey("State") as? String {
+        if let stateValue = address.value(forKey: "State") as? String {
             region += " \(stateValue)"
         }
-        if let zip = address.valueForKey("ZIP") as? String {
+        if let zip = address.value(forKey: "ZIP") as? String {
             if let intZip = Int(zip) {
-                let zipCodeValue = NSNumber(integer: intZip)
+                let zipCodeValue = NSNumber(value: intZip as Int)
                 region += " \(zipCodeValue)"
             }
         }
         return (street, region)
     }
     
-    private func createAddressObjectFor(address: (String, String)) -> Address {
-        let addressEntity = NSEntityDescription.entityForName("Address", inManagedObjectContext: managedContext!)
-        let addressObject = Address(entity: addressEntity!, insertIntoManagedObjectContext: managedContext)
+    fileprivate func createAddressObjectFor(_ address: (String, String)) -> Address {
+        let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: managedContext!)
+        let addressObject = Address(entity: addressEntity!, insertInto: managedContext)
         
         return addressObject
     }
     
-    private func saveManagedContext() {
+    fileprivate func saveManagedContext() {
         do { try managedContext!.save()
         } catch let fetchError as NSError {
             print(fetchError.localizedDescription)

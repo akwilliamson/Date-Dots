@@ -10,19 +10,19 @@ import Foundation
 
 extension UIAlertController {
     
-    class func generate(parentVC: UIViewController, title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { _ in
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+    class func generate(_ parentVC: UIViewController, title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
-                UIApplication.sharedApplication().openURL(url)
+                UIApplication.shared.openURL(url)
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)
         
-        parentVC.presentViewController(alertController, animated: true, completion: nil)
+        parentVC.present(alertController, animated: true, completion: nil)
     }
     
 }

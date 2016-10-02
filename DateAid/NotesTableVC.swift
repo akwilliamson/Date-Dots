@@ -20,40 +20,40 @@ class NotesTableVC: UITableViewController {
         super.viewDidLoad()
         self.logEvents(forString: "Notes Main View")
         registerNibCell(withName: "NoteCell")
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     func registerNibCell(withName name: String) {
         let noteCellNib = UINib(nibName: name, bundle: nil)
-        tableView.registerNib(noteCellNib, forCellReuseIdentifier: name)
+        tableView.register(noteCellNib, forCellReuseIdentifier: name)
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NoteCell", forIndexPath: indexPath) as! NoteCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
 
-        cell.nameLabel?.text = noteTitles[indexPath.row]
+        cell.nameLabel?.text = noteTitles[(indexPath as NSIndexPath).row]
         cell.nameLabel?.textColor = typeColor
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("ShowNote", sender: self)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "ShowNote", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        let noteVC = segue.destinationViewController as! NoteVC
+        let noteVC = segue.destination as! NoteVC
         noteVC.managedContext = managedContext
         noteVC.dateObject = dateObject
-        noteVC.noteTitle = noteTitles[indexPath.row]
+        noteVC.noteTitle = noteTitles[(indexPath as NSIndexPath).row]
     }
 }

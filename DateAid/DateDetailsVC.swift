@@ -50,10 +50,10 @@ class DateDetailsVC: UIViewController {
         self.logEvents(forString: "View Date Details")
         self.addGestureRecognizers()
 
-        envelopeImage.image = UIImage(named: "envelope.png")?.imageWithRenderingMode(.AlwaysTemplate)
+        envelopeImage.image = UIImage(named: "envelope.png")?.withRenderingMode(.alwaysTemplate)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setColorTheme(forType: dateObject.type)
@@ -145,7 +145,7 @@ class DateDetailsVC: UIViewController {
     
     func populateDateLabel(forDate date: Date) {
         if let readableDate = date.date?.readableDate() {
-            dateLabel.text = readableDate.stringByReplacingOccurrencesOfString(" ", withString: "\n")
+            dateLabel.text = readableDate.replacingOccurrences(of: " ", with: "\n")
         }
     }
     
@@ -159,18 +159,18 @@ class DateDetailsVC: UIViewController {
     func populateAddressText(forLabel label: UILabel, withText text: String?) {
         if let text = text {
             label.text = text
-            label.textColor = UIColor.grayColor()
+            label.textColor = UIColor.gray
         } else {
-            label.textColor = UIColor.lightGrayColor()
+            label.textColor = UIColor.lightGray
         }
     }
     
     func populateAlertViews() {
-        guard let notifications = UIApplication.sharedApplication().scheduledLocalNotifications else { return }
+        guard let notifications = UIApplication.shared.scheduledLocalNotifications else { return }
         
         for notification in notifications {
             guard let notificationID = notification.userInfo!["date"] as? String else { return }
-            let dateObjectURL = String(dateObject.objectID.URIRepresentation())
+            let dateObjectURL = String(describing: dateObject.objectID.uriRepresentation())
             
             if notificationID == dateObjectURL {
                 localNotificationFound = true
@@ -189,7 +189,7 @@ class DateDetailsVC: UIViewController {
         }
     }
     
-    func textForDaysPrior(daysPrior: Int) -> String {
+    func textForDaysPrior(_ daysPrior: Int) -> String {
         switch daysPrior {
         case 0:
             return "Day of "
@@ -200,7 +200,7 @@ class DateDetailsVC: UIViewController {
         }
     }
     
-    func textForHourOfDay(hourOfDay: Int) -> String {
+    func textForHourOfDay(_ hourOfDay: Int) -> String {
         switch hourOfDay {
         case 0:
             return "at midnight"
@@ -215,7 +215,7 @@ class DateDetailsVC: UIViewController {
     
     func setAlertTextAndImage(toImage imageString: String, withText text: String) {
         reminderLabel.text = text
-        reminderImage.image = UIImage(named: imageString)?.imageWithRenderingMode(.AlwaysTemplate)
+        reminderImage.image = UIImage(named: imageString)?.withRenderingMode(.alwaysTemplate)
     }
     
     func animateViews() {
@@ -227,25 +227,25 @@ class DateDetailsVC: UIViewController {
         reminderLabel.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
     }
     
-    func segueToNotification(sender: UITapGestureRecognizer) {
+    func segueToNotification(_ sender: UITapGestureRecognizer) {
         self.logEvents(forString: "Notification Gesture Tapped")
-        self.performSegueWithIdentifier("ShowNotification", sender: self)
+        self.performSegue(withIdentifier: "ShowNotification", sender: self)
     }
     
-    func segueToAddress(sender: UITapGestureRecognizer) {
+    func segueToAddress(_ sender: UITapGestureRecognizer) {
         self.logEvents(forString: "Address Gesture Tapped")
-        self.performSegueWithIdentifier("ShowAddress", sender: self)
+        self.performSegue(withIdentifier: "ShowAddress", sender: self)
     }
     
 // MARK: SEGUE
     
-    @IBAction func unwindToDateDetails(segue: UIStoryboardSegue) {
+    @IBAction func unwindToDateDetails(_ segue: UIStoryboardSegue) {
         self.loadView()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditDate" {
-            let addDateVC = segue.destinationViewController as! AddDateVC
+            let addDateVC = segue.destination as! AddDateVC
             addDateVC.isBeingEdited = true
             addDateVC.dateToSave = dateObject
             addDateVC.managedContext = managedContext
@@ -253,18 +253,18 @@ class DateDetailsVC: UIViewController {
             addDateVC.reloadDatesTableDelegate = reloadDatesTableDelegate
         }
         if segue.identifier == "ShowNotes" {
-            let notesTableVC = segue.destinationViewController as! NotesTableVC
+            let notesTableVC = segue.destination as! NotesTableVC
             notesTableVC.managedContext = managedContext
             notesTableVC.typeColor = colorForType[dateObject!.type!]
             notesTableVC.dateObject = dateObject
         }
         if segue.identifier == "ShowNotification" {
-            let singlePushSettingsVC = segue.destinationViewController as! SinglePushSettingsVC
+            let singlePushSettingsVC = segue.destination as! SinglePushSettingsVC
             singlePushSettingsVC.dateObject = dateObject
             singlePushSettingsVC.notificationDelegate = self
         }
         if segue.identifier == "ShowAddress" {
-            let editDetailsVC = segue.destinationViewController as! EditDetailsVC
+            let editDetailsVC = segue.destination as! EditDetailsVC
             editDetailsVC.dateObject = dateObject
             editDetailsVC.managedContext = managedContext
             editDetailsVC.addressDelegate = self

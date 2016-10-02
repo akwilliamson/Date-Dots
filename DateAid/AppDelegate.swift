@@ -13,13 +13,13 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let tabBarAppearance = UITabBar.appearance()
     let tabBarItemAppearance = UITabBarItem.appearance()
     let navBarAppearance = UINavigationBar.appearance()
     lazy var coreDataStack = CoreDataStack()
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         startAnalyticSessions()
         styleNavigationBar()
@@ -38,43 +38,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let window = self.window else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if userDefaults.objectForKey("hasLaunchedOnce") == nil {
-            userDefaults.setBool(true, forKey: "hasLaunchedOnce")
-            window.rootViewController = storyboard.instantiateViewControllerWithIdentifier("InitialImport") as! InitialImportVC
+        if userDefaults.object(forKey: "hasLaunchedOnce") == nil {
+            userDefaults.set(true, forKey: "hasLaunchedOnce")
+            window.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as! InitialImportVC
         } else {
-            window.rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainView") as UIViewController
+            window.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainView") as UIViewController
         }
     }
     
     func styleNavigationBar() {
         navBarAppearance.barTintColor = UIColor.birthdayColor()
-        navBarAppearance.tintColor = UIColor.whiteColor()
-        navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(),
+        navBarAppearance.tintColor = UIColor.white
+        navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
             NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
     }
     
     func styleTabBar() {
         tabBarAppearance.barTintColor = UIColor.birthdayColor()
-        tabBarAppearance.tintColor = UIColor.whiteColor()
-        tabBarItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+        tabBarAppearance.tintColor = UIColor.white
+        tabBarItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
     }
 
     // Persist data to disk when app enters background
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         coreDataStack.saveContext()
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
     }
 
     // Persist data to disk when app terminates
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         coreDataStack.saveContext()
     }
 }

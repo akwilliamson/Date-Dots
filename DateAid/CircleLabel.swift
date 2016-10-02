@@ -18,47 +18,47 @@ class CircleLabel: UILabel {
         super.init(coder: aDecoder)!
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         self.layer.cornerRadius = self.bounds.width/2
         self.clipsToBounds = true
-        super.drawRect(rect)
+        super.draw(rect)
     }
     
-    override func drawTextInRect(rect: CGRect) {
-        self.textColor = UIColor.whiteColor()
-        super.drawTextInRect(rect)
+    override func drawText(in rect: CGRect) {
+        self.textColor = UIColor.white
+        super.drawText(in: rect)
     }
     
-    func setProperties(borderWidth: Float, borderColor: UIColor) {
+    func setProperties(_ borderWidth: Float, borderColor: UIColor) {
         self.layer.borderWidth = CGFloat(borderWidth)
-        self.layer.borderColor = borderColor.CGColor
+        self.layer.borderColor = borderColor.cgColor
     }
     
-    func animateDropIn(withDelay delay: NSTimeInterval) {
+    func animateDropIn(withDelay delay: TimeInterval) {
         self.center.y = -50
-        UIView.animateWithDuration(1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 1, delay: delay, usingSpringWithDamping: 0.6, initialSpringVelocity: 8, options: [], animations: { () -> Void in
             self.center.y = 84
             }, completion: nil)
     }
     
-    func rollRight(forDuration duration: NSTimeInterval, inView view: UIView, closure: (CircleLabel) -> ()) {
+    func rollRight(forDuration duration: TimeInterval, inView view: UIView, closure: @escaping (CircleLabel) -> ()) {
         self.rotate360Degrees()
-        UIView.animateWithDuration(duration, animations: { _ in
+        UIView.animate(withDuration: duration, animations: { _ in
             self.center.x = view.frame.width - (self.center.x)
-            }) { _ in
+            }, completion: { _ in
                 closure(self)
-        }
+        }) 
     }
     
-    func rollLeft(forDuration duration: NSTimeInterval, toPosition position: CGFloat, closure: (CircleLabel, String) -> ()) {
+    func rollLeft(forDuration duration: TimeInterval, toPosition position: CGFloat, closure: @escaping (CircleLabel, String) -> ()) {
         self.rotateBack360Degrees()
         let text = self.text!
-        UIView.animateWithDuration(duration, animations: { _ in
+        UIView.animate(withDuration: duration, animations: { _ in
             self.center.x = position
             self.text = "✓"
-            }) { _ in
+            }, completion: { _ in
                 closure(self, text)
-        }
+        }) 
     }
     
     func addTapGestureRecognizer(forAction action: String, inController controller: UIViewController) {
@@ -67,9 +67,9 @@ class CircleLabel: UILabel {
         self.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func animate(intoView view: UIView, toPosition position: CGFloat, withDelay delay: NSTimeInterval) {
+    func animate(intoView view: UIView, toPosition position: CGFloat, withDelay delay: TimeInterval) {
         self.center.x = -view.frame.width - self.frame.height
-        UIView.animateWithDuration(0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { _ in
+        UIView.animate(withDuration: 0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { _ in
             self.center.x = position
             }) { _ in
         }

@@ -15,7 +15,7 @@ import CoreData
 extension Date {
 
     @NSManaged var abbreviatedName: String?
-    @NSManaged var date: NSDate?
+    @NSManaged var date: Foundation.Date?
     @NSManaged var equalizedDate: String?
     @NSManaged var name: String?
     @NSManaged var type: String?

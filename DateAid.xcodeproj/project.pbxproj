@@ -26,6 +26,7 @@
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		97618DC91BEB19CD0051ED3D /* ContactImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97618DC81BEB19CD0051ED3D /* ContactImporter.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
+		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
 		978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 978C22FE1BFC3668000075D5 /* NavigationCell.xib */; };
@@ -102,6 +103,7 @@
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		97618DC81BEB19CD0051ED3D /* ContactImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactImporter.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		978C22FE1BFC3668000075D5 /* NavigationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCell.xib; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
+				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -449,9 +452,11 @@
 					97364CDF1AFBF44A0095BC57 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 5GJ9V4N76W;
+						LastSwiftMigration = 0800;
 					};
 					97364CF71AFBF44A0095BC57 = {
 						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 97364CDF1AFBF44A0095BC57;
 					};
 				};
@@ -590,6 +595,7 @@
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
+				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
@@ -743,6 +749,7 @@
 				SWIFT_INCLUDE_PATHS = "$(inherited)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -765,6 +772,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
@@ -785,6 +793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateAid.app/DateAid";
 			};
 			name = Debug;
@@ -801,6 +810,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateAid.app/DateAid";
 			};
 			name = Release;

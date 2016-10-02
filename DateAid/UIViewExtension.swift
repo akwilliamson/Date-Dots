@@ -10,7 +10,7 @@ import Foundation
 
 extension UIView {
     
-    func rotate360Degrees(duration: CFTimeInterval = 0.4, completionDelegate: AnyObject? = nil) {
+    func rotate360Degrees(_ duration: CFTimeInterval = 0.4, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
         rotateAnimation.toValue = CGFloat(M_PI) * 2
@@ -19,10 +19,10 @@ extension UIView {
         if let delegate: AnyObject = completionDelegate {
             rotateAnimation.delegate = delegate
         }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
+        self.layer.add(rotateAnimation, forKey: nil)
     }
     
-    func rotateBack360Degrees(duration: CFTimeInterval = 0.4, completionDelegate: AnyObject? = nil) {
+    func rotateBack360Degrees(_ duration: CFTimeInterval = 0.4, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = CGFloat(M_PI) * 2
         rotateAnimation.toValue = 0
@@ -31,12 +31,12 @@ extension UIView {
         if let delegate: AnyObject = completionDelegate {
             rotateAnimation.delegate = delegate
         }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
+        self.layer.add(rotateAnimation, forKey: nil)
     }
     
-    func animateSlideIn(withDuration duration: NSTimeInterval, toPosition newPosition: CGFloat) {
+    func animateSlideIn(withDuration duration: TimeInterval, toPosition newPosition: CGFloat) {
         self.center.x = 600
-        UIView.animateWithDuration(duration, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: duration, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 8, options: [], animations: { () -> Void in
             self.center.x = newPosition
             self.center.x = newPosition
             }, completion: nil)

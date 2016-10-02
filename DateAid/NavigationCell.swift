@@ -14,8 +14,8 @@ class NavigationCell: UITableViewCell {
     @IBOutlet weak var navigationIcon: UIImageView!
     @IBOutlet weak var navigationTitle: UILabel!
     
-    func setIcon(forIndexPath indexPath: NSIndexPath) {
-        switch indexPath.row {
+    func setIcon(forIndexPath indexPath: IndexPath) {
+        switch (indexPath as NSIndexPath).row {
         case 0:
             self.navigationIcon.image = UIImage(named: "all.png")
         case 1:

@@ -8,22 +8,22 @@
 
 import Foundation
 
-extension NSDate {
+extension Foundation.Date {
 
-    convenience init(dateString: String) {
-        let dateStringFormatter = NSDateFormatter()
+    init(dateString: String) {
+        let dateStringFormatter = DateFormatter()
         dateStringFormatter.dateFormat = "yyyy-MM-dd"
-        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        let date = dateStringFormatter.dateFromString(dateString)!
-        self.init(timeInterval: 0, sinceDate: date)
+        dateStringFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let date = dateStringFormatter.date(from: dateString)!
+        (self as NSDate).init(timeInterval: 0, since: date)
     }
     
     func daysBetween() -> Int {
         let components = getComponents()
-        components.setValue(2015, forComponent: .Year) // Static year component for now, should change to dynamic
-        let newDate = getCalendar().dateFromComponents(components)
-        let dateDay = getCalendar().ordinalityOfUnit(.Day, inUnit: .Year, forDate: newDate!)
-        let nowDay = getCalendar().ordinalityOfUnit(.Day, inUnit: .Year, forDate: NSDate())
+        (components as NSDateComponents).setValue(2015, forComponent: .year) // Static year component for now, should change to dynamic
+        let newDate = getCalendar().date(from: components)
+        let dateDay = (getCalendar() as NSCalendar).ordinality(of: .day, in: .year, for: newDate!)
+        let nowDay = (getCalendar() as NSCalendar).ordinality(of: .day, in: .year, for: Foundation.Date())
         var difference = dateDay - nowDay
         if difference < 0 {
             difference += 365
@@ -32,67 +32,67 @@ extension NSDate {
     }
     
     func formatDateIntoString() -> String {
-        let formatString = NSDateFormatter.dateFormatFromTemplate("MM dd", options: 0, locale: NSLocale.currentLocale())
-        let dateFormatter = NSDateFormatter()
+        let formatString = DateFormatter.dateFormat(fromTemplate: "MM dd", options: 0, locale: Locale.current)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = formatString
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self)
     }
     
     func readableDate() -> String {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd"
-        return dateFormatter.stringFromDate(self)
+        return dateFormatter.string(from: self)
     }
     
     func ageTurning() -> Int {
-        let date = getCalendar().components(.Year, fromDate: self, toDate: NSDate(), options: [])
-        return date.year + 1
+        let date = (getCalendar() as NSCalendar).components(.year, from: self, to: Foundation.Date(), options: [])
+        return date.year! + 1
     }
     
-    func getCalendar() -> NSCalendar {
-        return NSCalendar.currentCalendar()
+    func getCalendar() -> Calendar {
+        return Calendar.current
     }
     
-    func getComponents() -> NSDateComponents {
-        return getCalendar().components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: self)
+    func getComponents() -> DateComponents {
+        return (getCalendar() as NSCalendar).components([.year, .month, .day, .hour, .minute, .second], from: self)
     }
     
     func getYear() -> Int {
-        return getComponents().year
+        return getComponents().year!
     }
     
     func getMonth() -> Int {
-        return getComponents().month
+        return getComponents().month!
     }
     
     func getDay() -> Int {
-        return getComponents().day
+        return getComponents().day!
     }
     
     func getHour() -> Int {
-        return getComponents().hour
+        return getComponents().hour!
     }
     
     func getMinute() -> Int {
-        return getComponents().minute
+        return getComponents().minute!
     }
     
     func getSecond() -> Int {
-        return getComponents().second
+        return getComponents().second!
     }
     
-    func setYear(year: Int) -> NSDate {
-        let components = getComponents()
+    func setYear(_ year: Int) -> Foundation.Date {
+        var components = getComponents()
         components.year = year
         components.month = self.getMonth()
         components.day = self.getDay()
         components.hour = self.getHour()
         components.minute = self.getMinute()
         components.second = self.getSecond()
-        var date = getCalendar().dateFromComponents(components)!
-        if date == date.earlierDate(NSDate()) {
+        var date = getCalendar().date(from: components)!
+        if date == (date as NSDate).earlierDate(Foundation.Date()) {
             components.year = year + 1
-            date = getCalendar().dateFromComponents(components)!
+            date = getCalendar().date(from: components)!
         }
         return date
     }
