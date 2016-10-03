@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -27,8 +26,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-U9-Mg1">
-                                <frame key="frameInset" minX="215" minY="85" width="170" height="170"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-U9-Mg1">
                                 <color key="backgroundColor" red="0.070588235294117646" green="0.59215686274509804" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="170" id="9NO-TM-pSo"/>
@@ -42,8 +40,7 @@
                                     <action selector="syncContacts:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TbS-Yj-o5H"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I52-SK-dt9">
-                                <frame key="frameInset" minX="240" minY="305" width="120" height="120"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I52-SK-dt9">
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="nBz-jj-chl"/>
@@ -55,11 +52,10 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="skipImport:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="QbN-Na-Ary"/>
+                                    <action selector="skipImportPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gBd-2Q-GM7"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-ps-xUI">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-ps-xUI">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Ss0-6t-lyN"/>
@@ -114,9 +110,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="importButton" destination="Ssd-U9-Mg1" id="i3b-pj-5sY"/>
-                        <outlet property="skipButton" destination="I52-SK-dt9" id="rec-YG-gd8"/>
-                        <segue destination="6Er-P5-vP8" kind="show" identifier="HomeScreen" id="SXV-Qu-gXZ"/>
+                        <segue destination="6Er-P5-vP8" kind="show" identifier="ShowHome" id="SXV-Qu-gXZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -988,24 +982,24 @@
                                 <exclude reference="SqN-ij-gia"/>
                                 <exclude reference="tT7-TI-MuM"/>
                                 <exclude reference="ymu-ir-10c"/>
-                                <exclude reference="Nwi-2V-wx8"/>
-                                <exclude reference="Op4-W7-PTj"/>
-                                <exclude reference="qwh-nh-oop"/>
-                                <exclude reference="vaZ-xI-r84"/>
                                 <exclude reference="CF1-bm-nLg"/>
                                 <exclude reference="mAr-x2-prD"/>
-                                <exclude reference="wM5-Qk-r0d"/>
                                 <exclude reference="a22-kp-9nq"/>
                                 <exclude reference="Bgx-6d-UcG"/>
                                 <exclude reference="JGx-1z-wsb"/>
                                 <exclude reference="PDY-V5-wVe"/>
                                 <exclude reference="X4f-HJ-Sed"/>
                                 <exclude reference="fYa-de-R7D"/>
-                                <exclude reference="T38-sl-sD7"/>
                                 <exclude reference="Eo2-aF-3fv"/>
                                 <exclude reference="Wga-eg-Obi"/>
                                 <exclude reference="mS1-p3-zzT"/>
                                 <exclude reference="ye1-Bd-FJY"/>
+                                <exclude reference="T38-sl-sD7"/>
+                                <exclude reference="Nwi-2V-wx8"/>
+                                <exclude reference="Op4-W7-PTj"/>
+                                <exclude reference="qwh-nh-oop"/>
+                                <exclude reference="vaZ-xI-r84"/>
+                                <exclude reference="wM5-Qk-r0d"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1017,25 +1011,25 @@
                                 <include reference="SqN-ij-gia"/>
                                 <include reference="tT7-TI-MuM"/>
                                 <include reference="ymu-ir-10c"/>
-                                <include reference="Nwi-2V-wx8"/>
-                                <exclude reference="Op4-W7-PTj"/>
-                                <include reference="qwh-nh-oop"/>
-                                <include reference="vaZ-xI-r84"/>
                                 <include reference="CF1-bm-nLg"/>
                                 <exclude reference="KgC-Ck-Bag"/>
                                 <include reference="mAr-x2-prD"/>
-                                <include reference="wM5-Qk-r0d"/>
                                 <include reference="a22-kp-9nq"/>
                                 <include reference="Bgx-6d-UcG"/>
                                 <include reference="JGx-1z-wsb"/>
                                 <exclude reference="PDY-V5-wVe"/>
                                 <include reference="X4f-HJ-Sed"/>
                                 <include reference="fYa-de-R7D"/>
-                                <include reference="T38-sl-sD7"/>
                                 <exclude reference="CO6-20-Lvj"/>
                                 <exclude reference="Rpr-si-DHy"/>
                                 <include reference="Wga-eg-Obi"/>
                                 <include reference="mS1-p3-zzT"/>
+                                <include reference="T38-sl-sD7"/>
+                                <include reference="Nwi-2V-wx8"/>
+                                <exclude reference="Op4-W7-PTj"/>
+                                <include reference="qwh-nh-oop"/>
+                                <include reference="vaZ-xI-r84"/>
+                                <include reference="wM5-Qk-r0d"/>
                             </mask>
                         </variation>
                     </view>
@@ -2615,6 +2609,7 @@
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Zdv-7h-m4M">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>

@@ -24,8 +24,15 @@ class InitialImportVC: UIViewController {
         activityView.center = self.view.center
         activityView.startAnimating()
         self.view.addSubview(activityView)
+        
         DateManager().syncDates()
+        
         activityView.stopAnimating()
-        self.performSegue(withIdentifier: "HomeScreen", sender: self)
+        self.performSegue(withIdentifier: "ShowHome", sender: self)
     }
+    
+    @IBAction func skipImportPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "ShowHome", sender: self)
+    }
+    
 }

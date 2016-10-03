@@ -12,32 +12,32 @@ import CoreData
 
 class DateManager {
 
-    var managedContext: NSManagedObjectContext = CoreDataStack().managedObjectContext
-    var contacts: [CNContact?] = ContactManager().contacts
+    private var managedContext: NSManagedObjectContext = CoreDataStack().managedObjectContext
+    private var contacts: [CNContact?] = ContactManager().contacts
 
-    var storedDates: [Date?] {
+    private var storedDates: [Date?] {
         return managedContext.fetch()
     }
     
-    func syncDates() {
+    public func syncDates() {
         createBirthdays()
         createAnniversaries()
         managedContext.trySave()
     }
     
-    func createBirthdays() {
+    private func createBirthdays() {
         contacts.forEach { contact in
             date(for: contact, of: .birthday)
         }
     }
     
-    func createAnniversaries() {
+    private func createAnniversaries() {
         contacts.forEach { contact in
             date(for: contact, of: .anniversary)
         }
     }
     
-    func createHolidays() {
+    private func createHolidays() {
         guard let path = Bundle.main.path(forResource: "Holidays", ofType: "plist"),
         let dict = NSDictionary(contentsOfFile: path) as? [String: Foundation.Date] else {
             return
@@ -62,7 +62,7 @@ class DateManager {
         }
     }
     
-    func date(for contact: CNContact?, of type: DateType) {
+    private func date(for contact: CNContact?, of type: DateType) {
         
         let exists = storedDates.contains { date -> Bool in
             return date?.name == contact?.fullName && date?.type == type.rawValue
@@ -95,7 +95,7 @@ class DateManager {
         }
     }
     
-    func create(_ postalAddress: CNPostalAddress, for date: Date) -> Address? {
+    private func create(_ postalAddress: CNPostalAddress, for date: Date) -> Address? {
         
         if let entity = NSEntityDescription.entity(forEntityName: "Date", in: managedContext) {
             let address = Address(entity: entity, insertInto: managedContext)
