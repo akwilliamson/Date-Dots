@@ -203,7 +203,7 @@ class SinglePushSettingsVC: UIViewController {
             application.cancelLocalNotification(notification)
         }
         notificationDelegate?.reloadNotificationView()
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func setAlertBody() -> String {

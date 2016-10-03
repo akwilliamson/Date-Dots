@@ -21,7 +21,8 @@ extension Foundation.Date {
         dateStringFormatter.dateFormat = "yyyy-MM-dd"
         dateStringFormatter.locale = Locale(identifier: "en_US_POSIX")
         let date = dateStringFormatter.date(from: dateString)!
-        (self as NSDate).init(timeInterval: 0, since: date)
+        
+        self.init(timeInterval: 0, since: date)
     }
     
     func daysBetween() -> Int {

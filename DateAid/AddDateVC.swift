@@ -272,11 +272,10 @@ class AddDateVC: UIViewController {
         }
         
         if let dateToSave = dateToSave {
-            
             dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces)
-            dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
+            dateToSave.abbreviatedName = dateToSave.name?.abbreviatedName()
             dateToSave.date = setDateFromValues()
-            dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()
+            dateToSave.equalizedDate = dateToSave.date?.formatted
             
             if dateToSave.address == nil {
                 guard let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: managedContext!) else { return }
@@ -412,7 +411,7 @@ extension AddDateVC {
             setValuesOnDateToSave()
             saveContext()
             reloadDatesTableDelegate?.reloadTableView()
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         } else {
             showAlertForNoName()
         }

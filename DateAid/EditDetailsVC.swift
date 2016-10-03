@@ -59,10 +59,10 @@ class EditDetailsVC: UIViewController {
         
         do { try managedContext?.save()
             if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {
-                self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+                _ = self.navigationController?.popToViewController(dateDetailsVC, animated: true)
             } else {
                 let datesTableVC = self.navigationController?.viewControllers[0] as! DatesTableVC
-                self.navigationController?.popToViewController(datesTableVC, animated: true)
+                _ = self.navigationController?.popToViewController(datesTableVC, animated: true)
             }
         } catch let error as NSError {
             print(error.localizedDescription)

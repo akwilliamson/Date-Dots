@@ -112,7 +112,7 @@ class DateDetailsVC: UIViewController {
     
     
     func populateNavBarTitle(forDate date: Date) {
-        if let abbreviatedName = date.name?.abbreviateName() {
+        if let abbreviatedName = date.name?.abbreviatedName() {
             title = date.type! == "birthday" ? abbreviatedName : dateObject.name!
         }
     }

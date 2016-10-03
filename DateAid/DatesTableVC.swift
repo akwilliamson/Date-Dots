@@ -78,16 +78,16 @@ class DatesTableVC: UITableViewController {
 // MARK: HELPERS
     
     func setAndPerformFetchRequest() {
-        let datesFetch = NSFetchRequest(entityName: "Date")
+        let datesFetch: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
         let datesInOrder = NSSortDescriptor(key: "equalizedDate", ascending: true)
         let namesInOrder = NSSortDescriptor(key: "name", ascending: true)
         datesFetch.sortDescriptors = [datesInOrder, namesInOrder]
         datesFetch.predicate = typePredicate
         
-        do { fetchedResults = try managedContext.fetch(datesFetch) as? [Date]
+        do { fetchedResults = try managedContext.fetch(datesFetch)
             if fetchedResults!.count > 0 {
                 for date in fetchedResults! {
-                    if date.equalizedDate < Foundation.Date().formatDateIntoString() {
+                    if date.equalizedDate < Foundation.Date().formatted {
                         fetchedResults!.remove(at: 0)
                         fetchedResults!.append(date)
                     }

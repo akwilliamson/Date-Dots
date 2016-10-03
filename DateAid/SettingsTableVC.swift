@@ -8,6 +8,7 @@
 
 import UIKit
 import AddressBook
+import Contacts
 
 class SettingsTableVC: UIViewController {
     
@@ -15,10 +16,6 @@ class SettingsTableVC: UIViewController {
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     var settingsLabelColor: UIColor?
     let userDefaults = UserDefaults.standard
-    
-    lazy var contactImporter: ContactImporter = {
-        return ContactImporter()
-    }()
     
     @IBOutlet weak var syncCancel: CircleLabel!
     @IBOutlet weak var iCloudCancel: CircleLabel!
@@ -130,9 +127,8 @@ class SettingsTableVC: UIViewController {
     }
     
     func syncAddressBook() {
-        let status = ABAddressBookGetAuthorizationStatus()
-        self.contactImporter.syncContacts(status: status)
-        if status == .authorized {
+        DateManager().syncDates()
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
             self.reloadDatesTableDelegate?.reloadTableView()
         } else {
             self.showContactsUnaccessibleAlert()

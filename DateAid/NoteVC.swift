@@ -72,7 +72,7 @@ class NoteVC: UIViewController {
         self.logEvents(forString: "Save Note")
         noteObject?.body = textView.text
         saveContext()
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func saveContext() {

@@ -105,13 +105,13 @@ class TurningVC: UIViewController {
     }
     
     func fetchDatesIfNotBeenFetched() {
-        let fetchRequest = NSFetchRequest(entityName: "Date")
+        let fetchRequest: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
         
         let datesInOrder = NSSortDescriptor(key: "equalizedDate", ascending: true)
         let namesInOrder = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [datesInOrder, namesInOrder]
         
-        do { fetchedResults = try managedContext.fetch(fetchRequest) as? [Date]
+        do { fetchedResults = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print(error.localizedDescription)
         }

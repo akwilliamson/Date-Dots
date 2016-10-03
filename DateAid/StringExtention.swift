@@ -14,12 +14,21 @@ extension String {
         return substring(with: (characters.index(startIndex, offsetBy: r.lowerBound) ..< characters.index(startIndex, offsetBy: r.upperBound)))
     }
     
-    func abbreviateName() -> String {
-        return self.contains(" ") ? self[0...((self as NSString).range(of: " ").location + 1)] : (self as String)
+    func abbreviatedName() -> String {
+        let comps = self.components(separatedBy: " ")
+        
+        if comps.count > 1 {
+            guard let char = comps[1].characters.first else {
+                return self
+            }
+            return comps[0] + " " + String(char)
+        } else {
+            return self
+        }
     }
     
     func firstName() -> String {
-        return self.contains(" ") ? self[0...((self as NSString).range(of: " ").location)] : (self as String)
+        return self.components(separatedBy: " ")[0]
     }
     
     func lastName() -> String? {
