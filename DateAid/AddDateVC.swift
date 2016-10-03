@@ -273,7 +273,7 @@ class AddDateVC: UIViewController {
         
         if let dateToSave = dateToSave {
             
-            dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces())
+            dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces)
             dateToSave.abbreviatedName = dateToSave.name?.abbreviateName()
             dateToSave.date = setDateFromValues()
             dateToSave.equalizedDate = dateToSave.date?.formatDateIntoString()

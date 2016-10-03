@@ -11,40 +11,17 @@ import Contacts
 
 class ContactManager {
     
-    let store = CNContactStore()
-    var contacts: [CNContact?] {
-        return getContacts()
-    }
+    lazy var store: CNContactStore = { CNContactStore() }()
+    var contacts: [CNContact?] { return getContacts() }
     
     private func getContacts() -> [CNContact?] {
         
         var fetchedContacts: [CNContact?] = []
         
         authorized(complete: { success in
-            if success {
-                fetchedContacts = self.fetchContacts()
-            }
+            fetchedContacts = success ? self.fetchContacts() : []
         })
         return fetchedContacts
-    }
-    
-    private func fetchContacts() -> [CNContact?] {
-        
-        let keys: [CNKeyDescriptor] = [
-            CNContactGivenNameKey       as CNKeyDescriptor,
-            CNContactFamilyNameKey      as CNKeyDescriptor,
-            CNContactBirthdayKey        as CNKeyDescriptor,
-            CNContactDatesKey           as CNKeyDescriptor
-        ]
-        do {
-            let containerId = CNContactStore().defaultContainerIdentifier()
-            let predicate: NSPredicate = CNContact.predicateForContactsInContainer(withIdentifier: containerId)
-            return try CNContactStore().unifiedContacts(matching: predicate, keysToFetch: keys)
-            // contacts.forEach({ print("\n\($0.givenName) \($0.familyName): \($0.birthday)\n\($0.dates.first?.label): \($0.dates.first?.value.date)\n****\n") })
-        } catch let error {
-            print("error: \(error)")
-            return []
-        }
     }
     
     private func authorized(complete: @escaping (_ success: Bool) -> Void) {
@@ -58,6 +35,26 @@ class ContactManager {
             })
         case .restricted, .denied:
             return complete(false)
+        }
+    }
+    
+    private func fetchContacts() -> [CNContact?] {
+        
+        let keys: [CNKeyDescriptor] = [
+            CNContactGivenNameKey       as CNKeyDescriptor,
+            CNContactFamilyNameKey      as CNKeyDescriptor,
+            CNContactBirthdayKey        as CNKeyDescriptor,
+            CNContactDatesKey           as CNKeyDescriptor,
+            CNContactPostalAddressesKey as CNKeyDescriptor,
+        ]
+        
+        do {
+            let containerId = store.defaultContainerIdentifier()
+            let predicate = CNContact.predicateForContactsInContainer(withIdentifier: containerId)
+            return try store.unifiedContacts(matching: predicate, keysToFetch: keys)
+        } catch let error {
+            print(error.localizedDescription)
+            return []
         }
     }
 }

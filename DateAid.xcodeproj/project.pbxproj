@@ -24,9 +24,10 @@
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
 		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
-		97618DC91BEB19CD0051ED3D /* ContactImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97618DC81BEB19CD0051ED3D /* ContactImporter.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
+		977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B011DA197FF005D131F /* CNContact+Tasks.swift */; };
+		977E3B041DA1A4A1005D131F /* DateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B031DA1A4A1005D131F /* DateType.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
 		978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 978C22FE1BFC3668000075D5 /* NavigationCell.xib */; };
@@ -49,6 +50,8 @@
 		97AEAC101B2EA74A00ADF181 /* Custom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Custom.plist */; };
 		97B099BC1BF55C5600ADE476 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BB1BF55C5600ADE476 /* Security.framework */; };
 		97B099BE1BF55C5C00ADE476 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */; };
+		97B40DAB1DA17900000DA0E0 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAA1DA17900000DA0E0 /* DateManager.swift */; };
+		97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */; };
 		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; };
 		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; };
 		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
@@ -101,9 +104,10 @@
 		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
-		97618DC81BEB19CD0051ED3D /* ContactImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactImporter.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		977E3B011DA197FF005D131F /* CNContact+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CNContact+Tasks.swift"; sourceTree = "<group>"; };
+		977E3B031DA1A4A1005D131F /* DateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateType.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		978C22FE1BFC3668000075D5 /* NavigationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCell.xib; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 		97AEAC0F1B2EA74A00ADF181 /* Custom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Custom.plist; sourceTree = "<group>"; };
 		97B099BB1BF55C5600ADE476 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		97B40DAA1DA17900000DA0E0 /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
+		97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Tasks.swift"; sourceTree = "<group>"; };
 		97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97B5F1A81BD02F3C00CEFFAF /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -190,6 +196,8 @@
 				978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */,
 				97F6C9601BFEF34400511572 /* UIButtonExtension.swift */,
 				975899751C02DAEA009BC3B9 /* ArrayExtension.swift */,
+				97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */,
+				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -286,7 +294,6 @@
 			isa = PBXGroup;
 			children = (
 				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
-				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -356,13 +363,15 @@
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				97618DC81BEB19CD0051ED3D /* ContactImporter.swift */,
+				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
+				97B40DAA1DA17900000DA0E0 /* DateManager.swift */,
 				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
 				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
 				9791F78A1BD4CCDF001E82BB /* Address.swift */,
 				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
 				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
+				977E3B031DA1A4A1005D131F /* DateType.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -584,8 +593,11 @@
 				9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */,
 				97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
-				97618DC91BEB19CD0051ED3D /* ContactImporter.swift in Sources */,
+				977E3B041DA1A4A1005D131F /* DateType.swift in Sources */,
 				973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */,
+				97B40DAB1DA17900000DA0E0 /* DateManager.swift in Sources */,
+				977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */,
+				97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */,
 				978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,

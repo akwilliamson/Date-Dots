@@ -9,6 +9,12 @@
 import Foundation
 
 extension Foundation.Date {
+    
+    var formatted: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        return dateFormatter.string(from: self)
+    }
 
     init(dateString: String) {
         let dateStringFormatter = DateFormatter()
@@ -29,13 +35,6 @@ extension Foundation.Date {
             difference += 365
         }
         return difference
-    }
-    
-    func formatDateIntoString() -> String {
-        let formatString = DateFormatter.dateFormat(fromTemplate: "MM dd", options: 0, locale: Locale.current)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatString
-        return dateFormatter.string(from: self)
     }
     
     func readableDate() -> String {
