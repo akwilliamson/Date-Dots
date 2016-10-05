@@ -409,18 +409,11 @@ extension AddDateVC {
         self.logEvents(forString: "Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
-            saveContext()
+            managedContext?.trySave()
             reloadDatesTableDelegate?.reloadTableView()
             _ = self.navigationController?.popViewController(animated: true)
         } else {
             showAlertForNoName()
-        }
-    }
-    
-    func saveContext() {
-        do { try managedContext!.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
         }
     }
 }

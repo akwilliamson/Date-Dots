@@ -11,9 +11,9 @@ import Contacts
 
 class ContactManager {
     
-    lazy var store: CNContactStore = { CNContactStore() }()
+    static var store: CNContactStore = { CNContactStore() }()
     
-    public func syncContacts(complete: @escaping () -> Void) {
+    static func syncContacts(complete: @escaping () -> Void) {
         
         authorized(complete: { success in
             let fetchedContacts: [CNContact?] = success ? self.fetchContacts() : []
@@ -22,7 +22,7 @@ class ContactManager {
         })
     }
     
-    private func authorized(complete: @escaping (_ success: Bool) -> Void) {
+    static func authorized(complete: @escaping (_ success: Bool) -> Void) {
         
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized:
@@ -37,7 +37,7 @@ class ContactManager {
         }
     }
     
-    private func fetchContacts() -> [CNContact?] {
+    static func fetchContacts() -> [CNContact?] {
         
         let keys: [CNKeyDescriptor] = [
             CNContactGivenNameKey       as CNKeyDescriptor,

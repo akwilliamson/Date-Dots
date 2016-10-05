@@ -127,7 +127,7 @@ class SettingsTableVC: UIViewController {
     }
     
     func syncAddressBook() {
-        ContactManager().syncContacts { 
+        ContactManager.syncContacts {
             if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
                 self.reloadDatesTableDelegate?.reloadTableView()
             } else {

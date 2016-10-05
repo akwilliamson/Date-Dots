@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Persist data to disk when app enters background
     func applicationDidEnterBackground(_ application: UIApplication) {
-        coreDataStack.saveContext()
+        coreDataStack.managedObjectContext.trySave()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Persist data to disk when app terminates
     func applicationWillTerminate(_ application: UIApplication) {
-        coreDataStack.saveContext()
+        coreDataStack.managedObjectContext.trySave()
     }
 }
 

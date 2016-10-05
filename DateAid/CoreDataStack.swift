@@ -12,39 +12,41 @@ import CoreData
 class CoreDataStack {
     
     lazy var managedObjectContext: NSManagedObjectContext = {
+        
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        
         return managedObjectContext
     }()
     
-    fileprivate lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("DateAid")
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        
+        let psc = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        let url = self.documentDirectoryUrl.appendingPathComponent("DateAid")
+        let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
+        
         do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-        } catch  {
-            print("Error adding persistent store.")
+            try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+        } catch let error {
+            print(error.localizedDescription)
         }
-        return persistentStoreCoordinator
+        
+        return psc
     }()
     
-    fileprivate lazy var applicationDocumentsDirectory: URL = {
+    private lazy var managedObjectModel: NSManagedObjectModel = {
+        
+        if let modelUrl = Bundle.main.url(forResource: "DateAid", withExtension: "momd"),
+           let mom = NSManagedObjectModel(contentsOf: modelUrl) {
+            return mom
+        } else {
+            return NSManagedObjectModel()
+        }
+    }()
+    
+    private lazy var documentDirectoryUrl: URL = {
+        
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
-    
-    fileprivate lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.url(forResource: "DateAid", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
-    }()
-    
-    func saveContext() {
-        if managedObjectContext.hasChanges {
-            do { try managedObjectContext.save()
-            } catch let error as NSError {
-                print("Could not save: \(error), \(error.userInfo)")
-            }
-        }
-    }
 }

@@ -12,10 +12,12 @@ import CoreData
 extension NSManagedObjectContext {
 
     func trySave() {
-        do {
-            try self.save()
-        } catch let error {
-            print("Could not save: \(error.localizedDescription)")
+        if self.hasChanges {
+            do {
+                try self.save()
+            } catch let error {
+                print("Could not save: \(error.localizedDescription)")
+            }
         }
     }
     
