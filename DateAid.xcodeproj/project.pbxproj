@@ -19,7 +19,6 @@
 		97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEF1AFBF44A0095BC57 /* Images.xcassets */; };
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
 		97364CFF1AFBF44A0095BC57 /* DateAidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */; };
-		97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */; };
 		97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */; };
 		97364D0F1AFC1E3A0095BC57 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */; };
 		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
@@ -54,8 +53,6 @@
 		97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */; };
 		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; };
 		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; };
-		97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CE1B030FED00613C77 /* AddressBook.framework */; };
-		97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C511CF1B030FED00613C77 /* AddressBookUI.framework */; };
 		97D185B71B3B51E8009E576E /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D185B61B3B51E8009E576E /* ImageExtension.swift */; };
 		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; };
 		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; };
@@ -98,8 +95,6 @@
 		97364CFD1AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
 		97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
-		97364D091AFBFCB10095BC57 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesTableVC.swift; sourceTree = "<group>"; };
 		97364D0E1AFC1E3A0095BC57 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -136,8 +131,6 @@
 		97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Tasks.swift"; sourceTree = "<group>"; };
 		97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97B5F1A81BD02F3C00CEFFAF /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		97C511CE1B030FED00613C77 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		97C511CF1B030FED00613C77 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		97D185B61B3B51E8009E576E /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		97D266991BD95380008F7EF8 /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
 		97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
@@ -157,8 +150,6 @@
 			files = (
 				97B099BE1BF55C5C00ADE476 /* SystemConfiguration.framework in Frameworks */,
 				97B099BC1BF55C5600ADE476 /* Security.framework in Frameworks */,
-				97C511D01B030FED00613C77 /* AddressBook.framework in Frameworks */,
-				97C511D11B030FED00613C77 /* AddressBookUI.framework in Frameworks */,
 				9F23812F132E5FE71B78AD9B /* libPods-DateAid.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,15 +191,6 @@
 				97AEAC0F1B2EA74A00ADF181 /* Custom.plist */,
 			);
 			name = PLists;
-			sourceTree = "<group>";
-		};
-		970D93671BC47C2100D7F1FF /* SWRevealVC */ = {
-			isa = PBXGroup;
-			children = (
-				97364D091AFBFCB10095BC57 /* SWRevealViewController.h */,
-				97364D0A1AFBFCB10095BC57 /* SWRevealViewController.m */,
-			);
-			name = SWRevealVC;
 			sourceTree = "<group>";
 		};
 		97364CD71AFBF44A0095BC57 = {
@@ -258,7 +240,6 @@
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
 				970D93651BC47BE800D7F1FF /* PLists */,
-				97F212E71B1D90EA00E88C43 /* Frameworks */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 			);
 			name = "Supporting Files";
@@ -375,16 +356,6 @@
 				978C23041BFC379E000075D5 /* UIControls */,
 			);
 			name = Subclasses;
-			sourceTree = "<group>";
-		};
-		97F212E71B1D90EA00E88C43 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				970D93671BC47C2100D7F1FF /* SWRevealVC */,
-				97C511CE1B030FED00613C77 /* AddressBook.framework */,
-				97C511CF1B030FED00613C77 /* AddressBookUI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		AF3A239E4DD2E644C034AFD3 /* Pods */ = {
@@ -610,7 +581,6 @@
 				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
-				97364D0B1AFBFCB10095BC57 /* SWRevealViewController.m in Sources */,
 				97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

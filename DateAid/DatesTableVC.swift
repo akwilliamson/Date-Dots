@@ -43,7 +43,6 @@ class DatesTableVC: UITableViewController {
         self.logEvents(forString: "Main View")
         setAndPerformFetchRequest()
         registerNibCell(withName: "DateCell")
-        addRevealVCGestureRecognizers()
         configureNavigationBar()
         addSearchBar()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -79,9 +78,11 @@ class DatesTableVC: UITableViewController {
             
             if fetchedResults!.count > 0 {
                 for date in fetchedResults! {
-                    if date.equalizedDate! < Foundation.Date().formatted {
-                        fetchedResults!.remove(at: 0)
-                        fetchedResults!.append(date)
+                    if let equalizedDate = date.equalizedDate {
+                        if equalizedDate < Foundation.Date().formatted {
+                            fetchedResults!.remove(at: 0)
+                            fetchedResults!.append(date)
+                        }
                     }
                 }
             }
@@ -101,12 +102,6 @@ class DatesTableVC: UITableViewController {
         tableView.reloadData()
     }
     
-    func addRevealVCGestureRecognizers() {
-        revealViewController().panGestureRecognizer()
-        revealViewController().tapGestureRecognizer()
-        revealViewController().delegate = self
-    }
-    
     func registerNibCell(withName name: String) {
         let dateCellNib = UINib(nibName: name, bundle: nil)
         tableView.register(dateCellNib, forCellReuseIdentifier: name)
@@ -116,8 +111,6 @@ class DatesTableVC: UITableViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d"
         title = formatter.string(from: Foundation.Date())
-        menuBarButtonItem.target = self.revealViewController()
-        menuBarButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
     }
     
     func addNoDatesLabel() {
@@ -257,16 +250,3 @@ extension DatesTableVC: UISearchResultsUpdating {
     
 }
 
-extension DatesTableVC: SWRevealViewControllerDelegate {
-
-    func revealController(_ revealController: SWRevealViewController!,  willMoveTo position: FrontViewPosition) {
-        if position == .left {
-             self.view.isUserInteractionEnabled = true
-            sidebarMenuOpen = false
-        } else {
-             self.view.isUserInteractionEnabled = false
-            sidebarMenuOpen = true
-        }
-    }
-
-}

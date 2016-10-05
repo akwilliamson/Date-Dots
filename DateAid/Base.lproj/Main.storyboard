@@ -90,10 +90,10 @@
                                 <exclude reference="2i3-ps-xUI"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="nnX-d4-jVu"/>
                                 <exclude reference="NuX-AD-GWu"/>
                                 <exclude reference="aVY-ru-y1Q"/>
                                 <exclude reference="iNI-hw-vdP"/>
-                                <exclude reference="nnX-d4-jVu"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -101,11 +101,11 @@
                                 <include reference="2i3-ps-xUI"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="UXT-Pj-HpY"/>
+                                <include reference="nnX-d4-jVu"/>
                                 <include reference="NuX-AD-GWu"/>
                                 <include reference="aVY-ru-y1Q"/>
                                 <include reference="iNI-hw-vdP"/>
-                                <exclude reference="UXT-Pj-HpY"/>
-                                <include reference="nnX-d4-jVu"/>
                             </mask>
                         </variation>
                     </view>
@@ -116,64 +116,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1014" y="479"/>
-        </scene>
-        <!--Dates-->
-        <scene sceneID="7nV-5l-Ef6">
-            <objects>
-                <viewController id="p5G-HO-BmN" customClass="SWRevealViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2Fa-Tu-raV"/>
-                        <viewControllerLayoutGuide type="bottom" id="ple-M8-4Bk"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tMC-mk-t8X">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="0Ef-6P-KoM">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="people-selected"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
-                    <connections>
-                        <segue destination="6sN-oB-xmV" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="S9O-1R-H1j"/>
-                        <segue destination="Uns-kb-TbM" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="oNP-ia-Yef"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e7L-rW-lOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1202" y="-679"/>
-        </scene>
-        <!--Back Table View Controller-->
-        <scene sceneID="Yb9-FJ-WCa">
-            <objects>
-                <tableViewController id="6sN-oB-xmV" userLabel="Back Table View Controller" customClass="BackTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="KxF-HB-0aT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" id="a9T-sy-env" customClass="NavigationCell" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="375" height="80"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9T-sy-env" id="6QW-ES-oSf">
-                                    <frame key="frameInset" width="375" height="79.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Uns-kb-TbM" kind="custom" identifier="ShowDatesTableVC" customClass="SWRevealViewControllerSeguePushController" id="8kR-B2-YHG"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="6sN-oB-xmV" id="vX5-X4-geC"/>
-                            <outlet property="delegate" destination="6sN-oB-xmV" id="SqK-1I-3cH"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7NB-m7-c5i" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1993" y="-1395"/>
         </scene>
         <!--Dates Table View Controller-->
         <scene sceneID="3Ht-Gr-w8u">
@@ -213,7 +155,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2716" y="-679"/>
+            <point key="canvasLocation" x="2012" y="-681"/>
         </scene>
         <!--Add Date View Controller-->
         <scene sceneID="bfe-1f-yLk">
@@ -1738,11 +1680,11 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBJ-Ek-HMP" id="xTJ-4M-tqM">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nby-ie-1Hz">
-                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1816,7 +1758,7 @@
         <scene sceneID="Iui-As-nW8">
             <objects>
                 <navigationController id="Uns-kb-TbM" userLabel="Dates Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dates" id="5SE-Ef-l1s"/>
+                    <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="5SE-Ef-l1s"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uha-Gn-0T8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1827,7 +1769,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gzl-Vo-RkW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1993" y="-679"/>
+            <point key="canvasLocation" x="1201" y="-680"/>
         </scene>
         <!--TurningVC-->
         <scene sceneID="fG8-zJ-c08">
@@ -2614,7 +2556,7 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="p5G-HO-BmN" kind="relationship" relationship="viewControllers" id="Aw1-Pw-dv3"/>
+                        <segue destination="Uns-kb-TbM" kind="relationship" relationship="viewControllers" id="uYz-Bx-8f7"/>
                         <segue destination="jrm-3o-G2d" kind="relationship" relationship="viewControllers" id="GfA-9x-kvk"/>
                         <segue destination="Jtm-UQ-CQR" kind="relationship" relationship="viewControllers" id="Yb6-cH-79A"/>
                     </connections>
@@ -2688,14 +2630,12 @@
         <image name="envelope" width="112" height="80"/>
         <image name="filter" width="25" height="25"/>
         <image name="people-outline" width="32" height="32"/>
-        <image name="people-selected" width="32" height="32"/>
         <image name="reminder-off" width="48" height="48"/>
         <image name="trash" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8kR-B2-YHG"/>
-        <segue reference="uOf-gp-zRy"/>
         <segue reference="byt-8L-e9s"/>
+        <segue reference="WGb-MU-B13"/>
         <segue reference="TPq-ng-Nxl"/>
         <segue reference="4IE-OH-euH"/>
     </inferredMetricsTieBreakers>
