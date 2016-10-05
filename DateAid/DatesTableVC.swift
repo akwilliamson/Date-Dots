@@ -8,16 +8,7 @@
 
 import UIKit
 import CoreData
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
+
 
 
 protocol ReloadDatesTableDelegate {
@@ -88,7 +79,7 @@ class DatesTableVC: UITableViewController {
             
             if fetchedResults!.count > 0 {
                 for date in fetchedResults! {
-                    if date.equalizedDate < Foundation.Date().formatted {
+                    if date.equalizedDate! < Foundation.Date().formatted {
                         fetchedResults!.remove(at: 0)
                         fetchedResults!.append(date)
                     }
