@@ -13,15 +13,12 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let userDefaults = UserDefaults.standard
-    let tabBarAppearance = UITabBar.appearance()
-    let tabBarItemAppearance = UITabBarItem.appearance()
-    let navBarAppearance = UINavigationBar.appearance()
+    
     lazy var coreDataStack = CoreDataStack()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        startAnalyticSessions()
+        Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
         styleNavigationBar()
         styleTabBar()
         showInitialImportOnFirstLaunch()
@@ -29,33 +26,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func startAnalyticSessions() {
-        Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
-    }
-    
     func showInitialImportOnFirstLaunch() {
-        guard let window = self.window else { return }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if userDefaults.object(forKey: "hasLaunchedOnce") == nil {
-            userDefaults.set(true, forKey: "hasLaunchedOnce")
-            window.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as! InitialImportVC
+        if UserDefaults.standard.object(forKey: "hasLaunchedOnce") == nil {
+            UserDefaults.standard.set(true, forKey: "hasLaunchedOnce")
+            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as? InitialImportVC
         } else {
-            window.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainView") as UIViewController
+            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainView") as UIViewController
         }
     }
     
     func styleNavigationBar() {
-        navBarAppearance.barTintColor = UIColor.birthdayColor()
-        navBarAppearance.tintColor = UIColor.white
-        navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
+        UINavigationBar.appearance().barTintColor = UIColor.birthdayColor()
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
             NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
     }
     
     func styleTabBar() {
-        tabBarAppearance.barTintColor = UIColor.birthdayColor()
-        tabBarAppearance.tintColor = UIColor.white
-        tabBarItemAppearance.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        UITabBar.appearance().barTintColor = UIColor.birthdayColor()
+        UITabBar.appearance().tintColor = UIColor.white
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: .normal)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
