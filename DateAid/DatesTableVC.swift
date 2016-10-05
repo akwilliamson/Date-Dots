@@ -85,6 +85,7 @@ class DatesTableVC: UITableViewController {
         datesFetch.predicate = typePredicate
         
         do { fetchedResults = try managedContext.fetch(datesFetch)
+            
             if fetchedResults!.count > 0 {
                 for date in fetchedResults! {
                     if date.equalizedDate < Foundation.Date().formatted {

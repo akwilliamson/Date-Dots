@@ -127,11 +127,12 @@ class SettingsTableVC: UIViewController {
     }
     
     func syncAddressBook() {
-        DateManager().syncDates()
-        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            self.reloadDatesTableDelegate?.reloadTableView()
-        } else {
-            self.showContactsUnaccessibleAlert()
+        ContactManager().syncContacts { 
+            if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+                self.reloadDatesTableDelegate?.reloadTableView()
+            } else {
+                self.showContactsUnaccessibleAlert()
+            }
         }
     }
     

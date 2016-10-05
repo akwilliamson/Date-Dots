@@ -1,16 +1,15 @@
 PODS:
-  - AppAnalytics (1.1.0)
   - ASValueTrackingSlider (0.11.2)
   - Flurry-iOS-SDK/FlurrySDK (7.3.0)
 
 DEPENDENCIES:
-  - AppAnalytics
   - ASValueTrackingSlider
   - Flurry-iOS-SDK/FlurrySDK
 
 SPEC CHECKSUMS:
-  AppAnalytics: 66090e82e3620c0bd0b93de980940586819c3c2e
   ASValueTrackingSlider: 45c9f78252da60de01d8f2afe869aaf90dd978d9
   Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 1da586a783e7ae7057428b746db32605a1b354db
+
+COCOAPODS: 1.1.0.rc.2

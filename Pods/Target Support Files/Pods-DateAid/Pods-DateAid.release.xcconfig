@@ -1,7 +1,9 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/AppAnalytics"
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ASValueTrackingSlider" "${PODS_ROOT}/Headers/Public/AppAnalytics" "${PODS_ROOT}/Headers/Public/Flurry-iOS-SDK"
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Flurry-iOS-SDK/Flurry"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/ASValueTrackingSlider" -isystem "${PODS_ROOT}/Headers/Public/AppAnalytics" -isystem "${PODS_ROOT}/Headers/Public/Flurry-iOS-SDK"
-OTHER_LDFLAGS = $(inherited) -ObjC -all_load -l"ASValueTrackingSlider" -l"Flurry-iOS-SDK" -l"Flurry_7.3.0" -framework "AppAnalytics" -framework "CoreLocation" -framework "Foundation" -framework "MobileCoreServices" -framework "Security" -framework "StoreKit" -framework "SystemConfiguration" -framework "UIKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ASValueTrackingSlider" "${PODS_ROOT}/Headers/Public/Flurry-iOS-SDK"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/ASValueTrackingSlider" "$PODS_CONFIGURATION_BUILD_DIR/Flurry-iOS-SDK" $(inherited) "${PODS_ROOT}/Flurry-iOS-SDK/Flurry"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/ASValueTrackingSlider" -isystem "${PODS_ROOT}/Headers/Public/Flurry-iOS-SDK"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"ASValueTrackingSlider" -l"Flurry-iOS-SDK" -l"Flurry_7.3.0" -framework "Foundation" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods

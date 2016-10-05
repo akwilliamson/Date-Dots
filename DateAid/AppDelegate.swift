@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func startAnalyticSessions() {
         Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
-        AppAnalytics.initWithAppKey("SsKD7Ojo2Fh7qjVoCqSCHLWIReKCItvZ")
     }
     
     func showInitialImportOnFirstLaunch() {

@@ -12,7 +12,6 @@ extension UIViewController {
 
     func logEvents(forString string: String) {
         Flurry.logEvent(string)
-        AppAnalytics.logEvent(string)
     }
     
     func delay(_ delay: Double, closure: @escaping ()->()) {

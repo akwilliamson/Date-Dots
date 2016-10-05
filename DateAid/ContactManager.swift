@@ -12,16 +12,14 @@ import Contacts
 class ContactManager {
     
     lazy var store: CNContactStore = { CNContactStore() }()
-    var contacts: [CNContact?] { return getContacts() }
     
-    private func getContacts() -> [CNContact?] {
-        
-        var fetchedContacts: [CNContact?] = []
+    public func syncContacts(complete: @escaping () -> Void) {
         
         authorized(complete: { success in
-            fetchedContacts = success ? self.fetchContacts() : []
+            let fetchedContacts: [CNContact?] = success ? self.fetchContacts() : []
+            DateManager(contacts: fetchedContacts).syncDates()
+            complete()
         })
-        return fetchedContacts
     }
     
     private func authorized(complete: @escaping (_ success: Bool) -> Void) {
@@ -33,6 +31,7 @@ class ContactManager {
             store.requestAccess(for: .contacts, completionHandler: { (success, error) in
                 return success ? complete(true) : complete(false)
             })
+            
         case .restricted, .denied:
             return complete(false)
         }

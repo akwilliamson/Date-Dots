@@ -44,7 +44,6 @@ class NoteVC: UIViewController {
         title = noteTitle
         
         Flurry.logEvent("Note Details", withParameters: ["forNote:" : noteTitle])
-        AppAnalytics.logEvent("Note Details", parameters: ["forNote:" : noteTitle])
         
         if dateObject?.notes?.count > 0 {
             guard let notesForDate = dateObject?.notes else { return }

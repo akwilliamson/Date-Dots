@@ -13,16 +13,24 @@ import CoreData
 class DateManager {
 
     private var managedContext: NSManagedObjectContext = CoreDataStack().managedObjectContext
-    private var contacts: [CNContact?] = ContactManager().contacts
+    private var contacts: [CNContact?]
+    
+    init(contacts: [CNContact?]) {
+        self.contacts = contacts
+    }
 
     private var storedDates: [Date?] {
         return managedContext.fetch()
     }
     
     public func syncDates() {
+        
         createBirthdays()
         createAnniversaries()
+        createHolidays()
+        
         managedContext.trySave()
+        
     }
     
     private func createBirthdays() {
@@ -87,10 +95,10 @@ class DateManager {
                 case .holiday:
                     return // Fix later
                 }
-                
-                if let address = contact.postalAddress {
-                    date.address = create(address, for: date)
-                }
+//                
+//                if let address = contact.postalAddress {
+//                    date.address = create(address, for: date)
+//                }
             }
         }
     }
