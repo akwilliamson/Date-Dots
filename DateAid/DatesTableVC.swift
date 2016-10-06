@@ -174,9 +174,9 @@ extension DatesTableVC { // UITableViewDataSource
         
         let date = resultSearchController.isActive == true ? filteredResults[(indexPath as NSIndexPath).row] : dates[(indexPath as NSIndexPath).row]
         
-        if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate(), let lastName = date.name?.lastName() {
-            if date.type! == "custom" {
-                dateCell.firstName = date.name!
+        if let firstName = date?.name?.firstName(), let readableDate = date?.date?.readableDate(), let lastName = date?.name?.lastName() {
+            if date?.type! == "custom" {
+                dateCell.firstName = (date?.name!)!
                 dateCell.lastName = ""
             } else {
                 dateCell.firstName = firstName
@@ -185,7 +185,7 @@ extension DatesTableVC { // UITableViewDataSource
             dateCell.date = readableDate
         }
         
-        dateCell.firstNameLabel.textColor = date.type?.associatedColor()
+        dateCell.firstNameLabel.textColor = date?.type?.associatedColor()
         
         return dateCell
     }
@@ -199,7 +199,7 @@ extension DatesTableVC { // UITableViewDataSource
         if editingStyle == .delete {
             self.logEvents(forString: "Swiped to Delete")
             let dateToDelete = dates[(indexPath as NSIndexPath).row]
-            managedContext.delete(dateToDelete)
+            managedContext.delete(dateToDelete!)
             dates.remove(at: (indexPath as NSIndexPath).row)
             
             do { try managedContext.save()
