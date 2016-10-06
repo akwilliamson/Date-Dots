@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-
-
 protocol ReloadDatesTableDelegate {
     func reloadTableView()
 }
@@ -21,7 +19,7 @@ class DatesTableVC: UITableViewController {
     
     var menuIndexPath: Int?
     var typePredicate: NSPredicate?
-    var fetchedResults: [Date]?
+    var dates: [Date?] = []
     var managedContext = CoreDataStack().managedObjectContext
     var sidebarMenuOpen: Bool?
     
@@ -40,9 +38,10 @@ class DatesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.logEvents(forString: "Main View")
-        setAndPerformFetchRequest()
-        registerNibCell(withName: "DateCell")
+        dates = fetch(dateType: nil)
+        register("DateCell")
         configureNavigationBar()
         addSearchBar()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -50,45 +49,45 @@ class DatesTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addSearchBar()
-        setAndPerformFetchRequest()
         
-        for item in tabBarController!.tabBar.items! {
-            if let image = item.image {
-                item.image = image.imageWithColor(UIColor.white).withRenderingMode(.alwaysOriginal)
-            }
-        }
+        dates = fetch(dateType: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        resultSearchController.isActive = false
         super.viewWillDisappear(true)
+        
+        resultSearchController.isActive = false
     }
     
 // MARK: HELPERS
     
-    func setAndPerformFetchRequest() {
-        let datesFetch: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
-        let datesInOrder = NSSortDescriptor(key: "equalizedDate", ascending: true)
-        let namesInOrder = NSSortDescriptor(key: "name", ascending: true)
-        datesFetch.sortDescriptors = [datesInOrder, namesInOrder]
-        datesFetch.predicate = typePredicate
+    func fetch(dateType: DateType?, sort descriptors: [String]? = ["equalizedDate", "name"]) -> [Date?] {
         
-        do { fetchedResults = try managedContext.fetch(datesFetch)
-            
-            if fetchedResults!.count > 0 {
-                for date in fetchedResults! {
-                    if let equalizedDate = date.equalizedDate {
-                        if equalizedDate < Foundation.Date().formatted {
-                            fetchedResults!.remove(at: 0)
-                            fetchedResults!.append(date)
-                        }
-                    }
-                }
-            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        let request: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
+        
+        if let type = dateType?.lowercased {
+            request.predicate = NSPredicate(format: "type = %@", type)
         }
+        
+        var sortDescriptors: [NSSortDescriptor] = []
+        descriptors?.forEach { sortDescriptors.append(NSSortDescriptor(key: $0, ascending: true)) }
+        request.sortDescriptors = sortDescriptors
+        
+        let dates = managedContext.tryFetch(request)
+        
+        return arrange(dates)
+    }
+    
+    func arrange(_ dates: [Date?]) -> [Date?] {
+        
+        var mutableDates = dates
+        
+        mutableDates.forEach({
+            guard let formattedDate = $0?.equalizedDate else { return }
+            if formattedDate < Foundation.Date().formatted { mutableDates.shift() }
+        })
+        
+        return mutableDates
     }
     
     func addSearchBar() {
@@ -102,9 +101,9 @@ class DatesTableVC: UITableViewController {
         tableView.reloadData()
     }
     
-    func registerNibCell(withName name: String) {
-        let dateCellNib = UINib(nibName: name, bundle: nil)
-        tableView.register(dateCellNib, forCellReuseIdentifier: name)
+    func register(_ cell: String) {
+        let nib = UINib(nibName: cell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cell)
     }
     
     func configureNavigationBar() {
@@ -138,7 +137,7 @@ class DatesTableVC: UITableViewController {
             if resultSearchController.isActive == true {
                 dateDetailsVC.dateObject = filteredResults[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
             } else {
-                dateDetailsVC.dateObject = fetchedResults![(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+                dateDetailsVC.dateObject = dates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
             }
             dateDetailsVC.managedContext = managedContext
             dateDetailsVC.reloadDatesTableDelegate = self
@@ -163,17 +162,17 @@ extension DatesTableVC { // UITableViewDataSource
             }
             return filteredResults.count
         } else {
-            if fetchedResults!.count == 0 {
+            if dates.count == 0 {
                 addNoDatesLabel()
             }
-            return fetchedResults!.count
+            return dates.count
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
         
-        let date = resultSearchController.isActive == true ? filteredResults[(indexPath as NSIndexPath).row] : fetchedResults![(indexPath as NSIndexPath).row]
+        let date = resultSearchController.isActive == true ? filteredResults[(indexPath as NSIndexPath).row] : dates[(indexPath as NSIndexPath).row]
         
         if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate(), let lastName = date.name?.lastName() {
             if date.type! == "custom" {
@@ -199,9 +198,9 @@ extension DatesTableVC { // UITableViewDataSource
         
         if editingStyle == .delete {
             self.logEvents(forString: "Swiped to Delete")
-            let dateToDelete = fetchedResults![(indexPath as NSIndexPath).row]
+            let dateToDelete = dates[(indexPath as NSIndexPath).row]
             managedContext.delete(dateToDelete)
-            fetchedResults?.remove(at: (indexPath as NSIndexPath).row)
+            dates.remove(at: (indexPath as NSIndexPath).row)
             
             do { try managedContext.save()
             } catch let error as NSError {
@@ -232,7 +231,7 @@ extension DatesTableVC { // UITableViewDelegate
 extension DatesTableVC: ReloadDatesTableDelegate {
 
     func reloadTableView() {
-        setAndPerformFetchRequest()
+        dates = fetch(dateType: nil)
         tableView.reloadData()
     }
     
@@ -243,7 +242,7 @@ extension DatesTableVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filteredResults.removeAll(keepingCapacity: false)
         let searchPredicate = NSPredicate(format: "name CONTAINS %@", searchController.searchBar.text!)
-        let array = (fetchedResults! as NSArray).filtered(using: searchPredicate)
+        let array = (dates as NSArray).filtered(using: searchPredicate)
         filteredResults = array as! [Date]
         tableView.reloadData()
     }

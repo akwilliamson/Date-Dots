@@ -13,4 +13,11 @@ enum DateType: String {
     case birthday    = "Birthday"
     case anniversary = "Anniversary"
     case holiday     = "Holiday"
+    
+    var lowercased: String {
+        switch self {
+        default:
+            return self.rawValue.lowercased()
+        }
+    }
 }

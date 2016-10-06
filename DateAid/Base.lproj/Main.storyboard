@@ -132,15 +132,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="yk7-8C-YI1">
                         <barButtonItem key="backBarButtonItem" title=" " id="P6Y-uy-ne3"/>
-                        <barButtonItem key="leftBarButtonItem" image="filter" id="FDs-gR-GhE"/>
-                        <barButtonItem key="rightBarButtonItem" image="add" style="plain" id="gaM-zp-ZWe">
+                        <barButtonItem key="rightBarButtonItem" image="add" id="gaM-zp-ZWe">
                             <connections>
                                 <segue destination="i1f-AG-9F2" kind="show" identifier="AddDateVC" id="WGb-MU-B13"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="menuBarButtonItem" destination="FDs-gR-GhE" id="6Gg-r5-GC2"/>
                         <outlet property="searchDisplayController" destination="ck8-ei-m3G" id="hRm-VU-aBM"/>
                         <segue destination="PaR-uw-Bbs" kind="show" identifier="DateDetailsVC" id="ikV-5z-sOm"/>
                     </connections>
@@ -169,8 +167,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="20" minY="84" width="560" height="60"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
@@ -179,8 +176,7 @@
                                     <outlet property="delegate" destination="i1f-AG-9F2" id="FNq-6y-A4L"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="208" minY="164" width="56" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="u1Z-l5-H0G" secondAttribute="height" multiplier="1:1" id="488-JI-mOP"/>
@@ -207,8 +203,7 @@
                                     <action selector="birthdayButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="kJ9-Ze-1XK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="272" minY="164" width="56" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="m7M-OE-FCb"/>
@@ -235,8 +230,7 @@
                                     <action selector="anniversaryButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="nwb-o1-2ms"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv" userLabel="Custom Button" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="336" minY="164" width="56" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv" userLabel="Custom Button" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="1bG-Ky-xac"/>
@@ -261,8 +255,7 @@
                                     <action selector="customButton:" destination="i1f-AG-9F2" eventType="touchUpInside" id="zdX-9O-nCr"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-BM-scR">
-                                <frame key="frameInset" minX="25" minY="240" width="89" height="70"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-BM-scR">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="HI3-Db-R1u"/>
                                 </constraints>
@@ -275,14 +268,9 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="38" minY="375" width="524" height="31"/>
-                            </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="38" minY="445" width="524" height="31"/>
-                            </slider>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdh-dN-iHJ">
-                                <frame key="frameInset" minY="515" width="600" height="60"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdh-dN-iHJ">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Edit Details"/>
@@ -290,8 +278,7 @@
                                     <segue destination="ph2-zO-ERN" kind="show" identifier="EditDetails" id="u8v-zp-2zi"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nbJ-Sn-kOd">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbJ-Sn-kOd">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="P1h-pO-9X2"/>
@@ -307,8 +294,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4QB-zC-Wlh">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4QB-zC-Wlh">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="XKb-hX-kLp"/>
@@ -327,8 +313,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTR-br-WpV">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTR-br-WpV">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="48Z-vg-7pu"/>
@@ -350,8 +335,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hwo-dl-95w">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwo-dl-95w">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="hqo-tM-whh"/>
@@ -367,8 +351,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5G-ae-FjB" userLabel="Day Label">
-                                <frame key="frameInset" minX="124" minY="240" width="89" height="70"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5G-ae-FjB" userLabel="Day Label">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="WEe-ul-8WB"/>
                                 </constraints>
@@ -381,8 +364,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1985" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDb-73-0WV">
-                                <frame key="frameInset" minX="-25" minY="-30" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1985" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDb-73-0WV">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -394,8 +376,7 @@
                                     <outlet property="delegate" destination="i1f-AG-9F2" id="71j-eN-gkS"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07e-oS-wqU">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07e-oS-wqU">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="qMF-yn-iqC"/>
                                     <constraint firstAttribute="height" constant="25" id="uj0-ap-YhO"/>
@@ -413,15 +394,9 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-Sc-JHA">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6u-nm-e8p">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fY-Ej-PCq">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
-                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-Sc-JHA"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6u-nm-e8p"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fY-Ej-PCq"/>
                         </subviews>
                         <color key="backgroundColor" red="0.88287168559999996" green="0.88287168559999996" blue="0.88287168559999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -724,8 +699,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City, State ZIP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xgs-nc-xLx" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="20" minY="162" width="560" height="60"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City, State ZIP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xgs-nc-xLx" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -734,8 +708,7 @@
                                     <outlet property="delegate" destination="ph2-zO-ERN" id="F2y-g5-MAB"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-5O-ydY">
-                                <frame key="frameInset" minY="435" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-5O-ydY">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -746,8 +719,7 @@
                                     <segue destination="ULx-DK-D8w" kind="show" identifier="ShowOther" id="Sh2-MR-qg4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNi-KX-LCe">
-                                <frame key="frameInset" minY="374" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNi-KX-LCe">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -758,8 +730,7 @@
                                     <segue destination="ULx-DK-D8w" kind="show" identifier="ShowPlans" id="AIv-oM-IK9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rf9-AL-IyN">
-                                <frame key="frameInset" minY="313" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rf9-AL-IyN">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -770,8 +741,7 @@
                                     <segue destination="ULx-DK-D8w" kind="show" identifier="ShowGifts" id="F3P-EW-vbw"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="6xN-nn-JjX">
-                                <frame key="frameInset" minX="570" minY="336" width="10" height="16"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="6xN-nn-JjX">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="INd-d3-dG9"/>
                                     <constraint firstAttribute="height" constant="16" id="MAL-Vg-eTm"/>
@@ -793,22 +763,19 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="idj-Yt-fFo">
-                                <frame key="frameInset" minX="570" minY="397" width="10" height="16"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="idj-Yt-fFo">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="HMP-tR-vdM"/>
                                     <constraint firstAttribute="height" constant="16" id="wAe-K0-AP3"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="RW3-cy-Jj9">
-                                <frame key="frameInset" minX="570" minY="458" width="10" height="16"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="RW3-cy-Jj9">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="EbV-kG-pK3"/>
                                     <constraint firstAttribute="width" constant="10" id="YPe-Wp-kBa"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uU-m9-sFz">
-                                <frame key="frameInset" minY="515" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uU-m9-sFz">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Alert Settings">
@@ -818,8 +785,7 @@
                                     <segue destination="qYj-Hm-vrr" kind="show" identifier="EditLocalNotification" id="g7o-yD-2k3"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfT-BR-pU0">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfT-BR-pU0">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="11s-yf-dhk"/>
@@ -835,8 +801,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jZs-fS-6xu">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jZs-fS-6xu">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="tYu-Z1-xng"/>
@@ -852,8 +817,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mailing Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VmS-GN-dQw" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="20" minY="94" width="560" height="60"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mailing Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VmS-GN-dQw" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -1009,8 +973,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2W-Yb-3Bi" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="248" minY="84" width="105" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2W-Yb-3Bi" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="105" id="QJz-8U-icI"/>
@@ -1031,15 +994,13 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Yearly" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7J-xQ-Rz6" userLabel="Repeat Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="478" minY="84" width="105" height="105"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7J-xQ-Rz6" userLabel="Repeat Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Day" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyb-NV-wmr" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="18" minY="84" width="105" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyb-NV-wmr" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="105" id="snS-aw-DtV"/>
@@ -1053,11 +1014,8 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TE3-dI-DuS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="38" minY="259" width="524" height="31"/>
-                            </slider>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="8fD-pO-roL">
-                                <frame key="frameInset" minX="275" minY="402" width="50" height="50"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TE3-dI-DuS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="8fD-pO-roL">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="20T-Ce-OdC"/>
                                     <constraint firstAttribute="width" secondItem="8fD-pO-roL" secondAttribute="height" multiplier="1:1" id="6Rf-wr-fdo"/>
@@ -1076,9 +1034,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QW9-m9-rGR" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="38" minY="329" width="524" height="31"/>
-                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QW9-m9-rGR" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target"/>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1212,8 +1168,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi" userLabel="Countdown Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="248" minY="84" width="105" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi" userLabel="Countdown Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gjl-WM-ZEi" secondAttribute="height" multiplier="1:1" id="3xO-Zx-4at"/>
                                 </constraints>
@@ -1231,20 +1186,17 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="480" minY="84" width="105" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="none" minimumScaleFactor="0.29999999999999999" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="15" minY="84" width="105" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="none" minimumScaleFactor="0.29999999999999999" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="45"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zck-0H-3Tc">
-                                <frame key="frameInset" minY="515" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zck-0H-3Tc">
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Notes">
@@ -1257,8 +1209,7 @@
                                     <segue destination="617-UG-6zb" kind="show" identifier="ShowNotes" id="t93-S5-ewk"/>
                                 </connections>
                             </button>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
-                                <frame key="frameInset" minX="278" minY="262" width="46" height="32"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="CwL-Jv-hIu" secondAttribute="height" multiplier="14:9" id="or7-z7-vud"/>
                                 </constraints>
@@ -1273,13 +1224,11 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
-                                <frame key="frameInset" minX="262" minY="465" width="77" height="50"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE1-PL-Yxl">
-                                <frame key="frameInset" minX="8" minY="5" width="544" height="35"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE1-PL-Yxl">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Zi6-qx-jKF"/>
@@ -1293,8 +1242,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Locality" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FxD-SH-WEl">
-                                <frame key="frameInset" minX="8" minY="35" width="544" height="35"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Locality" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FxD-SH-WEl">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="61p-1Q-Tzb"/>
@@ -1308,8 +1256,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rma-fS-BlE">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rma-fS-BlE">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Ean-iN-HG8"/>
@@ -1325,8 +1272,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LOo-xT-ABI">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOo-xT-ABI">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="T32-Fz-dfQ"/>
@@ -1342,8 +1288,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lc1-Su-K8e">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lc1-Su-K8e">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="2L7-Za-ua1"/>
@@ -1359,8 +1304,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
-                                <frame key="frameInset" minX="275" minY="425" width="50" height="50"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
                                     <constraint firstAttribute="width" constant="50" id="FmL-yz-vc0"/>
@@ -1379,8 +1323,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xog-1r-Chs">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xog-1r-Chs">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="NWl-8E-yZc"/>
                                     <constraint firstAttribute="width" constant="100" id="Spl-Es-ijX"/>
@@ -1398,8 +1341,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qrR-lO-rOq">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qrR-lO-rOq">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="7Dv-QT-8HI"/>
                                     <constraint firstAttribute="width" constant="100" id="EDc-TA-d08"/>
@@ -1720,8 +1662,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
-                                <frame key="frameInset" width="600" height="600"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
                                 <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1783,16 +1724,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lz-Z2-0NH">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lz-Z2-0NH">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="T6T-Gi-w4I" id="JMs-uz-qkW"/>
                                     <outlet property="delegate" destination="T6T-Gi-w4I" id="HbO-u0-9ju"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mr-Hr-gKj">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mr-Hr-gKj">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="HW1-Aw-6GD"/>
@@ -1808,11 +1747,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9mI-3R-l8H" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="38" minY="375" width="524" height="31"/>
-                            </slider>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-WX-FT3">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9mI-3R-l8H" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-WX-FT3">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="4J1-dV-p5C"/>
                                     <constraint firstAttribute="width" constant="25" id="U1m-Ar-Etn"/>
@@ -1830,9 +1766,7 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-sL-9BV">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
-                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-sL-9BV"/>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1940,8 +1874,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSl-kP-e5n" userLabel="Sync Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSl-kP-e5n" userLabel="Sync Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.91988241792929293" green="0.11028577712945378" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MSl-kP-e5n" secondAttribute="height" multiplier="1:1" id="GsQ-Dm-5ZM"/>
@@ -1960,14 +1893,12 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Address Book" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vzi-la-6E8" userLabel="Sync Text">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address Book" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vzi-la-6E8" userLabel="Sync Text">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sync " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAL-TA-H9o" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAL-TA-H9o" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="NAL-TA-H9o" secondAttribute="height" multiplier="1:1" id="ab1-xh-ea8"/>
@@ -1986,8 +1917,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuJ-fU-uz6" userLabel="iCloud Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuJ-fU-uz6" userLabel="iCloud Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.91988241790000003" green="0.1102857771" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="WuJ-fU-uz6" secondAttribute="height" multiplier="1:1" id="Jrl-7w-LYG"/>
@@ -2006,15 +1936,13 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="iCloud" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFu-bR-ipm" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCloud" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFu-bR-ipm" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAn-YB-5sd" userLabel="Alert Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAn-YB-5sd" userLabel="Alert Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.91988241790000003" green="0.1102857771" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="YAn-YB-5sd" secondAttribute="height" multiplier="1:1" id="fLy-d7-JBa"/>
@@ -2033,14 +1961,12 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Default Repeat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="6ym-6r-F5j" userLabel="Alerts Text">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Repeat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="6ym-6r-F5j" userLabel="Alerts Text">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVm-c4-E2L" userLabel="Color Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVm-c4-E2L" userLabel="Color Cancel" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.91988241790000003" green="0.1102857771" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RVm-c4-E2L" secondAttribute="height" multiplier="1:1" id="XwT-yI-8mc"/>
@@ -2059,21 +1985,18 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Customize Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="RFO-Yz-VED" userLabel="Colors Text">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="RFO-Yz-VED" userLabel="Colors Text">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNe-dL-JNh" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNe-dL-JNh" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.97039997577667236" green="0.73616838455200195" blue="0.035761818289756775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-P0-FTg">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-P0-FTg">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="3hR-Tn-Mnw"/>
@@ -2089,8 +2012,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JRH-Q3-6FF">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRH-Q3-6FF">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="jPa-rg-sEg"/>
@@ -2106,23 +2028,19 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cfE-18-Dce">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cfE-18-Dce">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xwo-CD-By1">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwo-CD-By1">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Alert" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSD-Jm-wJD" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSD-Jm-wJD" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <color key="backgroundColor" red="0.91056227684020996" green="0.30333411693572998" blue="0.26598474383354187" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mED-r1-jcE">
-                                <frame key="frameInset" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mED-r1-jcE">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="9" id="HEy-pa-k8V"/>
                                     <constraint firstAttribute="height" constant="20" id="ivN-OG-3YA"/>
@@ -2140,8 +2058,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PF7-dd-7E0">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PF7-dd-7E0">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <state key="normal" title=" Once ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2150,8 +2067,7 @@
                                     <action selector="alertOnceSelected:" destination="4LR-93-Beh" eventType="touchUpInside" id="mbQ-El-M9g"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZs-vS-haP">
-                                <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZs-vS-haP">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <state key="normal" title=" Yearly ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2160,20 +2076,17 @@
                                     <action selector="alertYearlySelected:" destination="4LR-93-Beh" eventType="touchUpInside" id="Eh6-d7-inS"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWz-uE-gxA">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWz-uE-gxA">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sync iCloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sy7-eO-Av5">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync iCloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sy7-eO-Av5">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Coming Soon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nfl-sO-hsC" userLabel="iCloud Text">
-                                <frame key="frameInset" minX="-42" minY="-21" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nfl-sO-hsC" userLabel="iCloud Text">
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2544,10 +2457,10 @@
             </objects>
             <point key="canvasLocation" x="2013" y="701"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Dates Tab Bar View Controller-->
         <scene sceneID="7a7-XW-WXs">
             <objects>
-                <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" customClass="DatesTabBarViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Zdv-7h-m4M">
@@ -2562,14 +2475,6 @@
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NPD-sH-tR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationItem id="HsK-H5-6mk">
-                    <barButtonItem key="backBarButtonItem" title=" " id="Dor-Fx-rUH"/>
-                    <barButtonItem key="rightBarButtonItem" title="Save" id="jD6-PR-bOa">
-                        <connections>
-                            <action selector="saveButton:" destination="i1f-AG-9F2" id="L9P-EW-BDQ"/>
-                        </connections>
-                    </barButtonItem>
-                </navigationItem>
             </objects>
             <point key="canvasLocation" x="276" y="479"/>
         </scene>
@@ -2628,15 +2533,14 @@
         <image name="cog-selected" width="32" height="32"/>
         <image name="disclosure" width="25" height="40"/>
         <image name="envelope" width="112" height="80"/>
-        <image name="filter" width="25" height="25"/>
         <image name="people-outline" width="32" height="32"/>
         <image name="reminder-off" width="48" height="48"/>
         <image name="trash" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="byt-8L-e9s"/>
         <segue reference="WGb-MU-B13"/>
-        <segue reference="TPq-ng-Nxl"/>
-        <segue reference="4IE-OH-euH"/>
+        <segue reference="u8v-zp-2zi"/>
+        <segue reference="g7o-yD-2k3"/>
+        <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

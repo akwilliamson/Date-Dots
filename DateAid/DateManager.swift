@@ -20,7 +20,7 @@ class DateManager {
     }
 
     private var storedDates: [Date?] {
-        return managedContext.fetch()
+        return managedContext.tryFetch()
     }
     
     public func syncDates() {

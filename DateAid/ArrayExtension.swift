@@ -10,8 +10,10 @@ import Foundation
 
 extension Array {
     
-    var last: Element? {
-        return self[self.endIndex - 1]
+    mutating func shift() {
+        var shifted = self[1..<self.count]
+        shifted += self[0..<1]
+        self = Array(shifted)
     }
     
 }

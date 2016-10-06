@@ -21,10 +21,12 @@ extension NSManagedObjectContext {
         }
     }
     
-    func fetch() -> [Date?] {
-        let fetchRequest: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
+    func tryFetch(_ request: NSFetchRequest<Date>? = nil) -> [Date?] {
+        
+        let request = request ?? NSFetchRequest(entityName: "Date")
+        
         do {
-            return try self.fetch(fetchRequest)
+            return try self.fetch(request)
         } catch let error {
             print("Could not fetch: \(error.localizedDescription)")
             return []
