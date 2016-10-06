@@ -28,8 +28,6 @@
 		977E3B041DA1A4A1005D131F /* DateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B031DA1A4A1005D131F /* DateType.swift */; };
 		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
-		978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 978C22FE1BFC3668000075D5 /* NavigationCell.xib */; };
-		978C23011BFC3699000075D5 /* NavigationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23001BFC3699000075D5 /* NavigationCell.swift */; };
 		978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
 		9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */; };
@@ -104,8 +102,6 @@
 		977E3B031DA1A4A1005D131F /* DateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateType.swift; sourceTree = "<group>"; };
 		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		978C22FE1BFC3668000075D5 /* NavigationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCell.xib; sourceTree = "<group>"; };
-		978C23001BFC3699000075D5 /* NavigationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCell.swift; sourceTree = "<group>"; };
 		978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
 		9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePushSettingsVC.swift; sourceTree = "<group>"; };
@@ -304,8 +300,6 @@
 		978C23021BFC36A0000075D5 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				978C23001BFC3699000075D5 /* NavigationCell.swift */,
-				978C22FE1BFC3668000075D5 /* NavigationCell.xib */,
 				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97361A631B2C0CEF006394E1 /* DateCell.xib */,
 				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
@@ -466,7 +460,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */,
-				978C22FF1BFC3668000075D5 /* NavigationCell.xib in Resources */,
 				97AEAC101B2EA74A00ADF181 /* Custom.plist in Resources */,
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
@@ -558,7 +551,6 @@
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
-				978C23011BFC3699000075D5 /* NavigationCell.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */,
