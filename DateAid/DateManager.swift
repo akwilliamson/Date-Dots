@@ -35,13 +35,13 @@ class DateManager {
     
     private func createBirthdays() {
         contacts.forEach { contact in
-            if contact?.birthday != nil { date(for: contact, of: .birthday) }
+            if contact?.birthday != nil { print("there's a birthday for \(contact?.givenName)"); date(for: contact, of: .birthday) }
         }
     }
     
     private func createAnniversaries() {
         contacts.forEach { contact in
-            if contact?.anniversary != nil { date(for: contact, of: .anniversary) }
+            if contact?.anniversary != nil { print("there's an anniversary for \(contact?.givenName)"); date(for: contact, of: .anniversary) }
         }
     }
     
@@ -79,6 +79,7 @@ class DateManager {
         }
         
         if !exists {
+            
             if let entity = NSEntityDescription.entity(forEntityName: "Date", in: managedContext),
                 let contact = contact {
                 

@@ -1,21 +1,15 @@
 //
-//  DatesTableVC.swift
+//  DatesViewController.swift
 //  DateAid
 //
-//  Created by Aaron Williamson on 5/7/15.
-//  Copyright (c) 2015 Aaron Williamson. All rights reserved.
+//  Created by Aaron Williamson on 10/8/16.
+//  Copyright © 2016 Aaron Williamson. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-protocol ReloadDatesTableDelegate {
-    func reloadTableView()
-}
-
-class DatesTableVC: UITableViewController {
-    
-// MARK: PROPERTIES
+class DatesViewController: UIViewController {
     
     var menuIndexPath: Int?
     var typePredicate: NSPredicate?
@@ -29,17 +23,12 @@ class DatesTableVC: UITableViewController {
     var dateTypeForNewDate = "birthday" // nil menu index path defaults to birthday type for add new date segue
     let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
     
-// MARK: OUTLETS
-    
-    @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
-    
-// MARK: VIEW SETUP
-    
+    @IBOutlet weak var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = Foundation.Date().formatted("MMMM dd")
-        
         self.logEvents(forString: "Main View")
         dates = fetch(dateType: nil)
         register("DateCell")
@@ -57,8 +46,6 @@ class DatesTableVC: UITableViewController {
         
         resultSearchController.isActive = false
     }
-    
-// MARK: HELPERS
     
     func fetch(dateType: DateType?, sort descriptors: [String]? = ["equalizedDate", "name"]) -> [Date?] {
         
@@ -122,7 +109,7 @@ class DatesTableVC: UITableViewController {
         }
     }
     
-// MARK: SEGUE
+    // MARK: SEGUE
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DateDetailsVC" {
@@ -145,9 +132,9 @@ class DatesTableVC: UITableViewController {
     }
 }
 
-extension DatesTableVC { // UITableViewDataSource
+extension DatesViewController: UITableViewDataSource {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if resultSearchController.isActive {
             if filteredResults.count == 0 {
@@ -162,16 +149,19 @@ extension DatesTableVC { // UITableViewDataSource
         }
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
         
         let date = resultSearchController.isActive == true ? filteredResults[(indexPath as NSIndexPath).row] : dates[(indexPath as NSIndexPath).row]
         
         if let firstName = date?.name?.firstName(), let readableDate = date?.date?.readableDate(), let lastName = date?.name?.lastName() {
+            
             if date?.type! == "custom" {
                 dateCell.firstName = (date?.name!)!
                 dateCell.lastName = ""
             } else {
+                
                 dateCell.firstName = firstName
                 dateCell.lastName = lastName
             }
@@ -183,11 +173,11 @@ extension DatesTableVC { // UITableViewDataSource
         return dateCell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             self.logEvents(forString: "Swiped to Delete")
@@ -205,20 +195,20 @@ extension DatesTableVC { // UITableViewDataSource
     }
 }
 
-extension DatesTableVC { // UITableViewDelegate
+extension DatesViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         resultSearchController.searchBar.isHidden = true
         self.performSegue(withIdentifier: "DateDetailsVC", sender: self)
     }
 }
 
-extension DatesTableVC: ReloadDatesTableDelegate {
-
+extension DatesViewController: ReloadDatesTableDelegate {
+    
     func reloadTableView() {
         dates = fetch(dateType: nil)
         tableView.reloadData()
@@ -226,7 +216,7 @@ extension DatesTableVC: ReloadDatesTableDelegate {
     
 }
 
-extension DatesTableVC: UISearchResultsUpdating {
+extension DatesViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         filteredResults.removeAll(keepingCapacity: false)
@@ -237,4 +227,3 @@ extension DatesTableVC: UISearchResultsUpdating {
     }
     
 }
-

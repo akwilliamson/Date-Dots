@@ -19,7 +19,6 @@
 		97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEF1AFBF44A0095BC57 /* Images.xcassets */; };
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
 		97364CFF1AFBF44A0095BC57 /* DateAidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */; };
-		97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */; };
 		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
@@ -59,6 +58,7 @@
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; };
 		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
+		97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */; };
 		97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F6C9601BFEF34400511572 /* UIButtonExtension.swift */; };
 		9F23812F132E5FE71B78AD9B /* libPods-DateAid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E6603D4715E14974321608 /* libPods-DateAid.a */; };
 /* End PBXBuildFile section */
@@ -93,7 +93,6 @@
 		97364CFD1AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
 		97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
-		97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesTableVC.swift; sourceTree = "<group>"; };
 		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
@@ -135,6 +134,7 @@
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
+		97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
 		97F6C9601BFEF34400511572 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		C1E6603D4715E14974321608 /* libPods-DateAid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DateAid.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -260,7 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				97BC1C6E1DA60BEF009E9AE7 /* DatesTabBarViewController.swift */,
-				97364D0C1AFBFDC50095BC57 /* DatesTableVC.swift */,
+				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
 				978446901B3A8143003889BD /* DateDetailsVC.swift */,
 				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
 				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
@@ -584,11 +584,11 @@
 				97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
+				97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */,
 				97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
-				97364D0D1AFBFDC50095BC57 /* DatesTableVC.swift in Sources */,
 				97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,7 +21,7 @@ class AddDateVC: UIViewController {
     
 // MARK: PROPERTIES
     
-    // Passed from DatesTableVC for new date
+    // Passed from DatesVC for new date
     var managedContext: NSManagedObjectContext?
     var isBeingEdited: Bool!
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
