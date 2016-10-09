@@ -9,17 +9,17 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-import Foundation
-import CoreData
+//import Foundation
+//import CoreData
 
-extension Date {
+//extension Date {
 
-    @NSManaged var abbreviatedName: String?
-    @NSManaged var date: Foundation.Date?
-    @NSManaged var equalizedDate: String?
-    @NSManaged var name: String?
-    @NSManaged var type: String?
-    @NSManaged var address: Address?
-    @NSManaged var notes: NSSet?
+//    @NSManaged var abbreviatedName: String?
+//    @NSManaged var date: Foundation.Date?
+//    @NSManaged var equalizedDate: String?
+//    @NSManaged var name: String?
+//    @NSManaged var type: String?
+//    @NSManaged var address: Address?
+//    @NSManaged var notes: NSSet?
 
-}
+//}

@@ -9,16 +9,22 @@
 import UIKit
 import CoreData
 
+protocol ReloadDatesTableDelegate {
+    func reloadTableView()
+}
+
 class DatesViewController: UIViewController {
     
     var menuIndexPath: Int?
     var typePredicate: NSPredicate?
-    var dates: [Date?] = []
+    
+    var fetchedDates: [Date?] = []
+    var filteredDates: [Date?] = []
+    
     var managedContext = CoreDataStack().managedObjectContext
     
     // Search
-    var filteredResults = [Date]()
-    var resultSearchController = UISearchController()
+    var searchController = UISearchController()
     
     var dateTypeForNewDate = "birthday" // nil menu index path defaults to birthday type for add new date segue
     let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
@@ -29,22 +35,23 @@ class DatesViewController: UIViewController {
         super.viewDidLoad()
         
         title = Foundation.Date().formatted("MMMM dd")
-        self.logEvents(forString: "Main View")
-        dates = fetch(dateType: nil)
-        register("DateCell")
+        logEvents(forString: "Main View")
+        tableView.register("DateCell")
+        fetchedDates = fetch(dateType: nil)
+        
         addSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        dates = fetch(dateType: nil)
+        fetchedDates = fetch(dateType: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        resultSearchController.isActive = false
+        searchController.isActive = false
     }
     
     func fetch(dateType: DateType?, sort descriptors: [String]? = ["equalizedDate", "name"]) -> [Date?] {
@@ -76,48 +83,15 @@ class DatesViewController: UIViewController {
         return mutableDates
     }
     
-    func addSearchBar() {
-        resultSearchController = UISearchController(searchResultsController: nil)
-        resultSearchController.searchResultsUpdater = self
-        resultSearchController.dimsBackgroundDuringPresentation = false
-        resultSearchController.searchBar.sizeToFit()
-        resultSearchController.searchBar.tintColor = UIColor.birthdayColor()
-        definesPresentationContext = true
-        tableView.tableHeaderView = resultSearchController.searchBar
-        tableView.reloadData()
-    }
-    
-    func register(_ cell: String) {
-        let nib = UINib(nibName: cell, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: cell)
-    }
-    
-    func addNoDatesLabel() {
-        if resultSearchController.isActive == false {
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            if let indexPath = menuIndexPath {
-                label.text = "No \(typeStrings[indexPath]) added"
-            } else {
-                label.text = "No dates found"
-            }
-            label.font = UIFont(name: "AvenirNext-Bold", size: 25)
-            label.textColor = UIColor.lightGray
-            label.textAlignment = .center
-            label.sizeToFit()
-            tableView.backgroundView = label
-            tableView.separatorStyle = .none
-        }
-    }
-    
     // MARK: SEGUE
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DateDetailsVC" {
             let dateDetailsVC = segue.destination as! DateDetailsVC
-            if resultSearchController.isActive == true {
-                dateDetailsVC.dateObject = filteredResults[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+            if searchController.isActive == true {
+                dateDetailsVC.dateObject = filteredDates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
             } else {
-                dateDetailsVC.dateObject = dates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+                dateDetailsVC.dateObject = fetchedDates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
             }
             dateDetailsVC.managedContext = managedContext
             dateDetailsVC.reloadDatesTableDelegate = self
@@ -130,47 +104,51 @@ class DatesViewController: UIViewController {
             addDateVC.reloadDatesTableDelegate = self
         }
     }
+    
+    func addSearchBar() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.tintColor = UIColor.birthday
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
+}
+
+extension DatesViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filterContentFor(searchText: searchText)
+        }
+    }
+    
+    func filterContentFor(searchText: String, scope: String = "All") {
+        filteredDates = fetchedDates.filter { date in
+            date?.name?.lowercased().contains(searchText.lowercased()) ?? false
+        }
+        tableView.reloadData()
+    }
 }
 
 extension DatesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if resultSearchController.isActive {
-            if filteredResults.count == 0 {
-                addNoDatesLabel()
-            }
-            return filteredResults.count
-        } else {
-            if dates.count == 0 {
-                addNoDatesLabel()
-            }
-            return dates.count
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredDates.count
         }
+        return fetchedDates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
+        let date = searchController.isActive == true ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
         
-        let date = resultSearchController.isActive == true ? filteredResults[(indexPath as NSIndexPath).row] : dates[(indexPath as NSIndexPath).row]
-        
-        if let firstName = date?.name?.firstName(), let readableDate = date?.date?.readableDate(), let lastName = date?.name?.lastName() {
-            
-            if date?.type! == "custom" {
-                dateCell.firstName = (date?.name!)!
-                dateCell.lastName = ""
-            } else {
-                
-                dateCell.firstName = firstName
-                dateCell.lastName = lastName
-            }
-            dateCell.date = readableDate
-        }
-        
-        dateCell.firstNameLabel.textColor = date?.type?.associatedColor()
-        
-        return dateCell
+        cell.date = date
+    
+        return cell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -181,9 +159,9 @@ extension DatesViewController: UITableViewDataSource {
         
         if editingStyle == .delete {
             self.logEvents(forString: "Swiped to Delete")
-            let dateToDelete = dates[(indexPath as NSIndexPath).row]
+            let dateToDelete = fetchedDates[(indexPath as NSIndexPath).row]
             managedContext.delete(dateToDelete!)
-            dates.remove(at: (indexPath as NSIndexPath).row)
+            fetchedDates.remove(at: (indexPath as NSIndexPath).row)
             
             do { try managedContext.save()
             } catch let error as NSError {
@@ -191,7 +169,6 @@ extension DatesViewController: UITableViewDataSource {
             }
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        
     }
 }
 
@@ -202,7 +179,6 @@ extension DatesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        resultSearchController.searchBar.isHidden = true
         self.performSegue(withIdentifier: "DateDetailsVC", sender: self)
     }
 }
@@ -210,19 +186,7 @@ extension DatesViewController: UITableViewDelegate {
 extension DatesViewController: ReloadDatesTableDelegate {
     
     func reloadTableView() {
-        dates = fetch(dateType: nil)
-        tableView.reloadData()
-    }
-    
-}
-
-extension DatesViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filteredResults.removeAll(keepingCapacity: false)
-        let searchPredicate = NSPredicate(format: "name CONTAINS %@", searchController.searchBar.text!)
-        let array = (dates as NSArray).filtered(using: searchPredicate)
-        filteredResults = array as! [Date]
+        fetchedDates = fetch(dateType: nil)
         tableView.reloadData()
     }
     

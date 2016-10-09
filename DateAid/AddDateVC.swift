@@ -35,7 +35,7 @@ class AddDateVC: UIViewController {
     var street: String?
     var region: String?
     
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     let fullMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     let fullDays = ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",
@@ -72,7 +72,11 @@ class AddDateVC: UIViewController {
         self.logEvents(forString: "View Add Date")
         title = addOrEdit()
         
-        setColorTheme(forDateType: dateToSave?.type)
+        if let dateToSave = dateToSave {
+            setTheme(to: dateToSave.color)
+        } else {
+            setTheme(to: UIColor.birthday)
+        }
         addColoredArrows()
         
         setDataSourceFor([monthSlider, daySlider])
@@ -130,7 +134,7 @@ class AddDateVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        animateButtonInAndOut(forDateType: dateToSave?.type)
+        animateButtonInAndOut(for: dateToSave)
     }
     
     func addOrEdit() -> String {
@@ -140,18 +144,18 @@ class AddDateVC: UIViewController {
     func addImagesToButtons() {
         let birthdayImage = UIImage(named: "balloon.png")?.withRenderingMode(.alwaysTemplate)
         birthdayButton.setImage(birthdayImage, for: UIControlState())
-        birthdayButton.tintColor = UIColor.birthdayColor()
-        birthdayButton.layer.borderColor = UIColor.birthdayColor().cgColor
+        birthdayButton.tintColor = UIColor.birthday
+        birthdayButton.layer.borderColor = UIColor.birthday.cgColor
         
         let anniversaryImage = UIImage(named: "heart.png")?.withRenderingMode(.alwaysTemplate)
         anniversaryButton.setImage(anniversaryImage, for: UIControlState())
-        anniversaryButton.tintColor = UIColor.anniversaryColor()
-        anniversaryButton.layer.borderColor = UIColor.anniversaryColor().cgColor
+        anniversaryButton.tintColor = UIColor.anniversary
+        anniversaryButton.layer.borderColor = UIColor.anniversary.cgColor
         
         let customImage = UIImage(named: "calendar.png")?.withRenderingMode(.alwaysTemplate)
         customButton.setImage(customImage, for: UIControlState())
-        customButton.tintColor = UIColor.customColor()
-        customButton.layer.borderColor = UIColor.customColor().cgColor
+        customButton.tintColor = UIColor.custom
+        customButton.layer.borderColor = UIColor.custom.cgColor
         
         [birthdayButton, anniversaryButton, customButton].forEach({
             $0?.layer.borderWidth = 2
@@ -160,11 +164,9 @@ class AddDateVC: UIViewController {
         })
     }
     
-    func setColorTheme(forDateType dateType: String?) {
-        if let typeColor = dateType != nil ? dateType?.associatedColor() : dateType?.associatedColor() {
-            [monthSlider, daySlider].forEach { $0!.setColorTo(typeColor) }
-            editDetailsButton.tintColor = typeColor
-        }
+    func setTheme(to color: UIColor) {
+        [monthSlider, daySlider].forEach { $0!.setColorTo(color) }
+        editDetailsButton.tintColor = color
     }
     
     func addColoredArrows() {
@@ -217,20 +219,20 @@ class AddDateVC: UIViewController {
         daySlider.addLabelOnThumb(withText: "D")
     }
     
-    func animateButtonInAndOut(forDateType dateType: String?) {
-        if let typeColor = dateType != nil ? dateType?.associatedColor() : UIColor.birthdayColor() {
-            let button = getProperButton(forTypeColor: typeColor)
+    func animateButtonInAndOut(for date: Date?) {
+        if let date = date {
+            let button = getProperButton(forTypeColor: date.color)
             button.animateInAndOut()
         }
     }
     
     func getProperButton(forTypeColor typeColor: UIColor) -> TypeButton {
         switch typeColor {
-        case UIColor.birthdayColor():
+        case UIColor.birthday:
             return birthdayButton
-        case UIColor.anniversaryColor():
+        case UIColor.anniversary:
             return anniversaryButton
-        case UIColor.customColor():
+        case UIColor.custom:
             return customButton
         default:
             return customButton
@@ -266,9 +268,7 @@ class AddDateVC: UIViewController {
         if dateToSave == nil {
             guard let entity = NSEntityDescription.entity(forEntityName: "Date", in: managedContext!) else { return }
             dateToSave = Date(entity: entity, insertInto: managedContext)
-            
-            let typeForIncomingColor = colorForType.allKeysForValue(dateType.associatedColor()).first!
-            dateToSave?.type = typeForIncomingColor
+            dateToSave?.type = "birthday"
         }
         
         if let dateToSave = dateToSave {
@@ -384,25 +384,23 @@ extension AddDateVC {
 
     @IBAction func birthdayButton(_ sender: UIButton) {
         [anniversaryButton, customButton].forEach { $0.stopAnimating() }
-        switchDateTypeAndColorsTo("birthday")
+        dateType = "birthday"
+        setTheme(to: UIColor.birthday)
         sender.animateInAndOut()
     }
     
     @IBAction func anniversaryButton(_ sender: UIButton) {
         [birthdayButton, customButton].forEach { $0.stopAnimating() }
-        switchDateTypeAndColorsTo("anniversary")
+        dateType = "anniversary"
+        setTheme(to: UIColor.anniversary)
         sender.animateInAndOut()
     }
     
     @IBAction func customButton(_ sender: UIButton) {
         [birthdayButton, anniversaryButton].forEach { $0.stopAnimating() }
-        switchDateTypeAndColorsTo("custom")
+        dateType = "custom"
+        setTheme(to: UIColor.custom)
         sender.animateInAndOut()
-    }
-    
-    func switchDateTypeAndColorsTo(_ type: String) {
-        dateType = type
-        setColorTheme(forDateType: type)
     }
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {

@@ -39,14 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func styleNavigationBar() {
-        UINavigationBar.appearance().barTintColor = UIColor.birthdayColor()
+        UINavigationBar.appearance().barTintColor = UIColor.birthday
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
             NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
     }
     
     func styleTabBar() {
-        UITabBar.appearance().barTintColor = UIColor.birthdayColor()
+        UITabBar.appearance().barTintColor = UIColor.birthday
         UITabBar.appearance().tintColor = UIColor.white
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: .normal)
     }

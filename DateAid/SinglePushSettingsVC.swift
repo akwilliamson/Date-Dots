@@ -14,7 +14,7 @@ class SinglePushSettingsVC: UIViewController {
     var notificationDelegate: SetNotificationDelegate?
     
     let application = UIApplication.shared
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM", "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
     
     var previouslyScheduledNotification: UILocalNotification?
@@ -79,7 +79,7 @@ class SinglePushSettingsVC: UIViewController {
         if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
             setLabelAndSliderValues(viaNotification: nil)
             trashIcon.image = UIImage(named: "reminder-off.png")?.withRenderingMode(.alwaysTemplate)
-            trashIcon.tintColor = dateObject.type!.associatedColor()
+            trashIcon.tintColor = dateObject.color
         }
     }
     

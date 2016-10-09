@@ -14,7 +14,7 @@ class TurningVC: UIViewController {
     var fetchedResults: [Date]?
     var filteredResults: [Date]?
     let managedContext = CoreDataStack().managedObjectContext
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
 
     @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
@@ -31,7 +31,7 @@ class TurningVC: UIViewController {
         turningSlider.addTarget(self, action: #selector(TurningVC.valueChanged(_:)), for: .valueChanged)
         turningSlider.setValues(max: 100, value: 1)
         turningSlider.minimumValue = 1
-        turningSlider.setColorTo(UIColor.birthdayColor())
+        turningSlider.setColorTo(UIColor.birthday)
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == 1 })
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -140,16 +140,11 @@ extension TurningVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
         
         if let results = filteredResults {
-            let date = results[(indexPath as NSIndexPath).row]
-            if let firstName = date.name?.firstName(), let readableDate = date.date?.readableDate(), let lastName = date.name?.lastName() {
-                dateCell.firstName = firstName
-                dateCell.lastName = lastName
-                dateCell.date = readableDate
-                dateCell.firstNameLabel.textColor = date.type?.associatedColor()
-            }
+            dateCell.date = results[indexPath.row]
         }
         dateCell.selectionStyle = .none
         return dateCell

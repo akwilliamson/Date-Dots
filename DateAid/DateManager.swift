@@ -35,13 +35,13 @@ class DateManager {
     
     private func createBirthdays() {
         contacts.forEach { contact in
-            if contact?.birthday != nil { print("there's a birthday for \(contact?.givenName)"); date(for: contact, of: .birthday) }
+            if contact?.birthday != nil { date(for: contact, of: .birthday) }
         }
     }
     
     private func createAnniversaries() {
         contacts.forEach { contact in
-            if contact?.anniversary != nil { print("there's an anniversary for \(contact?.givenName)"); date(for: contact, of: .anniversary) }
+            if contact?.anniversary != nil { date(for: contact, of: .anniversary) }
         }
     }
     
@@ -66,7 +66,6 @@ class DateManager {
                     date.abbreviatedName = givenName
                     date.date            = givenDate
                     date.equalizedDate   = givenDate.formatted("MM/dd")
-                    print("create holiday for \(date.name)")
                 }
             }
         }
@@ -84,9 +83,11 @@ class DateManager {
                 let contact = contact {
                 
                 let date = Date(entity: entity, insertInto: managedContext)
+                
                 date.type            = type.rawValue
                 date.name            = contact.fullName
                 date.abbreviatedName = contact.abbreviatedName
+                
                 switch type {
                 case .birthday:
                     date.date            = contact.birthdate
@@ -97,7 +98,6 @@ class DateManager {
                 case .holiday:
                     return // Fix later
                 }
-//                
 //                if let address = contact.postalAddress {
 //                    date.address = create(address, for: date)
 //                }

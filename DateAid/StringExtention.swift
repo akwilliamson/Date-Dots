@@ -26,35 +26,4 @@ extension String {
             return self
         }
     }
-    
-    func firstName() -> String {
-        return self.components(separatedBy: " ")[0]
-    }
-    
-    func lastName() -> String? {
-        let lastNameString: String?
-        let components = self.components(separatedBy: " ")
-        if components.count == 2 || components.count == 3 {
-            guard let lastName = components.last else { return "" }
-            lastNameString = lastName
-        } else {
-            lastNameString = ""
-        }
-        return lastNameString
-    }
-    
-    func associatedColor() -> UIColor {
-        switch self {
-        case "all", "All":
-            return UIColor.gray
-        case "birthday", "Birthdays":
-            return UIColor.birthdayColor()
-        case "anniversary", "Anniversaries":
-            return UIColor.anniversaryColor()
-        case "custom", "Custom":
-            return UIColor.customColor()
-        default:
-            return UIColor.birthdayColor()
-        }
-    }
 }

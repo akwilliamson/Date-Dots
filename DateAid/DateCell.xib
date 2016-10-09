@@ -49,7 +49,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="dateLabel" destination="rxm-ie-j9q" id="hS3-Eu-xqa"/>
+                <outlet property="dateLabel" destination="rxm-ie-j9q" id="RSj-6L-hKZ"/>
                 <outlet property="firstNameLabel" destination="Md7-GW-w1s" id="xcC-3L-OCc"/>
                 <outlet property="lastNameLabel" destination="HN3-iN-q8m" id="H9i-ih-VHQ"/>
             </connections>

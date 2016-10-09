@@ -30,14 +30,13 @@ class EditDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.logEvents(forString: "Edit Details")
-        setColorTheme(forType: dateObject.type)
+        setColorTheme(for: dateObject.color)
         populateAddressFields(withAddress: dateObject.address)
     }
     
-    func setColorTheme(forType dateType: String?) {
-        if let dateType = dateType {
-            let color = dateType.associatedColor()
-            [giftNotesButton, planNotesButton, otherNotesButton, notificationSettingsButton].forEach() { $0.setTitleColor(color, for: UIControlState()) }
+    func setColorTheme(for color: UIColor) {
+        [giftNotesButton, planNotesButton, otherNotesButton, notificationSettingsButton].forEach() {
+            $0.setTitleColor(color, for: .normal)
         }
     }
     

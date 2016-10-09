@@ -60,7 +60,7 @@ class SettingsTableVC: UIViewController {
     func alertToggle(selectedButton onButton: UIButton, offButton: UIButton) {
         
         guard let alertYearly = userDefaults.object(forKey: "alertYearly") as? Bool else {
-            onButton.backgroundColor = UIColor.anniversaryColor()
+            onButton.backgroundColor = UIColor.anniversary
             offButton.backgroundColor = UIColor.lightGray
             onButton.layer.cornerRadius = 5
             onButton.clipsToBounds = true
@@ -70,10 +70,10 @@ class SettingsTableVC: UIViewController {
         }
         
         if alertYearly == true {
-            onButton.backgroundColor = UIColor.anniversaryColor()
+            onButton.backgroundColor = UIColor.anniversary
             offButton.backgroundColor = UIColor.lightGray
         } else {
-            offButton.backgroundColor = UIColor.anniversaryColor()
+            offButton.backgroundColor = UIColor.anniversary
             onButton.backgroundColor = UIColor.lightGray
         }
         onButton.layer.cornerRadius = 5
@@ -137,7 +137,7 @@ class SettingsTableVC: UIViewController {
     }
     
     func saveAlertRepeatPreference() {
-        if alertYearlyButton.backgroundColor == UIColor.anniversaryColor() {
+        if alertYearlyButton.backgroundColor == UIColor.anniversary {
             userDefaults.set(true, forKey: "alertYearly")
         } else {
             userDefaults.set(false, forKey: "alertYearly")
@@ -177,7 +177,7 @@ class SettingsTableVC: UIViewController {
     }
     
     func rollRightCompletion(_ labelSelected: CircleLabel) {
-        labelSelected.backgroundColor = UIColor.confirmColor()
+        labelSelected.backgroundColor = UIColor.confirm
         enableProperLabelsForUserInteraction(labelSelected, enabled: true)
         showOrHidSettingsInfo(forIndex: labelSelected.index, hide: false)
     }
@@ -218,12 +218,12 @@ class SettingsTableVC: UIViewController {
     }
     
     @IBAction func alertYearlySelected(_ sender: AnyObject) {
-        alertYearlyButton.backgroundColor = UIColor.anniversaryColor()
+        alertYearlyButton.backgroundColor = UIColor.anniversary
         alertOnceButton.backgroundColor = UIColor.lightGray
     }
     
     @IBAction func alertOnceSelected(_ sender: AnyObject) {
-        alertOnceButton.backgroundColor = UIColor.anniversaryColor()
+        alertOnceButton.backgroundColor = UIColor.anniversary
         alertYearlyButton.backgroundColor = UIColor.lightGray
     }
     

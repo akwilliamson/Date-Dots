@@ -13,29 +13,19 @@ class DateCell: UITableViewCell {
     
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
-    var firstName: String = "" {
+    var date: Date? {
         didSet {
-            if (firstName != oldValue) {
-                firstNameLabel.text = firstName
-            }
+            if let date = date { populate(date) }
         }
     }
     
-    var lastName: String = "" {
-        didSet {
-            if (lastName != oldValue) {
-                lastNameLabel.text = lastName
-            }
-        }
-    }
-    
-    var date: String = "" {
-        didSet {
-            if (date != oldValue) {
-                dateLabel.text = date
-            }
-        }
+    private func populate(_ date: Date) {
+        
+        firstNameLabel.textColor = date.color
+        if let firstName = date.firstName { firstNameLabel.text = firstName }
+        if let lastName = date.lastName { lastNameLabel.text = lastName }
+        if let date = date.date { dateLabel.text = date.readable }
     }
 }

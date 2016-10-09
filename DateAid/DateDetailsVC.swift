@@ -20,7 +20,7 @@ class DateDetailsVC: UIViewController {
     var managedContext: NSManagedObjectContext?
     var dateObject: Date!
     var localNotificationFound: Bool?
-    let colorForType = ["birthday": UIColor.birthdayColor(), "anniversary": UIColor.anniversaryColor(), "custom": UIColor.customColor()]
+    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
     var reloadDatesTableDelegate: ReloadDatesTableDelegate?
 
 // MARK: OUTLETS
@@ -56,7 +56,7 @@ class DateDetailsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setColorTheme(forType: dateObject.type)
+        setColorTheme(to: dateObject.color)
         setdecorationImages(forType: dateObject.type)
         populateDateViews()
         populateAlertViews()
@@ -77,13 +77,11 @@ class DateDetailsVC: UIViewController {
         view.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func setColorTheme(forType dateType: String?) {
-        if let dateType = dateType {
-            [dateLabel, daysUntilLabel, ageLabel].forEach({ $0.backgroundColor = colorForType[dateType] })
-            [envelopeImage, reminderImage].forEach({ $0.tintColor = colorForType[dateType] })
-            reminderLabel.textColor = colorForType[dateType]
-            notesButton.backgroundColor = colorForType[dateType]
-        }
+    func setColorTheme(to color: UIColor) {
+        [dateLabel, daysUntilLabel, ageLabel].forEach({ $0.backgroundColor = color })
+        [envelopeImage, reminderImage].forEach({ $0.tintColor = color })
+        reminderLabel.textColor = color
+        notesButton.backgroundColor = color
     }
     
     func setdecorationImages(forType dateType: String?) {
@@ -144,7 +142,7 @@ class DateDetailsVC: UIViewController {
     }
     
     func populateDateLabel(forDate date: Date) {
-        if let readableDate = date.date?.readableDate() {
+        if let readableDate = date.date?.readable {
             dateLabel.text = readableDate.replacingOccurrences(of: " ", with: "\n")
         }
     }

@@ -10,6 +10,12 @@ import Foundation
 
 extension Foundation.Date {
     
+    var readable: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        return dateFormatter.string(from: self)
+    }
+    
     func formatted(_ format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
@@ -36,12 +42,6 @@ extension Foundation.Date {
             difference += 365
         }
         return difference
-    }
-    
-    func readableDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
-        return dateFormatter.string(from: self)
     }
     
     func ageTurning() -> Int {

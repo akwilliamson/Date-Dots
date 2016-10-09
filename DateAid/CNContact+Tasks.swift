@@ -28,13 +28,19 @@ extension CNContact {
     }
     
     var birthdate: Foundation.Date? {
-        return birthday?.date ?? nil
+        var comps = birthday
+        
+        comps?.timeZone = TimeZone.current
+        return comps?.date ?? nil
     }
     
     var anniversary: Foundation.Date? {
-        return dates.filter { date -> Bool in
+        var comps = dates.filter { date -> Bool in
             guard let label = date.label else { return false }
             return label.contains("Anniversary")
-        }.first?.value.date
+        }.first?.value as? DateComponents
+        
+        comps?.timeZone = TimeZone.current
+        return comps?.date
     }
 }
