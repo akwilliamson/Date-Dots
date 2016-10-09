@@ -16,6 +16,7 @@ class InitialImportVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addActivityView()
     }
     

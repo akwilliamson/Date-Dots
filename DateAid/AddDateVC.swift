@@ -275,7 +275,7 @@ class AddDateVC: UIViewController {
             dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces)
             dateToSave.abbreviatedName = dateToSave.name?.abbreviatedName()
             dateToSave.date = setDateFromValues()
-            dateToSave.equalizedDate = dateToSave.date?.formatted
+            dateToSave.equalizedDate = dateToSave.date?.formatted("MM/dd")
             
             if dateToSave.address == nil {
                 guard let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: managedContext!) else { return }

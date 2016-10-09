@@ -35,13 +35,13 @@ class DateManager {
     
     private func createBirthdays() {
         contacts.forEach { contact in
-            date(for: contact, of: .birthday)
+            if contact?.birthday != nil { date(for: contact, of: .birthday) }
         }
     }
     
     private func createAnniversaries() {
         contacts.forEach { contact in
-            date(for: contact, of: .anniversary)
+            if contact?.anniversary != nil { date(for: contact, of: .anniversary) }
         }
     }
     
@@ -54,7 +54,8 @@ class DateManager {
         for (givenName, givenDate) in dict {
             
             let exists = storedDates.contains { date -> Bool in
-                return date?.name == givenName && date?.type == DateType.holiday.rawValue
+                return date?.name == givenName &&
+                       date?.type == DateType.holiday.rawValue
             }
             
             if !exists {
@@ -64,7 +65,8 @@ class DateManager {
                     date.name            = givenName
                     date.abbreviatedName = givenName
                     date.date            = givenDate
-                    date.equalizedDate   = givenDate.formatted
+                    date.equalizedDate   = givenDate.formatted("MM/dd")
+                    print("create holiday for \(date.name)")
                 }
             }
         }
@@ -84,14 +86,13 @@ class DateManager {
                 date.type            = type.rawValue
                 date.name            = contact.fullName
                 date.abbreviatedName = contact.abbreviatedName
-                
                 switch type {
                 case .birthday:
                     date.date            = contact.birthdate
-                    date.equalizedDate   = contact.birthdate?.formatted
+                    date.equalizedDate   = contact.birthdate?.formatted("MM/dd")
                 case .anniversary:
                     date.date            = contact.anniversary
-                    date.equalizedDate   = contact.anniversary?.formatted
+                    date.equalizedDate   = contact.anniversary?.formatted("MM/dd")
                 case .holiday:
                     return // Fix later
                 }

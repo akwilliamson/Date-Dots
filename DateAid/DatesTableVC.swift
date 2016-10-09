@@ -21,7 +21,6 @@ class DatesTableVC: UITableViewController {
     var typePredicate: NSPredicate?
     var dates: [Date?] = []
     var managedContext = CoreDataStack().managedObjectContext
-    var sidebarMenuOpen: Bool?
     
     // Search
     var filteredResults = [Date]()
@@ -39,12 +38,12 @@ class DatesTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = Foundation.Date().formatted("MMMM dd")
+        
         self.logEvents(forString: "Main View")
         dates = fetch(dateType: nil)
         register("DateCell")
-        configureNavigationBar()
         addSearchBar()
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +83,7 @@ class DatesTableVC: UITableViewController {
         
         mutableDates.forEach({
             guard let formattedDate = $0?.equalizedDate else { return }
-            if formattedDate < Foundation.Date().formatted { mutableDates.shift() }
+            if formattedDate < Foundation.Date().formatted("MM/dd") { mutableDates.shift() }
         })
         
         return mutableDates
@@ -104,12 +103,6 @@ class DatesTableVC: UITableViewController {
     func register(_ cell: String) {
         let nib = UINib(nibName: cell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cell)
-    }
-    
-    func configureNavigationBar() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d"
-        title = formatter.string(from: Foundation.Date())
     }
     
     func addNoDatesLabel() {
@@ -216,10 +209,6 @@ extension DatesTableVC { // UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return sidebarMenuOpen == true ? nil : indexPath
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

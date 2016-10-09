@@ -43,7 +43,7 @@
 		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */; };
-		97AEAC101B2EA74A00ADF181 /* Custom.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Custom.plist */; };
+		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
 		97B099BC1BF55C5600ADE476 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BB1BF55C5600ADE476 /* Security.framework */; };
 		97B099BE1BF55C5C00ADE476 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */; };
 		97B40DAB1DA17900000DA0E0 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAA1DA17900000DA0E0 /* DateManager.swift */; };
@@ -119,7 +119,7 @@
 		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* StringExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
-		97AEAC0F1B2EA74A00ADF181 /* Custom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Custom.plist; sourceTree = "<group>"; };
+		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97B099BB1BF55C5600ADE476 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		97B40DAA1DA17900000DA0E0 /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -180,15 +180,6 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		970D93651BC47BE800D7F1FF /* PLists */ = {
-			isa = PBXGroup;
-			children = (
-				97364CE41AFBF44A0095BC57 /* Info.plist */,
-				97AEAC0F1B2EA74A00ADF181 /* Custom.plist */,
-			);
-			name = PLists;
-			sourceTree = "<group>";
-		};
 		97364CD71AFBF44A0095BC57 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +210,7 @@
 				977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */,
 				977ED8C01BFDA3F400BC7EB9 /* Turning Tab */,
 				977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */,
+				9793A3AF1DA77DAF002710A4 /* Core Data */,
 				97D2669B1BD98FE3008F7EF8 /* Models */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
@@ -230,12 +222,10 @@
 		97364CE31AFBF44A0095BC57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */,
+				97364CE41AFBF44A0095BC57 /* Info.plist */,
 				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
-				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
-				97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */,
-				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 				97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */,
-				970D93651BC47BE800D7F1FF /* PLists */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 			);
 			name = "Supporting Files";
@@ -326,17 +316,43 @@
 			name = UIControls;
 			sourceTree = "<group>";
 		};
-		97D2669B1BD98FE3008F7EF8 /* Models */ = {
+		9793A3AF1DA77DAF002710A4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
-				97B40DAA1DA17900000DA0E0 /* DateManager.swift */,
+				9793A3B01DA77DD7002710A4 /* Model */,
+				9793A3B11DA77DDD002710A4 /* Objects */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		9793A3B01DA77DD7002710A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
+				97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */,
+				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9793A3B11DA77DDD002710A4 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
 				97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */,
 				97AD26A71BD81C59004C1C7D /* Note.swift */,
 				9791F7891BD4CCDF001E82BB /* Address+CoreDataProperties.swift */,
 				9791F78A1BD4CCDF001E82BB /* Address.swift */,
 				97B5F1A81BD02F3C00CEFFAF /* Date.swift */,
 				97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		97D2669B1BD98FE3008F7EF8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
+				97B40DAA1DA17900000DA0E0 /* DateManager.swift */,
 				977E3B031DA1A4A1005D131F /* DateType.swift */,
 			);
 			name = Models;
@@ -460,7 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */,
-				97AEAC101B2EA74A00ADF181 /* Custom.plist in Resources */,
+				97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */,
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
