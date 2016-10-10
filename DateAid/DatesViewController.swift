@@ -15,19 +15,11 @@ protocol ReloadDatesTableDelegate {
 
 class DatesViewController: UIViewController {
     
-    var menuIndexPath: Int?
-    var typePredicate: NSPredicate?
-    
     var fetchedDates: [Date?] = []
     var filteredDates: [Date?] = []
     
     var managedContext = CoreDataStack().managedObjectContext
-    
-    // Search
-    var searchController = UISearchController()
-    
-    var dateTypeForNewDate = "birthday" // nil menu index path defaults to birthday type for add new date segue
-    let typeStrings = ["dates", "birthdays", "anniversaries", "custom"]
+    let searchController = UISearchController(searchResultsController: nil)
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -37,9 +29,8 @@ class DatesViewController: UIViewController {
         title = Foundation.Date().formatted("MMMM dd")
         logEvents(forString: "Main View")
         tableView.register("DateCell")
-        fetchedDates = fetch(dateType: nil)
-        
-        addSearchBar()
+        setupSearchController()
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +39,12 @@ class DatesViewController: UIViewController {
         fetchedDates = fetch(dateType: nil)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        
-        searchController.isActive = false
+    func setupSearchController() {
+        definesPresentationContext = true
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.tintColor = UIColor.birthday
     }
     
     func fetch(dateType: DateType?, sort descriptors: [String]? = ["equalizedDate", "name"]) -> [Date?] {
@@ -79,74 +72,43 @@ class DatesViewController: UIViewController {
             guard let formattedDate = $0?.equalizedDate else { return }
             if formattedDate < Foundation.Date().formatted("MM/dd") { mutableDates.shift() }
         })
-        
         return mutableDates
     }
     
-    // MARK: SEGUE
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "DateDetailsVC" {
-            let dateDetailsVC = segue.destination as! DateDetailsVC
-            if searchController.isActive == true {
-                dateDetailsVC.dateObject = filteredDates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            } else {
-                dateDetailsVC.dateObject = fetchedDates[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            }
-            dateDetailsVC.managedContext = managedContext
-            dateDetailsVC.reloadDatesTableDelegate = self
+            let dateDetailsVC = segue.destination as? DateDetailsVC
+            dateDetailsVC?.managedContext = managedContext
+            dateDetailsVC?.reloadDatesTableDelegate = self
+            
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            dateDetailsVC?.dateObject = searchController.isActive ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
         }
         if segue.identifier == "AddDateVC" {
             let addDateVC = segue.destination as! AddDateVC
             addDateVC.isBeingEdited = false
             addDateVC.managedContext = managedContext
-            addDateVC.dateType = dateTypeForNewDate
+            addDateVC.dateType = "birthday"
             addDateVC.reloadDatesTableDelegate = self
         }
-    }
-    
-    func addSearchBar() {
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.sizeToFit()
-        searchController.searchBar.tintColor = UIColor.birthday
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
-    }
-}
-
-extension DatesViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            filterContentFor(searchText: searchText)
-        }
-    }
-    
-    func filterContentFor(searchText: String, scope: String = "All") {
-        filteredDates = fetchedDates.filter { date in
-            date?.name?.lowercased().contains(searchText.lowercased()) ?? false
-        }
-        tableView.reloadData()
     }
 }
 
 extension DatesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive && searchController.searchBar.text != "" {
-            return filteredDates.count
-        }
-        return fetchedDates.count
+        
+        let searching = searchController.isActive == true && searchController.searchBar.text != ""
+        return searching ? filteredDates.count : fetchedDates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
-        let date = searchController.isActive == true ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
         
-        cell.date = date
+        let searching = searchController.isActive == true && searchController.searchBar.text != ""
+        cell.date = searching ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
     
         return cell
     }
@@ -158,15 +120,11 @@ extension DatesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            self.logEvents(forString: "Swiped to Delete")
-            let dateToDelete = fetchedDates[(indexPath as NSIndexPath).row]
-            managedContext.delete(dateToDelete!)
-            fetchedDates.remove(at: (indexPath as NSIndexPath).row)
-            
-            do { try managedContext.save()
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
+            guard let date = fetchedDates[indexPath.row] else { return }
+            fetchedDates.remove(at: indexPath.row)
+            managedContext.delete(date)
+            managedContext.trySave()
+
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -174,12 +132,25 @@ extension DatesViewController: UITableViewDataSource {
 
 extension DatesViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "DateDetailsVC", sender: self)
+    }
+}
+
+extension DatesViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        guard let searchText = searchController.searchBar.text else { return }
+        filterContentFor(searchText: searchText)
+    }
+    
+    func filterContentFor(searchText: String, scope: String = "All") {
+        
+        filteredDates = fetchedDates.filter { date in
+            date?.name?.lowercased().contains(searchText.lowercased()) ?? false
+        }
+        tableView.reloadData()
     }
 }
 
@@ -189,5 +160,4 @@ extension DatesViewController: ReloadDatesTableDelegate {
         fetchedDates = fetch(dateType: nil)
         tableView.reloadData()
     }
-    
 }

@@ -21,6 +21,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HN3-iN-q8m">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="VHb-si-sqJ"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="75"/>
                         <color key="textColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="0.14999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -53,7 +56,7 @@
                 <outlet property="firstNameLabel" destination="Md7-GW-w1s" id="xcC-3L-OCc"/>
                 <outlet property="lastNameLabel" destination="HN3-iN-q8m" id="H9i-ih-VHQ"/>
             </connections>
-            <point key="canvasLocation" x="360.5" y="285"/>
+            <point key="canvasLocation" x="-7093" y="-4359"/>
         </tableViewCell>
     </objects>
 </document>
