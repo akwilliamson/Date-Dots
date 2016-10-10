@@ -13,7 +13,7 @@ protocol SetNotificationDelegate {
     func reloadNotificationView()
 }
 
-class DateDetailsViewControler: UIViewController {
+class DateDetailsViewController: UIViewController {
     
 // MARK: PROPERTIES
 
@@ -47,9 +47,8 @@ class DateDetailsViewControler: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.logEvents(forString: "View Date Details")
-        self.addGestureRecognizers()
-
+        logEvents(forString: "View Date Details")
+        addGestureRecognizers()
         envelopeImage.image = UIImage(named: "envelope.png")?.withRenderingMode(.alwaysTemplate)
     }
     
@@ -57,21 +56,18 @@ class DateDetailsViewControler: UIViewController {
         super.viewWillAppear(animated)
         
         setColorTheme(to: dateObject.color)
-        setdecorationImages(forType: dateObject.type)
+        setdecorationImages(for: dateObject.dateType)
         populateDateViews()
         populateAlertViews()
         animateViews()
     }
     
     func addGestureRecognizers() {
-        self.addTapGestureRecognizer(onView: envelopeImage, forAction: "segueToAddress:")
-        self.addTapGestureRecognizer(onView: addressLabel, forAction: "segueToAddress:")
-        self.addTapGestureRecognizer(onView: regionLabel, forAction: "segueToAddress:")
-        self.addTapGestureRecognizer(onView: reminderImage, forAction: "segueToNotification:")
-        self.addTapGestureRecognizer(onView: reminderLabel, forAction: "segueToNotification:")
+        [envelopeImage, addressLabel, regionLabel].forEach({ addTapGesture(to: $0, action: "showAddress:") })
+        [reminderImage, reminderLabel].forEach({ addTapGesture(to: $0, action: "showNotification:") })
     }
     
-    func addTapGestureRecognizer(onView view: UIView, forAction action: String) {
+    func addTapGesture(to view: UIView, action: String) {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
         tapGestureRecognizer.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -84,18 +80,8 @@ class DateDetailsViewControler: UIViewController {
         notesButton.backgroundColor = color
     }
     
-    func setdecorationImages(forType dateType: String?) {
-        guard let dateType = dateType else { return }
-        switch dateType {
-        case "birthday":
-            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "balloon.png") })
-        case "anniversary":
-            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "heart.png") })
-        case "custom":
-            [leftDecorationImage, rightDecorationImage].forEach({ $0.image = UIImage(named: "calendar.png") })
-        default:
-            break
-        }
+    func setdecorationImages(for dateType: DateType) {
+        [leftDecorationImage, rightDecorationImage].forEach({ $0.image = dateType.decorationImage })
     }
     
     func populateDateViews() {
@@ -225,12 +211,12 @@ class DateDetailsViewControler: UIViewController {
         reminderLabel.animateSlideIn(withDuration: 0.5, toPosition: view.center.x)
     }
     
-    func segueToNotification(_ sender: UITapGestureRecognizer) {
+    func showNotification(_ sender: UITapGestureRecognizer) {
         self.logEvents(forString: "Notification Gesture Tapped")
         self.performSegue(withIdentifier: "ShowNotification", sender: self)
     }
     
-    func segueToAddress(_ sender: UITapGestureRecognizer) {
+    func showAddress(_ sender: UITapGestureRecognizer) {
         self.logEvents(forString: "Address Gesture Tapped")
         self.performSegue(withIdentifier: "ShowAddress", sender: self)
     }

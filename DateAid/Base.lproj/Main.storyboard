@@ -136,7 +136,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G1p-lm-wMV" id="nDZ-dc-8uC">
-                                            <frame key="frameInset" width="375" height="79"/>
+                                            <frame key="frameInset" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -159,7 +159,7 @@
                     <connections>
                         <outlet property="tableView" destination="J2T-UL-QCd" id="Qku-KM-VWd"/>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDateVC" id="3dK-Af-Sia"/>
-                        <segue destination="PaR-uw-Bbs" kind="show" identifier="DateDetailsVC" id="Wh4-7v-x9o"/>
+                        <segue destination="PaR-uw-Bbs" kind="show" identifier="DateDetailsViewController" id="Wh4-7v-x9o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eja-Ou-SkO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1170,7 +1170,7 @@
         <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
             <objects>
-                <viewController storyboardIdentifier="ShowDateDetails" id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsViewControler" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowDateDetails" id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
@@ -1633,11 +1633,11 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBJ-Ek-HMP" id="xTJ-4M-tqM">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nby-ie-1Hz">
-                                            <frame key="frameInset" minX="15" width="345" height="43"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

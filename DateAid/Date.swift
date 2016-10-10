@@ -29,7 +29,7 @@ class Date: NSManagedObject {
     
     var color: UIColor {
         
-        guard let type = self.type else { return UIColor.birthday }
+        guard let type = self.type else { return .birthday }
     
         switch type.lowercased() {
         case "birthday":
@@ -41,7 +41,22 @@ class Date: NSManagedObject {
         default:
             return UIColor.birthday
         }
+    }
+    
+    var dateType: DateType {
         
+        guard let type = self.type else { return .birthday }
+        
+        switch type {
+        case "Birthday":
+            return .birthday
+        case "Anniversary":
+            return .anniversary
+        case "Custom":
+            return .holiday
+        default:
+            return .birthday
+        }
     }
     
 }

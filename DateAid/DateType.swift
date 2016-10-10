@@ -15,9 +15,18 @@ enum DateType: String {
     case holiday     = "Holiday"
     
     var lowercased: String {
+        return self.rawValue.lowercased()
+    }
+    
+    var decorationImage: UIImage? {
+        
         switch self {
-        default:
-            return self.rawValue.lowercased()
+        case .birthday:
+            return UIImage(named: "balloon.png")
+        case .anniversary:
+            return UIImage(named: "heart.png")
+        case .holiday:
+            return UIImage(named: "calendar.png")
         }
     }
 }
