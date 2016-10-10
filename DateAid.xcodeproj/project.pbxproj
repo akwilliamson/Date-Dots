@@ -20,12 +20,12 @@
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
 		97364CFF1AFBF44A0095BC57 /* DateAidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */; };
 		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
+		975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */; };
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
 		977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B011DA197FF005D131F /* CNContact+Tasks.swift */; };
 		977E3B041DA1A4A1005D131F /* DateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B031DA1A4A1005D131F /* DateType.swift */; };
-		978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978446901B3A8143003889BD /* DateDetailsVC.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
 		978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
@@ -95,12 +95,12 @@
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
 		97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
 		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsViewController.swift; sourceTree = "<group>"; };
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		977E3B011DA197FF005D131F /* CNContact+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CNContact+Tasks.swift"; sourceTree = "<group>"; };
 		977E3B031DA1A4A1005D131F /* DateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateType.swift; sourceTree = "<group>"; };
-		978446901B3A8143003889BD /* DateDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsVC.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
@@ -264,7 +264,7 @@
 			children = (
 				97BC1C6E1DA60BEF009E9AE7 /* DatesTabBarViewController.swift */,
 				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
-				978446901B3A8143003889BD /* DateDetailsVC.swift */,
+				975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */,
 				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
 				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
 				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
@@ -550,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
+				975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */,
 				97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
@@ -569,7 +570,6 @@
 				97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
-				978446911B3A8143003889BD /* DateDetailsVC.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
