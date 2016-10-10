@@ -1170,7 +1170,7 @@
         <!--Date Details View Controller-->
         <scene sceneID="A4I-dg-Jq3">
             <objects>
-                <viewController storyboardIdentifier="ShowDateDetails" id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowDateDetails" id="PaR-uw-Bbs" userLabel="Date Details View Controller" customClass="DateDetailsViewControler" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="31a-j6-JAd"/>
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
@@ -2548,9 +2548,9 @@
         <image name="trash" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3dK-Af-Sia"/>
+        <segue reference="TPq-ng-Nxl"/>
+        <segue reference="uOf-gp-zRy"/>
         <segue reference="byt-8L-e9s"/>
-        <segue reference="u8v-zp-2zi"/>
         <segue reference="Sh2-MR-qg4"/>
     </inferredMetricsTieBreakers>
 </document>

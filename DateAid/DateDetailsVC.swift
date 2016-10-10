@@ -1,5 +1,5 @@
 //
-//  DateDetailsVC.swift
+//  DateDetailsViewController.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 6/23/15.
@@ -13,7 +13,7 @@ protocol SetNotificationDelegate {
     func reloadNotificationView()
 }
 
-class DateDetailsVC: UIViewController {
+class DateDetailsViewControler: UIViewController {
     
 // MARK: PROPERTIES
 
@@ -271,17 +271,16 @@ class DateDetailsVC: UIViewController {
     }
 }
 
-extension DateDetailsVC: SetNotificationDelegate {
+extension DateDetailsViewController: SetNotificationDelegate {
     
     func reloadNotificationView() {
         self.localNotificationFound = false
     }
 }
 
-extension DateDetailsVC: SetAddressDelegate {
+extension DateDetailsViewController: SetAddressDelegate {
 
     func repopulateAddressFor(dateObject date: Date) {
         populateAddressLabels(forDate: dateObject)
     }
-    
 }

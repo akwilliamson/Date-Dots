@@ -57,8 +57,8 @@ class EditDetailsVC: UIViewController {
         reloadDatesTableDelegate?.reloadTableView()
         
         do { try managedContext?.save()
-            if let dateDetailsVC = self.navigationController?.viewControllers[1] as? DateDetailsVC {
-                _ = self.navigationController?.popToViewController(dateDetailsVC, animated: true)
+            if let DateDetailsViewController = self.navigationController?.viewControllers[1] as? DateDetailsViewController {
+                _ = self.navigationController?.popToViewController(DateDetailsViewController, animated: true)
             } else {
                 let datesVC = self.navigationController?.viewControllers[0] as! DatesViewController
                 _ = self.navigationController?.popToViewController(datesVC, animated: true)

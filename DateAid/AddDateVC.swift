@@ -28,7 +28,7 @@ class AddDateVC: UIViewController {
     
     var dateType: String!
     
-    // Additionally passed from DateDetailsVC for edit date
+    // Additionally passed from DateDetailsViewController for edit date
     var dateToSave: Date?
     var notificationDelegate: SetNotificationDelegate?
     

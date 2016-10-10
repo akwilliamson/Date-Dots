@@ -77,13 +77,13 @@ class DatesViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "DateDetailsVC" {
-            let dateDetailsVC = segue.destination as? DateDetailsVC
-            dateDetailsVC?.managedContext = managedContext
-            dateDetailsVC?.reloadDatesTableDelegate = self
+        if segue.identifier == "DateDetailsViewController" {
+            let DateDetailsViewController = segue.destination as? DateDetailsViewController
+            DateDetailsViewController?.managedContext = managedContext
+            DateDetailsViewController?.reloadDatesTableDelegate = self
             
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            dateDetailsVC?.dateObject = searchController.isActive ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
+            DateDetailsViewController?.dateObject = searchController.isActive ? filteredDates[indexPath.row] : fetchedDates[indexPath.row]
         }
         if segue.identifier == "AddDateVC" {
             let addDateVC = segue.destination as! AddDateVC
@@ -133,7 +133,7 @@ extension DatesViewController: UITableViewDataSource {
 extension DatesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "DateDetailsVC", sender: self)
+        self.performSegue(withIdentifier: "DateDetailsViewController", sender: self)
     }
 }
 
