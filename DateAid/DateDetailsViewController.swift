@@ -13,7 +13,7 @@ protocol SetNotificationDelegate {
     func reloadNotificationView()
 }
 
-class DateDetailsViewControler: UIViewController {
+class DateDetailsViewController: UIViewController {
     
 // MARK: PROPERTIES
 
