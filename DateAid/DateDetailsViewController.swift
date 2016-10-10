@@ -92,28 +92,19 @@ class DateDetailsViewController: UIViewController {
     }
     
     func populateAgeLabel(for date: Date) {
-        if date.date!.year == 1604 {
-            ageLabel.text = "?"
-        } else {
-            let age: Int
-            if date.date?.daysUntil == 0 {
-                age = date.date!.ageTurning! - 1
-            } else {
-                age = date.date!.ageTurning!
-            }
-            ageLabel.text = date.type! == "birthday" ? "\(age)" : "#\(age)"
-        }
+        guard let age = date.date?.ageTurning else { ageLabel.text = "?"; return }
+        ageLabel.text = date.type! == "Birthday" ? "\(age)" : "#\(age)"
     }
     
     func populateDaysUntilLabel(for date: Date) {
-        if let numberOfDays = date.date?.daysUntil {
-            if numberOfDays == 0 {
-                daysUntilLabel.text = "Today"
-            } else if numberOfDays == 1 {
-                daysUntilLabel.text = "In \(numberOfDays)\nday"
-            } else {
-                daysUntilLabel.text = "In \(numberOfDays)\ndays"
-            }
+        guard let daysUntil = date.date?.daysUntil else { return }
+
+        if daysUntil == 0 {
+            daysUntilLabel.text = "Today"
+        } else if daysUntil == 1 {
+            daysUntilLabel.text = "In \(daysUntil)\nday"
+        } else {
+            daysUntilLabel.text = "In \(daysUntil)\ndays"
         }
     }
     

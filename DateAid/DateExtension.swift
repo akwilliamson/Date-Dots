@@ -31,10 +31,7 @@ extension Foundation.Date {
     }
     
     var ageTurning: Int? {
-        if let age = calendar.dateComponents([.year], from: self, to: Foundation.Date()).year {
-            return age + 1
-        }
-        return nil
+        return calendar.dateComponents([.year], from: self, to: nextOccurence).year
     }
     
     var daysUntil: Int? {
