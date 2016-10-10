@@ -228,7 +228,7 @@ class SinglePushSettingsVC: UIViewController {
     func setFireDate() -> Foundation.Date {
         let inSeconds = secondsBeforeForDaysBefore() + secondsForHourOfDay()
         let fireMonthAndDay = dateObject.date?.addingTimeInterval(inSeconds)
-        return fireMonthAndDay!.setYear(Foundation.Date().getYear()) // Is this right? e.g. for a birthday that's already passed should I be passing in the next year?
+        return fireMonthAndDay!.nextOccurence
     }
     
     @IBAction func createNotification(_ sender: AnyObject) {

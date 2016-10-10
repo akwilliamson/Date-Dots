@@ -29,6 +29,9 @@ class DateDetailsViewController: UIViewController {
     @IBOutlet weak var daysUntilLabel: CircleLabel!
     @IBOutlet weak var dateLabel: CircleLabel!
     
+    @IBOutlet weak var leftDecorationImage: UIImageView!
+    @IBOutlet weak var rightDecorationImage: UIImageView!
+    
     @IBOutlet weak var envelopeImage: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
@@ -37,10 +40,6 @@ class DateDetailsViewController: UIViewController {
     @IBOutlet weak var reminderLabel: UILabel!
     
     @IBOutlet weak var notesButton: UIButton!
-    
-    @IBOutlet weak var leftDecorationImage: UIImageView!
-    @IBOutlet weak var rightDecorationImage: UIImageView!
-    
     
 // MARK: VIEW SETUP
     
@@ -85,38 +84,29 @@ class DateDetailsViewController: UIViewController {
     }
     
     func populateDateViews() {
-        populateNavBarTitle(forDate: dateObject)
-        
-        populateAgeLabel(forDate: dateObject)
-        populateDaysUntilLabel(forDate: dateObject)
-        populateDateLabel(forDate: dateObject)
-        
-        populateAddressLabels(forDate: dateObject)
+        title = dateObject.abbreviatedName
+        populateAgeLabel(for: dateObject)
+        populateDaysUntilLabel(for: dateObject)
+        populateDateLabel(for: dateObject)
+        populateAddressLabels(for: dateObject)
     }
     
-    
-    func populateNavBarTitle(forDate date: Date) {
-        if let abbreviatedName = date.name?.abbreviatedName() {
-            title = date.type! == "birthday" ? abbreviatedName : dateObject.name!
-        }
-    }
-    
-    func populateAgeLabel(forDate date: Date) {
-        if date.date!.getYear() == 1604 {
+    func populateAgeLabel(for date: Date) {
+        if date.date!.year == 1604 {
             ageLabel.text = "?"
         } else {
             let age: Int
-            if date.date?.daysBetween() == 0 {
-                age = date.date!.ageTurning()-1
+            if date.date?.daysUntil == 0 {
+                age = date.date!.ageTurning! - 1
             } else {
-                age = date.date!.ageTurning()
+                age = date.date!.ageTurning!
             }
             ageLabel.text = date.type! == "birthday" ? "\(age)" : "#\(age)"
         }
     }
     
-    func populateDaysUntilLabel(forDate date: Date) {
-        if let numberOfDays = date.date?.daysBetween() {
+    func populateDaysUntilLabel(for date: Date) {
+        if let numberOfDays = date.date?.daysUntil {
             if numberOfDays == 0 {
                 daysUntilLabel.text = "Today"
             } else if numberOfDays == 1 {
@@ -127,13 +117,13 @@ class DateDetailsViewController: UIViewController {
         }
     }
     
-    func populateDateLabel(forDate date: Date) {
-        if let readableDate = date.date?.readable {
+    func populateDateLabel(for date: Date) {
+        if let readableDate = date.date?.formatted("MMM dd") {
             dateLabel.text = readableDate.replacingOccurrences(of: " ", with: "\n")
         }
     }
     
-    func populateAddressLabels(forDate date: Date) {
+    func populateAddressLabels(for date: Date) {
         if let address = date.address {
             self.populateAddressText(forLabel: addressLabel, withText: address.street)
             self.populateAddressText(forLabel: regionLabel, withText: address.region)
@@ -267,6 +257,6 @@ extension DateDetailsViewController: SetNotificationDelegate {
 extension DateDetailsViewController: SetAddressDelegate {
 
     func repopulateAddressFor(dateObject date: Date) {
-        populateAddressLabels(forDate: dateObject)
+        populateAddressLabels(for: dateObject)
     }
 }

@@ -10,18 +10,50 @@ import Foundation
 
 extension Foundation.Date {
     
-    var readable: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
-        return dateFormatter.string(from: self)
+    var calendar: Calendar {
+        return Calendar.current
     }
     
-    func formatted(_ format: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
+    var components: DateComponents {
+        return calendar.dateComponents(in: TimeZone.current, from: self)
     }
+    
+    var year: Int? {
+        return components.year
+    }
+    
+    var month: Int? {
+        return components.month
+    }
+    
+    var day: Int? {
+        return components.day
+    }
+    
+    var ageTurning: Int? {
+        if let age = calendar.dateComponents([.year], from: self, to: Foundation.Date()).year {
+            return age + 1
+        }
+        return nil
+    }
+    
+    var daysUntil: Int? {
+        let today = calendar.startOfDay(for: Foundation.Date())
+        let comps = calendar.dateComponents([.day, .month], from: self)
+        let next = calendar.nextDate(after: today, matching: comps, matchingPolicy: .nextTimePreservingSmallerComponents)!
+        let diff = calendar.dateComponents([.day], from: today, to: next)
+        
+        return diff.day
+    }
+    
+    var nextOccurence: Foundation.Date {
+        let today = calendar.startOfDay(for: Foundation.Date())
+        let comps = calendar.dateComponents([.day, .month], from: self)
+        let next = calendar.nextDate(after: today, matching: comps, matchingPolicy: .nextTimePreservingSmallerComponents)!
 
+        return next
+    }
+    
     init(dateString: String) {
         let dateStringFormatter = DateFormatter()
         dateStringFormatter.dateFormat = "yyyy-MM-dd"
@@ -31,69 +63,9 @@ extension Foundation.Date {
         self.init(timeInterval: 0, since: date)
     }
     
-    func daysBetween() -> Int {
-        let components = getComponents()
-        (components as NSDateComponents).setValue(2015, forComponent: .year) // Static year component for now, should change to dynamic
-        let newDate = getCalendar().date(from: components)
-        let dateDay = (getCalendar() as NSCalendar).ordinality(of: .day, in: .year, for: newDate!)
-        let nowDay = (getCalendar() as NSCalendar).ordinality(of: .day, in: .year, for: Foundation.Date())
-        var difference = dateDay - nowDay
-        if difference < 0 {
-            difference += 365
-        }
-        return difference
-    }
-    
-    func ageTurning() -> Int {
-        let date = (getCalendar() as NSCalendar).components(.year, from: self, to: Foundation.Date(), options: [])
-        return date.year! + 1
-    }
-    
-    func getCalendar() -> Calendar {
-        return Calendar.current
-    }
-    
-    func getComponents() -> DateComponents {
-        return (getCalendar() as NSCalendar).components([.year, .month, .day, .hour, .minute, .second], from: self)
-    }
-    
-    func getYear() -> Int {
-        return getComponents().year!
-    }
-    
-    func getMonth() -> Int {
-        return getComponents().month!
-    }
-    
-    func getDay() -> Int {
-        return getComponents().day!
-    }
-    
-    func getHour() -> Int {
-        return getComponents().hour!
-    }
-    
-    func getMinute() -> Int {
-        return getComponents().minute!
-    }
-    
-    func getSecond() -> Int {
-        return getComponents().second!
-    }
-    
-    func setYear(_ year: Int) -> Foundation.Date {
-        var components = getComponents()
-        components.year = year
-        components.month = self.getMonth()
-        components.day = self.getDay()
-        components.hour = self.getHour()
-        components.minute = self.getMinute()
-        components.second = self.getSecond()
-        var date = getCalendar().date(from: components)!
-        if date == (date as NSDate).earlierDate(Foundation.Date()) {
-            components.year = year + 1
-            date = getCalendar().date(from: components)!
-        }
-        return date
+    func formatted(_ format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
     }
 }

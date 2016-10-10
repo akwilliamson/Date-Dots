@@ -197,7 +197,7 @@ class AddDateVC: UIViewController {
     func setInitialValues(forDate date: Date?, whether isBeingEdited: Bool) {
         switch isBeingEdited {
         case true:
-            if let name = date?.name, let year = date?.date?.getYear(), let month = date?.date?.getMonth(), let day = date?.date?.getDay() {
+            if let name = date?.name, let year = date?.date?.year, let month = date?.date?.month, let day = date?.date?.day {
                 
                 monthSlider.setValues(max: 12, value: Float(month))
                 daySlider.setValues(max: 31, value: Float(day))
@@ -295,7 +295,7 @@ class AddDateVC: UIViewController {
     func setDateFromValues() -> Foundation.Date {
         var dateString = "-\(Int(monthSlider.value))-\(Int(daySlider.value))"
         if let year = Int(yearField.text!) {
-            dateString = year <= Foundation.Date().getYear() ? String(year) + dateString : "1604" + dateString
+            dateString = year <= Foundation.Date().year! ? String(year) + dateString : "1604" + dateString
         } else {
             dateString = "1604" + dateString
         }

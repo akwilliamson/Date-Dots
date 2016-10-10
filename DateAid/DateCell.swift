@@ -26,6 +26,6 @@ class DateCell: UITableViewCell {
         firstNameLabel.textColor = date.color
         if let firstName = date.firstName { firstNameLabel.text = firstName }
         if let lastName = date.lastName { lastNameLabel.text = lastName }
-        if let date = date.date { dateLabel.text = date.readable }
+        if let date = date.date { dateLabel.text = date.formatted("MMM dd") }
     }
 }

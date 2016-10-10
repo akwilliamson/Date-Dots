@@ -32,7 +32,7 @@ class TurningVC: UIViewController {
         turningSlider.setValues(max: 100, value: 1)
         turningSlider.minimumValue = 1
         turningSlider.setColorTo(UIColor.birthday)
-        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == 1 })
+        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == 1 })
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.addTapGestureRecognizer(onView: downArrow, forAction: "minusDay:")
@@ -61,7 +61,7 @@ class TurningVC: UIViewController {
             turningSlider.value -= 1
             title = "Who's turning \(Int(turningSlider.value))?"
             filteredResults?.removeAll()
-            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(turningSlider.value) })
+            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
             tableView.reloadData()
         }
     }
@@ -71,7 +71,7 @@ class TurningVC: UIViewController {
             turningSlider.value += 1
             title = "Who's turning \(Int(turningSlider.value))?"
             filteredResults?.removeAll()
-            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(turningSlider.value) })
+            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
             tableView.reloadData()
         }
     }
@@ -121,7 +121,7 @@ class TurningVC: UIViewController {
         sender.value = round(sender.value)
         title = "Who's turning \(Int(sender.value))?"
         filteredResults?.removeAll()
-        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning() == Int(sender.value) })
+        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(sender.value) })
         tableView.reloadData()
     }
     
