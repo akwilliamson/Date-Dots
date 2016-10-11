@@ -47,7 +47,8 @@ class SettingsTableVC: UIViewController {
         addGestureRecognizers()
         setIndicesForLabels()
         alertToggle(selectedButton: alertYearlyButton, offButton: alertOnceButton)
-        reloadDatesTableDelegate = tabBarController?.viewControllers?[0].childViewControllers[1].childViewControllers[0] as? DatesViewController
+        
+        reloadDatesTableDelegate = tabBarController?.viewControllers?[0].childViewControllers[0] as? DatesViewController
     }
 
     override func viewWillAppear(_ animated: Bool) {

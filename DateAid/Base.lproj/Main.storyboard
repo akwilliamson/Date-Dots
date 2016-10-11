@@ -1710,7 +1710,11 @@
         <scene sceneID="Iui-As-nW8">
             <objects>
                 <navigationController id="Uns-kb-TbM" userLabel="Dates Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="5SE-Ef-l1s"/>
+                    <tabBarItem key="tabBarItem" title="Dates" image="people-outline" id="5SE-Ef-l1s">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="people-selected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uha-Gn-0T8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2468,10 +2472,10 @@
             </objects>
             <point key="canvasLocation" x="2013" y="701"/>
         </scene>
-        <!--Dates Tab Bar View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="7a7-XW-WXs">
             <objects>
-                <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" customClass="DatesTabBarViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="6Er-P5-vP8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Zdv-7h-m4M">
@@ -2544,6 +2548,7 @@
         <image name="disclosure" width="25" height="40"/>
         <image name="envelope" width="112" height="80"/>
         <image name="people-outline" width="32" height="32"/>
+        <image name="people-selected" width="32" height="32"/>
         <image name="reminder-off" width="48" height="48"/>
         <image name="trash" width="48" height="48"/>
     </resources>
