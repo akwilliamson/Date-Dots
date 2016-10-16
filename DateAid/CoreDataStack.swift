@@ -12,7 +12,6 @@ import CoreData
 class CoreDataStack {
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
         
@@ -20,7 +19,6 @@ class CoreDataStack {
     }()
     
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        
         let psc = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.documentDirectoryUrl.appendingPathComponent("DateAid")
         let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
@@ -35,7 +33,6 @@ class CoreDataStack {
     }()
     
     private lazy var managedObjectModel: NSManagedObjectModel = {
-        
         if let modelUrl = Bundle.main.url(forResource: "DateAid", withExtension: "momd"),
            let mom = NSManagedObjectModel(contentsOf: modelUrl) {
             return mom
@@ -45,7 +42,6 @@ class CoreDataStack {
     }()
     
     private lazy var documentDirectoryUrl: URL = {
-        
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()

@@ -10,6 +10,24 @@ import Foundation
 
 extension Foundation.Date {
     
+    static var today: Foundation.Date { return Foundation.Date() }
+    
+    init(dateString: String) {
+        let dateStringFormatter = DateFormatter()
+        dateStringFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateStringFormatter.date(from: dateString)!
+        
+        self.init(timeInterval: 0, since: date)
+    }
+    
+    var formattedForTitle: String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd"
+        
+        return formatter.string(from: self)
+    }
+    
     var calendar: Calendar {
         return Calendar.current
     }
@@ -49,15 +67,6 @@ extension Foundation.Date {
         let next = calendar.nextDate(after: today, matching: comps, matchingPolicy: .nextTimePreservingSmallerComponents)!
 
         return next
-    }
-    
-    init(dateString: String) {
-        let dateStringFormatter = DateFormatter()
-        dateStringFormatter.dateFormat = "yyyy-MM-dd"
-        dateStringFormatter.locale = Locale(identifier: "en_US_POSIX")
-        let date = dateStringFormatter.date(from: dateString)!
-        
-        self.init(timeInterval: 0, since: date)
     }
     
     func formatted(_ format: String) -> String {

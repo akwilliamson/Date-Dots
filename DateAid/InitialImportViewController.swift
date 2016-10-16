@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 import Contacts
 
-class InitialImportVC: UIViewController {
+class InitialImportViewController: UIViewController {
     
-    var activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    var viewPresenter = InitialImportPresenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,19 +21,17 @@ class InitialImportVC: UIViewController {
     }
     
     private func addActivityView() {
-        activityView.transform = CGAffineTransform(scaleX: 2, y: 2)
-        activityView.center = view.center
-        activityView.isHidden = true
-        view.addSubview(activityView)
+        viewPresenter.activityIndicator.center = view.center
+        view.addSubview(viewPresenter.activityIndicator)
     }
     
 // MARK: - Actions
     
     @IBAction func syncContacts(_ sender: AnyObject) {
-        activityView.startAnimating()
+        viewPresenter.activityIndicator.startAnimating()
         
         ContactManager.syncContacts { 
-            self.activityView.stopAnimating()
+            self.viewPresenter.activityIndicator.startAnimating()
             self.performSegue(withIdentifier: "ShowHome", sender: self)
         }
     }

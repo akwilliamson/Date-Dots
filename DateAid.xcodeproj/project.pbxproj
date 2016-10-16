@@ -14,7 +14,7 @@
 		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; };
 		97361A641B2C0CEF006394E1 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97361A631B2C0CEF006394E1 /* DateCell.xib */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
-		97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */; };
+		97364CEB1AFBF44A0095BC57 /* InitialImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */; };
 		97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEC1AFBF44A0095BC57 /* Main.storyboard */; };
 		97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEF1AFBF44A0095BC57 /* Images.xcassets */; };
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
@@ -22,7 +22,12 @@
 		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
 		975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */; };
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
+		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
+		97682FF81DB3071E00E8C5E6 /* DatesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */; };
+		97682FFA1DB3092800E8C5E6 /* DatesViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
+		976E9FFB1DB34B80006DFB2D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976E9FFA1DB34B80006DFB2D /* Event.swift */; };
+		976E9FFD1DB34E19006DFB2D /* Identifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976E9FFC1DB34E19006DFB2D /* Identifiers.swift */; };
 		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
 		977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B011DA197FF005D131F /* CNContact+Tasks.swift */; };
 		977E3B041DA1A4A1005D131F /* DateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B031DA1A4A1005D131F /* DateType.swift */; };
@@ -84,7 +89,7 @@
 		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97364CE41AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CE51AFBF44A0095BC57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportVC.swift; sourceTree = "<group>"; };
+		97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportViewController.swift; sourceTree = "<group>"; };
 		97364CED1AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97364CEF1AFBF44A0095BC57 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		97364CF21AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -95,7 +100,12 @@
 		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsViewController.swift; sourceTree = "<group>"; };
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
+		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
+		97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesDataSource.swift; sourceTree = "<group>"; };
+		97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewPresenter.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		976E9FFA1DB34B80006DFB2D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		976E9FFC1DB34E19006DFB2D /* Identifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiers.swift; sourceTree = "<group>"; };
 		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		977E3B011DA197FF005D131F /* CNContact+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CNContact+Tasks.swift"; sourceTree = "<group>"; };
 		977E3B031DA1A4A1005D131F /* DateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateType.swift; sourceTree = "<group>"; };
@@ -246,10 +256,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		976E9FF91DB34587006DFB2D /* Dates */ = {
+			isa = PBXGroup;
+			children = (
+				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
+				97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */,
+				97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */,
+			);
+			name = Dates;
+			sourceTree = "<group>";
+		};
 		977ED8BE1BFDA3D500BC7EB9 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				97364CEA1AFBF44A0095BC57 /* InitialImportVC.swift */,
+				97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */,
+				97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -257,7 +278,7 @@
 		977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */ = {
 			isa = PBXGroup;
 			children = (
-				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
+				976E9FF91DB34587006DFB2D /* Dates */,
 				975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */,
 				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
 				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
@@ -351,6 +372,8 @@
 				976ED7781DA0D5E300AC5D29 /* ContactManager.swift */,
 				97B40DAA1DA17900000DA0E0 /* DateManager.swift */,
 				977E3B031DA1A4A1005D131F /* DateType.swift */,
+				976E9FFA1DB34B80006DFB2D /* Event.swift */,
+				976E9FFC1DB34E19006DFB2D /* Identifiers.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -543,8 +566,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97364CEB1AFBF44A0095BC57 /* InitialImportVC.swift in Sources */,
+				97364CEB1AFBF44A0095BC57 /* InitialImportViewController.swift in Sources */,
 				975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */,
+				976E9FFB1DB34B80006DFB2D /* Event.swift in Sources */,
 				97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
@@ -556,6 +580,7 @@
 				97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
 				975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */,
+				976E9FFD1DB34E19006DFB2D /* Identifiers.swift in Sources */,
 				9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */,
 				9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */,
 				9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */,
@@ -564,8 +589,10 @@
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
+				97682FF81DB3071E00E8C5E6 /* DatesDataSource.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
+				97682FFA1DB3092800E8C5E6 /* DatesViewPresenter.swift in Sources */,
 				9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
 				977E3B041DA1A4A1005D131F /* DateType.swift in Sources */,
@@ -579,6 +606,7 @@
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
 				97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
+				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */,
 				97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */,

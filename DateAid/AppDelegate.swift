@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if UserDefaults.standard.object(forKey: "hasLaunchedOnce") == nil {
             UserDefaults.standard.set(true, forKey: "hasLaunchedOnce")
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as? InitialImportVC
+            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as? InitialImportViewController
         } else {
             window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainView") as UIViewController
         }
