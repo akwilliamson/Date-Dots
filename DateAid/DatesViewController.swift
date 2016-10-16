@@ -54,8 +54,32 @@ class DatesViewController: UIViewController {
         navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == SegueId.dateDetails.value {
+            guard let dateDetailsVC = segue.destination as? DateDetailsViewController,
+                let indexPath = tableView.indexPathForSelectedRow else {
+                    return
+            }
+            dateDetailsVC.reloadDatesTableDelegate = self
+            dateDetailsVC.dateObject = viewPresenter.date(for: indexPath)
+        }
+        
+        if segue.identifier == SegueId.addDate.value {
+            guard let addDateVC = segue.destination as? AddDateVC else {
+                return
+            }
+            addDateVC.isBeingEdited = false
+            addDateVC.dateType = "birthday"
+            addDateVC.reloadDatesTableDelegate = self
+        }
+    }
+    
+    private func createSearchBar() -> UISearchBar {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        
+        return searchBar
     }
     
     private func formatView() {
@@ -71,44 +95,19 @@ class DatesViewController: UIViewController {
         viewPresenter.showSearch(size: CGSize(width: width, height: height!))
         navigationItem.titleView = viewPresenter.searchBar
         navigationItem.rightBarButtonItems = [addButton, cancelButton]
+        viewPresenter.searchBar.becomeFirstResponder()
     }
     
     func cancelSearch() {
         viewPresenter.hideSearch()
+        viewPresenter.searchBar.text = nil
         navigationItem.titleView = nil
         navigationItem.rightBarButtonItems = [addButton, searchButton]
+        tableView.reloadData()
     }
     
     func addDate() {
         self.performSegue(withIdentifier: SegueId.addDate.value, sender: self)
-    }
-    
-    private func createSearchBar() -> UISearchBar {
-        let searchBar = UISearchBar()
-        searchBar.delegate = self
-        
-        return searchBar
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == SegueId.dateDetails.value {
-            guard let dateDetailsVC = segue.destination as? DateDetailsViewController,
-                  let indexPath = tableView.indexPathForSelectedRow else {
-                    return
-            }
-            dateDetailsVC.reloadDatesTableDelegate = self
-            dateDetailsVC.dateObject = viewPresenter.date(for: indexPath)
-        }
-        
-        if segue.identifier == SegueId.addDate.value {
-            guard let addDateVC = segue.destination as? AddDateVC else {
-                return
-            }
-            addDateVC.isBeingEdited = false
-            addDateVC.dateType = "birthday"
-            addDateVC.reloadDatesTableDelegate = self
-        }
     }
 }
 
@@ -150,6 +149,7 @@ extension DatesViewController: UITableViewDelegate {
 extension DatesViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" { cancelSearch() }
         tableView.reloadData()
     }
 }
