@@ -120,7 +120,7 @@
         <!--Dates View Controller-->
         <scene sceneID="ldZ-TY-IkU">
             <objects>
-                <viewController id="4gB-zV-OP8" customClass="DatesViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4gB-zV-OP8" customClass="DatesViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bWk-oO-tpH"/>
                         <viewControllerLayoutGuide type="bottom" id="5br-c3-KCy"/>
@@ -133,10 +133,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DateCell" rowHeight="80" id="G1p-lm-wMV" customClass="DateCell" customModule="DateAid" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G1p-lm-wMV" id="nDZ-dc-8uC">
-                                            <frame key="frameInset" width="375" height="79.5"/>
+                                            <frame key="frameInset" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -146,17 +146,41 @@
                                     <outlet property="delegate" destination="4gB-zV-OP8" id="Ghk-o6-FK0"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekx-ta-SvP" customClass="DateSegmentedControl" customModule="DateAid" customModuleProvider="target">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KF8-EN-Vxg"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedLabelColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="unselectedLabelColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="thumbColor">
+                                        <color key="value" red="0.058000327189999999" green="0.57698419550000002" blue="0.77834990530000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.83869949489999995" green="0.83869949489999995" blue="0.83869949489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="J2T-UL-QCd" firstAttribute="top" secondItem="Ekx-ta-SvP" secondAttribute="bottom" constant="-2" id="2aX-5h-TiL"/>
                             <constraint firstAttribute="trailing" secondItem="J2T-UL-QCd" secondAttribute="trailing" id="31T-I2-qQu"/>
                             <constraint firstItem="5br-c3-KCy" firstAttribute="top" secondItem="J2T-UL-QCd" secondAttribute="bottom" id="8m5-8n-8la"/>
+                            <constraint firstItem="Ekx-ta-SvP" firstAttribute="top" secondItem="bWk-oO-tpH" secondAttribute="bottom" id="LHr-ED-ck7"/>
+                            <constraint firstAttribute="trailing" secondItem="Ekx-ta-SvP" secondAttribute="trailing" id="RVK-ta-nGU"/>
+                            <constraint firstItem="Ekx-ta-SvP" firstAttribute="leading" secondItem="2YI-mF-Eqj" secondAttribute="leading" id="TeM-Lx-tFW"/>
                             <constraint firstItem="J2T-UL-QCd" firstAttribute="leading" secondItem="2YI-mF-Eqj" secondAttribute="leading" id="Tfq-6Q-QHD"/>
-                            <constraint firstItem="J2T-UL-QCd" firstAttribute="top" secondItem="2YI-mF-Eqj" secondAttribute="top" id="ZZ4-Fr-jmp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vSW-gp-fGE"/>
                     <connections>
+                        <outlet property="segmentedControl" destination="Ekx-ta-SvP" id="5hm-Fl-LTf"/>
                         <outlet property="tableView" destination="J2T-UL-QCd" id="Qku-KM-VWd"/>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="3dK-Af-Sia"/>
                         <segue destination="PaR-uw-Bbs" kind="show" identifier="DateDetails" id="Wh4-7v-x9o"/>
@@ -1633,11 +1657,11 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBJ-Ek-HMP" id="xTJ-4M-tqM">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nby-ie-1Hz">
-                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1710,9 +1734,9 @@
         <scene sceneID="Iui-As-nW8">
             <objects>
                 <navigationController id="Uns-kb-TbM" userLabel="Dates Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dates" image="EDF09A9C-DCB3-46B2-AF6C-3400A633F158" id="5SE-Ef-l1s">
+                    <tabBarItem key="tabBarItem" title="Dates" image="64CBF054-261B-4691-8898-72DBCCF9E1A5" id="5SE-Ef-l1s">
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="497E9236-0977-4EF6-AAEE-5BF4ECBAE441"/>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="396A2276-5A5F-45B8-A576-753D7D92CC88"/>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uha-Gn-0T8">
@@ -2541,7 +2565,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="497E9236-0977-4EF6-AAEE-5BF4ECBAE441" width="32" height="32">
+        <image name="396A2276-5A5F-45B8-A576-753D7D92CC88" width="32" height="32">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -2660,7 +2684,7 @@ AKsArQCyALUAtwC5ALsAvQDCANkA2wDdGX8ZhBmPGZgZqxmvGboZwxnIGdAZ0xnYGecZ6xnyGfoaBxoM
 Gg4aEBoVGh0aIBolGi0aMBpCGkUaSgAAAAAAAAIBAAAAAAAAAEEAAAAAAAAAAAAAAAAAABpMA
 </mutableData>
         </image>
-        <image name="EDF09A9C-DCB3-46B2-AF6C-3400A633F158" width="32" height="32">
+        <image name="64CBF054-261B-4691-8898-72DBCCF9E1A5" width="32" height="32">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

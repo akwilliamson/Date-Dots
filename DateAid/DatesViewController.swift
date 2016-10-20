@@ -30,9 +30,16 @@ class DatesViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: DateSegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        segmentedControl.addTarget(self, action: #selector(self.segmentValueChanged(_:)), for: .valueChanged)
+        segmentedControl.items = ["All", "Birthdays", "Anniversaries", "Holidays"]
+        segmentedControl.font = UIFont(name: "Avenir-Black", size: 12)
+        segmentedControl.borderColor = UIColor(white: 1.0, alpha: 0.3)
+        segmentedControl.selectedIndex = 0
         
         logEvents(forString: Event.dates.value)
 
@@ -42,6 +49,24 @@ class DatesViewController: UIViewController {
         viewPresenter = DatesViewPresenter(dates, searchBar: searchBar)
         
         formatView()
+    }
+    
+    func segmentValueChanged(_ sender: DateSegmentedControl) {
+        viewPresenter.selectedIndex = sender.selectedIndex
+        
+        tableView.reloadData()
+//        switch sender.selectedIndex {
+//        case 0:
+//            print("0")
+//        case 1:
+//            print("1")
+//        case 2:
+//            print("2")
+//        case 3:
+//            print("3")
+//        default:
+//            return
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +83,7 @@ class DatesViewController: UIViewController {
         
         if segue.identifier == SegueId.dateDetails.value {
             guard let dateDetailsVC = segue.destination as? DateDetailsViewController,
-                let indexPath = tableView.indexPathForSelectedRow else {
+                  let indexPath = tableView.indexPathForSelectedRow else {
                     return
             }
             dateDetailsVC.reloadDatesTableDelegate = self
@@ -66,9 +91,7 @@ class DatesViewController: UIViewController {
         }
         
         if segue.identifier == SegueId.addDate.value {
-            guard let addDateVC = segue.destination as? AddDateVC else {
-                return
-            }
+            guard let addDateVC = segue.destination as? AddDateVC else { return }
             addDateVC.isBeingEdited = false
             addDateVC.dateType = "birthday"
             addDateVC.reloadDatesTableDelegate = self
@@ -90,19 +113,19 @@ class DatesViewController: UIViewController {
     }
     
     func showSearch() {
+        navigationItem.titleView = viewPresenter.searchBar
+        navigationItem.rightBarButtonItems = [addButton, cancelButton]
         let width = view.frame.width * 0.75
         let height = navigationController?.navigationBar.frame.height
         viewPresenter.showSearch(size: CGSize(width: width, height: height!))
-        navigationItem.titleView = viewPresenter.searchBar
-        navigationItem.rightBarButtonItems = [addButton, cancelButton]
         viewPresenter.searchBar.becomeFirstResponder()
     }
     
     func cancelSearch() {
-        viewPresenter.hideSearch()
-        viewPresenter.searchBar.text = nil
         navigationItem.titleView = nil
         navigationItem.rightBarButtonItems = [addButton, searchButton]
+        viewPresenter.hideSearch()
+        viewPresenter.searchBar.text = nil
         tableView.reloadData()
     }
     

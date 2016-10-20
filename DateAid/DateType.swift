@@ -30,3 +30,24 @@ enum DateType: String {
         }
     }
 }
+
+enum FilterDateType: Int {
+
+    case all
+    case birthday
+    case anniversary
+    case holiday
+    
+    var value: String {
+        switch self {
+        case .all:
+            return "All"
+        case .birthday:
+            return "Birthday"
+        case .anniversary:
+            return "Anniversary"
+        case .holiday:
+            return "Holiday"
+        }
+    }
+}

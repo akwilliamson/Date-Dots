@@ -12,6 +12,7 @@ struct DatesViewPresenter {
     
     var fetchedDates: [Date?]
     var searchBar: UISearchBar!
+    var selectedIndex: Int = 0
     
     init(_ dates: [Date?], searchBar: UISearchBar) {
         searchBar.tintColor = UIColor.birthday
@@ -20,10 +21,25 @@ struct DatesViewPresenter {
     }
     
     var filteredDates: [Date?] {
-        guard let searchText = searchBar.text else { return [] }
         
-        return fetchedDates.filter { date in
-            date?.name?.lowercased().contains(searchText.lowercased()) ?? false
+        let searchText: String? = searchBar.text != "" ? searchBar.text : nil
+        
+        if selectedIndex == 0 {
+            return arrangedDates.filter { date in
+                guard let searchText = searchText else { return true }
+                guard let containsName = date?.name?.lowercased().contains(searchText.lowercased()) else { return false }
+                return containsName
+            }
+        } else {
+            guard let dateType = FilterDateType(rawValue: selectedIndex)?.value else { return [] }
+            
+            return arrangedDates.filter { date in
+                guard let containsType = date?.type?.contains(dateType) else { return false }
+                guard let searchText = searchText else { return containsType }
+                guard let containsName = date?.name?.lowercased().contains(searchText.lowercased()) else { return false }
+                
+                return containsType && containsName
+            }
         }
     }
     
@@ -39,11 +55,17 @@ struct DatesViewPresenter {
     }
     
     var dateCount: Int {
-        return searchBar.text != "" ? filteredDates.count : fetchedDates.count
+        return filteredDates.count
     }
     
     func date(for indexPath: IndexPath) -> Date {
-        return searchBar.text != "" ? filteredDates[indexPath.row]! : arrangedDates[indexPath.row]!
+        return filteredDates[indexPath.row]!
+    }
+    
+    func dates(for type: String) -> [Date?] {
+        return arrangedDates.filter { date in
+            date?.type?.lowercased().contains(type.lowercased()) ?? false
+        }
     }
     
     func showSearch(size: CGSize) {

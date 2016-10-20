@@ -36,7 +36,7 @@ class Date: NSManagedObject {
             return UIColor.birthday
         case "anniversary":
             return UIColor.anniversary
-        case "custom":
+        case "holiday":
             return UIColor.custom
         default:
             return UIColor.birthday
