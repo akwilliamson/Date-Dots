@@ -8,21 +8,22 @@
 
 import Foundation
 
-enum SegueId: String {
-
-    case dateDetails = "DateDetails"
-    case addDate     = "AddDate"
-    
-    var value: String {
-        return self.rawValue
-    }
+protocol Stringable: RawRepresentable {
+    var value: String { get }
 }
 
-enum CellId: String {
-    
-    case dateCell = "DateCell"
-    
-    var value: String {
-        return self.rawValue
+extension Stringable {
+    var value: String { return self.rawValue as? String ?? "Not Stringable" }
+}
+
+struct Id {
+
+    enum Cell: String, Stringable {
+        case dateCell = "DateCell"
+    }
+
+    enum Segue: String, Stringable {
+        case dateDetails = "DateDetails"
+        case addDate     = "AddDate"
     }
 }

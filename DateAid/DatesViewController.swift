@@ -14,26 +14,25 @@ protocol ReloadDatesTableDelegate {
 }
 
 class DatesViewController: UIViewController {
-
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: DateSegmentedControl!
+    
+    var searchButton: UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
+    var addButton: UIBarButtonItem!
+    
     var dataSource = DatesDataSource()
     var viewPresenter: DatesViewPresenter!
     
     var searching: Bool = false
-    var searchButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.showSearch))
-    }
-    var cancelButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelSearch))
-    }
-    var addButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addDate))
-    }
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var segmentedControl: DateSegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.showSearch))
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelSearch))
+        addButton    = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addDate))
         
         segmentedControl.addTarget(self, action: #selector(self.segmentValueChanged(_:)), for: .valueChanged)
         segmentedControl.items = ["All", "Birthdays", "Anniversaries", "Holidays"]
@@ -53,20 +52,7 @@ class DatesViewController: UIViewController {
     
     func segmentValueChanged(_ sender: DateSegmentedControl) {
         viewPresenter.selectedIndex = sender.selectedIndex
-        
-        tableView.reloadData()
-//        switch sender.selectedIndex {
-//        case 0:
-//            print("0")
-//        case 1:
-//            print("1")
-//        case 2:
-//            print("2")
-//        case 3:
-//            print("3")
-//        default:
-//            return
-//        }
+        tableView.reloadSections([0], with: .fade)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +67,7 @@ class DatesViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == SegueId.dateDetails.value {
+        if segue.identifier == Id.Segue.dateDetails.value {
             guard let dateDetailsVC = segue.destination as? DateDetailsViewController,
                   let indexPath = tableView.indexPathForSelectedRow else {
                     return
@@ -90,7 +76,7 @@ class DatesViewController: UIViewController {
             dateDetailsVC.dateObject = viewPresenter.date(for: indexPath)
         }
         
-        if segue.identifier == SegueId.addDate.value {
+        if segue.identifier == Id.Segue.addDate.value {
             guard let addDateVC = segue.destination as? AddDateVC else { return }
             addDateVC.isBeingEdited = false
             addDateVC.dateType = "birthday"
@@ -108,7 +94,7 @@ class DatesViewController: UIViewController {
     private func formatView() {
         title = Foundation.Date.today.formattedForTitle
         navigationItem.rightBarButtonItems = [addButton, searchButton]
-        tableView.register(CellId.dateCell.value)
+        tableView.register(Id.Cell.dateCell.value)
         tableView.tableFooterView = UIView()
     }
     
@@ -118,19 +104,17 @@ class DatesViewController: UIViewController {
         let width = view.frame.width * 0.75
         let height = navigationController?.navigationBar.frame.height
         viewPresenter.showSearch(size: CGSize(width: width, height: height!))
-        viewPresenter.searchBar.becomeFirstResponder()
     }
     
     func cancelSearch() {
         navigationItem.titleView = nil
         navigationItem.rightBarButtonItems = [addButton, searchButton]
         viewPresenter.hideSearch()
-        viewPresenter.searchBar.text = nil
         tableView.reloadData()
     }
     
     func addDate() {
-        self.performSegue(withIdentifier: SegueId.addDate.value, sender: self)
+        self.performSegue(withIdentifier: Id.Segue.addDate.value, sender: self)
     }
 }
 
@@ -141,7 +125,7 @@ extension DatesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: CellId.dateCell.value, for: indexPath) as? DateCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: Id.Cell.dateCell.value, for: indexPath) as? DateCell {
             cell.date = viewPresenter.date(for: indexPath)
             
             return cell
@@ -165,7 +149,7 @@ extension DatesViewController: UITableViewDataSource {
 extension DatesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: SegueId.dateDetails.value, sender: self)
+        self.performSegue(withIdentifier: Id.Segue.dateDetails.value, sender: self)
     }
 }
 
@@ -173,7 +157,7 @@ extension DatesViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" { cancelSearch() }
-        tableView.reloadData()
+        tableView.reloadSections([0], with: .fade)
     }
 }
 

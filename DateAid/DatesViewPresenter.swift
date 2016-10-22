@@ -70,12 +70,14 @@ struct DatesViewPresenter {
     
     func showSearch(size: CGSize) {
         searchBar.frame.size = CGSize.zero
+        searchBar.becomeFirstResponder()
         UIView.animate(withDuration: 0.2) {
             self.searchBar.frame.size = size
         }
     }
     
     func hideSearch() {
+        self.searchBar.text = nil
         UIView.animate(withDuration: 0.2) {
             self.searchBar.frame.size = CGSize.zero
         }
