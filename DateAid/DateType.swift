@@ -50,4 +50,17 @@ enum FilterDateType: Int {
             return "Holiday"
         }
     }
+    
+    var pluralValue: String {
+        switch self {
+        case .all:
+            return "All"
+        case .birthday:
+            return "Birthdays"
+        case .anniversary:
+            return "Anniversaries"
+        case .holiday:
+            return "Holidays"
+        }
+    }
 }

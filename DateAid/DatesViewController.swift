@@ -13,41 +13,87 @@ protocol ReloadDatesTableDelegate {
     func reloadTableView()
 }
 
-class DatesViewController: UIViewController {
+class DatesViewController: UIViewController, DatesViewProtocol {
     
-    @IBOutlet weak var tableView: UITableView!
+    var searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
+    var cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+    var addButton    = UIBarButtonItem(barButtonSystemItem: .add,    target: nil, action: nil)
+    
     @IBOutlet weak var segmentedControl: DateSegmentedControl!
-    
-    var searchButton: UIBarButtonItem!
-    var cancelButton: UIBarButtonItem!
-    var addButton: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
     
     var dataSource = DatesDataSource()
     var viewPresenter: DatesViewPresenter!
+    
+    var presenter: DatesViewPresenterProtocol!
     
     var searching: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.showSearch))
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelSearch))
-        addButton    = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addDate))
-        
-        segmentedControl.addTarget(self, action: #selector(self.segmentValueChanged(_:)), for: .valueChanged)
-        segmentedControl.items = ["All", "Birthdays", "Anniversaries", "Holidays"]
-        segmentedControl.font = UIFont(name: "Avenir-Black", size: 12)
-        segmentedControl.borderColor = UIColor(white: 1.0, alpha: 0.3)
-        segmentedControl.selectedIndex = 0
-        
         logEvents(forString: Event.dates.value)
+        
+        presenter = DatesPresenter(view: self)
+
+        segmentedControl.addTarget(self, action: #selector(self.segmentValueChanged(_:)), for: .valueChanged)
+        
+        presenter.styleSegmentedControl()
 
         let dates = dataSource.fetch(dateType: nil)
         let searchBar = createSearchBar()
         
         viewPresenter = DatesViewPresenter(dates, searchBar: searchBar)
         
+        setBarButtonActions()
         formatView()
+    }
+    
+    private func setBarButtonActions() {
+        [searchButton, cancelButton, addButton].forEach({ $0.target = self })
+        searchButton.action = #selector(self.pressed(searchButton:))
+        cancelButton.action = #selector(self.cancelSearch)
+        addButton.action    = #selector(self.addDate)
+    }
+    
+    private func formatView() {
+        title = Foundation.Date.today.formattedForTitle
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+        tableView.register(Id.Cell.dateCell.value)
+        tableView.tableFooterView = UIView()
+    }
+    
+    func pressed(searchButton: UIBarButtonItem) {
+        
+    }
+    
+    func showSearch() {
+        navigationItem.titleView = viewPresenter.searchBar
+        navigationItem.rightBarButtonItems = [addButton, cancelButton]
+        let width = view.frame.width * 0.75
+        let height = navigationController?.navigationBar.frame.height
+        viewPresenter.showSearch(size: CGSize(width: width, height: height!))
+    }
+    
+    func cancelSearch() {
+        navigationItem.titleView = nil
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+        viewPresenter.hideSearch()
+        tableView.reloadData()
+    }
+    
+    func setSegmentedControl(_ items: [String], font: UIFont, selectedIndex: Int) {
+        segmentedControl.items = items
+        segmentedControl.font = font
+        segmentedControl.selectedIndex = selectedIndex
+    }
+    
+    func display(_ dates: [Date?]) {
+        tableView.reloadSections([0], with: .fade)
+    }
+    
+    func displayNoDates() {
+        // show some custom empty view
     }
     
     func segmentValueChanged(_ sender: DateSegmentedControl) {
@@ -89,28 +135,6 @@ class DatesViewController: UIViewController {
         searchBar.delegate = self
         
         return searchBar
-    }
-    
-    private func formatView() {
-        title = Foundation.Date.today.formattedForTitle
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-        tableView.register(Id.Cell.dateCell.value)
-        tableView.tableFooterView = UIView()
-    }
-    
-    func showSearch() {
-        navigationItem.titleView = viewPresenter.searchBar
-        navigationItem.rightBarButtonItems = [addButton, cancelButton]
-        let width = view.frame.width * 0.75
-        let height = navigationController?.navigationBar.frame.height
-        viewPresenter.showSearch(size: CGSize(width: width, height: height!))
-    }
-    
-    func cancelSearch() {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-        viewPresenter.hideSearch()
-        tableView.reloadData()
     }
     
     func addDate() {
