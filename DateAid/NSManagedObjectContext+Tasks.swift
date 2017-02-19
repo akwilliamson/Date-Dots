@@ -10,26 +10,26 @@ import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
-
-    func trySave() {
-        if self.hasChanges {
-            do {
-                try self.save()
-            } catch let error {
-                print("Could not save: \(error.localizedDescription)")
-            }
-        }
-    }
     
     func tryFetch(_ request: NSFetchRequest<Date>? = nil) -> [Date?] {
         
         let request = request ?? NSFetchRequest(entityName: "Date")
         
-        do {
-            return try self.fetch(request)
-        } catch let error {
+        do { return try self.fetch(request) } catch let error {
             print("Could not fetch: \(error.localizedDescription)")
             return []
+        }
+    }
+
+    func trySave(complete: (Bool) -> ()) {
+        
+        if hasChanges {
+            do { try save()
+                complete(true)
+            } catch let error {
+                print("Could not save: \(error.localizedDescription)")
+                complete(false)
+            }
         }
     }
 }

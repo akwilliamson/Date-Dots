@@ -13,7 +13,6 @@ import Contacts
 class SettingsTableVC: UIViewController {
     
     var settingsLabelIsActive = false
-    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     var settingsLabelColor: UIColor?
     let userDefaults = UserDefaults.standard
     
@@ -47,8 +46,6 @@ class SettingsTableVC: UIViewController {
         addGestureRecognizers()
         setIndicesForLabels()
         alertToggle(selectedButton: alertYearlyButton, offButton: alertOnceButton)
-        
-        reloadDatesTableDelegate = tabBarController?.viewControllers?[0].childViewControllers[0] as? DatesViewController
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -130,7 +127,6 @@ class SettingsTableVC: UIViewController {
     func syncAddressBook() {
         ContactManager.syncContacts {
             if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-                self.reloadDatesTableDelegate?.reloadTableView()
             } else {
                 self.showContactsUnaccessibleAlert()
             }

@@ -24,7 +24,6 @@ class AddDateVC: UIViewController {
     // Passed from DatesVC for new date
     var managedContext: NSManagedObjectContext?
     var isBeingEdited: Bool!
-    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     
     var dateType: String!
     
@@ -248,7 +247,6 @@ class AddDateVC: UIViewController {
                 editDetailsVC.managedContext = managedContext
                 editDetailsVC.addressDelegate = self
                 editDetailsVC.notificationDelegate = notificationDelegate
-                editDetailsVC.reloadDatesTableDelegate = reloadDatesTableDelegate
             } else {
                 showAlertForNoName()
             }
@@ -407,8 +405,8 @@ extension AddDateVC {
         self.logEvents(forString: "Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
-            managedContext?.trySave()
-            reloadDatesTableDelegate?.reloadTableView()
+            managedContext?.trySave(complete: { success in
+            })
             _ = self.navigationController?.popViewController(animated: true)
         } else {
             showAlertForNoName()

@@ -11,14 +11,15 @@ import Contacts
 
 class ContactManager {
     
-    static var store: CNContactStore = { CNContactStore() }()
+    static var store = CNContactStore()
     
     static func syncContacts(complete: @escaping () -> Void) {
         
         authorized(complete: { success in
-            let fetchedContacts: [CNContact?] = success ? self.fetchContacts() : []
-            fetchedContacts.forEach({ print($0?.givenName) })
+            let fetchedContacts: [CNContact] = success ? self.fetchContacts() : []
+            fetchedContacts.forEach({ print($0.givenName) })
             DateManager(contacts: fetchedContacts).syncDates()
+            
             complete()
         })
     }
@@ -38,7 +39,7 @@ class ContactManager {
         }
     }
     
-    static func fetchContacts() -> [CNContact?] {
+    static func fetchContacts() -> [CNContact] {
         
         let keys: [CNKeyDescriptor] = [
             CNContactGivenNameKey       as CNKeyDescriptor,

@@ -8,15 +8,28 @@
 
 import UIKit
 
-struct InitialImportPresenter {
-
-    var activityIndicator: UIActivityIndicatorView {
+class InitialImportPresenter {
     
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activityView.transform = CGAffineTransform(scaleX: 2, y: 2)
-        activityIndicator.isHidden = true
-        
-        return activityView
+    weak var wireframe: InitialImportWireframe?
+    weak var view: InitialImportViewOutputting?
+    var interactor: InitialImportInteractor?
+}
+
+extension InitialImportPresenter: InitialImportEventHandling {
+    
+    func syncContactsPressed(in window: UIWindow?) {
+        interactor?.syncContacts {
+            DispatchQueue.main.async() {
+                self.showTabBar(in: window)
+            }
+        }
     }
+    
+    func showTabBar(in window: UIWindow?) {
+        wireframe?.presentTabBar(in: window)
+    }
+}
+
+extension InitialImportPresenter: InitialImportInteractorOutputting {
 
 }

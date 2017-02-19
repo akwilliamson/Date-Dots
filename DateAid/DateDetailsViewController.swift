@@ -21,7 +21,6 @@ class DateDetailsViewController: UIViewController {
     var dateObject: Date!
     var localNotificationFound: Bool?
     let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
-    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
 
 // MARK: OUTLETS
     
@@ -215,7 +214,6 @@ class DateDetailsViewController: UIViewController {
             addDateVC.dateToSave = dateObject
             addDateVC.managedContext = managedContext
             addDateVC.notificationDelegate = self
-            addDateVC.reloadDatesTableDelegate = reloadDatesTableDelegate
         }
         if segue.identifier == "ShowNotes" {
             let notesTableVC = segue.destination as! NotesTableVC
@@ -233,7 +231,6 @@ class DateDetailsViewController: UIViewController {
             editDetailsVC.dateObject = dateObject
             editDetailsVC.managedContext = managedContext
             editDetailsVC.addressDelegate = self
-            editDetailsVC.reloadDatesTableDelegate = reloadDatesTableDelegate
         }
     }
 }

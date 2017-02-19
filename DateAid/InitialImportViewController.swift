@@ -12,32 +12,17 @@ import Contacts
 
 class InitialImportViewController: UIViewController {
     
-    var viewPresenter = InitialImportPresenter()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        addActivityView()
-    }
-    
-    private func addActivityView() {
-        viewPresenter.activityIndicator.center = view.center
-        view.addSubview(viewPresenter.activityIndicator)
-    }
+    var presenter: InitialImportEventHandling?
     
 // MARK: - Actions
     
     @IBAction func syncContacts(_ sender: AnyObject) {
-        viewPresenter.activityIndicator.startAnimating()
-        
-        ContactManager.syncContacts { 
-            self.viewPresenter.activityIndicator.startAnimating()
-            self.performSegue(withIdentifier: "ShowHome", sender: self)
-        }
+        presenter?.syncContactsPressed(in: view.window)
     }
     
     @IBAction func skipImportPressed(_ sender: AnyObject) {
-        self.performSegue(withIdentifier: "ShowHome", sender: self)
+        presenter?.showTabBar(in: view.window)
     }
-    
 }
+
+extension InitialImportViewController: InitialImportViewOutputting {}

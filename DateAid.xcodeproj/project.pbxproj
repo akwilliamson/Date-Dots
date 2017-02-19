@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9706223D1E2C2FF60020743C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9706223C1E2C2FF60020743C /* Constant.swift */; };
+		9706223F1E2C31880020743C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9706223E1E2C31880020743C /* TabBarViewController.swift */; };
+		970622421E2C32100020743C /* DatesNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622411E2C32100020743C /* DatesNavigationViewController.swift */; };
+		970622461E2C3F0B0020743C /* TabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622451E2C3F0B0020743C /* TabBarPresenter.swift */; };
+		970622481E2C3F160020743C /* TabBarWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622471E2C3F160020743C /* TabBarWireframe.swift */; };
+		9706224A1E2C3F210020743C /* TabBarEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622491E2C3F210020743C /* TabBarEventHandling.swift */; };
+		9706224C1E2C3F2C0020743C /* TabBarViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */; };
 		9707A7E91DBBFD6100C4A9C0 /* DatesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */; };
 		9707A7EB1DBC073D00C4A9C0 /* DatesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */; };
 		9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970807591BC7288100F030D3 /* ValueSlider.swift */; };
@@ -23,18 +30,18 @@
 		97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97364CEF1AFBF44A0095BC57 /* Images.xcassets */; };
 		97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */; };
 		97364CFF1AFBF44A0095BC57 /* DateAidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */; };
-		975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975899751C02DAEA009BC3B9 /* ArrayExtension.swift */; };
 		975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */; };
 		9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9760AF331BE874850098A1FE /* SettingsTableVC.swift */; };
 		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
-		97682FF81DB3071E00E8C5E6 /* DatesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */; };
-		97682FFA1DB3092800E8C5E6 /* DatesViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */; };
 		976BD4F71B2D079200415D65 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* DateCell.swift */; };
 		976E9FFB1DB34B80006DFB2D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976E9FFA1DB34B80006DFB2D /* Event.swift */; };
-		976E9FFD1DB34E19006DFB2D /* Identifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976E9FFC1DB34E19006DFB2D /* Identifiers.swift */; };
 		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
 		977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B011DA197FF005D131F /* CNContact+Tasks.swift */; };
 		977E3B041DA1A4A1005D131F /* DateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977E3B031DA1A4A1005D131F /* DateType.swift */; };
+		9781F9861E3E8A3A00E2C434 /* DatesNavigationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9851E3E8A3A00E2C434 /* DatesNavigationPresenter.swift */; };
+		9781F9881E3E8A4500E2C434 /* DatesNavigationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9871E3E8A4500E2C434 /* DatesNavigationWireframe.swift */; };
+		9781F98A1E3E8A5300E2C434 /* DatesNavigationEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9891E3E8A5300E2C434 /* DatesNavigationEventHandling.swift */; };
+		9781F98C1E3E8A5E00E2C434 /* DatesNavigationViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F98B1E3E8A5E00E2C434 /* DatesNavigationViewOutputting.swift */; };
 		978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */; };
 		978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */; };
 		9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */; };
@@ -44,6 +51,10 @@
 		9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F78A1BD4CCDF001E82BB /* Address.swift */; };
 		97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97943B551B0EA8CE004FC095 /* CoreDataStack.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
+		979C36A51E0E12770098345E /* DatesWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36A41E0E12770098345E /* DatesWireframe.swift */; };
+		979C36A71E0E14A80098345E /* InitialImportEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36A61E0E14A80098345E /* InitialImportEventHandling.swift */; };
+		979C36A91E0E14B20098345E /* InitialImportViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */; };
+		979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */; };
 		97A170231DAAB94E00B1F840 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A170221DAAB94E00B1F840 /* UITableView+Register.swift */; };
 		97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */; };
 		97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteVC.swift */; };
@@ -59,6 +70,9 @@
 		97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */; };
 		97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */; };
 		97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B5F1A81BD02F3C00CEFFAF /* Date.swift */; };
+		97B67D861E512F86006C3216 /* InitialImportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B67D851E512F86006C3216 /* InitialImportInteractor.swift */; };
+		97B67D881E512F95006C3216 /* InitialImportInteractorInputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B67D871E512F95006C3216 /* InitialImportInteractorInputting.swift */; };
+		97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */; };
 		97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* CircleLabel.swift */; };
 		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; };
 		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; };
@@ -67,12 +81,15 @@
 		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
 		97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */; };
-		97EF1F1F1DBC2E4900673553 /* DatesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EF1F1E1DBC2E4900673553 /* DatesRouter.swift */; };
+		97ED37601E45A70600B054FE /* AppDelegateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED375F1E45A70600B054FE /* AppDelegateWireframe.swift */; };
+		97ED37621E45A73200B054FE /* AppDelegatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */; };
+		97ED37641E45A76000B054FE /* AppDelegateEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37631E45A76000B054FE /* AppDelegateEventHandling.swift */; };
+		97ED37661E45A77400B054FE /* AppDelegateViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37651E45A77400B054FE /* AppDelegateViewOutputting.swift */; };
 		97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F6C9601BFEF34400511572 /* UIButtonExtension.swift */; };
-		97FA131B1DBEF5D200C9DBFE /* DatesViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131A1DBEF5D200C9DBFE /* DatesViewProtocol.swift */; };
-		97FA131D1DBEF61500C9DBFE /* DatesViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131C1DBEF61500C9DBFE /* DatesViewPresenterProtocol.swift */; };
-		97FA131F1DBEF63D00C9DBFE /* DatesInteractorPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131E1DBEF63D00C9DBFE /* DatesInteractorPresenterProtocol.swift */; };
-		97FA13211DBEF65C00C9DBFE /* DatesPresenterInteractorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA13201DBEF65C00C9DBFE /* DatesPresenterInteractorProtocol.swift */; };
+		97FA131B1DBEF5D200C9DBFE /* DatesViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131A1DBEF5D200C9DBFE /* DatesViewOutputting.swift */; };
+		97FA131D1DBEF61500C9DBFE /* DatesEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131C1DBEF61500C9DBFE /* DatesEventHandling.swift */; };
+		97FA131F1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131E1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift */; };
+		97FA13211DBEF65C00C9DBFE /* DatesInteractorInputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA13201DBEF65C00C9DBFE /* DatesInteractorInputting.swift */; };
 		9F23812F132E5FE71B78AD9B /* libPods-DateAid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E6603D4715E14974321608 /* libPods-DateAid.a */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +106,13 @@
 /* Begin PBXFileReference section */
 		1A95D6689C20FFC7B18E1F4B /* Pods-DateAid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DateAid.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DateAid/Pods-DateAid.debug.xcconfig"; sourceTree = "<group>"; };
 		56320FAE11656724D9E8DCC7 /* Pods-DateAid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DateAid.release.xcconfig"; path = "Pods/Target Support Files/Pods-DateAid/Pods-DateAid.release.xcconfig"; sourceTree = "<group>"; };
+		9706223C1E2C2FF60020743C /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		9706223E1E2C31880020743C /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		970622411E2C32100020743C /* DatesNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesNavigationViewController.swift; sourceTree = "<group>"; };
+		970622451E2C3F0B0020743C /* TabBarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarPresenter.swift; sourceTree = "<group>"; };
+		970622471E2C3F160020743C /* TabBarWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarWireframe.swift; sourceTree = "<group>"; };
+		970622491E2C3F210020743C /* TabBarEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarEventHandling.swift; sourceTree = "<group>"; };
+		9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewOutputting.swift; sourceTree = "<group>"; };
 		9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesPresenter.swift; sourceTree = "<group>"; };
 		9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesInteractor.swift; sourceTree = "<group>"; };
 		970807591BC7288100F030D3 /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
@@ -110,18 +134,18 @@
 		97364CFD1AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
 		97364D081AFBFCB00095BC57 /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
-		975899751C02DAEA009BC3B9 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsViewController.swift; sourceTree = "<group>"; };
 		9760AF331BE874850098A1FE /* SettingsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableVC.swift; sourceTree = "<group>"; };
 		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
-		97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesDataSource.swift; sourceTree = "<group>"; };
-		97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewPresenter.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		976E9FFA1DB34B80006DFB2D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		976E9FFC1DB34E19006DFB2D /* Identifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiers.swift; sourceTree = "<group>"; };
 		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		977E3B011DA197FF005D131F /* CNContact+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CNContact+Tasks.swift"; sourceTree = "<group>"; };
 		977E3B031DA1A4A1005D131F /* DateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateType.swift; sourceTree = "<group>"; };
+		9781F9851E3E8A3A00E2C434 /* DatesNavigationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesNavigationPresenter.swift; sourceTree = "<group>"; };
+		9781F9871E3E8A4500E2C434 /* DatesNavigationWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesNavigationWireframe.swift; sourceTree = "<group>"; };
+		9781F9891E3E8A5300E2C434 /* DatesNavigationEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesNavigationEventHandling.swift; sourceTree = "<group>"; };
+		9781F98B1E3E8A5E00E2C434 /* DatesNavigationViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesNavigationViewOutputting.swift; sourceTree = "<group>"; };
 		978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		978C23081BFC37CB000075D5 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailsVC.swift; sourceTree = "<group>"; };
@@ -133,6 +157,10 @@
 		979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V3.xcdatamodel; sourceTree = "<group>"; };
 		97943B551B0EA8CE004FC095 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
+		979C36A41E0E12770098345E /* DatesWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesWireframe.swift; sourceTree = "<group>"; };
+		979C36A61E0E14A80098345E /* InitialImportEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportEventHandling.swift; sourceTree = "<group>"; };
+		979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportViewOutputting.swift; sourceTree = "<group>"; };
+		979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportWireframe.swift; sourceTree = "<group>"; };
 		97A170221DAAB94E00B1F840 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
 		97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableVC.swift; sourceTree = "<group>"; };
 		97AD26A21BD77439004C1C7D /* NoteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
@@ -148,6 +176,9 @@
 		97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Tasks.swift"; sourceTree = "<group>"; };
 		97B5F1A41BD02EF500CEFFAF /* Date+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97B5F1A81BD02F3C00CEFFAF /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		97B67D851E512F86006C3216 /* InitialImportInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportInteractor.swift; sourceTree = "<group>"; };
+		97B67D871E512F95006C3216 /* InitialImportInteractorInputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportInteractorInputting.swift; sourceTree = "<group>"; };
+		97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportInteractorOutputting.swift; sourceTree = "<group>"; };
 		97D266991BD95380008F7EF8 /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
 		97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		97D266A01BDB3341008F7EF8 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
@@ -156,12 +187,15 @@
 		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewController.swift; sourceTree = "<group>"; };
-		97EF1F1E1DBC2E4900673553 /* DatesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesRouter.swift; sourceTree = "<group>"; };
+		97ED375F1E45A70600B054FE /* AppDelegateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateWireframe.swift; sourceTree = "<group>"; };
+		97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegatePresenter.swift; sourceTree = "<group>"; };
+		97ED37631E45A76000B054FE /* AppDelegateEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateEventHandling.swift; sourceTree = "<group>"; };
+		97ED37651E45A77400B054FE /* AppDelegateViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateViewOutputting.swift; sourceTree = "<group>"; };
 		97F6C9601BFEF34400511572 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
-		97FA131A1DBEF5D200C9DBFE /* DatesViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewProtocol.swift; sourceTree = "<group>"; };
-		97FA131C1DBEF61500C9DBFE /* DatesViewPresenterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewPresenterProtocol.swift; sourceTree = "<group>"; };
-		97FA131E1DBEF63D00C9DBFE /* DatesInteractorPresenterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesInteractorPresenterProtocol.swift; sourceTree = "<group>"; };
-		97FA13201DBEF65C00C9DBFE /* DatesPresenterInteractorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesPresenterInteractorProtocol.swift; sourceTree = "<group>"; };
+		97FA131A1DBEF5D200C9DBFE /* DatesViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesViewOutputting.swift; sourceTree = "<group>"; };
+		97FA131C1DBEF61500C9DBFE /* DatesEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesEventHandling.swift; sourceTree = "<group>"; };
+		97FA131E1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesInteractorOutputting.swift; sourceTree = "<group>"; };
+		97FA13201DBEF65C00C9DBFE /* DatesInteractorInputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesInteractorInputting.swift; sourceTree = "<group>"; };
 		C1E6603D4715E14974321608 /* libPods-DateAid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DateAid.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -186,6 +220,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		970622401E2C31960020743C /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				9706223E1E2C31880020743C /* TabBarViewController.swift */,
+				970622451E2C3F0B0020743C /* TabBarPresenter.swift */,
+				970622471E2C3F160020743C /* TabBarWireframe.swift */,
+				970622491E2C3F210020743C /* TabBarEventHandling.swift */,
+				9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */,
+			);
+			name = TabBar;
+			sourceTree = "<group>";
+		};
+		970622431E2C32170020743C /* Dates Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				970622411E2C32100020743C /* DatesNavigationViewController.swift */,
+				9781F9851E3E8A3A00E2C434 /* DatesNavigationPresenter.swift */,
+				9781F9871E3E8A4500E2C434 /* DatesNavigationWireframe.swift */,
+				9781F9891E3E8A5300E2C434 /* DatesNavigationEventHandling.swift */,
+				9781F98B1E3E8A5E00E2C434 /* DatesNavigationViewOutputting.swift */,
+			);
+			name = "Dates Navigation";
+			sourceTree = "<group>";
+		};
+		970622441E2C32630020743C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9706223C1E2C2FF60020743C /* Constant.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		970D93631BC47B9500D7F1FF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,7 +264,6 @@
 				97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */,
 				978481451BE9EE2F00BE1A8E /* UIViewExtension.swift */,
 				97F6C9601BFEF34400511572 /* UIButtonExtension.swift */,
-				975899751C02DAEA009BC3B9 /* ArrayExtension.swift */,
 				97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift */,
 				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 				97A170221DAAB94E00B1F840 /* UITableView+Register.swift */,
@@ -229,17 +294,16 @@
 		97364CE21AFBF44A0095BC57 /* DateAid */ = {
 			isa = PBXGroup;
 			children = (
-				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
+				97ED37671E45A7B400B054FE /* App Delegate */,
 				97943B551B0EA8CE004FC095 /* CoreDataStack.swift */,
 				97364CEC1AFBF44A0095BC57 /* Main.storyboard */,
-				977ED8BE1BFDA3D500BC7EB9 /* Onboarding */,
-				977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */,
-				977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */,
+				97D197CE1E3E8028006EC521 /* Storyboards */,
 				9793A3AF1DA77DAF002710A4 /* Core Data */,
 				97D2669B1BD98FE3008F7EF8 /* Models */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97DC1EC51BC5927F00FEE6BE /* Subclasses */,
 				97364CE31AFBF44A0095BC57 /* Supporting Files */,
+				970622441E2C32630020743C /* Utils */,
 			);
 			path = DateAid;
 			sourceTree = "<group>";
@@ -273,45 +337,42 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9751ED531E1B73DD00E4DF96 /* Date Details */ = {
+			isa = PBXGroup;
+			children = (
+				975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */,
+			);
+			name = "Date Details";
+			sourceTree = "<group>";
+		};
 		976E9FF91DB34587006DFB2D /* Dates */ = {
 			isa = PBXGroup;
 			children = (
 				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
-				97682FF71DB3071E00E8C5E6 /* DatesDataSource.swift */,
-				97682FF91DB3092800E8C5E6 /* DatesViewPresenter.swift */,
-				97FA131A1DBEF5D200C9DBFE /* DatesViewProtocol.swift */,
-				97FA131C1DBEF61500C9DBFE /* DatesViewPresenterProtocol.swift */,
 				9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */,
-				97FA13201DBEF65C00C9DBFE /* DatesPresenterInteractorProtocol.swift */,
+				979C36A41E0E12770098345E /* DatesWireframe.swift */,
 				9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */,
-				97FA131E1DBEF63D00C9DBFE /* DatesInteractorPresenterProtocol.swift */,
-				97EF1F1E1DBC2E4900673553 /* DatesRouter.swift */,
+				97FA131C1DBEF61500C9DBFE /* DatesEventHandling.swift */,
+				97FA13201DBEF65C00C9DBFE /* DatesInteractorInputting.swift */,
+				97FA131E1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift */,
+				97FA131A1DBEF5D200C9DBFE /* DatesViewOutputting.swift */,
 			);
 			name = Dates;
 			sourceTree = "<group>";
 		};
-		977ED8BE1BFDA3D500BC7EB9 /* Onboarding */ = {
+		977ED8BE1BFDA3D500BC7EB9 /* Initial Import */ = {
 			isa = PBXGroup;
 			children = (
 				97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */,
 				97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */,
+				979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */,
+				97B67D851E512F86006C3216 /* InitialImportInteractor.swift */,
+				979C36A61E0E14A80098345E /* InitialImportEventHandling.swift */,
+				97B67D871E512F95006C3216 /* InitialImportInteractorInputting.swift */,
+				97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */,
+				979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */,
 			);
-			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		977ED8BF1BFDA3ED00BC7EB9 /* Dates Tab */ = {
-			isa = PBXGroup;
-			children = (
-				976E9FF91DB34587006DFB2D /* Dates */,
-				975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */,
-				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
-				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
-				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
-				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
-				977ED8C01BFDA3F400BC7EB9 /* Turning Tab */,
-				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
-			);
-			name = "Dates Tab";
+			name = "Initial Import";
 			sourceTree = "<group>";
 		};
 		977ED8C01BFDA3F400BC7EB9 /* Turning Tab */ = {
@@ -392,6 +453,73 @@
 			name = Objects;
 			sourceTree = "<group>";
 		};
+		97D197C91E3E7FF7006EC521 /* Add Date */ = {
+			isa = PBXGroup;
+			children = (
+				97DD38141BC3659F00CF8A25 /* AddDateVC.swift */,
+			);
+			name = "Add Date";
+			sourceTree = "<group>";
+		};
+		97D197CA1E3E7FFD006EC521 /* Edit Details */ = {
+			isa = PBXGroup;
+			children = (
+				9791F77E1BD433E5001E82BB /* EditDetailsVC.swift */,
+			);
+			name = "Edit Details";
+			sourceTree = "<group>";
+		};
+		97D197CB1E3E8006006EC521 /* Single Push Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9791F7801BD45A08001E82BB /* SinglePushSettingsVC.swift */,
+			);
+			name = "Single Push Settings";
+			sourceTree = "<group>";
+		};
+		97D197CC1E3E800E006EC521 /* Notes Table */ = {
+			isa = PBXGroup;
+			children = (
+				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
+			);
+			name = "Notes Table";
+			sourceTree = "<group>";
+		};
+		97D197CD1E3E8015006EC521 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
+			);
+			name = Note;
+			sourceTree = "<group>";
+		};
+		97D197CE1E3E8028006EC521 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				97D197CF1E3E8035006EC521 /* Main */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		97D197CF1E3E8035006EC521 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				977ED8BE1BFDA3D500BC7EB9 /* Initial Import */,
+				970622401E2C31960020743C /* TabBar */,
+				970622431E2C32170020743C /* Dates Navigation */,
+				976E9FF91DB34587006DFB2D /* Dates */,
+				9751ED531E1B73DD00E4DF96 /* Date Details */,
+				97D197C91E3E7FF7006EC521 /* Add Date */,
+				97D197CA1E3E7FFD006EC521 /* Edit Details */,
+				97D197CB1E3E8006006EC521 /* Single Push Settings */,
+				97D197CC1E3E800E006EC521 /* Notes Table */,
+				977ED8C01BFDA3F400BC7EB9 /* Turning Tab */,
+				97D197CD1E3E8015006EC521 /* Note */,
+				977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,7 +527,6 @@
 				97B40DAA1DA17900000DA0E0 /* DateManager.swift */,
 				977E3B031DA1A4A1005D131F /* DateType.swift */,
 				976E9FFA1DB34B80006DFB2D /* Event.swift */,
-				976E9FFC1DB34E19006DFB2D /* Identifiers.swift */,
 				971E42EF1DB479C000478B24 /* DateColor.swift */,
 			);
 			name = Models;
@@ -413,6 +540,18 @@
 				978C23041BFC379E000075D5 /* UIControls */,
 			);
 			name = Subclasses;
+			sourceTree = "<group>";
+		};
+		97ED37671E45A7B400B054FE /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				97364CE51AFBF44A0095BC57 /* AppDelegate.swift */,
+				97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */,
+				97ED375F1E45A70600B054FE /* AppDelegateWireframe.swift */,
+				97ED37631E45A76000B054FE /* AppDelegateEventHandling.swift */,
+				97ED37651E45A77400B054FE /* AppDelegateViewOutputting.swift */,
+			);
+			name = "App Delegate";
 			sourceTree = "<group>";
 		};
 		AF3A239E4DD2E644C034AFD3 /* Pods */ = {
@@ -593,59 +732,76 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97ED37641E45A76000B054FE /* AppDelegateEventHandling.swift in Sources */,
 				97364CEB1AFBF44A0095BC57 /* InitialImportViewController.swift in Sources */,
 				975DBBBD1DAB748600D4CCC3 /* DateDetailsViewController.swift in Sources */,
 				976E9FFB1DB34B80006DFB2D /* Event.swift in Sources */,
-				97FA13211DBEF65C00C9DBFE /* DatesPresenterInteractorProtocol.swift in Sources */,
+				97FA13211DBEF65C00C9DBFE /* DatesInteractorInputting.swift in Sources */,
+				979C36A91E0E14B20098345E /* InitialImportViewOutputting.swift in Sources */,
+				9706223D1E2C2FF60020743C /* Constant.swift in Sources */,
 				97F6C9611BFEF34400511572 /* UIButtonExtension.swift in Sources */,
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
+				97ED37621E45A73200B054FE /* AppDelegatePresenter.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
 				97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */,
+				97ED37661E45A77400B054FE /* AppDelegateViewOutputting.swift in Sources */,
 				9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */,
 				978481461BE9EE2F00BE1A8E /* UIViewExtension.swift in Sources */,
 				97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */,
 				97A170231DAAB94E00B1F840 /* UITableView+Register.swift in Sources */,
 				97B5F1A61BD02EF500CEFFAF /* Date+CoreDataProperties.swift in Sources */,
-				97EF1F1F1DBC2E4900673553 /* DatesRouter.swift in Sources */,
 				976BD4F71B2D079200415D65 /* DateCell.swift in Sources */,
-				975899761C02DAEA009BC3B9 /* ArrayExtension.swift in Sources */,
-				976E9FFD1DB34E19006DFB2D /* Identifiers.swift in Sources */,
 				9791F78B1BD4CCDF001E82BB /* Address+CoreDataProperties.swift in Sources */,
 				9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */,
 				971E42F01DB479C000478B24 /* DateColor.swift in Sources */,
 				9760AF341BE874850098A1FE /* SettingsTableVC.swift in Sources */,
+				970622461E2C3F0B0020743C /* TabBarPresenter.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
 				9707A7EB1DBC073D00C4A9C0 /* DatesInteractor.swift in Sources */,
 				97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */,
-				97FA131F1DBEF63D00C9DBFE /* DatesInteractorPresenterProtocol.swift in Sources */,
+				97FA131F1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift in Sources */,
+				9781F98A1E3E8A5300E2C434 /* DatesNavigationEventHandling.swift in Sources */,
+				9706224C1E2C3F2C0020743C /* TabBarViewOutputting.swift in Sources */,
+				9781F98C1E3E8A5E00E2C434 /* DatesNavigationViewOutputting.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
+				97B67D861E512F86006C3216 /* InitialImportInteractor.swift in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
+				9706223F1E2C31880020743C /* TabBarViewController.swift in Sources */,
 				9708075A1BC7288100F030D3 /* ValueSlider.swift in Sources */,
-				97682FF81DB3071E00E8C5E6 /* DatesDataSource.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
+				979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
-				97682FFA1DB3092800E8C5E6 /* DatesViewPresenter.swift in Sources */,
 				9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */,
+				979C36A71E0E14A80098345E /* InitialImportEventHandling.swift in Sources */,
 				9791F77F1BD433E5001E82BB /* EditDetailsVC.swift in Sources */,
-				97FA131B1DBEF5D200C9DBFE /* DatesViewProtocol.swift in Sources */,
+				97FA131B1DBEF5D200C9DBFE /* DatesViewOutputting.swift in Sources */,
 				977E3B041DA1A4A1005D131F /* DateType.swift in Sources */,
+				9781F9881E3E8A4500E2C434 /* DatesNavigationWireframe.swift in Sources */,
 				971E42EE1DB471FE00478B24 /* DateSegmentedControl.swift in Sources */,
-				97FA131D1DBEF61500C9DBFE /* DatesViewPresenterProtocol.swift in Sources */,
+				970622481E2C3F160020743C /* TabBarWireframe.swift in Sources */,
+				97FA131D1DBEF61500C9DBFE /* DatesEventHandling.swift in Sources */,
 				973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */,
 				9707A7E91DBBFD6100C4A9C0 /* DatesPresenter.swift in Sources */,
 				97B40DAB1DA17900000DA0E0 /* DateManager.swift in Sources */,
 				977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */,
+				979C36A51E0E12770098345E /* DatesWireframe.swift in Sources */,
+				97B67D881E512F95006C3216 /* InitialImportInteractorInputting.swift in Sources */,
 				97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */,
 				978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
 				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,
+				9781F9861E3E8A3A00E2C434 /* DatesNavigationPresenter.swift in Sources */,
 				970D93621BC4765900D7F1FF /* ColorExtension.swift in Sources */,
 				97D2669A1BD95380008F7EF8 /* CircleLabel.swift in Sources */,
+				9706224A1E2C3F210020743C /* TabBarEventHandling.swift in Sources */,
+				97ED37601E45A70600B054FE /* AppDelegateWireframe.swift in Sources */,
+				970622421E2C32100020743C /* DatesNavigationViewController.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */,
 				97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */,
+				97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* StringExtention.swift in Sources */,
 				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
 				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,

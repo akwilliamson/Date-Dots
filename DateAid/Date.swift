@@ -58,5 +58,4 @@ class Date: NSManagedObject {
             return .birthday
         }
     }
-    
 }

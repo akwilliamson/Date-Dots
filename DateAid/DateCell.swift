@@ -16,9 +16,7 @@ class DateCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     
     var date: Date? {
-        didSet {
-            if let date = date { populate(date) }
-        }
+        didSet { if let date = date { populate(date) } }
     }
     
     private func populate(_ date: Date) {

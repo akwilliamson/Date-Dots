@@ -13,9 +13,9 @@ import CoreData
 class DateManager {
 
     private var managedContext: NSManagedObjectContext = CoreDataStack().managedObjectContext
-    private var contacts: [CNContact?]
+    private var contacts: [CNContact]
     
-    init(contacts: [CNContact?]) {
+    init(contacts: [CNContact]) {
         self.contacts = contacts
     }
 
@@ -29,19 +29,20 @@ class DateManager {
         createAnniversaries()
         createHolidays()
         
-        managedContext.trySave()
-        
+        managedContext.trySave { success in
+            
+        }
     }
     
     private func createBirthdays() {
         contacts.forEach { contact in
-            if contact?.birthday != nil { date(for: contact, of: .birthday) }
+            if contact.birthday != nil { date(for: contact, of: .birthday) }
         }
     }
     
     private func createAnniversaries() {
         contacts.forEach { contact in
-            if contact?.anniversary != nil { date(for: contact, of: .anniversary) }
+            if contact.anniversary != nil { date(for: contact, of: .anniversary) }
         }
     }
     

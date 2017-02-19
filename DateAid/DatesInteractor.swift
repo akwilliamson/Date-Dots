@@ -10,48 +10,38 @@ import CoreData
 
 class DatesInteractor {
     
-    weak var presenter: DatesInteractorPresenterProtocol!
-    
-    required init(presenter: DatesInteractorPresenterProtocol) {
-        self.presenter = presenter
-    }
+    weak var presenter: DatesInteractorOutputting?
     
     let moc = CoreDataStack().managedObjectContext
 }
 
-extension DatesInteractor: DatesPresenterInteractorProtocol {
-    
-    func dateFilterCategories() {
-        
-        let categories = [
-            FilterDateType.all.pluralValue,
-            FilterDateType.birthday.pluralValue,
-            FilterDateType.anniversary.pluralValue,
-            FilterDateType.holiday.pluralValue
-        ]
-        
-        presenter.styleSegmentedControl(with: categories)
-    }
+extension DatesInteractor: DatesInteractorInputting {
 
-    func fetchDates(for type: DateType?, sort descriptors: [String]?) {
+    func fetch(dates type: String) {
         
         let request: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
         
-        if let type = type?.lowercased {
+        if type != "all" {
             request.predicate = NSPredicate(format: "type = %@", type)
         }
         
-        if let descriptors = descriptors {
-            request.sortDescriptors = descriptors.map { return NSSortDescriptor(key: $0, ascending: true) }
+        let sortByDate = NSSortDescriptor(key: "equalizedDate", ascending: true)
+        let sortByName = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sortByDate, sortByName]
+
+        let today = Foundation.Date().formatted("MM/dd")
+        
+        presenter?.dates = moc.tryFetch(request).sorted { (a, b) -> Bool in
+            guard let aDate = a?.equalizedDate, let bDate = b?.equalizedDate else { return false }
+            return aDate >= today && bDate < today ? aDate > bDate : aDate < bDate
         }
-        
-        let dates = moc.tryFetch(request)
-        
-        presenter.fetched(dates)
     }
     
-    func delete(_ date: Date) {
+    func delete(_ date: Date?, complete: (Bool) -> ()) {
+        guard let date = date else { complete(false); return }
         moc.delete(date)
-        moc.trySave()
+        moc.trySave { success in
+            complete(success)
+        }
     }
 }

@@ -38,7 +38,7 @@ enum FilterDateType: Int {
     case anniversary
     case holiday
     
-    var value: String {
+    var string: String {
         switch self {
         case .all:
             return "All"
@@ -51,7 +51,11 @@ enum FilterDateType: Int {
         }
     }
     
-    var pluralValue: String {
+    var lowerCaseString: String {
+        return string.lowercased()
+    }
+    
+    var pluralString: String {
         switch self {
         case .all:
             return "All"

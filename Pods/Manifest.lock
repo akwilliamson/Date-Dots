@@ -1,15 +1,15 @@
 PODS:
-  - ASValueTrackingSlider (0.11.2)
-  - Flurry-iOS-SDK/FlurrySDK (7.3.0)
+  - ASValueTrackingSlider (0.12.1)
+  - Flurry-iOS-SDK/FlurrySDK (7.9.2)
 
 DEPENDENCIES:
   - ASValueTrackingSlider
   - Flurry-iOS-SDK/FlurrySDK
 
 SPEC CHECKSUMS:
-  ASValueTrackingSlider: 45c9f78252da60de01d8f2afe869aaf90dd978d9
-  Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
+  ASValueTrackingSlider: 5261de3fcf00adb339efc93885e8f0bc99e703cd
+  Flurry-iOS-SDK: 300dc1d78443dea3d433a38e76292f20f14f0a96
 
 PODFILE CHECKSUM: 1da586a783e7ae7057428b746db32605a1b354db
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0

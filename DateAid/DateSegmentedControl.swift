@@ -27,12 +27,12 @@ import UIKit
         didSet { labels.forEach({ $0.textColor = unselectedLabelColor }) }
     }
     
-    @IBInspectable var borderColor: UIColor = .white {
-        didSet { layer.borderColor = borderColor.cgColor }
+    @IBInspectable var thumbColor: UIColor = .birthday {
+        didSet { layer.backgroundColor = thumbColor.cgColor }
     }
     
-    @IBInspectable var font: UIFont! = UIFont() {
-        didSet { labels.forEach({ $0.font = font }) }
+    @IBInspectable var borderColor: UIColor = .white {
+        didSet { layer.borderColor = borderColor.cgColor }
     }
     
     override init(frame: CGRect) {
@@ -62,7 +62,7 @@ import UIKit
             label.text = items[index - 1]
             label.backgroundColor = .clear
             label.textAlignment = .center
-            label.font = font
+             label.font = UIFont(name: "AvenirNext-Bold", size: 13)!
             label.textColor = index == 0 ? selectedLabelColor : unselectedLabelColor
             label.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(label)

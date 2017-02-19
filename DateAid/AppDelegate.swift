@@ -13,61 +13,49 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var appWireframe: AppDelegateWireframe?
     
     lazy var coreDataStack = CoreDataStack()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Flurry.startSession("GRKF26Q66DS5Z6ZCVZ3M")
-        styleNavigationBar()
-        styleTabBar()
-        showInitialImportOnFirstLaunch()
+        appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
+        
+        appWireframe?.presenter.setupApp()
+
+        showInitialView()
         
         return true
     }
     
-    func showInitialImportOnFirstLaunch() {
+    private func showInitialView() {
+        let key = Constant.UserDefaults.hasLaunchedOnce.value
+        let userHasLaunchedAppOnce = UserDefaults.standard.value(forKey: key)
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if UserDefaults.standard.object(forKey: "hasLaunchedOnce") == nil {
-            UserDefaults.standard.set(true, forKey: "hasLaunchedOnce")
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "InitialImport") as? InitialImportViewController
+        if userHasLaunchedAppOnce == nil {
+            UserDefaults.standard.setValue(true, forKey: key)
+            appWireframe?.presenter.showInitialImport(in: window)
         } else {
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainView") as UIViewController
+            appWireframe?.presenter.showDatesTabBar(in: window)
         }
-    }
-    
-    func styleNavigationBar() {
-        UINavigationBar.appearance().barTintColor = UIColor.birthday
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 23)!]
-    }
-    
-    func styleTabBar() {
-        UITabBar.appearance().barTintColor = UIColor.birthday
-        UITabBar.appearance().tintColor = UIColor.white
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: .normal)
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
     }
 
     // Persist data to disk when app enters background
     func applicationDidEnterBackground(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave()
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
+        coreDataStack.managedObjectContext.trySave { _ in }
     }
 
     // Persist data to disk when app terminates
     func applicationWillTerminate(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave()
+        coreDataStack.managedObjectContext.trySave { _ in }
     }
 }
+
+extension AppDelegate: AppDelegateOutputting {
+    
+    func initializeFlurry() {
+        Flurry.startSession(Constant.Flurry.APIKey.value)
+    }
+}
+
 

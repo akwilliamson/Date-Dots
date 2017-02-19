@@ -15,7 +15,6 @@ class EditDetailsVC: UIViewController {
     var managedContext: NSManagedObjectContext?
     
     var addressDelegate: SetAddressDelegate?
-    var reloadDatesTableDelegate: ReloadDatesTableDelegate?
     var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
 
     @IBOutlet weak var addressTextField: AddNameTextField!
@@ -54,7 +53,6 @@ class EditDetailsVC: UIViewController {
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
         addressDelegate?.repopulateAddressFor(dateObject: dateObject)
-        reloadDatesTableDelegate?.reloadTableView()
         
         do { try managedContext?.save()
             if let DateDetailsViewController = self.navigationController?.viewControllers[1] as? DateDetailsViewController {

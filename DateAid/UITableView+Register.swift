@@ -10,9 +10,9 @@ import Foundation
 
 extension UITableView {
 
-    func register(_ cell: String) {
-        let nib = UINib(nibName: cell, bundle: nil)
-        self.register(nib, forCellReuseIdentifier: cell)
+    func register(nib name: String?) {
+        guard let name = name else { print("nib name doesn't exist"); return }
+        register(UINib(nibName: name, bundle: nil), forCellReuseIdentifier: name)
     }
 
 }
