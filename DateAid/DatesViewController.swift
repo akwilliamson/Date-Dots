@@ -39,7 +39,6 @@ class DatesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        logEvents(forString: Event.dates.value)
         navigationItem.rightBarButtonItems = [addButton, searchButton]
         presenter?.setupView()
     }
@@ -50,17 +49,17 @@ class DatesViewController: UIViewController {
         presenter?.resetView()
     }
     
-    func pressedSearchButton(sender: UIBarButtonItem) {
+    @objc func pressedSearchButton(sender: UIBarButtonItem) {
         navigationItem.rightBarButtonItems?[1] = cancelButton
         presenter?.pressedSearchButton()
     }
     
-    func pressedCancelButton(sender: UIBarButtonItem) {
+    @objc func pressedCancelButton(sender: UIBarButtonItem) {
         navigationItem.rightBarButtonItems = [addButton, searchButton]
         presenter?.pressedCancelButton()
     }
     
-    func pressedAddButton(sender: UIBarButtonItem) {
+    @objc func pressedAddButton(sender: UIBarButtonItem) {
         // self.performSegue(withIdentifier: Id.Segue.addDate.value, sender: self)
     }
     
@@ -115,7 +114,7 @@ extension DatesViewController: UITableViewDataSource {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete { presenter?.deleteDate(atIndexPath: indexPath) }
     }
 }
@@ -192,11 +191,11 @@ extension DatesViewController: DatesViewOutputting {
         }
     }
     
-    func reloadTableView(sections: IndexSet, animation: UITableViewRowAnimation) {
+    func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation) {
         tableView.reloadSections(sections, with: animation)
     }
     
-    func deleteTableView(rows: [IndexPath], animation: UITableViewRowAnimation) {
+    func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation) {
         tableView.deleteRows(at: rows, with: animation)
     }
 }

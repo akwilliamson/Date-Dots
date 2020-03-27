@@ -18,7 +18,6 @@ class NotesTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logEvents(forString: "Notes Main View")
         registerNibCell(withName: "NoteCell")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '638CE21AF477F85CC9B7A06C453EF8FD'
-               BlueprintName = 'ASValueTrackingSlider'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libASValueTrackingSlider.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "43864ED50F85F0C79360CBAC23D812B4"
+               BuildableName = "libASValueTrackingSlider.a"
+               BlueprintName = "ASValueTrackingSlider"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

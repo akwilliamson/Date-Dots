@@ -44,8 +44,6 @@ class DateDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        logEvents(forString: "View Date Details")
         addGestureRecognizers()
         envelopeImage.image = UIImage(named: "envelope.png")?.withRenderingMode(.alwaysTemplate)
     }
@@ -192,12 +190,10 @@ class DateDetailsViewController: UIViewController {
     }
     
     func showNotification(_ sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Notification Gesture Tapped")
         self.performSegue(withIdentifier: "ShowNotification", sender: self)
     }
     
     func showAddress(_ sender: UITapGestureRecognizer) {
-        self.logEvents(forString: "Address Gesture Tapped")
         self.performSegue(withIdentifier: "ShowAddress", sender: self)
     }
     

@@ -10,15 +10,11 @@ import Foundation
 
 extension String {
     
-    subscript (r: Range<Int>) -> String {
-        return substring(with: (characters.index(startIndex, offsetBy: r.lowerBound) ..< characters.index(startIndex, offsetBy: r.upperBound)))
-    }
-    
     func abbreviatedName() -> String {
         let comps = self.components(separatedBy: " ")
         
         if comps.count > 1 {
-            guard let char = comps[1].characters.first else {
+            guard let char = comps[1].first else {
                 return self
             }
             return comps[0] + " " + String(char)

@@ -24,7 +24,6 @@ class TurningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Who's turning 1?"
-        self.logEvents(forString: "Turning VC")
         registerDateCellNib()
         fetchDatesIfNotBeenFetched()
         addColoredArrows()
@@ -43,10 +42,10 @@ class TurningVC: UIViewController {
         let downArrowImage = UIImage(named: "down-arrow.png")?.withRenderingMode(.alwaysTemplate)
         let upArrowImage = UIImage(named: "up-arrow.png")?.withRenderingMode(.alwaysTemplate)
         
-        downArrow.setImage(downArrowImage, for: UIControlState())
+        downArrow.setImage(downArrowImage, for: UIControl.State())
         downArrow.tintColor = UIColor.lightGray
         
-        upArrow.setImage(upArrowImage, for: UIControlState())
+        upArrow.setImage(upArrowImage, for: UIControl.State())
         upArrow.tintColor = UIColor.lightGray
     }
     
@@ -117,7 +116,7 @@ class TurningVC: UIViewController {
         }
     }
     
-    func valueChanged(_ sender: ValueSlider) {
+    @objc func valueChanged(_ sender: ValueSlider) {
         sender.value = round(sender.value)
         title = "Who's turning \(Int(sender.value))?"
         filteredResults?.removeAll()

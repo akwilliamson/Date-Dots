@@ -67,8 +67,6 @@ class AddDateVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.logEvents(forString: "View Add Date")
         title = addOrEdit()
         
         if let dateToSave = dateToSave {
@@ -142,24 +140,24 @@ class AddDateVC: UIViewController {
     
     func addImagesToButtons() {
         let birthdayImage = UIImage(named: "balloon.png")?.withRenderingMode(.alwaysTemplate)
-        birthdayButton.setImage(birthdayImage, for: UIControlState())
+        birthdayButton.setImage(birthdayImage, for: UIControl.State())
         birthdayButton.tintColor = UIColor.birthday
         birthdayButton.layer.borderColor = UIColor.birthday.cgColor
         
         let anniversaryImage = UIImage(named: "heart.png")?.withRenderingMode(.alwaysTemplate)
-        anniversaryButton.setImage(anniversaryImage, for: UIControlState())
+        anniversaryButton.setImage(anniversaryImage, for: UIControl.State())
         anniversaryButton.tintColor = UIColor.anniversary
         anniversaryButton.layer.borderColor = UIColor.anniversary.cgColor
         
         let customImage = UIImage(named: "calendar.png")?.withRenderingMode(.alwaysTemplate)
-        customButton.setImage(customImage, for: UIControlState())
+        customButton.setImage(customImage, for: UIControl.State())
         customButton.tintColor = UIColor.custom
         customButton.layer.borderColor = UIColor.custom.cgColor
         
         [birthdayButton, anniversaryButton, customButton].forEach({
             $0?.layer.borderWidth = 2
             $0?.adjustsImageWhenHighlighted = false
-            $0?.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+            $0?.imageEdgeInsets = UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
         })
     }
     
@@ -172,16 +170,16 @@ class AddDateVC: UIViewController {
         let downArrow = UIImage(named: "down-arrow.png")?.withRenderingMode(.alwaysTemplate)
         let upArrow = UIImage(named: "up-arrow.png")?.withRenderingMode(.alwaysTemplate)
         
-        minusMonthLabel.setImage(downArrow, for: UIControlState())
+        minusMonthLabel.setImage(downArrow, for: UIControl.State())
         minusMonthLabel.tintColor = UIColor.lightGray
         
-        plusMonthLabel.setImage(upArrow, for: UIControlState())
+        plusMonthLabel.setImage(upArrow, for: UIControl.State())
         plusMonthLabel.tintColor = UIColor.lightGray
         
-        minusDayLabel.setImage(downArrow, for: UIControlState())
+        minusDayLabel.setImage(downArrow, for: UIControl.State())
         minusDayLabel.tintColor = UIColor.lightGray
         
-        plusDayLabel.setImage(upArrow, for: UIControlState())
+        plusDayLabel.setImage(upArrow, for: UIControl.State())
         plusDayLabel.tintColor = UIColor.lightGray
     }
     
@@ -254,7 +252,7 @@ class AddDateVC: UIViewController {
     }
     
     func nameFieldIsPopulated() -> Bool {
-        if nameField.text?.characters.count == 0 || nameField.text == nil {
+        if nameField.text?.count == 0 || nameField.text == nil {
             return false
         } else {
             return true
@@ -402,7 +400,6 @@ extension AddDateVC {
     }
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-        self.logEvents(forString: "Save Date on AddDateVC")
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
             managedContext?.trySave(complete: { success in

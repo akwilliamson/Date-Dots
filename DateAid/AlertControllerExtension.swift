@@ -13,7 +13,7 @@ extension UIAlertController {
     class func generate(_ parentVC: UIViewController, title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
-            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            let settingsUrl = URL(string: UIApplication.openSettingsURLString)
             if let url = settingsUrl {
                 UIApplication.shared.openURL(url)
             }

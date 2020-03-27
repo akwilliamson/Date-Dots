@@ -33,8 +33,11 @@ class ContactManager {
             store.requestAccess(for: .contacts, completionHandler: { (success, error) in
                 return success ? complete(true) : complete(false)
             })
-            
-        case .restricted, .denied:
+        case .restricted:
+            return complete(false)
+        case .denied:
+            return complete(false)
+        @unknown default:
             return complete(false)
         }
     }

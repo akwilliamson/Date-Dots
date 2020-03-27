@@ -9,10 +9,6 @@
 import Foundation
 
 extension UIViewController {
-
-    func logEvents(forString string: String) {
-        Flurry.logEvent(string)
-    }
     
     func delay(_ delay: Double, closure: @escaping ()->()) {
         DispatchQueue.main.asyncAfter(

@@ -13,14 +13,14 @@ extension UIView {
     func rotate360Degrees(_ duration: CFTimeInterval = 0.4) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
-        rotateAnimation.toValue = CGFloat(M_PI) * 2
+        rotateAnimation.toValue = CGFloat(Double.pi) * 2
         rotateAnimation.duration = duration
         self.layer.add(rotateAnimation, forKey: nil)
     }
     
     func rotateBack360Degrees(_ duration: CFTimeInterval = 0.4) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.fromValue = CGFloat(M_PI) * 2
+        rotateAnimation.fromValue = CGFloat(Double.pi) * 2
         rotateAnimation.toValue = 0
         rotateAnimation.duration = duration
         self.layer.add(rotateAnimation, forKey: nil)

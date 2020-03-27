@@ -30,7 +30,6 @@ class SinglePushSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logEvents(forString: "Push Notification Setting")
         checkIfUserHasEnabledLocalNotifications()
         
         addValueChangedTargetOn([daySlider, timeSlider])
@@ -212,7 +211,7 @@ class SinglePushSettingsVC: UIViewController {
         return greeting + message
     }
     
-    func valueChanged(_ sender: ValueSlider) {
+    @objc func valueChanged(_ sender: ValueSlider) {
         
         setLabelValues(forDaysPrior: daySlider.value, at: timeSlider.value)
     }
@@ -232,8 +231,6 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     @IBAction func createNotification(_ sender: AnyObject) {
-        self.logEvents(forString: "Create Notification")
-        
         deletePreviousNotification()
         
         let notification = UILocalNotification()

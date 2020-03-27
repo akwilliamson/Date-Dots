@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var coreDataStack = CoreDataStack()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
         
@@ -51,11 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: AppDelegateOutputting {
-    
-    func initializeFlurry() {
-        Flurry.startSession(Constant.Flurry.APIKey.value)
-    }
-}
+extension AppDelegate: AppDelegateOutputting {}
 
 

@@ -43,8 +43,6 @@ class NoteVC: UIViewController {
         super.viewDidLoad()
         title = noteTitle
         
-        Flurry.logEvent("Note Details", withParameters: ["forNote:" : noteTitle])
-        
         if dateObject?.notes?.count > 0 {
             guard let notesForDate = dateObject?.notes else { return }
             for noteForDate in notesForDate {
@@ -63,12 +61,11 @@ class NoteVC: UIViewController {
     }
     
     func setPlaceholderText(inView view: UITextView) {
-        view.text = "A place for \(placeHolderTextForTitle[noteTitle])"
+        view.text = "A place for \(placeHolderTextForTitle[noteTitle] ?? "ideas")"
         view.textColor = UIColor.lightGray
     }
     
     @IBAction func saveNote(_ sender: AnyObject) {
-        self.logEvents(forString: "Save Note")
         noteObject?.body = textView.text
         saveContext()
         _ = self.navigationController?.popViewController(animated: true)

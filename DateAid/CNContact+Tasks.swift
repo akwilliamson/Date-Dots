@@ -16,7 +16,7 @@ extension CNContact {
     }
     
     var abbreviatedName: String {
-        guard let character = familyName.characters.first else { return givenName }
+        guard let character = familyName.first else { return givenName }
         return givenName + " " + String(character)
     }
     
@@ -35,12 +35,16 @@ extension CNContact {
     }
     
     var anniversary: Foundation.Date? {
-        var comps = dates.filter { date -> Bool in
+        let comps = dates.filter { date -> Bool in
             guard let label = date.label else { return false }
             return label.contains("Anniversary")
-        }.first?.value as? DateComponents
+        }
         
-        comps?.timeZone = TimeZone.current
-        return comps?.date
+        guard let components = comps.first?.value else { return nil }
+        
+        var finalComps = components as DateComponents
+
+        finalComps.timeZone = TimeZone.current
+        return finalComps.date
     }
 }

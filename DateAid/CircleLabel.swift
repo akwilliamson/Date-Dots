@@ -43,7 +43,7 @@ class CircleLabel: UILabel {
     
     func rollRight(forDuration duration: TimeInterval, inView view: UIView, closure: @escaping (CircleLabel) -> ()) {
         self.rotate360Degrees()
-        UIView.animate(withDuration: duration, animations: { _ in
+        UIView.animate(withDuration: duration, animations: { 
             self.center.x = view.frame.width - (self.center.x)
             }, completion: { _ in
                 closure(self)
@@ -53,7 +53,7 @@ class CircleLabel: UILabel {
     func rollLeft(forDuration duration: TimeInterval, toPosition position: CGFloat, closure: @escaping (CircleLabel, String) -> ()) {
         self.rotateBack360Degrees()
         let text = self.text!
-        UIView.animate(withDuration: duration, animations: { _ in
+        UIView.animate(withDuration: duration, animations: { 
             self.center.x = position
             self.text = "✓"
             }, completion: { _ in
@@ -69,7 +69,7 @@ class CircleLabel: UILabel {
     
     func animate(intoView view: UIView, toPosition position: CGFloat, withDelay delay: TimeInterval) {
         self.center.x = -view.frame.width - self.frame.height
-        UIView.animate(withDuration: 0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { _ in
+        UIView.animate(withDuration: 0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: { 
             self.center.x = position
             }) { _ in
         }

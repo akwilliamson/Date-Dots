@@ -18,6 +18,6 @@ protocol DatesViewOutputting: class {
     
     func showSearchBar(frame: CGRect, duration: TimeInterval)
     func hideSearchBar(duration: TimeInterval)
-    func reloadTableView(sections: IndexSet, animation: UITableViewRowAnimation)
-    func deleteTableView(rows: [IndexPath], animation: UITableViewRowAnimation)
+    func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation)
+    func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation)
 }

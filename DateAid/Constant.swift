@@ -13,7 +13,7 @@ protocol Stringable: RawRepresentable {
 }
 
 extension Stringable {
-    var value: String { return self.rawValue as? String ?? "Not Stringable" }
+    var value: String { return rawValue as? String ?? "Not Stringable" }
 }
 
 struct Constant {
@@ -21,11 +21,6 @@ struct Constant {
     enum UserDefaults: String, Stringable {
     
         case hasLaunchedOnce = "hasLaunchedOnce"
-    }
-    
-    enum Flurry: String, Stringable {
-        
-        case APIKey = "GRKF26Q66DS5Z6ZCVZ3M"
     }
     
     enum StoryboardId: String, Stringable {

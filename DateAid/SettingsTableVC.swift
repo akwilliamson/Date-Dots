@@ -42,7 +42,6 @@ class SettingsTableVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logEvents(forString: "Settings")
         addGestureRecognizers()
         setIndicesForLabels()
         alertToggle(selectedButton: alertYearlyButton, offButton: alertOnceButton)
@@ -240,7 +239,7 @@ class SettingsTableVC: UIViewController {
         settingsLabel.backgroundColor = settingsLabelColor
         settingsLabel.rotateBack360Degrees()
         
-        UIView.animate(withDuration: 0.5, animations: { _ in
+        UIView.animate(withDuration: 0.5, animations: { 
             settingsLabel.center.x = self.syncCancel.center.x
             }, completion: { _ in
                 self.settingsLabelIsActive = false

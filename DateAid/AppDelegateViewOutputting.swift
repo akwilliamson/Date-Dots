@@ -8,7 +8,4 @@
 
 import Foundation
 
-protocol AppDelegateOutputting: class {
-    
-    func initializeFlurry()
-}
+protocol AppDelegateOutputting: class {}

@@ -16,9 +16,7 @@ class AppDelegatePresenter {
 
 extension AppDelegatePresenter: AppDelegateEventHandling {
     
-    func setupApp() {
-        view?.initializeFlurry()
-    }
+    func setupApp() {}
     
     func showInitialImport(in window: UIWindow?) {
         wireframe?.presentInitialImportModule(in: window)

@@ -16,7 +16,7 @@ class InitialImportInteractor {
 extension InitialImportInteractor: InitialImportInteractorInputting {
     
     func syncContacts(handleContacts: @escaping () -> Void) {
-        ContactManager.syncContacts { success in
+        ContactManager.syncContacts {
             handleContacts()
         }
     }

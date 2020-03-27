@@ -15,14 +15,11 @@ enum DateColor: Int {
     case holiday
     
     var color: UIColor {
+        
         switch self {
-        case .birthday:
-            return UIColor.birthday
-        case .anniversary:
-            return UIColor.anniversary
-        case .holiday:
-            return UIColor.custom
+        case .birthday:    return .birthday
+        case .anniversary: return .anniversary
+        case .holiday:     return .custom
         }
     }
-
 }

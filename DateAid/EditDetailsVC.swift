@@ -28,7 +28,6 @@ class EditDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.logEvents(forString: "Edit Details")
         setColorTheme(for: dateObject.color)
         populateAddressFields(withAddress: dateObject.address)
     }
@@ -49,7 +48,6 @@ class EditDetailsVC: UIViewController {
     }
     
     @IBAction func done(_ sender: AnyObject) {
-        self.logEvents(forString: "Save Date on EditDetailsVC")
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
         addressDelegate?.repopulateAddressFor(dateObject: dateObject)
