@@ -8,13 +8,11 @@
 
 protocol DatesEventHandling: class {
     
-    var title: String { get }
-    var cellId: String { get}
-    var filterValues: [FilterDateType] { get }
-    var filterSelection: Int { get }
-    var dates: [Date?] { get }
+    var dateCellID: String     { get }
+    var selectedTabIndex: Int  { get }
+    var dates: [Date?]         { get }
     var filteredDates: [Date?] { get }
-    var isSearching: Bool { get }
+    var isSearching: Bool      { get }
     
     func setupView()
     func pressedSearchButton()

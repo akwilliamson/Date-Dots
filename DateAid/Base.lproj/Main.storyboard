@@ -128,7 +128,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekx-ta-SvP" customClass="DateSegmentedControl" customModule="DateAid">
-                                <rect key="frame" x="0.0" y="44" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="KF8-EN-Vxg"/>
@@ -147,12 +147,9 @@
                                         <color key="value" red="0.83869949489999995" green="0.83869949489999995" blue="0.83869949489999995" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="segmentedControlPressed:" destination="4gB-zV-OP8" eventType="valueChanged" id="Dqj-6p-SvV"/>
-                                </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J2T-UL-QCd">
-                                <rect key="frame" x="0.0" y="82" width="375" height="585"/>
+                                <rect key="frame" x="0.0" y="38" width="375" height="629"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DateCell" rowHeight="80" id="G1p-lm-wMV" customClass="DateCell" customModule="DateAid" customModuleProvider="target">
@@ -164,10 +161,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="4gB-zV-OP8" id="Cpo-us-Nr4"/>
-                                    <outlet property="delegate" destination="4gB-zV-OP8" id="Ghk-o6-FK0"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -183,8 +176,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="vSW-gp-fGE"/>
                     <connections>
-                        <outlet property="segmentedControl" destination="Ekx-ta-SvP" id="5hm-Fl-LTf"/>
-                        <outlet property="tableView" destination="J2T-UL-QCd" id="Qku-KM-VWd"/>
                         <segue destination="i1f-AG-9F2" kind="show" identifier="AddDate" id="3dK-Af-Sia"/>
                         <segue destination="PaR-uw-Bbs" kind="show" identifier="DateDetails" id="Wh4-7v-x9o"/>
                     </connections>
@@ -202,11 +193,11 @@
                         <viewControllerLayoutGuide type="bottom" id="OwV-4I-2tz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="a12-fm-HpS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8DU-k5-J9G" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="16" y="64" width="343" height="60"/>
+                                <rect key="frame" x="16" y="76" width="343" height="58"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
@@ -216,7 +207,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-l5-H0G" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="89.5" y="137.5" width="60" height="60"/>
+                                <rect key="frame" x="92" y="147" width="58.5" height="58.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="u1Z-l5-H0G" secondAttribute="height" multiplier="1:1" id="488-JI-mOP"/>
@@ -244,7 +235,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePo-6G-7uF" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="157.5" y="137.5" width="60" height="60"/>
+                                <rect key="frame" x="158.5" y="147" width="58" height="58.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="m7M-OE-FCb"/>
@@ -272,7 +263,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-PL-aiv" userLabel="Custom Button" customClass="TypeButton" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="225.5" y="137.5" width="60" height="60"/>
+                                <rect key="frame" x="224.5" y="147" width="58.5" height="58.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="1bG-Ky-xac"/>
@@ -298,7 +289,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uma-BM-scR">
-                                <rect key="frame" x="16" y="207.5" width="89" height="49.5"/>
+                                <rect key="frame" x="16" y="215" width="89" height="49.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="HI3-Db-R1u"/>
                                 </constraints>
@@ -312,13 +303,13 @@
                                 </variation>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vhw-nm-zBS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="49" y="289.5" width="277" height="31"/>
+                                <rect key="frame" x="49" y="297" width="277" height="31"/>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-R0-OwM" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="49" y="352.5" width="277" height="31"/>
+                                <rect key="frame" x="49" y="359" width="277" height="31"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kdh-dN-iHJ">
-                                <rect key="frame" x="-4" y="578.5" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="561" width="383" height="71"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Edit Details"/>
@@ -327,7 +318,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbJ-Sn-kOd">
-                                <rect key="frame" x="172.5" y="327.5" width="30" height="17"/>
+                                <rect key="frame" x="172.5" y="335" width="30" height="16"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="P1h-pO-9X2"/>
@@ -344,7 +335,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4QB-zC-Wlh">
-                                <rect key="frame" x="172.5" y="265" width="30" height="16.5"/>
+                                <rect key="frame" x="172.5" y="272.5" width="30" height="16.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="XKb-hX-kLp"/>
@@ -364,7 +355,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTR-br-WpV">
-                                <rect key="frame" x="172.5" y="124" width="30" height="13.5"/>
+                                <rect key="frame" x="172.5" y="134" width="30" height="13"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="48Z-vg-7pu"/>
@@ -387,7 +378,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwo-dl-95w">
-                                <rect key="frame" x="172.5" y="197.5" width="30" height="10"/>
+                                <rect key="frame" x="172.5" y="205.5" width="30" height="9.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="hqo-tM-whh"/>
@@ -404,7 +395,7 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5G-ae-FjB" userLabel="Day Label">
-                                <rect key="frame" x="113" y="207.5" width="89" height="49.5"/>
+                                <rect key="frame" x="113" y="215" width="89" height="49.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="WEe-ul-8WB"/>
                                 </constraints>
@@ -418,7 +409,7 @@
                                 </variation>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1985" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDb-73-0WV">
-                                <rect key="frame" x="250.5" y="207.5" width="108.5" height="49.5"/>
+                                <rect key="frame" x="248" y="215" width="111" height="49.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -431,7 +422,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07e-oS-wqU">
-                                <rect key="frame" x="16" y="292" width="25" height="25"/>
+                                <rect key="frame" x="16" y="299.5" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="qMF-yn-iqC"/>
                                     <constraint firstAttribute="height" constant="25" id="uj0-ap-YhO"/>
@@ -450,13 +441,13 @@
                                 </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-Sc-JHA">
-                                <rect key="frame" x="334" y="292" width="25" height="25"/>
+                                <rect key="frame" x="334" y="299.5" width="25" height="25"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6u-nm-e8p">
-                                <rect key="frame" x="334" y="355" width="25" height="25"/>
+                                <rect key="frame" x="334" y="361.5" width="25" height="25"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fY-Ej-PCq">
-                                <rect key="frame" x="16" y="355" width="25" height="25"/>
+                                <rect key="frame" x="16" y="361.5" width="25" height="25"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.88287168559999996" green="0.88287168559999996" blue="0.88287168559999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -599,18 +590,18 @@
                                 <exclude reference="Os5-OM-hNG"/>
                                 <exclude reference="kkE-7O-Vxe"/>
                                 <exclude reference="zQx-Wa-4wx"/>
+                                <exclude reference="WKj-jb-52d"/>
+                                <exclude reference="fnj-BD-hag"/>
                                 <exclude reference="w7E-6k-9ob"/>
                                 <exclude reference="hGk-sY-Eyq"/>
                                 <exclude reference="Kaq-jK-xxy"/>
                                 <exclude reference="wD1-jx-MPl"/>
                                 <exclude reference="xNu-Kt-Dyu"/>
+                                <exclude reference="ZkJ-mT-ewf"/>
+                                <exclude reference="fqs-r2-Y9L"/>
                                 <exclude reference="1JS-7o-mq0"/>
                                 <exclude reference="hJl-v9-R0u"/>
                                 <exclude reference="hOr-SK-dVi"/>
-                                <exclude reference="ZkJ-mT-ewf"/>
-                                <exclude reference="fqs-r2-Y9L"/>
-                                <exclude reference="WKj-jb-52d"/>
-                                <exclude reference="fnj-BD-hag"/>
                                 <exclude reference="xvj-uM-rRz"/>
                                 <exclude reference="aan-ga-TD5"/>
                                 <exclude reference="g1k-xz-PF5"/>
@@ -679,22 +670,22 @@
                                 <include reference="kkE-7O-Vxe"/>
                                 <include reference="zQx-Wa-4wx"/>
                                 <exclude reference="DW5-8o-d7B"/>
+                                <exclude reference="2df-Lb-sLT"/>
+                                <exclude reference="HTq-K6-zzs"/>
+                                <include reference="WKj-jb-52d"/>
+                                <include reference="fnj-BD-hag"/>
                                 <exclude reference="w7E-6k-9ob"/>
                                 <exclude reference="wJq-iM-d6g"/>
                                 <include reference="hGk-sY-Eyq"/>
                                 <include reference="Kaq-jK-xxy"/>
                                 <include reference="wD1-jx-MPl"/>
                                 <include reference="xNu-Kt-Dyu"/>
-                                <include reference="1JS-7o-mq0"/>
-                                <include reference="hJl-v9-R0u"/>
-                                <include reference="hOr-SK-dVi"/>
                                 <exclude reference="RFp-Vy-qCg"/>
                                 <include reference="ZkJ-mT-ewf"/>
                                 <include reference="fqs-r2-Y9L"/>
-                                <exclude reference="2df-Lb-sLT"/>
-                                <exclude reference="HTq-K6-zzs"/>
-                                <include reference="WKj-jb-52d"/>
-                                <include reference="fnj-BD-hag"/>
+                                <include reference="1JS-7o-mq0"/>
+                                <include reference="hJl-v9-R0u"/>
+                                <include reference="hOr-SK-dVi"/>
                                 <include reference="xvj-uM-rRz"/>
                                 <include reference="aan-ga-TD5"/>
                                 <include reference="g1k-xz-PF5"/>
@@ -757,11 +748,11 @@
                         <viewControllerLayoutGuide type="bottom" id="UWX-rN-mFn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Mq3-Cl-VvF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City, State ZIP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xgs-nc-xLx" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="16" y="145.5" width="343" height="60"/>
+                                <rect key="frame" x="16" y="98.5" width="343" height="58.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -771,7 +762,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-5O-ydY">
-                                <rect key="frame" x="-4" y="492" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="476.5" width="383" height="71.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -783,7 +774,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNi-KX-LCe">
-                                <rect key="frame" x="-4" y="417.5" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="404.5" width="383" height="71"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -795,7 +786,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rf9-AL-IyN">
-                                <rect key="frame" x="-4" y="343" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="332.5" width="383" height="71"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -807,7 +798,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="6xN-nn-JjX">
-                                <rect key="frame" x="349" y="372" width="10" height="16"/>
+                                <rect key="frame" x="349" y="360" width="10" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="INd-d3-dG9"/>
                                     <constraint firstAttribute="height" constant="16" id="MAL-Vg-eTm"/>
@@ -830,21 +821,21 @@
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="idj-Yt-fFo">
-                                <rect key="frame" x="349" y="446" width="10" height="16"/>
+                                <rect key="frame" x="349" y="432" width="10" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="HMP-tR-vdM"/>
                                     <constraint firstAttribute="height" constant="16" id="wAe-K0-AP3"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="RW3-cy-Jj9">
-                                <rect key="frame" x="349" y="520.5" width="10" height="16"/>
+                                <rect key="frame" x="349" y="504.5" width="10" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="EbV-kG-pK3"/>
                                     <constraint firstAttribute="width" constant="10" id="YPe-Wp-kBa"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uU-m9-sFz">
-                                <rect key="frame" x="-4" y="578.5" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="561" width="383" height="71"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Alert Settings">
@@ -855,7 +846,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfT-BR-pU0">
-                                <rect key="frame" x="172.5" y="565.5" width="30" height="13"/>
+                                <rect key="frame" x="172.5" y="548" width="30" height="13"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="11s-yf-dhk"/>
@@ -872,7 +863,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jZs-fS-6xu">
-                                <rect key="frame" x="172.5" y="44" width="30" height="33.5"/>
+                                <rect key="frame" x="172.5" y="0.0" width="30" height="32.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="tYu-Z1-xng"/>
@@ -889,7 +880,7 @@
                                 </variation>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mailing Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VmS-GN-dQw" customClass="AddNameTextField" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="16" y="77.5" width="343" height="60"/>
+                                <rect key="frame" x="16" y="32.5" width="343" height="58"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.39493542909622192" green="0.3949236273765564" blue="0.39493030309677124" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
@@ -1042,11 +1033,11 @@
                         <viewControllerLayoutGuide type="bottom" id="ETc-cK-5vR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IUJ-yu-2sQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2W-Yb-3Bi" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="130.5" y="64" width="112" height="111.5"/>
+                                <rect key="frame" x="130.5" y="20" width="112" height="111.5"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="105" id="QJz-8U-icI"/>
@@ -1068,14 +1059,14 @@
                                 </variation>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7J-xQ-Rz6" userLabel="Repeat Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="247.5" y="64" width="111.5" height="111.5"/>
+                                <rect key="frame" x="247.5" y="20" width="111.5" height="111.5"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyb-NV-wmr" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="14" y="64" width="111.5" height="111.5"/>
+                                <rect key="frame" x="14" y="20" width="111.5" height="111.5"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="105" id="snS-aw-DtV"/>
@@ -1090,10 +1081,10 @@
                                 </variation>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TE3-dI-DuS" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="34" y="233.5" width="307" height="31"/>
+                                <rect key="frame" x="34" y="189.5" width="307" height="31"/>
                             </slider>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="8fD-pO-roL">
-                                <rect key="frame" x="165" y="363.5" width="45" height="45"/>
+                                <rect key="frame" x="165" y="319.5" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="20T-Ce-OdC"/>
                                     <constraint firstAttribute="width" secondItem="8fD-pO-roL" secondAttribute="height" multiplier="1:1" id="6Rf-wr-fdo"/>
@@ -1113,7 +1104,7 @@
                                 </variation>
                             </imageView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QW9-m9-rGR" customClass="ValueSlider" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="34" y="303.5" width="307" height="31"/>
+                                <rect key="frame" x="34" y="259.5" width="307" height="31"/>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1245,11 +1236,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wzr-L8-IZ7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sia-pu-44W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-WM-ZEi" userLabel="Countdown Label" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="130.5" y="64" width="114" height="114.5"/>
+                                <rect key="frame" x="130.5" y="20" width="114" height="114.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gjl-WM-ZEi" secondAttribute="height" multiplier="1:1" id="3xO-Zx-4at"/>
                                 </constraints>
@@ -1268,19 +1259,19 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDV-mQ-X2z" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="249.5" y="64" width="114.5" height="114.5"/>
+                                <rect key="frame" x="249.5" y="20" width="114.5" height="114.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="none" minimumScaleFactor="0.29999999999999999" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Ml-Gk-LXZ" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
-                                <rect key="frame" x="11" y="64" width="114.5" height="114.5"/>
+                                <rect key="frame" x="11" y="20" width="114.5" height="114.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="45"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zck-0H-3Tc">
-                                <rect key="frame" x="-4" y="578.5" width="383" height="73.5"/>
+                                <rect key="frame" x="-4" y="561" width="383" height="71"/>
                                 <color key="backgroundColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <state key="normal" title="Notes">
@@ -1294,7 +1285,7 @@
                                 </connections>
                             </button>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="envelope" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-Jv-hIu">
-                                <rect key="frame" x="165.5" y="205" width="44" height="28.5"/>
+                                <rect key="frame" x="165.5" y="160" width="44" height="28.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="CwL-Jv-hIu" secondAttribute="height" multiplier="14:9" id="or7-z7-vud"/>
                                 </constraints>
@@ -1310,12 +1301,12 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 days before at midnight" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-WW-Y3o">
-                                <rect key="frame" x="20" y="528.5" width="335" height="40"/>
+                                <rect key="frame" x="20" y="512" width="335" height="39"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE1-PL-Yxl">
-                                <rect key="frame" x="0.0" y="245" width="375" height="33.5"/>
+                                <rect key="frame" x="0.0" y="200" width="375" height="32.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Zi6-qx-jKF"/>
@@ -1330,7 +1321,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Locality" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FxD-SH-WEl">
-                                <rect key="frame" x="0.0" y="283.5" width="375" height="33.5"/>
+                                <rect key="frame" x="0.0" y="237.5" width="375" height="32.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="61p-1Q-Tzb"/>
@@ -1345,7 +1336,7 @@
                                 </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rma-fS-BlE">
-                                <rect key="frame" x="172.5" y="178.5" width="30" height="26.5"/>
+                                <rect key="frame" x="172.5" y="134.5" width="30" height="25.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Ean-iN-HG8"/>
@@ -1362,7 +1353,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOo-xT-ABI">
-                                <rect key="frame" x="172.5" y="317" width="30" height="20"/>
+                                <rect key="frame" x="172.5" y="270" width="30" height="19.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="T32-Fz-dfQ"/>
@@ -1379,7 +1370,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lc1-Su-K8e">
-                                <rect key="frame" x="172.5" y="238.5" width="30" height="6.5"/>
+                                <rect key="frame" x="172.5" y="193.5" width="30" height="6.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="2L7-Za-ua1"/>
@@ -1396,7 +1387,7 @@
                                 </variation>
                             </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reminder-off" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-U1-hEO">
-                                <rect key="frame" x="161.5" y="476.5" width="52" height="52"/>
+                                <rect key="frame" x="161.5" y="459.5" width="52" height="52.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7KE-dk-Wrx"/>
                                     <constraint firstAttribute="width" constant="50" id="FmL-yz-vc0"/>
@@ -1416,7 +1407,7 @@
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xog-1r-Chs">
-                                <rect key="frame" x="18" y="192.5" width="100" height="100"/>
+                                <rect key="frame" x="18" y="148.5" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="NWl-8E-yZc"/>
                                     <constraint firstAttribute="width" constant="100" id="Spl-Es-ijX"/>
@@ -1435,7 +1426,7 @@
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qrR-lO-rOq">
-                                <rect key="frame" x="257" y="192.5" width="100" height="100"/>
+                                <rect key="frame" x="257" y="148.5" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="7Dv-QT-8HI"/>
                                     <constraint firstAttribute="width" constant="100" id="EDc-TA-d08"/>
@@ -1561,31 +1552,44 @@
                                 <exclude reference="qrR-lO-rOq"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="YV8-bv-CbG"/>
-                                <exclude reference="uJg-jB-37s"/>
-                                <exclude reference="xif-JF-5lV"/>
                                 <exclude reference="1OV-0F-oCm"/>
                                 <exclude reference="2BM-gm-0xZ"/>
                                 <exclude reference="4Te-nO-QFA"/>
                                 <exclude reference="h6d-2R-QBh"/>
                                 <exclude reference="zuY-mK-d9U"/>
+                                <exclude reference="YV8-bv-CbG"/>
+                                <exclude reference="uJg-jB-37s"/>
+                                <exclude reference="xif-JF-5lV"/>
                                 <exclude reference="QKd-ga-1Ku"/>
                                 <exclude reference="dsy-VX-VtQ"/>
                                 <exclude reference="LNP-WN-p5E"/>
+                                <exclude reference="Uhv-rw-rPg"/>
+                                <exclude reference="khp-49-tEx"/>
+                                <exclude reference="qOe-uI-teR"/>
                                 <exclude reference="kHF-Ow-Gx9"/>
                                 <exclude reference="MMf-Jf-4Bj"/>
                                 <exclude reference="UIB-tV-zex"/>
                                 <exclude reference="kLf-bi-g32"/>
-                                <exclude reference="08u-Wi-QnB"/>
-                                <exclude reference="763-mb-3yS"/>
-                                <exclude reference="8d2-ae-bza"/>
-                                <exclude reference="9JN-r1-Jwj"/>
-                                <exclude reference="DiP-Ba-8b4"/>
-                                <exclude reference="jYT-CK-3jY"/>
                                 <exclude reference="KFD-AO-1to"/>
                                 <exclude reference="cGP-iw-k5q"/>
                                 <exclude reference="jM8-Hh-hDn"/>
                                 <exclude reference="tlh-CO-sKU"/>
+                                <exclude reference="08u-Wi-QnB"/>
+                                <exclude reference="763-mb-3yS"/>
+                                <exclude reference="8d2-ae-bza"/>
+                                <exclude reference="9JN-r1-Jwj"/>
+                                <exclude reference="KAo-dW-CdB"/>
+                                <exclude reference="enf-rR-oJD"/>
+                                <exclude reference="og2-hb-WGf"/>
+                                <exclude reference="JDr-Eb-qhf"/>
+                                <exclude reference="K9C-hR-MMl"/>
+                                <exclude reference="zet-7W-6qq"/>
+                                <exclude reference="1ed-q6-1uG"/>
+                                <exclude reference="agU-ag-T94"/>
+                                <exclude reference="e70-zJ-0X6"/>
+                                <exclude reference="xbg-SA-pon"/>
+                                <exclude reference="DiP-Ba-8b4"/>
+                                <exclude reference="jYT-CK-3jY"/>
                                 <exclude reference="4lG-k0-E12"/>
                                 <exclude reference="VZz-v8-mhr"/>
                                 <exclude reference="YjQ-3K-uKZ"/>
@@ -1595,19 +1599,6 @@
                                 <exclude reference="wbk-wM-EFO"/>
                                 <exclude reference="AX7-fy-E6i"/>
                                 <exclude reference="VY5-q4-msB"/>
-                                <exclude reference="KAo-dW-CdB"/>
-                                <exclude reference="enf-rR-oJD"/>
-                                <exclude reference="og2-hb-WGf"/>
-                                <exclude reference="Uhv-rw-rPg"/>
-                                <exclude reference="khp-49-tEx"/>
-                                <exclude reference="qOe-uI-teR"/>
-                                <exclude reference="JDr-Eb-qhf"/>
-                                <exclude reference="K9C-hR-MMl"/>
-                                <exclude reference="zet-7W-6qq"/>
-                                <exclude reference="1ed-q6-1uG"/>
-                                <exclude reference="agU-ag-T94"/>
-                                <exclude reference="e70-zJ-0X6"/>
-                                <exclude reference="xbg-SA-pon"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1621,32 +1612,45 @@
                                 <include reference="qrR-lO-rOq"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="YV8-bv-CbG"/>
-                                <include reference="uJg-jB-37s"/>
-                                <include reference="xif-JF-5lV"/>
                                 <include reference="1OV-0F-oCm"/>
                                 <include reference="2BM-gm-0xZ"/>
                                 <exclude reference="4Te-nO-QFA"/>
                                 <include reference="h6d-2R-QBh"/>
                                 <include reference="zuY-mK-d9U"/>
+                                <include reference="YV8-bv-CbG"/>
+                                <include reference="uJg-jB-37s"/>
+                                <include reference="xif-JF-5lV"/>
                                 <include reference="QKd-ga-1Ku"/>
                                 <include reference="dsy-VX-VtQ"/>
                                 <include reference="LNP-WN-p5E"/>
+                                <include reference="Uhv-rw-rPg"/>
+                                <include reference="khp-49-tEx"/>
+                                <include reference="qOe-uI-teR"/>
                                 <include reference="kHF-Ow-Gx9"/>
                                 <include reference="MMf-Jf-4Bj"/>
                                 <include reference="UIB-tV-zex"/>
                                 <include reference="kLf-bi-g32"/>
-                                <include reference="08u-Wi-QnB"/>
-                                <include reference="763-mb-3yS"/>
-                                <include reference="8d2-ae-bza"/>
-                                <include reference="9JN-r1-Jwj"/>
-                                <include reference="DiP-Ba-8b4"/>
-                                <include reference="jYT-CK-3jY"/>
                                 <include reference="KFD-AO-1to"/>
                                 <exclude reference="cGP-iw-k5q"/>
                                 <include reference="jM8-Hh-hDn"/>
                                 <include reference="tlh-CO-sKU"/>
+                                <include reference="08u-Wi-QnB"/>
+                                <include reference="763-mb-3yS"/>
+                                <include reference="8d2-ae-bza"/>
+                                <include reference="9JN-r1-Jwj"/>
                                 <exclude reference="1hZ-Oc-H4A"/>
+                                <include reference="KAo-dW-CdB"/>
+                                <include reference="enf-rR-oJD"/>
+                                <include reference="og2-hb-WGf"/>
+                                <include reference="JDr-Eb-qhf"/>
+                                <include reference="K9C-hR-MMl"/>
+                                <include reference="zet-7W-6qq"/>
+                                <include reference="1ed-q6-1uG"/>
+                                <include reference="agU-ag-T94"/>
+                                <include reference="e70-zJ-0X6"/>
+                                <include reference="xbg-SA-pon"/>
+                                <include reference="DiP-Ba-8b4"/>
+                                <include reference="jYT-CK-3jY"/>
                                 <include reference="4lG-k0-E12"/>
                                 <include reference="VZz-v8-mhr"/>
                                 <exclude reference="WgJ-l7-StV"/>
@@ -1659,19 +1663,6 @@
                                 <include reference="AX7-fy-E6i"/>
                                 <include reference="VY5-q4-msB"/>
                                 <exclude reference="e8t-hn-lkd"/>
-                                <include reference="KAo-dW-CdB"/>
-                                <include reference="enf-rR-oJD"/>
-                                <include reference="og2-hb-WGf"/>
-                                <include reference="Uhv-rw-rPg"/>
-                                <include reference="khp-49-tEx"/>
-                                <include reference="qOe-uI-teR"/>
-                                <include reference="JDr-Eb-qhf"/>
-                                <include reference="K9C-hR-MMl"/>
-                                <include reference="zet-7W-6qq"/>
-                                <include reference="1ed-q6-1uG"/>
-                                <include reference="agU-ag-T94"/>
-                                <include reference="e70-zJ-0X6"/>
-                                <include reference="xbg-SA-pon"/>
                             </mask>
                         </variation>
                     </view>
@@ -1708,7 +1699,7 @@
             <objects>
                 <tableViewController id="617-UG-6zb" customClass="NotesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eCF-9U-zSB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1753,11 +1744,11 @@
                         <viewControllerLayoutGuide type="bottom" id="eTq-iQ-ajz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RCP-H5-DTc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                 <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1789,22 +1780,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LNm-Ia-QUh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4889" y="528"/>
-        </scene>
-        <!--Dates Navigation Controller-->
-        <scene sceneID="Iui-As-nW8">
-            <objects>
-                <navigationController storyboardIdentifier="DatesNavigation" id="Uns-kb-TbM" userLabel="Dates Navigation Controller" customClass="DatesNavigationViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uha-Gn-0T8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="4gB-zV-OP8" kind="relationship" relationship="rootViewController" id="Nyc-Mk-9fM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Gzl-Vo-RkW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1201" y="-680"/>
         </scene>
         <!--TurningVC-->
         <scene sceneID="fG8-zJ-c08">
@@ -2102,7 +2077,7 @@
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNe-dL-JNh" customClass="CircleLabel" customModule="DateAid" customModuleProvider="target">
                                 <rect key="frame" x="16" y="437.5" width="86.5" height="86.5"/>
-                                <color key="backgroundColor" red="0.97039997577667236" green="0.73616838455200195" blue="0.035761818289756775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.89724609374999997" green="0.71796796202157298" blue="0.057591109799751218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>

@@ -10,37 +10,55 @@ import UIKit
 import CoreData
 
 class DatesViewController: UIViewController {
+
+    // MARK: UI
+
+    private lazy var segmentedControl: DateSegmentedControl = {
+        let segmentedControl = DateSegmentedControl()
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .touchUpInside)
+        return segmentedControl
+    }()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
-    @IBOutlet weak var segmentedControl: DateSegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
-    
-    var presenter: DatesEventHandling?
-    
-    lazy var searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.delegate = self
         return searchBar
     }()
     
-    var searchButton: UIBarButtonItem {
-        let action = #selector(pressedSearchButton(sender:))
-        return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: action)
+    private var searchButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(pressedSearchButton))
     }
     
-    var cancelButton: UIBarButtonItem {
-        let action = #selector(pressedCancelButton(sender:))
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: action)
+    private var cancelButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(pressedCancelButton))
     }
     
-    lazy var addButton: UIBarButtonItem = {
-        let action = #selector(pressedAddButton(sender:))
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: action)
+    private lazy var addButton: UIBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedAddButton))
     }()
+
+    // MARK: Properties
+
+    var presenter: DatesEventHandling?
+
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
         presenter?.setupView()
+        configureView()
+        constructViews()
+        constrainViews()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -48,25 +66,7 @@ class DatesViewController: UIViewController {
         navigationItem.rightBarButtonItems?[1] = searchButton
         presenter?.resetView()
     }
-    
-    @objc func pressedSearchButton(sender: UIBarButtonItem) {
-        navigationItem.rightBarButtonItems?[1] = cancelButton
-        presenter?.pressedSearchButton()
-    }
-    
-    @objc func pressedCancelButton(sender: UIBarButtonItem) {
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-        presenter?.pressedCancelButton()
-    }
-    
-    @objc func pressedAddButton(sender: UIBarButtonItem) {
-        // self.performSegue(withIdentifier: Id.Segue.addDate.value, sender: self)
-    }
-    
-    @IBAction func segmentedControlPressed(_ sender: DateSegmentedControl) {
-        presenter?.segmentedControl(indexSelected: sender.selectedIndex)
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Why aren't you using a wireframe?" {
@@ -83,31 +83,79 @@ class DatesViewController: UIViewController {
             addDateVC.dateType = "birthday"
         }
     }
+
+    // MARK: View Setup
+
+    private func configureView() {
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+    }
+
+    private func constructViews() {
+        view.addSubview(segmentedControl)
+        view.addSubview(tableView)
+    }
+
+    private func constrainViews() {
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 40),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+
+    // MARK: Actions
+    
+    @objc
+    func pressedSearchButton() {
+        navigationItem.rightBarButtonItems = [cancelButton]
+        presenter?.pressedSearchButton()
+    }
+    
+    @objc
+    func pressedCancelButton() {
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+        presenter?.pressedCancelButton()
+    }
+    
+    @objc
+    func pressedAddButton() {
+        print("Show adding a date here")
+    }
+    
+    @objc
+    func segmentedControlTapped(_ sender: DateSegmentedControl) {
+        presenter?.segmentedControl(indexSelected: sender.selectedIndex)
+    }
 }
+
+// MARK: - UITableViewDataSource
 
 extension DatesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if presenter?.isSearching ?? false {
-            return presenter?.filteredDates.count ?? 0
-        } else {
-            return presenter?.dates.count ?? 0
-        }
+        guard let presenter = presenter else { return 0 }
+
+        return presenter.isSearching ? presenter.filteredDates.count : presenter.dates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellId = presenter?.cellId else { return UITableViewCell() }
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? DateCell {
-            if presenter?.isSearching ?? false {
-                cell.date = presenter?.filteredDates[indexPath.row]
-            } else {
-                cell.date = presenter?.dates[indexPath.row]
-            }
-            return cell
-        } else {
+        guard
+            let presenter = presenter,
+            let cell = tableView.dequeueReusableCell(withIdentifier: presenter.dateCellID, for: indexPath) as? DateCell
+        else {
             return UITableViewCell()
         }
+
+        cell.date = presenter.isSearching ? presenter.filteredDates[indexPath.row] : presenter.dates[indexPath.row]
+
+        return cell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -119,12 +167,16 @@ extension DatesViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension DatesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // performSegue(withIdentifier: Id.Segue.dateDetails.value, sender: self)
+        print("Show date details here")
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension DatesViewController: UISearchBarDelegate {
     
@@ -133,29 +185,27 @@ extension DatesViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - DatesViewOutputting
+
 extension DatesViewController: DatesViewOutputting {
     
     func setNavigation(title: String) {
-        self.navigationItem.title = title
+        navigationItem.title = title
     }
     
-    func setNavigation(titleView: UIView?) {
-        self.navigationItem.titleView = titleView
-    }
-    
-    func setSegmentedControl(items: [String]) {
-        segmentedControl.items = items
+    func setSegmentedControl(tabStrings: [String]) {
+        segmentedControl.items = tabStrings
     }
     
     func setSegmentedControl(selectedIndex: Int) {
         segmentedControl.selectedIndex = selectedIndex
     }
     
-    func registerTableView(nib id: String) {
-        tableView.register(nib: id)
+    func registerTableView(cellClass: AnyClass?, reuseIdentifier: String) {
+        tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
     }
     
-    func setTableView(footerView: UIView) {
+    func setupTableView(with footerView: UIView) {
         tableView.tableFooterView = footerView
     }
     
@@ -167,12 +217,11 @@ extension DatesViewController: DatesViewOutputting {
     func setTabBarItemNamed(selectedName: String, unselectedName: String) {
         let unselectedImage = UIImage(named: unselectedName)
         let selectedImage = UIImage(named: selectedName)
-        let tabBarItem = UITabBarItem(title: "Dates", image: unselectedImage, selectedImage: selectedImage)
-        self.tabBarItem = tabBarItem
+        tabBarItem = UITabBarItem(title: "Dates", image: unselectedImage, selectedImage: selectedImage)
     }
     
     func showSearchBar(frame: CGRect, duration: TimeInterval) {
-        self.navigationItem.titleView = searchBar
+        navigationItem.titleView = searchBar
         
         UIView.animate(withDuration: duration, animations: { 
             self.searchBar.frame = frame
@@ -182,7 +231,7 @@ extension DatesViewController: DatesViewOutputting {
     }
     
     func hideSearchBar(duration: TimeInterval) {
-        self.navigationItem.titleView = nil
+        navigationItem.titleView = nil
         
         UIView.animate(withDuration: duration, animations: { 
             self.searchBar.frame = .zero

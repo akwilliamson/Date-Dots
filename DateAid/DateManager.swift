@@ -98,6 +98,8 @@ class DateManager {
                     date.equalizedDate   = contact.anniversary?.formatted("MM/dd")
                 case .holiday:
                     return // Fix later
+                case .other:
+                    return // Fix later
                 }
 //                if let address = contact.postalAddress {
 //                    date.address = create(address, for: date)

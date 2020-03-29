@@ -9,29 +9,29 @@
 import UIKit
 
 class DatesNavigationWireframe {
+
+    private var parentWireframe: TabBarWireframe?
     
-    let presenter = DatesNavigationPresenter()
-    
-    var parentWireframe: TabBarWireframe?
+    private let presenter = DatesNavigationPresenter()
     
     init(parentWireframe: TabBarWireframe) {
         self.parentWireframe = parentWireframe
         presenter.wireframe = self
-        presenter.view = datesNavigationViewController()
+        presenter.view = viewController()
     }
     
-    func presentModule(in tabBar: TabBarViewController?) {  
+    public func presentModule(in tabBar: TabBarViewController?) {
         guard let view = presenter.view as? DatesNavigationViewController else { return }
         tabBar?.viewControllers = [view]
     }
     
-    func presentDates(in navigation: DatesNavigationViewController?) {
+    public func presentDates(in navigation: DatesNavigationViewController?) {
         let datesWireframe = DatesWireframe(parentWireframe: self)
         datesWireframe.presentModule(in: navigation)
     }
     
-    private func datesNavigationViewController<T: DatesNavigationViewController>() -> T {
-        let vc: T = Constant.StoryboardId.main.vc(id: .datesNavigation)
+    private func viewController() -> DatesNavigationViewOutputting {
+        let vc = DatesNavigationViewController()
         vc.presenter = presenter
         return vc
     }

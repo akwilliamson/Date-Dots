@@ -8,8 +8,4 @@
 
 import Foundation
 
-protocol DatesNavigationViewOutputting: class {
-
-//  func updateLabel(with text: String) -> Void
-    
-}
+protocol DatesNavigationViewOutputting: class {}

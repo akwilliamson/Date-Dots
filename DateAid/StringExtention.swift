@@ -10,16 +10,10 @@ import Foundation
 
 extension String {
     
-    func abbreviatedName() -> String {
-        let comps = self.components(separatedBy: " ")
-        
-        if comps.count > 1 {
-            guard let char = comps[1].first else {
-                return self
-            }
-            return comps[0] + " " + String(char)
-        } else {
-            return self
-        }
+    var abbreviatedName: String {
+        let words = components(separatedBy: " ")
+        guard words.count > 1, let lastInitial = words[1].first else { return self }
+
+        return words[0] + " " + String(lastInitial)
     }
 }

@@ -10,13 +10,13 @@ import Foundation
 
 class DatesNavigationPresenter {
     
-    weak var wireframe: DatesNavigationWireframe?
-    weak var view: DatesNavigationViewOutputting?
+    public weak var wireframe: DatesNavigationWireframe?
+    public var view: DatesNavigationViewOutputting?
 }
 
 extension DatesNavigationPresenter: DatesNavigationEventHandling {
 
-    func showDates(in navigation: DatesNavigationViewController?) {
+    public func showDates(in navigation: DatesNavigationViewController?) {
         wireframe?.presentDates(in: navigation)
     }
 }

@@ -112,7 +112,14 @@ import UIKit
         
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: [], animations: {
             self.thumbView.frame = labelFrame
-            let color = DateColor(rawValue: self.selectedIndex-1)?.color ?? UIColor.lightGray
+            let color: UIColor
+            
+            switch self.selectedIndex {
+            case 1:  color = .birthday
+            case 2:  color = .anniversary
+            case 3:  color = .holiday
+            default: color = .gray
+            }
             self.thumbView.backgroundColor = color
         }, completion: nil)
     }

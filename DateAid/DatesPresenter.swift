@@ -8,15 +8,31 @@
 
 class DatesPresenter {
 
-    weak var wireframe: DatesWireframe?
-    weak var view: DatesViewOutputting?
-    var interactor: DatesInteractorInputting?
+    // MARK: Components
     
-    var title: String = "Dates"
-    var cellId: String = Constant.CellId.dateCell.value
-    var filterValues: [FilterDateType] = [.all, .birthday, .anniversary, .holiday]
-    var filterSelection: Int = 0 {
-        didSet { interactor?.fetch(dates: filterValues[filterSelection].lowerCaseString) }
+    public weak var wireframe: DatesWireframe?
+    public var view: DatesViewOutputting?
+    public var interactor: DatesInteractorInputting?
+
+    // MARK: Constants
+
+    private enum Constant {
+        enum String {
+            static let title = "Dates"
+            static let dateCellID = "DateCell"
+        }
+    }
+
+    // MARK: Properties
+
+    private var tabs: [DateType] = [.birthday, .anniversary, .holiday, .other]
+
+    private var tabStrings: [String] {
+        return tabs.map { $0.pluralString }
+    }
+
+    var selectedTabIndex = 0 {
+        didSet { interactor?.fetch(dates: tabs[selectedTabIndex].lowercased) }
     }
     var dates: [Date?] = [] {
         didSet { view?.reloadTableView(sections: [0], animation: .fade) }
@@ -26,15 +42,25 @@ class DatesPresenter {
 }
 
 extension DatesPresenter: DatesEventHandling {
+
+    // MARK: Properties
     
     func setupView() {
-        view?.setNavigation(title: title)
-        view?.setSegmentedControl(items: filterValues.map { $0.pluralString })
-        view?.setSegmentedControl(selectedIndex: filterSelection)
-        view?.registerTableView(nib: cellId)
-        view?.setTableView(footerView: UIView())
+        view?.setNavigation(title: Constant.String.title)
+
+        view?.setSegmentedControl(tabStrings: tabStrings)
+        view?.setSegmentedControl(selectedIndex: selectedTabIndex)
+
+        view?.registerTableView(cellClass: DateCell.self, reuseIdentifier: Constant.String.dateCellID)
+        view?.setupTableView(with: UIView())
+
         view?.setTabBarItemNamed(selectedName: "people-selected", unselectedName: "people-outline")
+
         interactor?.fetch(dates: "all")
+    }
+
+    var dateCellID: String {
+        return Constant.String.dateCellID
     }
     
     func pressedSearchButton() {
@@ -68,7 +94,7 @@ extension DatesPresenter: DatesEventHandling {
     }
     
     func segmentedControl(indexSelected: Int) {
-        self.filterSelection = indexSelected
+        selectedTabIndex = indexSelected
     }
     
     func deleteDate(atIndexPath indexPath: IndexPath) {
@@ -83,7 +109,6 @@ extension DatesPresenter: DatesEventHandling {
     }
     
     func resetView() {
-        view?.setNavigation(titleView: nil)
         view?.reloadTableView(sections: [0], animation: .fade)
     }
 }

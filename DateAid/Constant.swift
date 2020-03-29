@@ -32,6 +32,7 @@ struct Constant {
         }
         
         func vc<T>(id: Constant.ViewControllerId) -> T {
+            
             return self.storyboard.instantiateViewController(withIdentifier: id.value) as! T
         }
 
