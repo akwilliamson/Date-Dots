@@ -77,7 +77,7 @@ class DateDetailsViewController: UIViewController {
     }
     
     func setdecorationImages(for dateType: DateType) {
-        [leftDecorationImage, rightDecorationImage].forEach({ $0.image = dateType.iconImage })
+//        [leftDecorationImage, rightDecorationImage].forEach({ $0.image = dateType.iconImage })
     }
     
     func populateDateViews() {

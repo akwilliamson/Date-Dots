@@ -8,6 +8,6 @@
 
 protocol DatesInteractorInputting: class {
     
-    func fetch(dates type: String) -> Void
+    func fetch(_ dateType: String) -> Void
     func delete(_ date: Date?, complete: (Bool) -> ())
 }

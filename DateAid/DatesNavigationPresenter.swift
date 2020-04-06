@@ -11,7 +11,7 @@ import Foundation
 class DatesNavigationPresenter {
     
     public weak var wireframe: DatesNavigationWireframe?
-    public var view: DatesNavigationViewOutputting?
+    public var view: DatesNavigationViewController?
 }
 
 extension DatesNavigationPresenter: DatesNavigationEventHandling {

@@ -48,7 +48,7 @@ class DateCell: UITableViewCell {
     // MARK: Lifecycle
 
     required init?(coder: NSCoder) {
-        fatalError("No init coder used")
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

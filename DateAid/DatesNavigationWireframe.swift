@@ -21,7 +21,7 @@ class DatesNavigationWireframe {
     }
     
     public func presentModule(in tabBar: TabBarViewController?) {
-        guard let view = presenter.view as? DatesNavigationViewController else { return }
+        guard let view = presenter.view else { return }
         tabBar?.viewControllers = [view]
     }
     
@@ -30,7 +30,7 @@ class DatesNavigationWireframe {
         datesWireframe.presentModule(in: navigation)
     }
     
-    private func viewController() -> DatesNavigationViewOutputting {
+    private func viewController() -> DatesNavigationViewController {
         let vc = DatesNavigationViewController()
         vc.presenter = presenter
         return vc

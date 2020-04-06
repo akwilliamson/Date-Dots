@@ -19,13 +19,11 @@ class DatesNavigationViewController: UINavigationController {
     }
 
     private func configureView() {
-        navigationBar.barTintColor = .birthday
-        navigationBar.tintColor = .white
+        navigationBar.barTintColor = .white
+        navigationBar.tintColor = .birthday
         navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.foregroundColor: UIColor.birthday,
             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Bold", size: 23)!
         ]
     }
 }
-
-extension DatesNavigationViewController: DatesNavigationViewOutputting {}

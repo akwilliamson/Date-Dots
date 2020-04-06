@@ -15,7 +15,7 @@ extension UIColor {
     }
     
     class var anniversary: UIColor {
-        return UIColor(red: 232/255.0, green: 68/255.0, blue: 80/255.0, alpha: 1)
+        return UIColor(red: 214/255.0, green: 87/255.0, blue: 69/255.0, alpha: 1)
     }
     
     class var holiday: UIColor {

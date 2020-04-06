@@ -8,7 +8,7 @@
 
 class DatesPresenter {
 
-    // MARK: Components
+    // MARK: VIPER
     
     public weak var wireframe: DatesWireframe?
     public var view: DatesViewOutputting?
@@ -18,99 +18,98 @@ class DatesPresenter {
 
     private enum Constant {
         enum String {
+            static let tabBarImage = "people-outline"
+            static let tabBarSelectedImage = "people-selected"
             static let title = "Dates"
-            static let dateCellID = "DateCell"
+        }
+        enum Layout {
+            static let searchBarFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)
+        }
+        enum Animation {
+            static let searchBarDisplay = 0.25
         }
     }
 
     // MARK: Properties
 
-    private var tabs: [DateType] = [.birthday, .anniversary, .holiday, .other]
-
-    private var tabStrings: [String] {
-        return tabs.map { $0.pluralString }
+    private var dotStates: [DateType: Bool] = [
+        .birthday: true,
+        .anniversary: true,
+        .holiday: true,
+        .other: true
+    ]
+    
+    private var isSearching = false
+    
+    public var dates: [Date] {
+        get {
+            isSearching ? allDates : filteredDates
+        }
     }
 
-    var selectedTabIndex = 0 {
-        didSet { interactor?.fetch(dates: tabs[selectedTabIndex].lowercased) }
-    }
-    var dates: [Date?] = [] {
-        didSet { view?.reloadTableView(sections: [0], animation: .fade) }
-    }
-    var filteredDates: [Date?] = []
-    var isSearching: Bool = false
+    private var allDates: [Date] = []
+    private var filteredDates: [Date] = []
 }
 
 extension DatesPresenter: DatesEventHandling {
 
     // MARK: Properties
     
-    func setupView() {
-        view?.setNavigation(title: Constant.String.title)
-
-        view?.setSegmentedControl(tabStrings: tabStrings)
-        view?.setSegmentedControl(selectedIndex: selectedTabIndex)
-
-        view?.registerTableView(cellClass: DateCell.self, reuseIdentifier: Constant.String.dateCellID)
-        view?.setupTableView(with: UIView())
-
-        view?.setTabBarItemNamed(selectedName: "people-selected", unselectedName: "people-outline")
-
-        interactor?.fetch(dates: "all")
-    }
-
-    var dateCellID: String {
-        return Constant.String.dateCellID
+    func viewLoaded() {
+        view?.configureTabBar(
+            title: Constant.String.title,
+            image: UIImage(named: Constant.String.tabBarImage)!,
+            selectedImage: UIImage(named: Constant.String.tabBarSelectedImage)!
+        )
+        view?.configureNavigationBar(title: Constant.String.title)
+        view?.configureTableView(footerView: UIView())
+        interactor?.fetch("all")
     }
     
-    func pressedSearchButton() {
+    func searchButtonPressed() {
         isSearching = true
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)
-        view?.showSearchBar(frame: frame, duration: 0.25)
+        view?.showSearchBar(frame: Constant.Layout.searchBarFrame, duration: Constant.Animation.searchBarDisplay)
     }
-    
-    func pressedCancelButton() {
-        isSearching = false
-        view?.hideSearchBar(duration: 0.25)
-    }
-    
-    func filterDatesFor(searchText: String) {
+
+    func textChanged(to searchText: String) {
         let lowerSearchText = searchText.lowercased()
         
-        filteredDates = dates.filter {
-            if let lowerFirstName = $0?.firstName?.lowercased() {
-                if lowerFirstName.contains(lowerSearchText) {
-                    return true
-                }
+        filteredDates = allDates.filter { savedDate in
+            if let lowerFirstName = savedDate.firstName?.lowercased() {
+                if lowerFirstName.contains(lowerSearchText) { return true }
             }
-            if let lowerLastName = $0?.lastName?.lowercased() {
-                if lowerLastName.contains(lowerSearchText) {
-                    return true
-                }
+            if let lowerLastName = savedDate.lastName?.lowercased() {
+                if lowerLastName.contains(lowerSearchText) { return true }
             }
             return false
         }
         view?.reloadTableView(sections: [0], animation: .fade)
     }
     
-    func segmentedControl(indexSelected: Int) {
-        selectedTabIndex = indexSelected
+    func cancelButtonPressed() {
+        isSearching = false
+        view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
+    }
+
+    func dotPressed(for dateType: DateType) {
+        let isSelected = !(dotStates[dateType] ?? true)
+        dotStates[dateType] = isSelected
+        view?.updateDot(for: dateType, isSelected: isSelected)
     }
     
-    func deleteDate(atIndexPath indexPath: IndexPath) {
+    func deleteDatePressed(at indexPath: IndexPath) {
         interactor?.delete(dates[indexPath.row], complete: { success in
             if success {
                 view?.deleteTableView(rows: [indexPath], animation: .automatic)
-            } else {
-                // TODO: Some sort of error handling?
-                view?.reloadTableView(sections: [0], animation: .fade)
             }
         })
     }
+}
+
+extension DatesPresenter: DatesInteractorOutputting {
     
-    func resetView() {
+    func set(_ dates: [Date]) {
+        allDates = dates
         view?.reloadTableView(sections: [0], animation: .fade)
     }
 }
-
-extension DatesPresenter: DatesInteractorOutputting {}

@@ -8,5 +8,5 @@
 
 protocol DatesInteractorOutputting: class {
     
-    var dates: [Date?] { get set }
+    func set(_ dates: [Date])
 }

@@ -13,38 +13,71 @@ class DatesViewController: UIViewController {
 
     // MARK: UI
 
-    private lazy var segmentedControl: DateSegmentedControl = {
-        let segmentedControl = DateSegmentedControl()
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .touchUpInside)
-        return segmentedControl
-    }()
-
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
-    }()
-    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.delegate = self
         return searchBar
     }()
+
+    private var dotStackView: UIStackView = {
+        let stacKView = UIStackView()
+        stacKView.translatesAutoresizingMaskIntoConstraints = false
+        stacKView.distribution = .equalSpacing
+        return stacKView
+    }()
+
+    private lazy var birthdayDot: DateDotView = {
+        let dotView = DateDotView(dateType: .birthday)
+        dotView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var anniversaryDot: DateDotView = {
+        let dotView = DateDotView(dateType: .anniversary)
+        dotView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var holidayDot: DateDotView = {
+        let dotView = DateDotView(dateType: .holiday)
+        dotView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var otherDot: DateDotView = {
+        let dotView = DateDotView(dateType: .other)
+        dotView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(DateCell.self, forCellReuseIdentifier: "DateCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
     private var searchButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(pressedSearchButton))
+        return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonPressed))
     }
     
     private var cancelButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(pressedCancelButton))
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
     }
     
     private lazy var addButton: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedAddButton))
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
     }()
 
     // MARK: Properties
@@ -55,55 +88,37 @@ class DatesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.setupView()
+        presenter?.viewLoaded()
         configureView()
-        constructViews()
-        constrainViews()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        navigationItem.rightBarButtonItems?[1] = searchButton
-        presenter?.resetView()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "Why aren't you using a wireframe?" {
-            guard let dateDetailsVC = segue.destination as? DateDetailsViewController,
-                  let indexPath = tableView.indexPathForSelectedRow else {
-                    return
-            }
-            dateDetailsVC.dateObject = presenter?.dates[indexPath.row]
-        }
-        
-        if segue.identifier == "Why aren't you using a wireframe?" {
-            guard let addDateVC = segue.destination as? AddDateVC else { return }
-            addDateVC.isBeingEdited = false
-            addDateVC.dateType = "birthday"
-        }
+        constructSubviews()
+        constrainSubviews()
     }
 
     // MARK: View Setup
 
     private func configureView() {
+        view.backgroundColor = .white
         navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
 
-    private func constructViews() {
-        view.addSubview(segmentedControl)
+    private func constructSubviews() {
+        view.addSubview(dotStackView)
+        dotStackView.addArrangedSubview(birthdayDot)
+        dotStackView.addArrangedSubview(anniversaryDot)
+        dotStackView.addArrangedSubview(holidayDot)
+        dotStackView.addArrangedSubview(otherDot)
         view.addSubview(tableView)
     }
 
-    private func constrainViews() {
+    private func constrainSubviews() {
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            segmentedControl.heightAnchor.constraint(equalToConstant: 40),
-            segmentedControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            dotStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            dotStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            dotStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            dotStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor)
         ])
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -113,25 +128,26 @@ class DatesViewController: UIViewController {
     // MARK: Actions
     
     @objc
-    func pressedSearchButton() {
-        navigationItem.rightBarButtonItems = [cancelButton]
-        presenter?.pressedSearchButton()
+    func searchButtonPressed() {
+        presenter?.searchButtonPressed()
     }
     
     @objc
-    func pressedCancelButton() {
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-        presenter?.pressedCancelButton()
+    func cancelButtonPressed() {
+        presenter?.cancelButtonPressed()
     }
     
     @objc
-    func pressedAddButton() {
-        print("Show adding a date here")
+    func addButtonPressed() {
+        // present: AddDateVC()
+        // set: addDateVC.isBeingEdited = false
+        // set: addDateVC.dateType = "birthday"
     }
     
     @objc
-    func segmentedControlTapped(_ sender: DateSegmentedControl) {
-        presenter?.segmentedControl(indexSelected: sender.selectedIndex)
+    func dotPressed(_ sender: UITapGestureRecognizer) {
+        guard let dotView = sender.view as? DateDotView else { return }
+        presenter?.dotPressed(for: dotView.dateType)
     }
 }
 
@@ -140,20 +156,18 @@ class DatesViewController: UIViewController {
 extension DatesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let presenter = presenter else { return 0 }
-
-        return presenter.isSearching ? presenter.filteredDates.count : presenter.dates.count
+        return presenter?.dates.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let presenter = presenter,
-            let cell = tableView.dequeueReusableCell(withIdentifier: presenter.dateCellID, for: indexPath) as? DateCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as? DateCell
         else {
             return UITableViewCell()
         }
 
-        cell.date = presenter.isSearching ? presenter.filteredDates[indexPath.row] : presenter.dates[indexPath.row]
+        cell.date = presenter.dates[indexPath.row]
 
         return cell
     }
@@ -163,7 +177,7 @@ extension DatesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete { presenter?.deleteDate(atIndexPath: indexPath) }
+        if editingStyle == .delete { presenter?.deleteDatePressed(at: indexPath) }
     }
 }
 
@@ -172,7 +186,8 @@ extension DatesViewController: UITableViewDataSource {
 extension DatesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Show date details here")
+        // present: DateDetailsViewController()
+        // set: dateDetailsVC.dateObject = presenter?.dates[indexPath.row]
     }
 }
 
@@ -181,7 +196,7 @@ extension DatesViewController: UITableViewDelegate {
 extension DatesViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.filterDatesFor(searchText: searchText)
+        presenter?.textChanged(to: searchText)
     }
 }
 
@@ -189,39 +204,25 @@ extension DatesViewController: UISearchBarDelegate {
 
 extension DatesViewController: DatesViewOutputting {
     
-    func setNavigation(title: String) {
+    // MARK: Configuration
+    
+    func configureTabBar(title: String, image: UIImage, selectedImage: UIImage) {
+        tabBarItem = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
+    }
+    
+    func configureNavigationBar(title: String) {
         navigationItem.title = title
     }
     
-    func setSegmentedControl(tabStrings: [String]) {
-        segmentedControl.items = tabStrings
-    }
-    
-    func setSegmentedControl(selectedIndex: Int) {
-        segmentedControl.selectedIndex = selectedIndex
-    }
-    
-    func registerTableView(cellClass: AnyClass?, reuseIdentifier: String) {
-        tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
-    }
-    
-    func setupTableView(with footerView: UIView) {
+    func configureTableView(footerView: UIView) {
         tableView.tableFooterView = footerView
     }
-    
-    func setSegmentedControl(with categories: [String], selectedIndex: Int) {
-        segmentedControl.items = categories
-        segmentedControl.selectedIndex = selectedIndex
-    }
-    
-    func setTabBarItemNamed(selectedName: String, unselectedName: String) {
-        let unselectedImage = UIImage(named: unselectedName)
-        let selectedImage = UIImage(named: selectedName)
-        tabBarItem = UITabBarItem(title: "Dates", image: unselectedImage, selectedImage: selectedImage)
-    }
+
+    // MARK: Actions
     
     func showSearchBar(frame: CGRect, duration: TimeInterval) {
         navigationItem.titleView = searchBar
+        navigationItem.rightBarButtonItems = [cancelButton]
         
         UIView.animate(withDuration: duration, animations: { 
             self.searchBar.frame = frame
@@ -232,11 +233,21 @@ extension DatesViewController: DatesViewOutputting {
     
     func hideSearchBar(duration: TimeInterval) {
         navigationItem.titleView = nil
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
         
         UIView.animate(withDuration: duration, animations: { 
             self.searchBar.frame = .zero
         }) { completed in
             self.searchBar.text = nil
+        }
+    }
+    
+    func updateDot(for dateType: DateType, isSelected: Bool) {
+        switch dateType {
+        case .birthday:    birthdayDot.updateImage(isSelected)
+        case .anniversary: anniversaryDot.updateImage(isSelected)
+        case .holiday:     holidayDot.updateImage(isSelected)
+        case .other:       otherDot.updateImage(isSelected)
         }
     }
     
