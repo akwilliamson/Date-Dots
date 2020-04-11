@@ -118,7 +118,7 @@ class DatesViewController: UIViewController {
             dotStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor)
         ])
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -156,7 +156,9 @@ class DatesViewController: UIViewController {
 extension DatesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.dates.count ?? 0
+        guard let presenter = presenter else { return 0 }
+        let dotDates = presenter.datesToShow()
+        return dotDates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -167,7 +169,8 @@ extension DatesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.date = presenter.dates[indexPath.row]
+        let dotDates = presenter.datesToShow()
+        cell.date = dotDates[indexPath.row]
 
         return cell
     }
@@ -244,10 +247,10 @@ extension DatesViewController: DatesViewOutputting {
     
     func updateDot(for dateType: DateType, isSelected: Bool) {
         switch dateType {
-        case .birthday:    birthdayDot.updateImage(isSelected)
-        case .anniversary: anniversaryDot.updateImage(isSelected)
-        case .holiday:     holidayDot.updateImage(isSelected)
-        case .other:       otherDot.updateImage(isSelected)
+        case .birthday:    birthdayDot.updateImage(isSelected: isSelected)
+        case .anniversary: anniversaryDot.updateImage(isSelected: isSelected)
+        case .holiday:     holidayDot.updateImage(isSelected: isSelected)
+        case .other:       otherDot.updateImage(isSelected: isSelected)
         }
     }
     

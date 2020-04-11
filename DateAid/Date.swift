@@ -19,14 +19,15 @@ class Date: NSManagedObject {
     @NSManaged var address: Address?
     @NSManaged var notes: NSSet?
     
-    var firstName: String? {
+    public var firstName: String? {
         return name?.components(separatedBy: " ").first
     }
     
-    var lastName: String? {
+    public var lastName: String? {
         return name?.components(separatedBy: " ").last
     }
     
+    // TODO: REMOVE
     var color: UIColor {
         
         guard let type = self.type else { return .birthday }
@@ -43,19 +44,15 @@ class Date: NSManagedObject {
         }
     }
     
-    var dateType: DateType {
-        
-        guard let type = self.type else { return .birthday }
-        
+    public var dateType: DateType {
+        guard let type = type else { return .other }
+
         switch type {
-        case "Birthday":
-            return .birthday
-        case "Anniversary":
-            return .anniversary
-        case "Custom":
-            return .holiday
-        default:
-            return .birthday
+        case "Birthday":    return .birthday
+        case "Anniversary": return .anniversary
+        case "Custom":      return .holiday
+        case "Other":       return .other
+        default:            return .other
         }
     }
 }

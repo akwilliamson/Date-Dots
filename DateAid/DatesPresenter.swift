@@ -31,23 +31,17 @@ class DatesPresenter {
     }
 
     // MARK: Properties
-
+    
     private var dotStates: [DateType: Bool] = [
-        .birthday: true,
-        .anniversary: true,
-        .holiday: true,
-        .other: true
+        .birthday: false,
+        .anniversary: false,
+        .holiday: false,
+        .other: false
     ]
+
+    private var dotDates: [DateType: [Date]] = [:]
     
     private var isSearching = false
-    
-    public var dates: [Date] {
-        get {
-            isSearching ? allDates : filteredDates
-        }
-    }
-
-    private var allDates: [Date] = []
     private var filteredDates: [Date] = []
 }
 
@@ -63,7 +57,16 @@ extension DatesPresenter: DatesEventHandling {
         )
         view?.configureNavigationBar(title: Constant.String.title)
         view?.configureTableView(footerView: UIView())
-        interactor?.fetch("all")
+        interactor?.fetchDotDates()
+    }
+    
+    func datesToShow() -> [Date] {
+        let birthdays     = dotStates[.birthday]    ?? false ? dotDates[.birthday] ?? []    : []
+        let anniversaries = dotStates[.anniversary] ?? false ? dotDates[.anniversary] ?? [] : []
+        let holidays      = dotStates[.holiday]     ?? false ? dotDates[.holiday] ?? []     : []
+        let other         = dotStates[.other]       ?? false ? dotDates[.other] ?? []       : []
+
+        return birthdays + anniversaries + holidays + other
     }
     
     func searchButtonPressed() {
@@ -72,18 +75,18 @@ extension DatesPresenter: DatesEventHandling {
     }
 
     func textChanged(to searchText: String) {
-        let lowerSearchText = searchText.lowercased()
+//        let lowerSearchText = searchText.lowercased()
         
-        filteredDates = allDates.filter { savedDate in
-            if let lowerFirstName = savedDate.firstName?.lowercased() {
-                if lowerFirstName.contains(lowerSearchText) { return true }
-            }
-            if let lowerLastName = savedDate.lastName?.lowercased() {
-                if lowerLastName.contains(lowerSearchText) { return true }
-            }
-            return false
-        }
-        view?.reloadTableView(sections: [0], animation: .fade)
+//        filteredDates = allDates.filter { savedDate in
+//            if let lowerFirstName = savedDate.firstName?.lowercased() {
+//                if lowerFirstName.contains(lowerSearchText) { return true }
+//            }
+//            if let lowerLastName = savedDate.lastName?.lowercased() {
+//                if lowerLastName.contains(lowerSearchText) { return true }
+//            }
+//            return false
+//        }
+//        view?.reloadTableView(sections: [0], animation: .fade)
     }
     
     func cancelButtonPressed() {
@@ -94,22 +97,28 @@ extension DatesPresenter: DatesEventHandling {
     func dotPressed(for dateType: DateType) {
         let isSelected = !(dotStates[dateType] ?? true)
         dotStates[dateType] = isSelected
+        // filter dots
         view?.updateDot(for: dateType, isSelected: isSelected)
+        view?.reloadTableView(sections: [0], animation: .fade)
     }
     
     func deleteDatePressed(at indexPath: IndexPath) {
-        interactor?.delete(dates[indexPath.row], complete: { success in
-            if success {
-                view?.deleteTableView(rows: [indexPath], animation: .automatic)
-            }
-        })
+//        interactor?.delete(dates[indexPath.row], complete: { success in
+//            if success {
+//                view?.deleteTableView(rows: [indexPath], animation: .automatic)
+//            }
+//        })
     }
 }
 
 extension DatesPresenter: DatesInteractorOutputting {
     
     func set(_ dates: [Date]) {
-        allDates = dates
+        dotDates[.birthday]    = dates.filter { $0.dateType == .birthday }
+        dotDates[.anniversary] = dates.filter { $0.dateType == .anniversary }
+        dotDates[.holiday]     = dates.filter { $0.dateType == .holiday }
+        dotDates[.other]       = dates.filter { $0.dateType == .other }
+
         view?.reloadTableView(sections: [0], animation: .fade)
     }
 }

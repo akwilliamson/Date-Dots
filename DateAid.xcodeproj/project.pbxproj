@@ -353,6 +353,7 @@
 				97E0818A1DAA1F5B00B0ED5F /* DatesViewController.swift */,
 				9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */,
 				9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */,
+				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97AC90FC243045EA008A877D /* Protocols */,
 			);
 			name = Dates;
@@ -392,7 +393,6 @@
 		978C23021BFC36A0000075D5 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				976BD4F61B2D079200415D65 /* DateCell.swift */,
 				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
 				97D266A01BDB3341008F7EF8 /* NoteCell.xib */,
 			);

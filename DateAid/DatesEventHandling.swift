@@ -8,10 +8,8 @@
 
 protocol DatesEventHandling: class {
     
-    var dates: [Date] { get }
-    
     func viewLoaded()
-
+    func datesToShow() -> [Date]
     func searchButtonPressed()
     func textChanged(to searchText: String)
     func cancelButtonPressed()

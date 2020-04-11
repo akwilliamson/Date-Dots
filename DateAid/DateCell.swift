@@ -42,7 +42,9 @@ class DateCell: UITableViewCell {
     // MARK: Properties
     
     var date: Date? {
-        didSet { if let date = date { populate(date) } }
+        didSet {
+            populate(date)
+        }
     }
     
     // MARK: Lifecycle
@@ -86,7 +88,9 @@ class DateCell: UITableViewCell {
 
     // MARK: Helper Methods
 
-    private func populate(_ date: Date) {
+    private func populate(_ date: Date?) {
+        guard let date = date else { return }
+
         firstNameLabel.textColor = date.color
         
         if let lastName  = date.lastName  { lastNameLabel.text = lastName }
