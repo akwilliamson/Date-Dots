@@ -18,9 +18,11 @@ class DatesPresenter {
 
     private enum Constant {
         enum String {
-            static let tabBarImage = "people-outline"
-            static let tabBarSelectedImage = "people-selected"
             static let title = "Dates"
+        }
+        enum Image {
+            static let iconSelected = UIImage(named: "selected-calendar")!
+            static let iconUnselected =  UIImage(named: "unselected-calendar")!
         }
         enum Layout {
             static let searchBarFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)
@@ -50,11 +52,7 @@ extension DatesPresenter: DatesEventHandling {
     // MARK: Properties
     
     func viewLoaded() {
-        view?.configureTabBar(
-            title: Constant.String.title,
-            image: UIImage(named: Constant.String.tabBarImage)!,
-            selectedImage: UIImage(named: Constant.String.tabBarSelectedImage)!
-        )
+        view?.configureTabBar(image: Constant.Image.iconUnselected, selectedImage: Constant.Image.iconSelected)
         view?.configureNavigationBar(title: Constant.String.title)
         view?.configureTableView(footerView: UIView())
         interactor?.fetchDotDates()

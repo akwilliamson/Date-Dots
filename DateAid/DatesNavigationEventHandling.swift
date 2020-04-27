@@ -10,5 +10,6 @@ import Foundation
 
 protocol DatesNavigationEventHandling: class {
 
+    func viewDidLoad()
     func showDates(in navigation: DatesNavigationViewController?)
 }

@@ -41,7 +41,7 @@ class DateCell: UITableViewCell {
 
     // MARK: Properties
     
-    var date: Date? {
+    public var date: Date? {
         didSet {
             populate(date)
         }
@@ -55,11 +55,16 @@ class DateCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureView()
         constructViews()
         constrainViews()
     }
 
     // MARK: View Setup
+
+    private func configureView() {
+        selectionStyle = .none
+    }
     
     private func constructViews() {
         addSubview(lastNameLabel)
@@ -70,18 +75,18 @@ class DateCell: UITableViewCell {
     private func constrainViews() {
         NSLayoutConstraint.activate([
             lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             lastNameLabel.heightAnchor.constraint(equalToConstant: 80),
             lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])
         NSLayoutConstraint.activate([
             firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
-            firstNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            firstNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             firstNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: topAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

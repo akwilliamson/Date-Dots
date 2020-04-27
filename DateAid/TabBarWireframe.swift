@@ -10,15 +10,20 @@ import UIKit
 
 class TabBarWireframe: NSObject {
     
-    let presenter = TabBarPresenter()
+    // MARK: Properties
     
-    var childDatesNavigationWireframe: DatesNavigationWireframe?
+    private let presenter = TabBarPresenter()
+    private var childDatesNavigationWireframe: DatesNavigationWireframe?
+    
+    // MARK: Initialization
     
     override init() {
         super.init()
         presenter.wireframe = self
         presenter.view = tabBarViewController()
     }
+
+    // MARK: Routing
     
     func presentModule(in window: UIWindow?) {
         guard let view = presenter.view as? TabBarViewController else { return }
@@ -29,10 +34,10 @@ class TabBarWireframe: NSObject {
         childDatesNavigationWireframe = DatesNavigationWireframe(parentWireframe: self)
         childDatesNavigationWireframe?.presentModule(in: tabBar)
     }
+
+    // MARK: Helpers
     
-    private func tabBarViewController<T: TabBarViewController>() -> T {
-        let vc: T = Constant.StoryboardId.main.vc(id: .tabBar)
-        vc.presenter = presenter
-        return vc
+    private func tabBarViewController() -> TabBarViewOutputting {
+        return TabBarViewController(presenter: presenter)
     }
 }

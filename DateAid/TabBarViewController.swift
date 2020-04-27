@@ -9,15 +9,32 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
+
+    // MARK: Properties
     
-    var presenter: TabBarPresenter?
+    private let presenter: TabBarPresenter
+
+    // MARK: Initialization
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    init(presenter: TabBarPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.setupView()
-        presenter?.showTabs(in: self)
+        presenter.setupView()
+        presenter.showTabs(in: self)
     }
 }
+
+// MARK: TabBarViewOutputting
 
 extension TabBarViewController: TabBarViewOutputting {
     
@@ -28,14 +45,4 @@ extension TabBarViewController: TabBarViewOutputting {
     func setTabBar(tintColor: UIColor) {
         tabBar.tintColor = tintColor
     }
-    
-    func setTabBar(attributes: [String: Any]?) {
-        tabBarItem.setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary(attributes), for: .normal)
-    }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

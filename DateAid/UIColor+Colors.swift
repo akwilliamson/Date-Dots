@@ -10,6 +10,10 @@ import Foundation
 
 extension UIColor {
     
+    class var navigationGray: UIColor {
+        return UIColor(red:  72/255.0, green: 72/255.0, blue: 72/255.0, alpha: 1)
+    }
+    
     class var birthday: UIColor {
         return UIColor(red:  17/255.0, green: 132/255.0, blue: 151/255.0, alpha: 1)
     }

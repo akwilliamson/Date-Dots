@@ -17,7 +17,7 @@ class DatesInteractor {
 
 extension DatesInteractor: DatesInteractorInputting {
 
-    public func fetchDotDates() {
+    func fetchDotDates() {
         
         let request: NSFetchRequest<Date> = NSFetchRequest(entityName: "Date")
         
@@ -36,7 +36,7 @@ extension DatesInteractor: DatesInteractorInputting {
         presenter?.set(dates)
     }
     
-    public func delete(_ date: Date?, complete: (Bool) -> ()) {
+    func delete(_ date: Date?, complete: (Bool) -> ()) {
         guard let date = date else { complete(false); return }
         moc.delete(date)
         moc.trySave { success in

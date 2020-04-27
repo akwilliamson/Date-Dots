@@ -8,7 +8,7 @@
 
 protocol DatesViewOutputting: class {
  
-    func configureTabBar(title: String, image: UIImage, selectedImage: UIImage)
+    func configureTabBar(image: UIImage, selectedImage: UIImage)
     func configureNavigationBar(title: String)
     func configureTableView(footerView: UIView)
 

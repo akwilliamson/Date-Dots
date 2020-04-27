@@ -9,10 +9,13 @@
 import UIKit
 
 class DatesNavigationWireframe {
+    
+    // MARK: Properties
 
     private var parentWireframe: TabBarWireframe?
-    
     private let presenter = DatesNavigationPresenter()
+    
+    // MARK: Initialization
     
     init(parentWireframe: TabBarWireframe) {
         self.parentWireframe = parentWireframe
@@ -20,15 +23,19 @@ class DatesNavigationWireframe {
         presenter.view = viewController()
     }
     
-    public func presentModule(in tabBar: TabBarViewController?) {
+    // MARK: Routing
+    
+    func presentModule(in tabBar: TabBarViewController?) {
         guard let view = presenter.view else { return }
         tabBar?.viewControllers = [view]
     }
     
-    public func presentDates(in navigation: DatesNavigationViewController?) {
+    func presentDates(in navigation: DatesNavigationViewController?) {
         let datesWireframe = DatesWireframe(parentWireframe: self)
         datesWireframe.presentModule(in: navigation)
     }
+    
+    // MARK: Helpers
     
     private func viewController() -> DatesNavigationViewController {
         let vc = DatesNavigationViewController()

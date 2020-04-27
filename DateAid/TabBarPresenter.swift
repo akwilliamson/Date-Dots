@@ -10,24 +10,22 @@ import UIKit
 
 class TabBarPresenter {
     
+    // MARK: Properties
+    
     weak var wireframe: TabBarWireframe?
     weak var view: TabBarViewOutputting?
 }
 
+// MARK: TabBarEventHandling
+
 extension TabBarPresenter: TabBarEventHandling {
 
     func setupView() {
-        view?.setTabBar(barTintColor: .birthday)
-        view?.setTabBar(tintColor: .white)
-        view?.setTabBar(attributes: [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.white])
+        view?.setTabBar(barTintColor: .white)
+        view?.setTabBar(tintColor: .navigationGray)
     }
     
     func showTabs(in tabBar: TabBarViewController) {
         wireframe?.presentDatesNavigation(in: tabBar)
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
 }

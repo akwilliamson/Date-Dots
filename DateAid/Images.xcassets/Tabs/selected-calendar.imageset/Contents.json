@@ -1,24 +1,24 @@
 {
   "images" : [
     {
+      "filename" : "selected-calendar.png",
       "idiom" : "universal",
-      "filename" : "calendar-outline.png",
       "scale" : "1x"
     },
     {
+      "filename" : "selected-calendar@3x-1.png",
       "idiom" : "universal",
-      "filename" : "calendar-outline@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "selected-calendar@3x.png",
       "idiom" : "universal",
-      "filename" : "calendar-outline@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "template-rendering-intent" : "original"

@@ -11,7 +11,6 @@ import UIKit
 class DatesWireframe {
     
     private var presenter = DatesPresenter()
-    
     private var parentWireframe: DatesNavigationWireframe?
     
     init(parentWireframe: DatesNavigationWireframe) {

@@ -19,7 +19,7 @@ protocol ResetDateDelegate {
 
 class AddDateVC: UIViewController {
     
-// MARK: PROPERTIES
+    // MARK: Properties
     
     // Passed from DatesVC for new date
     var managedContext: NSManagedObjectContext?
@@ -41,7 +41,7 @@ class AddDateVC: UIViewController {
                     "11th","12th","13th","14th","15th","16th","17th","18th","19th","20th",
                     "21st","22nd","23rd","24th","25th","26th","27th","28th","29th","30th","31st"]
     
-// MARK: OUTLETS
+    // MARK: Outlets
 
     @IBOutlet weak var nameField: AddNameTextField!
     

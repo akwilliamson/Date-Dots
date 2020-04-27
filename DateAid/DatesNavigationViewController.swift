@@ -10,20 +10,29 @@ import UIKit
 
 class DatesNavigationViewController: UINavigationController {
     
-    public var presenter: DatesNavigationEventHandling?
+    // MARK: Properties
+    
+    var presenter: DatesNavigationEventHandling?
+    
+    // MARK: Initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        presenter?.viewDidLoad()
         presenter?.showDates(in: self)
     }
+}
 
-    private func configureView() {
-        navigationBar.barTintColor = .white
-        navigationBar.tintColor = .birthday
-        navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.birthday,
-            NSAttributedString.Key.font: UIFont(name: "AvenirNext-Bold", size: 23)!
-        ]
+// MARK: DatesNavigationViewOutputting
+
+extension DatesNavigationViewController: DatesNavigationViewOutputting {
+
+    func configureNavigation(barTintColor: UIColor, tintColor: UIColor) {
+        navigationBar.barTintColor = barTintColor
+        navigationBar.tintColor = tintColor
+    }
+    
+    func configureNavigation(titleTextAttributes:  [NSAttributedString.Key : Any]?) {
+        navigationBar.titleTextAttributes = titleTextAttributes
     }
 }

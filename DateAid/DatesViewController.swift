@@ -23,36 +23,37 @@ class DatesViewController: UIViewController {
     private var dotStackView: UIStackView = {
         let stacKView = UIStackView()
         stacKView.translatesAutoresizingMaskIntoConstraints = false
-        stacKView.distribution = .equalSpacing
+        stacKView.distribution = .fillEqually
+        stacKView.spacing = 8
         return stacKView
     }()
 
-    private lazy var birthdayDot: DateDotView = {
-        let dotView = DateDotView(dateType: .birthday)
+    private lazy var birthdayDot: IconCircleImageView = {
+        let dotView = IconCircleImageView(dateType: .birthday)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var anniversaryDot: DateDotView = {
-        let dotView = DateDotView(dateType: .anniversary)
+    private lazy var anniversaryDot: IconCircleImageView = {
+        let dotView = IconCircleImageView(dateType: .anniversary)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var holidayDot: DateDotView = {
-        let dotView = DateDotView(dateType: .holiday)
+    private lazy var holidayDot: IconCircleImageView = {
+        let dotView = IconCircleImageView(dateType: .holiday)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var otherDot: DateDotView = {
-        let dotView = DateDotView(dateType: .other)
+    private lazy var otherDot: IconCircleImageView = {
+        let dotView = IconCircleImageView(dateType: .other)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
@@ -112,10 +113,14 @@ class DatesViewController: UIViewController {
 
     private func constrainSubviews() {
         NSLayoutConstraint.activate([
-            dotStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            dotStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             dotStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             dotStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             dotStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
+            birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
         ])
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor, constant: 20),
@@ -146,7 +151,7 @@ class DatesViewController: UIViewController {
     
     @objc
     func dotPressed(_ sender: UITapGestureRecognizer) {
-        guard let dotView = sender.view as? DateDotView else { return }
+        guard let dotView = sender.view as? IconCircleImageView else { return }
         presenter?.dotPressed(for: dotView.dateType)
     }
 }
@@ -189,8 +194,11 @@ extension DatesViewController: UITableViewDataSource {
 extension DatesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // present: DateDetailsViewController()
-        // set: dateDetailsVC.dateObject = presenter?.dates[indexPath.row]
+        guard let presenter = presenter else { return }
+        let dotDates = presenter.datesToShow()
+        let event = dotDates[indexPath.row]
+        let viewController = DateDetailsViewController(event: event)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -209,8 +217,9 @@ extension DatesViewController: DatesViewOutputting {
     
     // MARK: Configuration
     
-    func configureTabBar(title: String, image: UIImage, selectedImage: UIImage) {
-        tabBarItem = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
+    func configureTabBar(image: UIImage, selectedImage: UIImage) {
+        tabBarItem = UITabBarItem(title: "Dates", image: image, selectedImage: selectedImage)
+        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.navigationGray], for: .normal)
     }
     
     func configureNavigationBar(title: String) {

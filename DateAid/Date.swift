@@ -33,14 +33,10 @@ class Date: NSManagedObject {
         guard let type = self.type else { return .birthday }
     
         switch type.lowercased() {
-        case "birthday":
-            return UIColor.birthday
-        case "anniversary":
-            return UIColor.anniversary
-        case "holiday":
-            return UIColor.custom
-        default:
-            return UIColor.birthday
+        case "birthday":    return UIColor.birthday
+        case "anniversary": return UIColor.anniversary
+        case "holiday":     return UIColor.holiday
+        default:            return UIColor.custom
         }
     }
     

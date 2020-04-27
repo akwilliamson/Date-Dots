@@ -12,5 +12,4 @@ protocol TabBarViewOutputting: class {
 
     func setTabBar(barTintColor: UIColor)
     func setTabBar(tintColor: UIColor)
-    func setTabBar(attributes: [String: Any]?)
 }
