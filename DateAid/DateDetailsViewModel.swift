@@ -8,6 +8,16 @@
 
 class DateDetailsViewModel {
 
+    /// The options for displaying extra information about an event.
+    enum ChosenEvent {
+        case address
+        case reminder
+    }
+
+    // MARK: Properties
+    
+    var chosenEvent: ChosenEvent = .address
+
     // MARK: Details
 
     func textForDateLabel(for event: Date) -> String {
@@ -68,5 +78,11 @@ class DateDetailsViewModel {
         }
         
         return text
+    }
+
+    // MARK: Actions
+
+    func didSelectChosenEvent(_ chosenEvent: ChosenEvent) {
+        self.chosenEvent = chosenEvent
     }
 }

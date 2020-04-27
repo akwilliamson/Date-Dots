@@ -51,9 +51,8 @@ class DateDetailsViewController: UIViewController {
 
     private let addressContainerView: UIView = {
         let view = UIView()
-        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAddressView)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEditAddress)))
         view.isUserInteractionEnabled = true
         view.layer.borderWidth = 4
         view.layer.cornerRadius = 10
@@ -69,6 +68,16 @@ class DateDetailsViewController: UIViewController {
         stackView.spacing = 0
         stackView.distribution = .fillEqually
         return stackView
+    }()
+
+    private lazy var editAddressButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Edit Address", for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        button.setTitleColor(.navigationGray, for: .normal)
+        button.addTarget(self, action: #selector(didTapEditAddress), for: .touchUpInside)
+        return button
     }()
 
     private lazy var stampImageView: UIImageView = {
@@ -122,16 +131,20 @@ class DateDetailsViewController: UIViewController {
         return stackView
     }()
     
-    private let addressCircleImageView: CircleImageView = {
+    private lazy var addressCircleImageView: CircleImageView = {
         let circleImageView = CircleImageView()
+        circleImageView.isUserInteractionEnabled = true
+        circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAddressIcon)))
         circleImageView.image = UIImage(named: "envelope")?.withRenderingMode(.alwaysTemplate)
-        circleImageView.tintColor = .navigationGray
+        circleImageView.tintColor = event.color
         circleImageView.layer.borderColor = UIColor.navigationGray.cgColor
         return circleImageView
     }()
 
-    private let reminderCircleImageView: CircleImageView = {
+    private lazy var reminderCircleImageView: CircleImageView = {
         let circleImageView = CircleImageView()
+        circleImageView.isUserInteractionEnabled = true
+        circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapReminderIcon)))
         circleImageView.image = UIImage(named: "reminder")?.withRenderingMode(.alwaysTemplate)
         circleImageView.tintColor = .navigationGray
         circleImageView.layer.borderColor = UIColor.navigationGray.cgColor
@@ -203,10 +216,11 @@ class DateDetailsViewController: UIViewController {
         configureView()
         constructSubviews()
         constrainSubviews()
-        populateAlertViews()
+        setButtonState()
+        populateReminderLabel()
     }
     
-    private func populateAlertViews() {
+    private func populateReminderLabel() {
 
         var daysPrior: Int? = nil
         var hourOfDay: Int? = nil
@@ -227,6 +241,25 @@ class DateDetailsViewController: UIViewController {
         reminderLabel.text = viewModel.textForReminderLabel(for: daysPrior, hourOfDay: hourOfDay)
     }
 
+    private func setButtonState() {
+        switch viewModel.chosenEvent {
+        case .address:
+            addressCircleImageView.tintColor = event.color
+            addressCircleImageView.layer.borderColor = event.color.cgColor
+            addressContainerView.isHidden = false
+            reminderCircleImageView.tintColor = .navigationGray
+            reminderCircleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+            reminderImageView.isHidden = true
+        case .reminder:
+            addressCircleImageView.tintColor = .navigationGray
+            addressCircleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+            addressContainerView.isHidden = true
+            reminderCircleImageView.tintColor = event.color
+            reminderCircleImageView.layer.borderColor = event.color.cgColor
+            reminderImageView.isHidden = false
+        }
+    }
+
     private func configureView() {
         title = event.abbreviatedName
         view.backgroundColor = .white
@@ -238,6 +271,7 @@ class DateDetailsViewController: UIViewController {
         eventLabelStackView.addArrangedSubview(ageLabel)
         eventLabelStackView.addArrangedSubview(countdownLabel)
         view.addSubview(addressContainerView)
+        addressContainerView.addSubview(editAddressButton)
         addressContainerView.addSubview(stampImageView)
         addressContainerView.addSubview(addressLabel)
         view.addSubview(reminderImageView)
@@ -290,10 +324,14 @@ class DateDetailsViewController: UIViewController {
             reminderLabel.trailingAnchor.constraint(equalTo: reminderImageView.trailingAnchor)
         ])
         NSLayoutConstraint.activate([
-            addressContainerView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 40),
+            addressContainerView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 60),
             addressContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addressContainerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.5),
             addressContainerView.heightAnchor.constraint(equalTo: addressContainerView.widthAnchor, multiplier: 0.5)
+        ])
+        NSLayoutConstraint.activate([
+            editAddressButton.topAnchor.constraint(equalTo: addressContainerView.topAnchor, constant: 8),
+            editAddressButton.leadingAnchor.constraint(equalTo: addressContainerView.leadingAnchor, constant: 12),
         ])
         NSLayoutConstraint.activate([
             stampImageView.topAnchor.constraint(equalTo: addressContainerView.topAnchor, constant: 8),
@@ -309,20 +347,30 @@ class DateDetailsViewController: UIViewController {
         ])
     }
     
-    private func addTapGesture(to view: UIView, action: String) {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(action))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tapGestureRecognizer)
+    // MARK: Actions
+    
+    @objc
+    private func didTapAddressIcon() {
+        viewModel.chosenEvent = .address
+        setButtonState()
+    }
+
+    @objc
+    private func didTapEditAddress() {
+        /// Navigate to the event's edit address view
+//        performSegue(withIdentifier: "ShowAddress", sender: self)
+    }
+    
+    @objc
+    private func didTapReminderIcon() {
+        viewModel.chosenEvent = .reminder
+        setButtonState()
     }
     
     @objc
     private func showReminderView() {
+        /// Navigate to the event's edit reminder view
 //        performSegue(withIdentifier: "ShowNotification", sender: self)
-    }
-    
-    @objc
-    private func showAddressView() {
-//        performSegue(withIdentifier: "ShowAddress", sender: self)
     }
     
     // MARK: Transition
