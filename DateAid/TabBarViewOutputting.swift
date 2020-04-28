@@ -10,6 +10,7 @@ import Foundation
 
 protocol TabBarViewOutputting: class {
 
+    func setTabBar(backgroundColor: UIColor)
     func setTabBar(barTintColor: UIColor)
     func setTabBar(tintColor: UIColor)
 }

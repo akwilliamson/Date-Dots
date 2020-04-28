@@ -29,7 +29,6 @@ class AddDateVC: UIViewController {
     
     // Additionally passed from DateDetailsViewController for edit date
     var dateToSave: Date?
-    var notificationDelegate: SetNotificationDelegate?
     
     var street: String?
     var region: String?
@@ -244,7 +243,6 @@ class AddDateVC: UIViewController {
                 editDetailsVC.dateObject = dateToSave
                 editDetailsVC.managedContext = managedContext
                 editDetailsVC.addressDelegate = self
-                editDetailsVC.notificationDelegate = notificationDelegate
             } else {
                 showAlertForNoName()
             }

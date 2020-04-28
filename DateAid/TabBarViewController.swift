@@ -38,6 +38,10 @@ class TabBarViewController: UITabBarController {
 
 extension TabBarViewController: TabBarViewOutputting {
     
+    func setTabBar(backgroundColor: UIColor) {
+        tabBar.backgroundColor = .white
+    }
+    
     func setTabBar(barTintColor: UIColor) {
         tabBar.barTintColor = barTintColor
     }

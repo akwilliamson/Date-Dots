@@ -11,7 +11,6 @@ import UIKit
 class SinglePushSettingsVC: UIViewController {
     
     var dateObject: Date!
-    var notificationDelegate: SetNotificationDelegate?
     
     let application = UIApplication.shared
     let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
@@ -201,7 +200,6 @@ class SinglePushSettingsVC: UIViewController {
         if let notification = previouslyScheduledNotification {
             application.cancelLocalNotification(notification)
         }
-        notificationDelegate?.reloadNotificationView()
         _ = self.navigationController?.popViewController(animated: true)
     }
     

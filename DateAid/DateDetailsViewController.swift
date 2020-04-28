@@ -10,10 +10,6 @@ import UIKit
 import CoreData
 import UserNotifications
 
-protocol SetNotificationDelegate {
-    func reloadNotificationView()
-}
-
 class DateDetailsViewController: UIViewController {
 
     // MARK: UI - Details
@@ -104,7 +100,7 @@ class DateDetailsViewController: UIViewController {
     private lazy var reminderImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showReminderView)))
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEditReminder)))
         imageView.isUserInteractionEnabled = true
         imageView.tintColor = UIColor.navigationGray
         imageView.image = UIImage(named: "sticky")?.withRenderingMode(.alwaysTemplate)
@@ -165,6 +161,7 @@ class DateDetailsViewController: UIViewController {
     private lazy var giftIdeasButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapGiftIdeas), for: .touchUpInside)
         button.backgroundColor = event.color
         button.setTitle("Gift Ideas", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
@@ -174,6 +171,7 @@ class DateDetailsViewController: UIViewController {
     private lazy var eventPlansButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapEventPlans), for: .touchUpInside)
         button.backgroundColor = event.color
         button.setTitle("Event Plans", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
@@ -183,6 +181,7 @@ class DateDetailsViewController: UIViewController {
     private lazy var otherNotesButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapOtherNotes), for: .touchUpInside)
         button.backgroundColor = event.dateType.color
         button.setTitle("Other Notes", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
@@ -194,7 +193,6 @@ class DateDetailsViewController: UIViewController {
     private let event: Date
 
     var managedContext: NSManagedObjectContext?
-    var localNotificationFound: Bool?
 
     private let viewModel = DateDetailsViewModel()
     
@@ -368,9 +366,27 @@ class DateDetailsViewController: UIViewController {
     }
     
     @objc
-    private func showReminderView() {
+    private func didTapEditReminder() {
         /// Navigate to the event's edit reminder view
 //        performSegue(withIdentifier: "ShowNotification", sender: self)
+    }
+
+    @objc
+    private func didTapGiftIdeas() {
+        let viewController = NoteViewController(event: event, noteType: .gifts)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    @objc
+    private func didTapEventPlans() {
+        let viewController = NoteViewController(event: event, noteType: .plans)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc
+    private func didTapOtherNotes() {
+        let viewController = NoteViewController(event: event, noteType: .other)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: Transition
@@ -385,18 +401,10 @@ class DateDetailsViewController: UIViewController {
             addDateVC.isBeingEdited = true
             addDateVC.dateToSave = event
             addDateVC.managedContext = managedContext
-            addDateVC.notificationDelegate = self
-        }
-        if segue.identifier == "ShowNotes" {
-            let notesTableVC = segue.destination as! NotesTableVC
-            notesTableVC.managedContext = managedContext
-            notesTableVC.typeColor = event.color
-            notesTableVC.dateObject = event
         }
         if segue.identifier == "ShowNotification" {
             let singlePushSettingsVC = segue.destination as! SinglePushSettingsVC
             singlePushSettingsVC.dateObject = event
-            singlePushSettingsVC.notificationDelegate = self
         }
         if segue.identifier == "ShowAddress" {
             let editDetailsVC = segue.destination as! EditDetailsVC
@@ -404,15 +412,6 @@ class DateDetailsViewController: UIViewController {
             editDetailsVC.managedContext = managedContext
             editDetailsVC.addressDelegate = self
         }
-    }
-}
-
-// MARK: - SetNotificationDelegate
-
-extension DateDetailsViewController: SetNotificationDelegate {
-    
-    func reloadNotificationView() {
-        localNotificationFound = false
     }
 }
 

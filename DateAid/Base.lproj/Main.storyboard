@@ -769,9 +769,6 @@
                                 <state key="normal" title="Other">
                                     <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ULx-DK-D8w" kind="show" identifier="ShowOther" id="Sh2-MR-qg4"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNi-KX-LCe">
                                 <rect key="frame" x="-4" y="404.5" width="383" height="71"/>
@@ -781,9 +778,6 @@
                                 <state key="normal" title="Plans">
                                     <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ULx-DK-D8w" kind="show" identifier="ShowPlans" id="AIv-oM-IK9"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rf9-AL-IyN">
                                 <rect key="frame" x="-4" y="332.5" width="383" height="71"/>
@@ -793,9 +787,6 @@
                                 <state key="normal" title="Gifts">
                                     <color key="titleColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ULx-DK-D8w" kind="show" identifier="ShowGifts" id="F3P-EW-vbw"/>
-                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="6xN-nn-JjX">
                                 <rect key="frame" x="349" y="360" width="10" height="16"/>
@@ -1256,93 +1247,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ljB-LZ-q1m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3001" y="-395"/>
-        </scene>
-        <!--Notes-->
-        <scene sceneID="1ZR-cE-43s">
-            <objects>
-                <tableViewController id="617-UG-6zb" customClass="NotesTableVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eCF-9U-zSB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="nby-ie-1Hz" style="IBUITableViewCellStyleDefault" id="XBJ-Ek-HMP">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XBJ-Ek-HMP" id="xTJ-4M-tqM">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nby-ie-1Hz">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="617-UG-6zb" id="TRS-zS-bND"/>
-                            <outlet property="delegate" destination="617-UG-6zb" id="gbn-j9-uMo"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Notes" id="EJ2-iJ-gYz"/>
-                    <connections>
-                        <segue destination="ULx-DK-D8w" kind="show" identifier="ShowNote" id="4IE-OH-euH"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t2a-IV-azd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3046" y="528"/>
-        </scene>
-        <!--NoteVC-->
-        <scene sceneID="aj2-dD-r76">
-            <objects>
-                <viewController id="ULx-DK-D8w" customClass="NoteVC" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="a7D-rA-smg"/>
-                        <viewControllerLayoutGuide type="bottom" id="eTq-iQ-ajz"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="RCP-H5-DTc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd2-MJ-0d2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                                <color key="textColor" red="0.070588235289999995" green="0.59215686270000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="ULx-DK-D8w" id="R5q-Pf-1kW"/>
-                                </connections>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="top" secondItem="RCP-H5-DTc" secondAttribute="top" id="5dN-OO-399"/>
-                            <constraint firstItem="Cd2-MJ-0d2" firstAttribute="leading" secondItem="RCP-H5-DTc" secondAttribute="leading" id="AW9-Yx-TU0"/>
-                            <constraint firstAttribute="trailing" secondItem="Cd2-MJ-0d2" secondAttribute="trailing" id="f7h-Sx-MY3"/>
-                            <constraint firstItem="eTq-iQ-ajz" firstAttribute="top" secondItem="Cd2-MJ-0d2" secondAttribute="bottom" id="uIR-jf-jq5"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="3gG-0k-1Xu">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="UGS-7I-Msx">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="saveNote:" destination="ULx-DK-D8w" id="Ngh-fn-imo"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="textView" destination="Cd2-MJ-0d2" id="Kr2-ew-M3f"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LNm-Ia-QUh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4889" y="528"/>
         </scene>
         <!--TurningVC-->
         <scene sceneID="fG8-zJ-c08">
@@ -2165,7 +2069,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Sh2-MR-qg4"/>
         <segue reference="byt-8L-e9s"/>
         <segue reference="TPq-ng-Nxl"/>
         <segue reference="uOf-gp-zRy"/>

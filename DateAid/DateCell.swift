@@ -17,6 +17,7 @@ class DateCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 75)
         label.textColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.15)
+        label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         return label
     }()
@@ -76,6 +77,7 @@ class DateCell: UITableViewCell {
         NSLayoutConstraint.activate([
             lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             lastNameLabel.heightAnchor.constraint(equalToConstant: 80),
             lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])

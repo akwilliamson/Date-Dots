@@ -17,7 +17,7 @@ class Date: NSManagedObject {
     @NSManaged var name: String?
     @NSManaged var type: String?
     @NSManaged var address: Address?
-    @NSManaged var notes: NSSet?
+    @NSManaged var notes: Set<Note>?
     
     public var firstName: String? {
         return name?.components(separatedBy: " ").first
@@ -44,11 +44,17 @@ class Date: NSManagedObject {
         guard let type = type else { return .other }
 
         switch type {
-        case "Birthday":    return .birthday
-        case "Anniversary": return .anniversary
-        case "Custom":      return .holiday
-        case "Other":       return .other
+        case "birthday":    return .birthday
+        case "anniversary": return .anniversary
+        case "custom":      return .holiday
+        case "other":       return .other
         default:            return .other
         }
+    }
+
+    public func note(forType noteType: NoteType) -> Note? {
+        guard let notes = notes else { return nil }
+
+        return Array(notes).filter { $0.title == noteType.title }.first
     }
 }

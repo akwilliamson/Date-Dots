@@ -41,7 +41,7 @@ class DatesPresenter {
         .other: false
     ]
 
-    private var dotDates: [DateType: [Date]] = [:]
+    private var events: [DateType: [Date]] = [:]
     
     private var isSearching = false
     private var filteredDates: [Date] = []
@@ -59,10 +59,10 @@ extension DatesPresenter: DatesEventHandling {
     }
     
     func datesToShow() -> [Date] {
-        let birthdays     = dotStates[.birthday]    ?? false ? dotDates[.birthday] ?? []    : []
-        let anniversaries = dotStates[.anniversary] ?? false ? dotDates[.anniversary] ?? [] : []
-        let holidays      = dotStates[.holiday]     ?? false ? dotDates[.holiday] ?? []     : []
-        let other         = dotStates[.other]       ?? false ? dotDates[.other] ?? []       : []
+        let birthdays     = dotStates[.birthday]    ?? false ? events[.birthday] ?? []    : []
+        let anniversaries = dotStates[.anniversary] ?? false ? events[.anniversary] ?? [] : []
+        let holidays      = dotStates[.holiday]     ?? false ? events[.holiday] ?? []     : []
+        let other         = dotStates[.other]       ?? false ? events[.other] ?? []       : []
 
         return birthdays + anniversaries + holidays + other
     }
@@ -112,10 +112,10 @@ extension DatesPresenter: DatesEventHandling {
 extension DatesPresenter: DatesInteractorOutputting {
     
     func set(_ dates: [Date]) {
-        dotDates[.birthday]    = dates.filter { $0.dateType == .birthday }
-        dotDates[.anniversary] = dates.filter { $0.dateType == .anniversary }
-        dotDates[.holiday]     = dates.filter { $0.dateType == .holiday }
-        dotDates[.other]       = dates.filter { $0.dateType == .other }
+        events[.birthday]    = dates.filter { $0.dateType == .birthday }
+        events[.anniversary] = dates.filter { $0.dateType == .anniversary }
+        events[.holiday]     = dates.filter { $0.dateType == .holiday }
+        events[.other]       = dates.filter { $0.dateType == .other }
 
         view?.reloadTableView(sections: [0], animation: .fade)
     }

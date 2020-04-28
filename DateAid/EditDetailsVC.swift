@@ -15,7 +15,6 @@ class EditDetailsVC: UIViewController {
     var managedContext: NSManagedObjectContext?
     
     var addressDelegate: SetAddressDelegate?
-    var notificationDelegate: SetNotificationDelegate? // <<< Not used here, but propogated to SinglePushSettingsVC
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
@@ -68,21 +67,8 @@ class EditDetailsVC: UIViewController {
         if segue.identifier == "EditLocalNotification" {
             let singlePushSettingsVC = segue.destination as! SinglePushSettingsVC
             singlePushSettingsVC.dateObject = dateObject
-            singlePushSettingsVC.notificationDelegate = notificationDelegate
         } else {
-            let noteVC = segue.destination as! NoteVC
-            noteVC.dateObject = dateObject
-            noteVC.managedContext = managedContext
-            switch segue.identifier! {
-            case "ShowGifts":
-                noteVC.noteTitle = "Gifts"
-            case "ShowPlans":
-                noteVC.noteTitle = "Plans"
-            case "ShowOther":
-                noteVC.noteTitle = "Other"
-            default:
-                break
-            }
+            // Navigate to notes?
         }
     }
 }

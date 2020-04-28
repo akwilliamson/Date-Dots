@@ -55,8 +55,7 @@
 		979C36A91E0E14B20098345E /* InitialImportViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */; };
 		979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */; };
 		97A170231DAAB94E00B1F840 /* UITableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A170221DAAB94E00B1F840 /* UITableView+Register.swift */; };
-		97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */; };
-		97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteVC.swift */; };
+		97AD26A31BD77439004C1C7D /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteViewController.swift */; };
 		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; };
 		97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */; };
 		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
@@ -74,8 +73,6 @@
 		97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */; };
 		97D2669A1BD95380008F7EF8 /* EventCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* EventCircleLabel.swift */; };
 		97D2669D1BDAC376008F7EF8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */; };
-		97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D266A01BDB3341008F7EF8 /* NoteCell.xib */; };
-		97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266A21BDB648D008F7EF8 /* NoteCell.swift */; };
 		97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */; };
 		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DD38141BC3659F00CF8A25 /* AddDateVC.swift */; };
@@ -160,8 +157,7 @@
 		979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportViewOutputting.swift; sourceTree = "<group>"; };
 		979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportWireframe.swift; sourceTree = "<group>"; };
 		97A170221DAAB94E00B1F840 /* UITableView+Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Register.swift"; sourceTree = "<group>"; };
-		97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableVC.swift; sourceTree = "<group>"; };
-		97AD26A21BD77439004C1C7D /* NoteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
+		97AD26A21BD77439004C1C7D /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V2_V3.xcmappingmodel; sourceTree = "<group>"; };
 		97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -179,8 +175,6 @@
 		97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportInteractorOutputting.swift; sourceTree = "<group>"; };
 		97D266991BD95380008F7EF8 /* EventCircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCircleLabel.swift; sourceTree = "<group>"; };
 		97D2669C1BDAC376008F7EF8 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
-		97D266A01BDB3341008F7EF8 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
-		97D266A21BDB648D008F7EF8 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNameTextField.swift; sourceTree = "<group>"; };
 		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97DD38141BC3659F00CF8A25 /* AddDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateVC.swift; sourceTree = "<group>"; };
@@ -407,25 +401,6 @@
 			name = "Settings Tab";
 			sourceTree = "<group>";
 		};
-		978C23021BFC36A0000075D5 /* Table View Cells */ = {
-			isa = PBXGroup;
-			children = (
-				97D266A21BDB648D008F7EF8 /* NoteCell.swift */,
-				97D266A01BDB3341008F7EF8 /* NoteCell.xib */,
-			);
-			name = "Table View Cells";
-			sourceTree = "<group>";
-		};
-		978C23041BFC379E000075D5 /* UIControls */ = {
-			isa = PBXGroup;
-			children = (
-				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
-				9708075B1BC7303800F030D3 /* TypeButton.swift */,
-				970807591BC7288100F030D3 /* ValueSlider.swift */,
-			);
-			name = UIControls;
-			sourceTree = "<group>";
-		};
 		9793A3AF1DA77DAF002710A4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,12 +442,11 @@
 				970622431E2C32170020743C /* Dates Navigation */,
 				976E9FF91DB34587006DFB2D /* Dates */,
 				9751ED531E1B73DD00E4DF96 /* Date Details */,
+				97D197CC1E3E800E006EC521 /* Notes */,
 				97D197C91E3E7FF7006EC521 /* Add Date */,
 				97D197CA1E3E7FFD006EC521 /* Edit Details */,
 				97D197CB1E3E8006006EC521 /* Single Push Settings */,
-				97D197CC1E3E800E006EC521 /* Notes Table */,
 				977ED8C01BFDA3F400BC7EB9 /* Turning Tab */,
-				97D197CD1E3E8015006EC521 /* Note */,
 				977ED8C11BFDA3FB00BC7EB9 /* Settings Tab */,
 			);
 			name = UI;
@@ -522,20 +496,12 @@
 			name = "Single Push Settings";
 			sourceTree = "<group>";
 		};
-		97D197CC1E3E800E006EC521 /* Notes Table */ = {
+		97D197CC1E3E800E006EC521 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				97AD26A01BD7741C004C1C7D /* NotesTableVC.swift */,
+				97AD26A21BD77439004C1C7D /* NoteViewController.swift */,
 			);
-			name = "Notes Table";
-			sourceTree = "<group>";
-		};
-		97D197CD1E3E8015006EC521 /* Note */ = {
-			isa = PBXGroup;
-			children = (
-				97AD26A21BD77439004C1C7D /* NoteVC.swift */,
-			);
-			name = Note;
+			name = Notes;
 			sourceTree = "<group>";
 		};
 		97D2669B1BD98FE3008F7EF8 /* Models */ = {
@@ -549,8 +515,9 @@
 		97DC1EC51BC5927F00FEE6BE /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
-				978C23021BFC36A0000075D5 /* Table View Cells */,
-				978C23041BFC379E000075D5 /* UIControls */,
+				97DC1EC31BC5926E00FEE6BE /* AddNameTextField.swift */,
+				9708075B1BC7303800F030D3 /* TypeButton.swift */,
+				970807591BC7288100F030D3 /* ValueSlider.swift */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -684,7 +651,6 @@
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
-				97D266A11BDB3341008F7EF8 /* NoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,7 +700,6 @@
 				97DD38151BC3659F00CF8A25 /* AddDateVC.swift in Sources */,
 				97ED37621E45A73200B054FE /* AppDelegatePresenter.swift in Sources */,
 				9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */,
-				97D266A31BDB648D008F7EF8 /* NoteCell.swift in Sources */,
 				97ED37661E45A77400B054FE /* AppDelegateViewOutputting.swift in Sources */,
 				9791F7811BD45A08001E82BB /* SinglePushSettingsVC.swift in Sources */,
 				97DC1EC41BC5926E00FEE6BE /* AddNameTextField.swift in Sources */,
@@ -777,7 +742,6 @@
 				97B40DAD1DA18DA6000DA0E0 /* NSManagedObjectContext+Tasks.swift in Sources */,
 				978C23091BFC37CB000075D5 /* ViewControllerExtension.swift in Sources */,
 				97943B561B0EA8CE004FC095 /* CoreDataStack.swift in Sources */,
-				97AD26A11BD7741C004C1C7D /* NotesTableVC.swift in Sources */,
 				9781F9861E3E8A3A00E2C434 /* DatesNavigationPresenter.swift in Sources */,
 				970D93621BC4765900D7F1FF /* UIColor+Colors.swift in Sources */,
 				975713B12455507E00EDD963 /* DateDetailsViewModel.swift in Sources */,
@@ -785,7 +749,7 @@
 				9706224A1E2C3F210020743C /* TabBarEventHandling.swift in Sources */,
 				97ED37601E45A70600B054FE /* AppDelegateWireframe.swift in Sources */,
 				970622421E2C32100020743C /* DatesNavigationViewController.swift in Sources */,
-				97AD26A31BD77439004C1C7D /* NoteVC.swift in Sources */,
+				97AD26A31BD77439004C1C7D /* NoteViewController.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				97E0818B1DAA1F5B00B0ED5F /* DatesViewController.swift in Sources */,
