@@ -13,7 +13,7 @@ class SinglePushSettingsVC: UIViewController {
     var dateObject: Date!
     
     let application = UIApplication.shared
-    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
+    let colorForType = ["birthday": DateType.birthday.color, "anniversary": DateType.anniversary.color, "custom": DateType.other.color]
     let timeArray = ["12:00\nAM", "1:00\nAM", "2:00\nAM", "3:00\nAM", "4:00\nAM", "5:00\nAM", "6:00\nAM", "7:00\nAM", "8:00\nAM", "9:00\nAM", "10:00\nAM", "11:00\nAM", "12:00\nPM", "1:00\nPM", "2:00\nPM", "3:00\nPM", "4:00\nPM", "5:00\nPM", "6:00\nPM", "7:00\nPM", "8:00\nPM", "9:00\nPM", "10:00\nPM", "11:00\nPM"]
     
     var previouslyScheduledNotification: UILocalNotification?

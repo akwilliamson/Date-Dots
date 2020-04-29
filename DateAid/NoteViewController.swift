@@ -27,9 +27,11 @@ class NoteViewController: UIViewController {
     
     // MARK: UI
     
-    private var textView: UITextView = {
+    private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.delegate = self
+        textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
         return textView
     }()
 
@@ -45,6 +47,8 @@ class NoteViewController: UIViewController {
     var note: Note?
     
     var managedContext: NSManagedObjectContext?
+
+    var showPlaceholderText = true
     
     // MARK: Initialization
     
@@ -72,7 +76,7 @@ class NoteViewController: UIViewController {
     private func configureView() {
         title = noteType.title
         view.backgroundColor = .white
-        navigationController?.navigationItem.rightBarButtonItem = saveBarButtonItem
+        navigationItem.rightBarButtonItem = saveBarButtonItem
     }
 
     private func constructSubviews() {
@@ -81,22 +85,26 @@ class NoteViewController: UIViewController {
     
     private func constrainSubviews() {
         NSLayoutConstraint.activate([
-            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 16),
+            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 16)
         ])
     }
 
     // MARK: View Setup
 
     private func configureNote() {
-        guard let note = note else { addPlaceholderText(); return }
-
-        textView.text = note.body
+        if let note = note {
+            showPlaceholderText = false
+            textView.text = note.body
+        }  else {
+            showPlaceholderText = true
+            configurePlaceholderText()
+        }
     }
 
-    private func addPlaceholderText() {
+    private func configurePlaceholderText() {
         switch noteType {
         case .gifts: textView.text = "A place for gift ideas"
         case .plans: textView.text = "A place for event plans"
@@ -122,7 +130,11 @@ class NoteViewController: UIViewController {
             createNewNote()
         }
         
-        try? managedContext.save()
+        do {
+            try managedContext.save()
+        }  catch {
+            print(error.localizedDescription)
+        }
     }
     
     private func createNewNote() {
@@ -149,19 +161,17 @@ class NoteViewController: UIViewController {
 extension NoteViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray {
+        if showPlaceholderText == true {
+            showPlaceholderText = false
             textView.text = nil
             textView.textColor = event.color
         }
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        print("wtf")
-    }
-    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            addPlaceholderText()
+            showPlaceholderText = true
+            configurePlaceholderText()
         }
     }
 }

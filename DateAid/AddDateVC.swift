@@ -33,7 +33,7 @@ class AddDateVC: UIViewController {
     var street: String?
     var region: String?
     
-    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
+    let colorForType = ["birthday": DateType.birthday.color, "anniversary": DateType.anniversary.color, "custom": DateType.other.color]
     let months = ["J","F","M","A","M","Jn","Jl","A","S","O","N","D"]
     let fullMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     let fullDays = ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th",
@@ -71,7 +71,7 @@ class AddDateVC: UIViewController {
         if let dateToSave = dateToSave {
             setTheme(to: dateToSave.color)
         } else {
-            setTheme(to: UIColor.birthday)
+            setTheme(to: DateType.birthday.color)
         }
         addColoredArrows()
         
@@ -140,18 +140,18 @@ class AddDateVC: UIViewController {
     func addImagesToButtons() {
         let birthdayImage = UIImage(named: "balloon.png")?.withRenderingMode(.alwaysTemplate)
         birthdayButton.setImage(birthdayImage, for: UIControl.State())
-        birthdayButton.tintColor = UIColor.birthday
-        birthdayButton.layer.borderColor = UIColor.birthday.cgColor
+        birthdayButton.tintColor = DateType.birthday.color
+        birthdayButton.layer.borderColor = DateType.birthday.color.cgColor
         
         let anniversaryImage = UIImage(named: "heart.png")?.withRenderingMode(.alwaysTemplate)
         anniversaryButton.setImage(anniversaryImage, for: UIControl.State())
-        anniversaryButton.tintColor = UIColor.anniversary
-        anniversaryButton.layer.borderColor = UIColor.anniversary.cgColor
+        anniversaryButton.tintColor = DateType.anniversary.color
+        anniversaryButton.layer.borderColor = DateType.anniversary.color.cgColor
         
         let customImage = UIImage(named: "calendar.png")?.withRenderingMode(.alwaysTemplate)
         customButton.setImage(customImage, for: UIControl.State())
-        customButton.tintColor = UIColor.custom
-        customButton.layer.borderColor = UIColor.custom.cgColor
+        customButton.tintColor = DateType.other.color
+        customButton.layer.borderColor = DateType.other.color.cgColor
         
         [birthdayButton, anniversaryButton, customButton].forEach({
             $0?.layer.borderWidth = 2
@@ -224,11 +224,11 @@ class AddDateVC: UIViewController {
     
     func getProperButton(forTypeColor typeColor: UIColor) -> TypeButton {
         switch typeColor {
-        case UIColor.birthday:
+        case DateType.birthday.color:
             return birthdayButton
-        case UIColor.anniversary:
+        case DateType.anniversary.color:
             return anniversaryButton
-        case UIColor.custom:
+        case DateType.other.color:
             return customButton
         default:
             return customButton
@@ -379,21 +379,21 @@ extension AddDateVC {
     @IBAction func birthdayButton(_ sender: UIButton) {
         [anniversaryButton, customButton].forEach { $0.stopAnimating() }
         dateType = "birthday"
-        setTheme(to: UIColor.birthday)
+        setTheme(to: DateType.birthday.color)
         sender.animateInAndOut()
     }
     
     @IBAction func anniversaryButton(_ sender: UIButton) {
         [birthdayButton, customButton].forEach { $0.stopAnimating() }
         dateType = "anniversary"
-        setTheme(to: UIColor.anniversary)
+        setTheme(to: DateType.anniversary.color)
         sender.animateInAndOut()
     }
     
     @IBAction func customButton(_ sender: UIButton) {
         [birthdayButton, anniversaryButton].forEach { $0.stopAnimating() }
         dateType = "custom"
-        setTheme(to: UIColor.custom)
+        setTheme(to: DateType.other.color)
         sender.animateInAndOut()
     }
     

@@ -57,7 +57,7 @@ class SettingsTableVC: UIViewController {
     func alertToggle(selectedButton onButton: UIButton, offButton: UIButton) {
         
         guard let alertYearly = userDefaults.object(forKey: "alertYearly") as? Bool else {
-            onButton.backgroundColor = UIColor.anniversary
+            onButton.backgroundColor = DateType.anniversary.color
             offButton.backgroundColor = UIColor.lightGray
             onButton.layer.cornerRadius = 5
             onButton.clipsToBounds = true
@@ -67,10 +67,10 @@ class SettingsTableVC: UIViewController {
         }
         
         if alertYearly == true {
-            onButton.backgroundColor = UIColor.anniversary
+            onButton.backgroundColor = DateType.anniversary.color
             offButton.backgroundColor = UIColor.lightGray
         } else {
-            offButton.backgroundColor = UIColor.anniversary
+            offButton.backgroundColor = DateType.anniversary.color
             onButton.backgroundColor = UIColor.lightGray
         }
         onButton.layer.cornerRadius = 5
@@ -133,7 +133,7 @@ class SettingsTableVC: UIViewController {
     }
     
     func saveAlertRepeatPreference() {
-        if alertYearlyButton.backgroundColor == UIColor.anniversary {
+        if alertYearlyButton.backgroundColor == DateType.anniversary.color {
             userDefaults.set(true, forKey: "alertYearly")
         } else {
             userDefaults.set(false, forKey: "alertYearly")
@@ -210,12 +210,12 @@ class SettingsTableVC: UIViewController {
     }
     
     @IBAction func alertYearlySelected(_ sender: AnyObject) {
-        alertYearlyButton.backgroundColor = UIColor.anniversary
+        alertYearlyButton.backgroundColor = DateType.anniversary.color
         alertOnceButton.backgroundColor = UIColor.lightGray
     }
     
     @IBAction func alertOnceSelected(_ sender: AnyObject) {
-        alertOnceButton.backgroundColor = UIColor.anniversary
+        alertOnceButton.backgroundColor = DateType.anniversary.color
         alertYearlyButton.backgroundColor = UIColor.lightGray
     }
     

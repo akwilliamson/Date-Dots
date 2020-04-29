@@ -14,7 +14,7 @@ class TurningVC: UIViewController {
     var fetchedResults: [Date]?
     var filteredResults: [Date]?
     let managedContext = CoreDataStack().managedObjectContext
-    let colorForType = ["birthday": UIColor.birthday, "anniversary": UIColor.anniversary, "custom": UIColor.custom]
+    let colorForType = ["birthday": DateType.birthday.color, "anniversary": DateType.anniversary.color, "custom": DateType.other.color]
 
     @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
@@ -30,7 +30,7 @@ class TurningVC: UIViewController {
         turningSlider.addTarget(self, action: #selector(TurningVC.valueChanged(_:)), for: .valueChanged)
         turningSlider.setValues(max: 100, value: 1)
         turningSlider.minimumValue = 1
-        turningSlider.setColorTo(UIColor.birthday)
+        turningSlider.setColorTo(DateType.birthday.color)
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == 1 })
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         

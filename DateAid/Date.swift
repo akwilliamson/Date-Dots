@@ -29,14 +29,13 @@ class Date: NSManagedObject {
     
     // TODO: REMOVE
     var color: UIColor {
-        
-        guard let type = self.type else { return .birthday }
+        guard let type = self.type else { return DateType.birthday.color }
     
         switch type.lowercased() {
-        case "birthday":    return UIColor.birthday
-        case "anniversary": return UIColor.anniversary
-        case "holiday":     return UIColor.holiday
-        default:            return UIColor.custom
+        case "birthday":    return DateType.birthday.color
+        case "anniversary": return DateType.anniversary.color
+        case "holiday":     return DateType.holiday.color
+        default:            return DateType.other.color
         }
     }
     

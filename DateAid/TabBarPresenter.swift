@@ -21,9 +21,8 @@ class TabBarPresenter {
 extension TabBarPresenter: TabBarEventHandling {
 
     func setupView() {
-        view?.setTabBar(backgroundColor: .white)
         view?.setTabBar(barTintColor: .white)
-        view?.setTabBar(tintColor: .navigationGray)
+        view?.setTabBar(tintColor: .white)
     }
     
     func showTabs(in tabBar: TabBarViewController) {

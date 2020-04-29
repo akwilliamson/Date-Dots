@@ -98,7 +98,7 @@ class DatesViewController: UIViewController {
     // MARK: View Setup
 
     private func configureView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .standardBackgroundColor
         navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
 
@@ -219,7 +219,7 @@ extension DatesViewController: DatesViewOutputting {
     
     func configureTabBar(image: UIImage, selectedImage: UIImage) {
         tabBarItem = UITabBarItem(title: "Dates", image: image, selectedImage: selectedImage)
-        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.navigationGray], for: .normal)
+        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.textGray], for: .normal)
     }
     
     func configureNavigationBar(title: String) {

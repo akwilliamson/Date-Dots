@@ -10,24 +10,28 @@ import Foundation
 
 extension UIColor {
     
-    class var navigationGray: UIColor {
-        return UIColor(red:  72/255.0, green: 72/255.0, blue: 72/255.0, alpha: 1)
-    }
-    
-    class var birthday: UIColor {
-        return UIColor(red:  17/255.0, green: 132/255.0, blue: 151/255.0, alpha: 1)
-    }
-    
-    class var anniversary: UIColor {
-        return UIColor(red: 214/255.0, green: 87/255.0, blue: 69/255.0, alpha: 1)
-    }
-    
-    class var holiday: UIColor {
-        return UIColor(red:  87/255.0, green: 153/255.0, blue: 22/255.0, alpha: 1)
+    class var standardBackgroundColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
     }
 
-    class var custom: UIColor {
-        return UIColor(red:  229/255.0, green: 183/255.0, blue: 15/255.0, alpha: 1)
+    class var navigationGray: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray3
+        } else {
+            return UIColor.white
+        }
+    }
+
+    class var textGray: UIColor {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return UIColor(white: 72/255.0, alpha: 1)
+        }
     }
     
     class var confirm: UIColor {

@@ -50,9 +50,9 @@ class DateDetailsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEditAddress)))
         view.isUserInteractionEnabled = true
-        view.layer.borderWidth = 4
+        view.layer.borderWidth = 6
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.navigationGray.cgColor
+        view.layer.borderColor = UIColor.textGray.cgColor
         view.clipsToBounds = true
         return view
     }()
@@ -71,7 +71,7 @@ class DateDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Edit Address", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
-        button.setTitleColor(.navigationGray, for: .normal)
+        button.setTitleColor(.textGray, for: .normal)
         button.addTarget(self, action: #selector(didTapEditAddress), for: .touchUpInside)
         return button
     }()
@@ -102,7 +102,7 @@ class DateDetailsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEditReminder)))
         imageView.isUserInteractionEnabled = true
-        imageView.tintColor = UIColor.navigationGray
+        imageView.tintColor = UIColor.textGray
         imageView.image = UIImage(named: "sticky")?.withRenderingMode(.alwaysTemplate)
         return imageView
     }()
@@ -133,7 +133,7 @@ class DateDetailsViewController: UIViewController {
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAddressIcon)))
         circleImageView.image = UIImage(named: "envelope")?.withRenderingMode(.alwaysTemplate)
         circleImageView.tintColor = event.color
-        circleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+        circleImageView.layer.borderColor = UIColor.textGray.cgColor
         return circleImageView
     }()
 
@@ -142,8 +142,8 @@ class DateDetailsViewController: UIViewController {
         circleImageView.isUserInteractionEnabled = true
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapReminderIcon)))
         circleImageView.image = UIImage(named: "reminder")?.withRenderingMode(.alwaysTemplate)
-        circleImageView.tintColor = .navigationGray
-        circleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+        circleImageView.tintColor = .textGray
+        circleImageView.layer.borderColor = UIColor.textGray.cgColor
         return circleImageView
     }()
     
@@ -245,12 +245,12 @@ class DateDetailsViewController: UIViewController {
             addressCircleImageView.tintColor = event.color
             addressCircleImageView.layer.borderColor = event.color.cgColor
             addressContainerView.isHidden = false
-            reminderCircleImageView.tintColor = .navigationGray
-            reminderCircleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+            reminderCircleImageView.tintColor = .textGray
+            reminderCircleImageView.layer.borderColor = UIColor.textGray.cgColor
             reminderImageView.isHidden = true
         case .reminder:
-            addressCircleImageView.tintColor = .navigationGray
-            addressCircleImageView.layer.borderColor = UIColor.navigationGray.cgColor
+            addressCircleImageView.tintColor = .textGray
+            addressCircleImageView.layer.borderColor = UIColor.textGray.cgColor
             addressContainerView.isHidden = true
             reminderCircleImageView.tintColor = event.color
             reminderCircleImageView.layer.borderColor = event.color.cgColor
@@ -260,7 +260,7 @@ class DateDetailsViewController: UIViewController {
 
     private func configureView() {
         title = event.abbreviatedName
-        view.backgroundColor = .white
+        view.backgroundColor = .standardBackgroundColor
     }
     
     private func constructSubviews() {
@@ -310,7 +310,7 @@ class DateDetailsViewController: UIViewController {
             addressCircleImageView.heightAnchor.constraint(equalTo: addressCircleImageView.widthAnchor)
         ])
         NSLayoutConstraint.activate([
-            reminderImageView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 40),
+            reminderImageView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 30),
             reminderImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             reminderImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2),
             reminderImageView.heightAnchor.constraint(equalTo: reminderImageView.widthAnchor)
@@ -374,18 +374,21 @@ class DateDetailsViewController: UIViewController {
     @objc
     private func didTapGiftIdeas() {
         let viewController = NoteViewController(event: event, noteType: .gifts)
+        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
     private func didTapEventPlans() {
         let viewController = NoteViewController(event: event, noteType: .plans)
+        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapOtherNotes() {
         let viewController = NoteViewController(event: event, noteType: .other)
+        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
     
