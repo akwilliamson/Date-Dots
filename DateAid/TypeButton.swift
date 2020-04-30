@@ -6,7 +6,7 @@
 //  Copyright © 2015 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TypeButton: UIButton {
     required init(coder aDecoder: NSCoder) {

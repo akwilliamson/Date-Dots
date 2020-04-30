@@ -16,7 +16,7 @@ class TurningVC: UIViewController {
     let managedContext = CoreDataStack().managedObjectContext
     let colorForType = ["birthday": DateType.birthday.color, "anniversary": DateType.anniversary.color, "custom": DateType.other.color]
 
-    @IBOutlet weak var turningSlider: ValueSlider!
+//    @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var downArrow: UIButton!
     @IBOutlet weak var upArrow: UIButton!
@@ -27,10 +27,10 @@ class TurningVC: UIViewController {
         registerDateCellNib()
         fetchDatesIfNotBeenFetched()
         addColoredArrows()
-        turningSlider.addTarget(self, action: #selector(TurningVC.valueChanged(_:)), for: .valueChanged)
-        turningSlider.setValues(max: 100, value: 1)
-        turningSlider.minimumValue = 1
-        turningSlider.setColorTo(DateType.birthday.color)
+//        turningSlider.addTarget(self, action: #selector(TurningVC.valueChanged(_:)), for: .valueChanged)
+//        turningSlider.setValues(max: 100, value: 1)
+//        turningSlider.minimumValue = 1
+//        turningSlider.setColorTo(DateType.birthday.color)
         filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == 1 })
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
@@ -56,23 +56,23 @@ class TurningVC: UIViewController {
     }
     
     func minusDay(_ sender: UITapGestureRecognizer) {
-        if turningSlider.value > turningSlider.minimumValue {
-            turningSlider.value -= 1
-            title = "Who's turning \(Int(turningSlider.value))?"
-            filteredResults?.removeAll()
-            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
-            tableView.reloadData()
-        }
+//        if turningSlider.value > turningSlider.minimumValue {
+//            turningSlider.value -= 1
+//            title = "Who's turning \(Int(turningSlider.value))?"
+//            filteredResults?.removeAll()
+//            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
+//            tableView.reloadData()
+//        }
     }
     
     func plusDay(_ sender: UITapGestureRecognizer) {
-        if turningSlider.value < turningSlider.maximumValue {
-            turningSlider.value += 1
-            title = "Who's turning \(Int(turningSlider.value))?"
-            filteredResults?.removeAll()
-            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
-            tableView.reloadData()
-        }
+//        if turningSlider.value < turningSlider.maximumValue {
+//            turningSlider.value += 1
+//            title = "Who's turning \(Int(turningSlider.value))?"
+//            filteredResults?.removeAll()
+//            filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(turningSlider.value) })
+//            tableView.reloadData()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,14 +115,14 @@ class TurningVC: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
-    @objc func valueChanged(_ sender: ValueSlider) {
-        sender.value = round(sender.value)
-        title = "Who's turning \(Int(sender.value))?"
-        filteredResults?.removeAll()
-        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(sender.value) })
-        tableView.reloadData()
-    }
+//    
+//    @objc func valueChanged(_ sender: ValueSlider) {
+//        sender.value = round(sender.value)
+//        title = "Who's turning \(Int(sender.value))?"
+//        filteredResults?.removeAll()
+//        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(sender.value) })
+//        tableView.reloadData()
+//    }
     
     
 }

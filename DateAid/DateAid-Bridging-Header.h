@@ -1,5 +1,13 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  DateAid-Bridging-Header.h
+//  DateAid
+//
+//  Created by Aaron Williamson on 4/29/20.
+//  Copyright © 2020 Aaron Williamson. All rights reserved.
 //
 
-#import "ASValueTrackingSlider.h"
+#ifndef DateAid_Bridging_Header_h
+#define DateAid_Bridging_Header_h
+
+
+#endif /* DateAid_Bridging_Header_h */

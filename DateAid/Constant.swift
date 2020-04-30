@@ -6,7 +6,7 @@
 //  Copyright © 2017 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol Stringable: RawRepresentable {
     var value: String { get }

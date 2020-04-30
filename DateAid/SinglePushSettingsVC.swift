@@ -21,9 +21,9 @@ class SinglePushSettingsVC: UIViewController {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
-    
-    @IBOutlet weak var daySlider: ValueSlider!
-    @IBOutlet weak var timeSlider: ValueSlider!
+//
+//    @IBOutlet weak var daySlider: ValueSlider!
+//    @IBOutlet weak var timeSlider: ValueSlider!
     
     @IBOutlet weak var trashIcon: UIImageView!
     
@@ -31,7 +31,7 @@ class SinglePushSettingsVC: UIViewController {
         super.viewDidLoad()
         checkIfUserHasEnabledLocalNotifications()
         
-        addValueChangedTargetOn([daySlider, timeSlider])
+//        addValueChangedTargetOn([daySlider, timeSlider])
         addSingleTapGestureRecognizerOn([repeatLabel, trashIcon], forActions: ["toggleRepeat", "deletePreviousNotification"])
         
         setLabelAndSliderValues()
@@ -53,9 +53,9 @@ class SinglePushSettingsVC: UIViewController {
         application.registerUserNotificationSettings(localNotificationSettings)
     }
     
-    func addValueChangedTargetOn(_ sliders: [ValueSlider]) {
-        sliders.forEach { $0.addTarget(self, action: #selector(SinglePushSettingsVC.valueChanged(_:)), for: .valueChanged) }
-    }
+//    func addValueChangedTargetOn(_ sliders: [ValueSlider]) {
+//        sliders.forEach { $0.addTarget(self, action: #selector(SinglePushSettingsVC.valueChanged(_:)), for: .valueChanged) }
+//    }
     
     func addSingleTapGestureRecognizerOn(_ views: [UIView], forActions: [String]) {
         for (index, view) in views.enumerated() {
@@ -106,8 +106,8 @@ class SinglePushSettingsVC: UIViewController {
     }
     
     func setSliderValues(forDaysPrior daysPrior: Float, at hourOfDay: Float) {
-        daySlider.setValues(max: 21, value: daysPrior)
-        timeSlider.setValues(max: 23, value: hourOfDay)
+//        daySlider.setValues(max: 21, value: daysPrior)
+//        timeSlider.setValues(max: 23, value: hourOfDay)
     }
     
     func setDayLabelString(forDaysPrior: Float) -> String {
@@ -130,7 +130,7 @@ class SinglePushSettingsVC: UIViewController {
     func setLabelAndSliderColors() {
         if let color = colorForType[dateObject!.type!] {
             [dayLabel, timeLabel, repeatLabel].forEach { $0.backgroundColor = color }
-            [daySlider, timeSlider].forEach() { $0!.setColorTo(color) }
+//            [daySlider, timeSlider].forEach() { $0!.setColorTo(color) }
             trashIcon.tintColor = color
         }
     }
@@ -181,8 +181,8 @@ class SinglePushSettingsVC: UIViewController {
     
     
     func addLabelOnThumbForSliders() {
-        daySlider.addLabelOnThumb(withText: "D")
-        timeSlider.addLabelOnThumb(withText: "T")
+//        daySlider.addLabelOnThumb(withText: "D")
+//        timeSlider.addLabelOnThumb(withText: "T")
     }
     
     func toggleRepeat() {
@@ -203,29 +203,26 @@ class SinglePushSettingsVC: UIViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func setAlertBody() -> String {
-        let greeting = setAlertGreeting(forHourOfDay: timeSlider.value)
-        let message = setAlertMessage(forCountdown: daySlider.value)
-        return greeting + message
-    }
+//    func setAlertBody() -> String {
+//        let greeting = setAlertGreeting(forHourOfDay: timeSlider.value)
+//        let message = setAlertMessage(forCountdown: daySlider.value)
+//        return greeting + message
+//    }
     
-    @objc func valueChanged(_ sender: ValueSlider) {
-        
-        setLabelValues(forDaysPrior: daySlider.value, at: timeSlider.value)
-    }
-    
-    func secondsBeforeForDaysBefore() -> Double {
-        return Double(-60 * 60 * 24 * daySlider.integerValue())
-    }
+//    func secondsBeforeForDaysBefore() -> Double {
+//        return Double(-60 * 60 * 24 * daySlider.integerValue())
+//    }
     
     func secondsForHourOfDay() -> Double {
-        return Double(60 * 60 * timeSlider.integerValue())
+//        return Double(60 * 60 * timeSlider.integerValue())
+        return 0
     }
     
     func setFireDate() -> Foundation.Date {
-        let inSeconds = secondsBeforeForDaysBefore() + secondsForHourOfDay()
-        let fireMonthAndDay = dateObject.date?.addingTimeInterval(inSeconds)
-        return fireMonthAndDay!.nextOccurence
+//        let inSeconds = secondsBeforeForDaysBefore() + secondsForHourOfDay()
+//        let fireMonthAndDay = dateObject.date?.addingTimeInterval(inSeconds)
+//        return fireMonthAndDay!.nextOccurence
+        return Foundation.Date()
     }
     
     @IBAction func createNotification(_ sender: AnyObject) {
@@ -233,17 +230,17 @@ class SinglePushSettingsVC: UIViewController {
         
         let notification = UILocalNotification()
         let fireDate = setFireDate()
-        let alertBody = setAlertBody()
+//        let alertBody = setAlertBody()
         let alertAction = "Dismiss"
         let soundName = UILocalNotificationDefaultSoundName
-        let userInfo = ["date": String(describing: dateObject.objectID.uriRepresentation()), "daysPrior": String(daySlider.integerValue()), "hoursAfter": String(timeSlider.integerValue())]
+//        let userInfo = ["date": String(describing: dateObject.objectID.uriRepresentation()), "daysPrior": String(daySlider.integerValue()), "hoursAfter": String(timeSlider.integerValue())]
         let repeatInterval: NSCalendar.Unit? = repeatLabel.text == "Yearly" ? .year : nil
 
         notification.fireDate = fireDate
-        notification.alertBody = alertBody
+//        notification.alertBody = alertBody
         notification.alertAction = alertAction
         notification.soundName = soundName
-        notification.userInfo = userInfo
+//        notification.userInfo = userInfo
         if let repeatInterval = repeatInterval {
             notification.repeatInterval = repeatInterval
         }

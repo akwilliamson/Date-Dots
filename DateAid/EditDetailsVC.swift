@@ -13,8 +13,6 @@ class EditDetailsVC: UIViewController {
     
     var dateObject: Date!
     var managedContext: NSManagedObjectContext?
-    
-    var addressDelegate: SetAddressDelegate?
 
     @IBOutlet weak var addressTextField: AddNameTextField!
     @IBOutlet weak var regionTextField: AddNameTextField!
@@ -49,7 +47,6 @@ class EditDetailsVC: UIViewController {
     @IBAction func done(_ sender: AnyObject) {
         dateObject.address?.street = addressTextField.text
         dateObject.address?.region = regionTextField.text
-        addressDelegate?.repopulateAddressFor(dateObject: dateObject)
         
         do { try managedContext?.save()
             if let DateDetailsViewController = self.navigationController?.viewControllers[1] as? DateDetailsViewController {

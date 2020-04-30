@@ -9,10 +9,6 @@
 import UIKit
 import CoreData
 
-protocol SetAddressDelegate {
-    func repopulateAddressFor(dateObject date: Date)
-}
-
 protocol ResetDateDelegate {
     func resetDate(_ date: Date)
 }
@@ -52,8 +48,8 @@ class AddDateVC: UIViewController {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var yearField: UITextField!
     
-    @IBOutlet weak var monthSlider: ValueSlider!
-    @IBOutlet weak var daySlider: ValueSlider!
+//    @IBOutlet weak var monthSlider: ValueSlider!
+//    @IBOutlet weak var daySlider: ValueSlider!
     
     @IBOutlet weak var editDetailsButton: UIButton!
     
@@ -75,8 +71,8 @@ class AddDateVC: UIViewController {
         }
         addColoredArrows()
         
-        setDataSourceFor([monthSlider, daySlider])
-        addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
+//        setDataSourceFor([monthSlider, daySlider])
+//        addTarget(onSliders: [monthSlider, daySlider], forAction: "valueChanged:")
         
         setInitialValues(forDate: dateToSave, whether: isBeingEdited)
         addImagesToButtons()
@@ -96,33 +92,33 @@ class AddDateVC: UIViewController {
         view.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func minusMonth(_ sender: UITapGestureRecognizer) {
-        if monthSlider.value > monthSlider.minimumValue {
-            monthSlider.value -= 1
-            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
-        }
-    }
-    
-    func plusMonth(_ sender: UITapGestureRecognizer) {
-        if monthSlider.value < monthSlider.maximumValue {
-            monthSlider.value += 1
-            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
-        }
-    }
-    
-    func minusDay(_ sender: UITapGestureRecognizer) {
-        if daySlider.value > daySlider.minimumValue {
-            daySlider.value -= 1
-            dayLabel.text = fullDays[Int(daySlider.value)-1]
-        }
-    }
-    
-    func plusDay(_ sender: UITapGestureRecognizer) {
-        if daySlider.value < daySlider.maximumValue {
-            daySlider.value += 1
-            dayLabel.text = fullDays[Int(daySlider.value)-1]
-        }
-    }
+//    func minusMonth(_ sender: UITapGestureRecognizer) {
+//        if monthSlider.value > monthSlider.minimumValue {
+//            monthSlider.value -= 1
+//            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+//        }
+//    }
+//
+//    func plusMonth(_ sender: UITapGestureRecognizer) {
+//        if monthSlider.value < monthSlider.maximumValue {
+//            monthSlider.value += 1
+//            monthLabel.text = fullMonths[Int(monthSlider.value)-1]
+//        }
+//    }
+//
+//    func minusDay(_ sender: UITapGestureRecognizer) {
+//        if daySlider.value > daySlider.minimumValue {
+//            daySlider.value -= 1
+//            dayLabel.text = fullDays[Int(daySlider.value)-1]
+//        }
+//    }
+//
+//    func plusDay(_ sender: UITapGestureRecognizer) {
+//        if daySlider.value < daySlider.maximumValue {
+//            daySlider.value += 1
+//            dayLabel.text = fullDays[Int(daySlider.value)-1]
+//        }
+//    }
     
     override func viewDidLayoutSubviews() {
         addLabelOnThumbForSliders()
@@ -161,7 +157,7 @@ class AddDateVC: UIViewController {
     }
     
     func setTheme(to color: UIColor) {
-        [monthSlider, daySlider].forEach { $0!.setColorTo(color) }
+//        [monthSlider, daySlider].forEach { $0!.setColorTo(color) }
         editDetailsButton.tintColor = color
     }
     
@@ -182,43 +178,43 @@ class AddDateVC: UIViewController {
         plusDayLabel.tintColor = UIColor.lightGray
     }
     
-    func setDataSourceFor(_ sliders: [ASValueTrackingSlider]) {
-        sliders.forEach { $0.dataSource = self }
-    }
+//    func setDataSourceFor(_ sliders: [ASValueTrackingSlider]) {
+//        sliders.forEach { $0.dataSource = self }
+//    }
     
-    func addTarget(onSliders sliders: [ValueSlider], forAction action: String) {
-        sliders.forEach { $0.addTarget(self, action: Selector(action), for: .valueChanged) }
-    }
+//    func addTarget(onSliders sliders: [ValueSlider], forAction action: String) {
+//        sliders.forEach { $0.addTarget(self, action: Selector(action), for: .valueChanged) }
+//    }
     
     func setInitialValues(forDate date: Date?, whether isBeingEdited: Bool) {
         switch isBeingEdited {
         case true:
             if let name = date?.name, let year = date?.date?.year, let month = date?.date?.month, let day = date?.date?.day {
                 
-                monthSlider.setValues(max: 12, value: Float(month))
-                daySlider.setValues(max: 31, value: Float(day))
+//                monthSlider.setValues(max: 12, value: Float(month))
+//                daySlider.setValues(max: 31, value: Float(day))
                 nameField.text = name
                 yearField.text = year != 1604 ? String(year) : nil
                 monthLabel.text = fullMonths[month-1]
                 dayLabel.text = fullDays[day-1]
             }
         case false:
-            monthSlider.setValues(max: 12, value: 1)
-            daySlider.setValues(max: 31, value: 1)
+//            monthSlider.setValues(max: 12, value: 1)
+//            daySlider.setValues(max: 31, value: 1)
             monthLabel.text = "Jan"
             dayLabel.text = "1st"
         }
     }
     
     func addLabelOnThumbForSliders() {
-        monthSlider.addLabelOnThumb(withText: "M")
-        daySlider.addLabelOnThumb(withText: "D")
+//        monthSlider.addLabelOnThumb(withText: "M")
+//        daySlider.addLabelOnThumb(withText: "D")
     }
     
     func animateButtonInAndOut(for date: Date?) {
         if let date = date {
             let button = getProperButton(forTypeColor: date.color)
-            button.animateInAndOut()
+//            button.animateInAndOut()
         }
     }
     
@@ -242,7 +238,6 @@ class AddDateVC: UIViewController {
                 setValuesOnDateToSave()
                 editDetailsVC.dateObject = dateToSave
                 editDetailsVC.managedContext = managedContext
-                editDetailsVC.addressDelegate = self
             } else {
                 showAlertForNoName()
             }
@@ -268,7 +263,7 @@ class AddDateVC: UIViewController {
         if let dateToSave = dateToSave {
             dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces)
             dateToSave.abbreviatedName = dateToSave.name?.abbreviatedName
-            dateToSave.date = setDateFromValues()
+//            dateToSave.date = setDateFromValues()
             dateToSave.equalizedDate = dateToSave.date?.formatted("MM/dd")
             
             if dateToSave.address == nil {
@@ -286,15 +281,15 @@ class AddDateVC: UIViewController {
         
     }
     
-    func setDateFromValues() -> Foundation.Date {
-        var dateString = "-\(Int(monthSlider.value))-\(Int(daySlider.value))"
-        if let year = Int(yearField.text!) {
-            dateString = year <= Foundation.Date().year! ? String(year) + dateString : "1604" + dateString
-        } else {
-            dateString = "1604" + dateString
-        }
-        return Calendar.current.startOfDay(for: Foundation.Date(dateString: dateString))
-    }
+//    func setDateFromValues() -> Foundation.Date {
+//        var dateString = "-\(Int(monthSlider.value))-\(Int(daySlider.value))"
+//        if let year = Int(yearField.text!) {
+//            dateString = year <= Foundation.Date().year! ? String(year) + dateString : "1604" + dateString
+//        } else {
+//            dateString = "1604" + dateString
+//        }
+//        return Calendar.current.startOfDay(for: Foundation.Date(dateString: dateString))
+//    }
     
     func showAlertForNoName() {
         let alert = UIAlertController(title: "No Name", message: "Please add a name before continuing", preferredStyle: .alert)
@@ -305,22 +300,13 @@ class AddDateVC: UIViewController {
     
 // MARK: SELECTORS
     
-    func valueChanged(_ sender: ValueSlider) {
-        if sender == monthSlider {
-            monthLabel.text = fullMonths[Int(sender.value)-1]
-        } else {
-            dayLabel.text = fullDays[Int(sender.value)-1]
-        }
-    }
-}
-
-extension AddDateVC: SetAddressDelegate {
-    
-    func repopulateAddressFor(dateObject date: Date) {
-        self.street = date.address?.street
-        self.region = date.address?.region
-    }
-
+//    func valueChanged(_ sender: ValueSlider) {
+//        if sender == monthSlider {
+//            monthLabel.text = fullMonths[Int(sender.value)-1]
+//        } else {
+//            dayLabel.text = fullDays[Int(sender.value)-1]
+//        }
+//    }
 }
 
 extension AddDateVC: ResetDateDelegate {
@@ -345,11 +331,11 @@ extension AddDateVC: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        monthSlider.isUserInteractionEnabled = false
+//        monthSlider.isUserInteractionEnabled = false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        monthSlider.isUserInteractionEnabled = true
+//        monthSlider.isUserInteractionEnabled = true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -357,20 +343,20 @@ extension AddDateVC: UITextFieldDelegate {
     }
 }
 
-extension AddDateVC: ASValueTrackingSliderDataSource {
-    
-    func slider(_ slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
-        let intValue = Int(value)
-        switch slider {
-        case monthSlider:
-            return months[intValue - 1]
-        case daySlider:
-            return String(intValue)
-        default:
-            return "No String"
-        }
-    }
-}
+//extension AddDateVC: ASValueTrackingSliderDataSource {
+//
+//    func slider(_ slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
+//        let intValue = Int(value)
+//        switch slider {
+//        case monthSlider:
+//            return months[intValue - 1]
+//        case daySlider:
+//            return String(intValue)
+//        default:
+//            return "No String"
+//        }
+//    }
+//}
 
 // MARK: Actions
 
@@ -380,7 +366,7 @@ extension AddDateVC {
         [anniversaryButton, customButton].forEach { $0.stopAnimating() }
         dateType = "birthday"
         setTheme(to: DateType.birthday.color)
-        sender.animateInAndOut()
+//        sender.animateInAndOut()
     }
     
     @IBAction func anniversaryButton(_ sender: UIButton) {
