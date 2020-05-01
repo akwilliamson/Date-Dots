@@ -9,14 +9,14 @@
 class DateDetailsViewModel {
 
     /// The options for displaying extra information about an event.
-    enum ChosenEvent {
+    enum ToggledEvent {
         case address
         case reminder
     }
 
     // MARK: Properties
     
-    var chosenEvent: ChosenEvent = .address
+    var toggledEvent: ToggledEvent = .address
 
     // MARK: Details
 
@@ -45,44 +45,9 @@ class DateDetailsViewModel {
         }
     }
 
-    // MARK: Address
-
-    func textForAddressLabel(for event: Date) -> String {
-        guard let street = event.address?.street, let region = event.address?.region else {
-            return "No Address"
-        }
-
-        return "\(street)\n\(region)"
-    }
-
-    // MARK: Reminders
-
-    func textForReminderLabel(for daysPrior: Int?, hourOfDay: Int?) -> String {
-        guard let daysPrior = daysPrior, let hourOfDay = hourOfDay  else {
-            return "Reminder\nNot Set"
-        }
-
-        var text: String
-
-        switch daysPrior {
-        case 0:  text = "Day of\n"
-        case 1:  text = "\(daysPrior) day before\n"
-        default: text = "\(daysPrior) days before\n"
-        }
-        
-        switch hourOfDay {
-        case 0:      text += "at midnight"
-        case 1...11: text += "at \(hourOfDay)am"
-        case 12:     text += "at noon"
-        default:     text += "at \(hourOfDay - 12)pm"
-        }
-        
-        return text
-    }
-
     // MARK: Actions
 
-    func didSelectChosenEvent(_ chosenEvent: ChosenEvent) {
-        self.chosenEvent = chosenEvent
+    func didToggleEvent(_ toggledEvent: ToggledEvent) {
+        self.toggledEvent = toggledEvent
     }
 }

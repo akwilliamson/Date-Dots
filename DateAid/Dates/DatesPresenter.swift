@@ -23,8 +23,8 @@ class DatesPresenter {
             static let title = "Dates"
         }
         enum Image {
-            static let iconSelected = UIImage(named: "selected-calendar")!
-            static let iconUnselected =  UIImage(named: "unselected-calendar")!
+            static let iconSelected = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
+            static let iconUnselected =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
         }
         enum Layout {
             static let searchBarFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)

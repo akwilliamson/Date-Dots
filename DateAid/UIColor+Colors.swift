@@ -10,6 +10,14 @@ import UIKit
 
 extension UIColor {
     
+    class var standardTintColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .secondaryLabel
+        } else {
+            return .black
+        }
+    }
+    
     class var standardBackgroundColor: UIColor {
         if #available(iOS 13.0, *) {
             return .systemBackground

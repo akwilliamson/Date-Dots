@@ -51,31 +51,17 @@ class DateDetailsViewController: UIViewController {
         return view
     }()
 
-    // MARK: UI - Reminders
-
-    private lazy var reminderImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEditReminder)))
-        imageView.isUserInteractionEnabled = true
-        imageView.tintColor = UIColor.textGray
-        imageView.image = UIImage(named: "sticky")?.withRenderingMode(.alwaysTemplate)
-        return imageView
-    }()
-
-    private lazy var reminderLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Noteworthy-Bold", size: 20)
-        label.textColor = event.color
-        label.textAlignment = .center
-        return label
+    // MARK: UI - Reminder
+    
+    private lazy var reminderView: ReminderView = {
+        let viewModel = ReminderViewViewModel(eventID: event.objectID.uriRepresentation())
+        let view = ReminderView(viewModel: viewModel, delegate: self)
+        return view
     }()
     
     // MARK: UI - Circle Icons
     
-    private let circleImageStackView: UIStackView = {
+    private let toggleButtonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 50
@@ -171,46 +157,24 @@ class DateDetailsViewController: UIViewController {
         constructSubviews()
         constrainSubviews()
         setButtonState()
-        populateReminderLabel()
-    }
-    
-    private func populateReminderLabel() {
-
-        var daysPrior: Int? = nil
-        var hourOfDay: Int? = nil
-        
-        if let notifications = UIApplication.shared.scheduledLocalNotifications {
-            for notification in notifications {
-                guard let notificationID = notification.userInfo?["date"] as? String else { continue }
-                
-                let dateObjectURL = String(describing: event.objectID.uriRepresentation())
-                
-                if notificationID == dateObjectURL {
-                    daysPrior = Int(notification.userInfo?["daysPrior"] as! String)
-                    hourOfDay = Int(notification.userInfo?["hoursAfter"] as! String)
-                }
-            }
-        }
-
-        reminderLabel.text = viewModel.textForReminderLabel(for: daysPrior, hourOfDay: hourOfDay)
     }
 
     private func setButtonState() {
-        switch viewModel.chosenEvent {
+        switch viewModel.toggledEvent {
         case .address:
             addressCircleImageView.tintColor = event.color
             addressCircleImageView.layer.borderColor = event.color.cgColor
             addressView.isHidden = false
             reminderCircleImageView.tintColor = .textGray
             reminderCircleImageView.layer.borderColor = UIColor.textGray.cgColor
-            reminderImageView.isHidden = true
+            reminderView.isHidden = true
         case .reminder:
             addressCircleImageView.tintColor = .textGray
             addressCircleImageView.layer.borderColor = UIColor.textGray.cgColor
             addressView.isHidden = true
             reminderCircleImageView.tintColor = event.color
             reminderCircleImageView.layer.borderColor = event.color.cgColor
-            reminderImageView.isHidden = false
+            reminderView.isHidden = false
         }
     }
 
@@ -225,11 +189,10 @@ class DateDetailsViewController: UIViewController {
         eventLabelStackView.addArrangedSubview(ageLabel)
         eventLabelStackView.addArrangedSubview(countdownLabel)
         view.addSubview(addressView)
-        view.addSubview(reminderImageView)
-        reminderImageView.addSubview(reminderLabel)
-        view.addSubview(circleImageStackView)
-        circleImageStackView.addArrangedSubview(addressCircleImageView)
-        circleImageStackView.addArrangedSubview(reminderCircleImageView)
+        view.addSubview(reminderView)
+        view.addSubview(toggleButtonStackView)
+        toggleButtonStackView.addArrangedSubview(addressCircleImageView)
+        toggleButtonStackView.addArrangedSubview(reminderCircleImageView)
         view.addSubview(notesStackView)
         notesStackView.addArrangedSubview(giftIdeasButton)
         notesStackView.addArrangedSubview(eventPlansButton)
@@ -255,27 +218,21 @@ class DateDetailsViewController: UIViewController {
             giftIdeasButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         NSLayoutConstraint.activate([
-            circleImageStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -20),
-            circleImageStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            toggleButtonStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -20),
+            toggleButtonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
             addressCircleImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
             addressCircleImageView.heightAnchor.constraint(equalTo: addressCircleImageView.widthAnchor)
         ])
         NSLayoutConstraint.activate([
-            reminderImageView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 30),
-            reminderImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            reminderImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2),
-            reminderImageView.heightAnchor.constraint(equalTo: reminderImageView.widthAnchor)
+            reminderView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 10),
+            reminderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            reminderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.7),
+            reminderView.heightAnchor.constraint(equalTo: reminderView.widthAnchor)
         ])
         NSLayoutConstraint.activate([
-            reminderLabel.topAnchor.constraint(equalTo: reminderImageView.topAnchor),
-            reminderLabel.bottomAnchor.constraint(equalTo: reminderImageView.bottomAnchor),
-            reminderLabel.leadingAnchor.constraint(equalTo: reminderImageView.leadingAnchor),
-            reminderLabel.trailingAnchor.constraint(equalTo: reminderImageView.trailingAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            addressView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 60),
+            addressView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 40),
             addressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addressView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.5),
             addressView.heightAnchor.constraint(equalTo: addressView.widthAnchor, multiplier: 0.5)
@@ -286,26 +243,14 @@ class DateDetailsViewController: UIViewController {
     
     @objc
     private func didTapAddressIcon() {
-        viewModel.chosenEvent = .address
+        viewModel.toggledEvent = .address
         setButtonState()
-    }
-
-    @objc
-    private func editAddressTapped() {
-        /// Navigate to the event's edit address view
-//        performSegue(withIdentifier: "ShowAddress", sender: self)
     }
     
     @objc
     private func didTapReminderIcon() {
-        viewModel.chosenEvent = .reminder
+        viewModel.toggledEvent = .reminder
         setButtonState()
-    }
-    
-    @objc
-    private func didTapEditReminder() {
-        /// Navigate to the event's edit reminder view
-//        performSegue(withIdentifier: "ShowNotification", sender: self)
     }
 
     @objc
@@ -351,5 +296,12 @@ class DateDetailsViewController: UIViewController {
             editDetailsVC.dateObject = event
             editDetailsVC.managedContext = managedContext
         }
+    }
+}
+
+extension DateDetailsViewController: ReminderViewDelegate {
+
+    func didTapReminderView() {
+        // Navigation to notifications
     }
 }

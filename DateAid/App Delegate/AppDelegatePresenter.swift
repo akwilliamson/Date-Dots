@@ -12,11 +12,19 @@ class AppDelegatePresenter {
     
     weak var view: AppDelegateOutputting?
     weak var wireframe: AppDelegateWireframe?
+    
+    private enum Constant {
+        static let tintColor = UIColor.textGray
+        static let barTintColor = UIColor.navigationGray
+    }
 }
 
 extension AppDelegatePresenter: AppDelegateEventHandling {
     
-    func setupApp() {}
+    func setupApp() {
+        view?.setTabBar(tintColor: Constant.tintColor)
+        view?.setTabBar(barTintColor: Constant.barTintColor)
+    }
     
     func showInitialImport(in window: UIWindow?) {
         wireframe?.presentInitialImportModule(in: window)

@@ -29,20 +29,6 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.setupView()
         presenter.showTabs(in: self)
-    }
-}
-
-// MARK: TabBarViewOutputting
-
-extension TabBarViewController: TabBarViewOutputting {
-    
-    func setTabBar(barTintColor: UIColor) {
-        tabBar.barTintColor = barTintColor
-    }
-
-    func setTabBar(tintColor: UIColor) {
-        tabBar.tintColor = tintColor
     }
 }

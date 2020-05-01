@@ -51,6 +51,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: AppDelegateOutputting {}
+// MARK: AppDelegateOutputting
 
-
+extension AppDelegate: AppDelegateOutputting {
+    
+    func setTabBar(tintColor: UIColor) {
+        UITabBar.appearance().tintColor = tintColor
+    }
+    
+    func setTabBar(barTintColor: UIColor) {
+        UITabBar.appearance().barTintColor = barTintColor
+    }
+}

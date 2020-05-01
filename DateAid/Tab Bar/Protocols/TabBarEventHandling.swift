@@ -10,6 +10,5 @@ import UIKit
 
 protocol TabBarEventHandling: class {
 
-    func setupView()
     func showTabs(in tabBar: TabBarViewController)
 }

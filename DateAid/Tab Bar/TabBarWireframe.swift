@@ -26,7 +26,7 @@ class TabBarWireframe: NSObject {
     // MARK: Routing
     
     func presentModule(in window: UIWindow?) {
-        guard let view = presenter.view as? TabBarViewController else { return }
+        guard let view = presenter.view else { return }
         window?.rootViewController = view
     }
     
@@ -37,7 +37,7 @@ class TabBarWireframe: NSObject {
 
     // MARK: Helpers
     
-    private func tabBarViewController() -> TabBarViewOutputting {
+    private func tabBarViewController() -> TabBarViewController {
         return TabBarViewController(presenter: presenter)
     }
 }

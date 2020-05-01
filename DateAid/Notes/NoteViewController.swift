@@ -75,7 +75,7 @@ class NoteViewController: UIViewController {
 
     private func configureView() {
         title = noteType.title
-        view.backgroundColor = .white
+        view.backgroundColor = .standardBackgroundColor
         navigationItem.rightBarButtonItem = saveBarButtonItem
     }
 
@@ -86,9 +86,9 @@ class NoteViewController: UIViewController {
     private func constrainSubviews() {
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 16),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 16)
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
 

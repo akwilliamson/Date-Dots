@@ -6,6 +6,10 @@
 //  Copyright © 2017 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol AppDelegateOutputting: class {}
+protocol AppDelegateOutputting: class {
+ 
+    func setTabBar(tintColor: UIColor)
+    func setTabBar(barTintColor: UIColor)
+}

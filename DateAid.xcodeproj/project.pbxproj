@@ -13,13 +13,14 @@
 		970622461E2C3F0B0020743C /* TabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622451E2C3F0B0020743C /* TabBarPresenter.swift */; };
 		970622481E2C3F160020743C /* TabBarWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622471E2C3F160020743C /* TabBarWireframe.swift */; };
 		9706224A1E2C3F210020743C /* TabBarEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622491E2C3F210020743C /* TabBarEventHandling.swift */; };
-		9706224C1E2C3F2C0020743C /* TabBarViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */; };
 		9707A7E91DBBFD6100C4A9C0 /* DatesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */; };
 		9707A7EB1DBC073D00C4A9C0 /* DatesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */; };
 		9708075C1BC7303800F030D3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708075B1BC7303800F030D3 /* TypeButton.swift */; };
 		970D93621BC4765900D7F1FF /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* UIColor+Colors.swift */; };
 		971DBA37244C1E3D00BFB727 /* DatesNavigationViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DBA36244C1E3D00BFB727 /* DatesNavigationViewOutputting.swift */; };
 		9725927C1C0D005200BE37BB /* AlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9725927B1C0D005200BE37BB /* AlertControllerExtension.swift */; };
+		972E323F245A902B00E9DAAA /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972E323E245A902B00E9DAAA /* ReminderView.swift */; };
+		972E3241245A903300E9DAAA /* ReminderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972E3240245A903300E9DAAA /* ReminderViewViewModel.swift */; };
 		973023D91BD6B6E80087BA54 /* ResponderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973023D81BD6B6E80087BA54 /* ResponderExtension.swift */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
 		97364CEB1AFBF44A0095BC57 /* InitialImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */; };
@@ -106,7 +107,6 @@
 		970622451E2C3F0B0020743C /* TabBarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarPresenter.swift; sourceTree = "<group>"; };
 		970622471E2C3F160020743C /* TabBarWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarWireframe.swift; sourceTree = "<group>"; };
 		970622491E2C3F210020743C /* TabBarEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarEventHandling.swift; sourceTree = "<group>"; };
-		9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewOutputting.swift; sourceTree = "<group>"; };
 		9707A7E81DBBFD6100C4A9C0 /* DatesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesPresenter.swift; sourceTree = "<group>"; };
 		9707A7EA1DBC073D00C4A9C0 /* DatesInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesInteractor.swift; sourceTree = "<group>"; };
 		9708075B1BC7303800F030D3 /* TypeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeButton.swift; sourceTree = "<group>"; };
@@ -114,6 +114,8 @@
 		971DBA36244C1E3D00BFB727 /* DatesNavigationViewOutputting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesNavigationViewOutputting.swift; sourceTree = "<group>"; };
 		9725927B1C0D005200BE37BB /* AlertControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertControllerExtension.swift; sourceTree = "<group>"; };
 		972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
+		972E323E245A902B00E9DAAA /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		972E3240245A903300E9DAAA /* ReminderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewViewModel.swift; sourceTree = "<group>"; };
 		973023D81BD6B6E80087BA54 /* ResponderExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderExtension.swift; sourceTree = "<group>"; };
 		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97364CE41AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -242,6 +244,15 @@
 				97364CE41AFBF44A0095BC57 /* Info.plist */,
 			);
 			name = "Root Files";
+			sourceTree = "<group>";
+		};
+		972E323D245A8E7100E9DAAA /* Reminder View */ = {
+			isa = PBXGroup;
+			children = (
+				972E323E245A902B00E9DAAA /* ReminderView.swift */,
+				972E3240245A903300E9DAAA /* ReminderViewViewModel.swift */,
+			);
+			path = "Reminder View";
 			sourceTree = "<group>";
 		};
 		97364CD71AFBF44A0095BC57 = {
@@ -455,7 +466,6 @@
 			isa = PBXGroup;
 			children = (
 				970622491E2C3F210020743C /* TabBarEventHandling.swift */,
-				9706224B1E2C3F2C0020743C /* TabBarViewOutputting.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -518,6 +528,7 @@
 				975DBBBC1DAB748600D4CCC3 /* DateDetailsViewController.swift */,
 				975713B02455507E00EDD963 /* DateDetailsViewModel.swift */,
 				97C901E5245A8846005AF301 /* Address View */,
+				972E323D245A8E7100E9DAAA /* Reminder View */,
 			);
 			path = "Date Details";
 			sourceTree = "<group>";
@@ -712,11 +723,11 @@
 				97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */,
 				97FA131F1DBEF63D00C9DBFE /* DatesInteractorOutputting.swift in Sources */,
 				9781F98A1E3E8A5300E2C434 /* DatesNavigationEventHandling.swift in Sources */,
-				9706224C1E2C3F2C0020743C /* TabBarViewOutputting.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97B67D861E512F86006C3216 /* InitialImportInteractor.swift in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* DateExtension.swift in Sources */,
 				9706223F1E2C31880020743C /* TabBarViewController.swift in Sources */,
+				972E3241245A903300E9DAAA /* ReminderViewViewModel.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
@@ -746,6 +757,7 @@
 				9706224A1E2C3F210020743C /* TabBarEventHandling.swift in Sources */,
 				97ED37601E45A70600B054FE /* AppDelegateWireframe.swift in Sources */,
 				970622421E2C32100020743C /* DatesNavigationViewController.swift in Sources */,
+				972E323F245A902B00E9DAAA /* ReminderView.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* NoteViewController.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,

@@ -35,8 +35,8 @@ class AddressView: UIView {
     private lazy var editAddressButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Edit Address", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        button.setTitle("Edit", for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
         button.setTitleColor(.textGray, for: .normal)
         button.addTarget(self, action: #selector(didTapEditAddress), for: .touchUpInside)
         return button
@@ -45,7 +45,8 @@ class AddressView: UIView {
     private lazy var stampImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "stamp")
+        imageView.tintColor = .standardTintColor
+        imageView.image = UIImage(named: "stamp")?.withRenderingMode(.alwaysTemplate)
         return imageView
     }()
 
@@ -74,27 +75,38 @@ class AddressView: UIView {
     init(viewModel: AddressViewViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        configureView()
+        constructSubviews()
+        constrainSubviews()
     }
 
+    // MARK: View Setup
+
     private func configureView() {
-        
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
-    private func constructView() {
+    private func constructSubviews() {
         addSubview(addressContainerView)
         addressContainerView.addSubview(editAddressButton)
         addressContainerView.addSubview(stampImageView)
         addressContainerView.addSubview(addressLabel)
     }
     
-    private func constrainView() {
+    private func constrainSubviews() {
+        NSLayoutConstraint.activate([
+            addressContainerView.topAnchor.constraint(equalTo: topAnchor),
+            addressContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
         NSLayoutConstraint.activate([
             editAddressButton.topAnchor.constraint(equalTo: addressContainerView.topAnchor, constant: 8),
             editAddressButton.leadingAnchor.constraint(equalTo: addressContainerView.leadingAnchor, constant: 12),
         ])
         NSLayoutConstraint.activate([
-            stampImageView.topAnchor.constraint(equalTo: addressContainerView.topAnchor, constant: 8),
-            stampImageView.trailingAnchor.constraint(equalTo: addressContainerView.trailingAnchor, constant: -8),
+            stampImageView.topAnchor.constraint(equalTo: addressContainerView.topAnchor, constant: 12),
+            stampImageView.trailingAnchor.constraint(equalTo: addressContainerView.trailingAnchor, constant: -12),
             stampImageView.widthAnchor.constraint(equalToConstant: 25),
             stampImageView.heightAnchor.constraint(equalToConstant: 30),
         ])
@@ -106,7 +118,7 @@ class AddressView: UIView {
         ])
     }
     
-    // MARK: Action
+    // MARK: Actions
     
     @objc
     func didTapEditAddress() {
