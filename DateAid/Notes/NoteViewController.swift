@@ -75,7 +75,7 @@ class NoteViewController: UIViewController {
 
     private func configureView() {
         title = noteType.title
-        view.backgroundColor = .standardBackgroundColor
+        view.backgroundColor = .compatibleSystemBackground
         navigationItem.rightBarButtonItem = saveBarButtonItem
     }
 

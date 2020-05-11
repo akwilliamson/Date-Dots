@@ -14,8 +14,8 @@ class AppDelegatePresenter {
     weak var wireframe: AppDelegateWireframe?
     
     private enum Constant {
-        static let tintColor = UIColor.textGray
-        static let barTintColor = UIColor.navigationGray
+        static let tintColor = UIColor.compatibleLabel
+        static let barTintColor = UIColor.compatibleSystemGray3
     }
 }
 

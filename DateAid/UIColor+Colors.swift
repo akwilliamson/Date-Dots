@@ -10,7 +10,7 @@ import UIKit
 
 extension UIColor {
     
-    class var standardTintColor: UIColor {
+    class var compatibleSecondaryLabel: UIColor {
         if #available(iOS 13.0, *) {
             return .secondaryLabel
         } else {
@@ -18,7 +18,7 @@ extension UIColor {
         }
     }
     
-    class var standardBackgroundColor: UIColor {
+    class var compatibleSystemBackground: UIColor {
         if #available(iOS 13.0, *) {
             return .systemBackground
         } else {
@@ -26,7 +26,7 @@ extension UIColor {
         }
     }
 
-    class var navigationGray: UIColor {
+    class var compatibleSystemGray3: UIColor {
         if #available(iOS 13.0, *) {
             return .systemGray3
         } else {
@@ -34,7 +34,7 @@ extension UIColor {
         }
     }
 
-    class var textGray: UIColor {
+    class var compatibleLabel: UIColor {
         if #available(iOS 13.0, *) {
             return .label
         } else {

@@ -20,7 +20,7 @@ class ReminderView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = true
-        imageView.tintColor = UIColor.textGray
+        imageView.tintColor = UIColor.compatibleLabel
         imageView.image = UIImage(named: "sticky")?.withRenderingMode(.alwaysTemplate)
         return imageView
     }()

@@ -17,9 +17,9 @@ class DatesNavigationPresenter {
 
     private enum Constant {
         enum Style {
-            static let barTintColor = UIColor.navigationGray
-            static let tintColor = UIColor.textGray
-            static let foregroundColor = UIColor.textGray
+            static let barTintColor = UIColor.compatibleSystemGray3
+            static let tintColor = UIColor.compatibleLabel
+            static let foregroundColor = UIColor.compatibleLabel
             static let font = UIFont(name: "AvenirNext-Bold", size: 23)!
         }
     }

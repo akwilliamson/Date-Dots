@@ -98,7 +98,7 @@ class DatesViewController: UIViewController {
     // MARK: View Setup
 
     private func configureView() {
-        view.backgroundColor = .standardBackgroundColor
+        view.backgroundColor = .compatibleSystemBackground
         navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
 
@@ -144,9 +144,8 @@ class DatesViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        // present: AddDateVC()
-        // set: addDateVC.isBeingEdited = false
-        // set: addDateVC.dateType = "birthday"
+        let dateSetupViewController = DateSetupViewController()
+        navigationController?.pushViewController(dateSetupViewController, animated: true)
     }
     
     @objc
@@ -219,7 +218,7 @@ extension DatesViewController: DatesViewOutputting {
     
     func configureTabBar(image: UIImage, selectedImage: UIImage) {
         tabBarItem = UITabBarItem(title: "Dates", image: image, selectedImage: selectedImage)
-        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.textGray], for: .normal)
+        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.compatibleLabel], for: .normal)
     }
     
     func configureNavigationBar(title: String) {
