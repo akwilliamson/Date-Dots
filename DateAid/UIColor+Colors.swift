@@ -34,15 +34,23 @@ extension UIColor {
         }
     }
 
+    class var compatiblePlaceholderText: UIColor {
+        if #available(iOS 13.0, *) {
+            return .placeholderText
+        } else {
+            return UIColor(red: 235/255, green: 235/255, blue: 245/255, alpha: 1)
+        }
+    }
+
     class var compatibleLabel: UIColor {
         if #available(iOS 13.0, *) {
             return .label
         } else {
-            return UIColor(white: 72/255.0, alpha: 1)
+            return UIColor(white: 72/255, alpha: 1)
         }
     }
     
     class var confirm: UIColor {
-        return UIColor(red:  102/255.0, green: 165/255.0, blue: 48/255.0, alpha: 1)
+        return UIColor(red:  102/255, green: 165/255, blue: 48/255, alpha: 1)
     }
 }

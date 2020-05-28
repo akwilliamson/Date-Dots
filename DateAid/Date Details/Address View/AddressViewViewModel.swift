@@ -23,9 +23,7 @@ class AddressViewViewModel {
     private let dateType: DateType
     
     // MARK: Public Properties
-    
-    var isEditing = false
-    
+
     var addressText: String {
         return address?.street ?? "Address"
     }
@@ -48,21 +46,5 @@ class AddressViewViewModel {
     
     var regionFont: UIFont {
         return address?.region == nil ? UIFont(name: "AvenirNext-DemiBold", size: 18)! : UIFont(name: "Noteworthy-Bold", size: 20)!
-    }
-    
-    var editButtonTitle: String  {
-        switch isEditing {
-        case true:  return "Save"
-        case false: return "Edit"
-        }
-    }
-
-    func didTapEditButton() {
-        isEditing = !isEditing
-    }
-    
-    func setAddress(streetText: String?, regionText: String?) {
-        address?.street = streetText
-        address?.region = regionText
     }
 }

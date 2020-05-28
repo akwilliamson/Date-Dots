@@ -65,7 +65,7 @@ class AddDateVC: UIViewController {
         title = addOrEdit()
         
         if let dateToSave = dateToSave {
-            setTheme(to: dateToSave.color)
+            setTheme(to: dateToSave.dateType.color)
         } else {
             setTheme(to: DateType.birthday.color)
         }
@@ -213,7 +213,7 @@ class AddDateVC: UIViewController {
     
     func animateButtonInAndOut(for date: Date?) {
         if let date = date {
-            let button = getProperButton(forTypeColor: date.color)
+            let button = getProperButton(forTypeColor: date.dateType.color)
 //            button.animateInAndOut()
         }
     }
@@ -262,7 +262,7 @@ class AddDateVC: UIViewController {
         
         if let dateToSave = dateToSave {
             dateToSave.name = nameField.text?.trimmingCharacters(in: .whitespaces)
-            dateToSave.abbreviatedName = dateToSave.name?.abbreviatedName
+//            dateToSave.abbreviatedName = dateToSave.name?.abbreviatedName
 //            dateToSave.date = setDateFromValues()
             dateToSave.equalizedDate = dateToSave.date?.formatted("MM/dd")
             
@@ -386,9 +386,8 @@ extension AddDateVC {
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
         if nameFieldIsPopulated() {
             setValuesOnDateToSave()
-            managedContext?.trySave(complete: { success in
-            })
-            _ = self.navigationController?.popViewController(animated: true)
+            managedContext?.trySave(completion: { (_, _) in })
+            _ = navigationController?.popViewController(animated: true)
         } else {
             showAlertForNoName()
         }

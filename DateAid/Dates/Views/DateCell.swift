@@ -98,7 +98,7 @@ class DateCell: UITableViewCell {
     private func populate(_ date: Date?) {
         guard let date = date else { return }
 
-        firstNameLabel.textColor = date.color
+        firstNameLabel.textColor = date.dateType.color
         
         if let lastName  = date.lastName  { lastNameLabel.text = lastName }
         if let firstName = date.firstName { firstNameLabel.text = firstName }

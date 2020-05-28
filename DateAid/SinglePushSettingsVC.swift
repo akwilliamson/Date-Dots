@@ -77,7 +77,7 @@ class SinglePushSettingsVC: UIViewController {
         if previouslyScheduledNotification == nil { // There were no matching scheduled local notification, so
             setLabelAndSliderValues(viaNotification: nil)
             trashIcon.image = UIImage(named: "reminder-off.png")?.withRenderingMode(.alwaysTemplate)
-            trashIcon.tintColor = dateObject.color
+            trashIcon.tintColor = dateObject.dateType.color
         }
     }
     

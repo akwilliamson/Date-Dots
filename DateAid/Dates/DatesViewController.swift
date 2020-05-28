@@ -94,6 +94,11 @@ class DatesViewController: UIViewController {
         constructSubviews()
         constrainSubviews()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewWillAppear()
+    }
 
     // MARK: View Setup
 
@@ -255,10 +260,10 @@ extension DatesViewController: DatesViewOutputting {
     
     func updateDot(for dateType: DateType, isSelected: Bool) {
         switch dateType {
-        case .birthday:    birthdayDot.updateImage(isSelected: isSelected)
-        case .anniversary: anniversaryDot.updateImage(isSelected: isSelected)
-        case .holiday:     holidayDot.updateImage(isSelected: isSelected)
-        case .other:       otherDot.updateImage(isSelected: isSelected)
+        case .birthday:    birthdayDot.setSelectedState(isSelected: isSelected)
+        case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
+        case .holiday:     holidayDot.setSelectedState(isSelected: isSelected)
+        case .other:       otherDot.setSelectedState(isSelected: isSelected)
         }
     }
     

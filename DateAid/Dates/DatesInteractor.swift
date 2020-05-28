@@ -28,18 +28,24 @@ extension DatesInteractor: DatesInteractorInputting {
 
         let today = Foundation.Date().formatted("MM/dd")
         
-        let dates = moc.tryFetch(request).sorted { date1, date2 -> Bool in
-            guard let date1 = date1?.equalizedDate, let date2 = date2?.equalizedDate else { return false }
-            return (date1 >= today && date2 < today) ? (date1 > date2) : (date1 < date2)
-        }.compactMap { $0 }
-        
-        presenter?.set(dates)
+        moc.tryFetch { (dates, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                let sortedDates = dates.sorted { date1, date2 -> Bool in
+                    guard let date1 = date1?.equalizedDate, let date2 = date2?.equalizedDate else { return false }
+                    return (date1 >= today && date2 < today) ? (date1 > date2) : (date1 < date2)
+                }.compactMap { $0 }
+                
+                presenter?.set(sortedDates)
+            }
+        }
     }
     
     func delete(_ date: Date?, complete: (Bool) -> ()) {
         guard let date = date else { complete(false); return }
         moc.delete(date)
-        moc.trySave { success in
+        moc.trySave { (success, error) in
             complete(success)
         }
     }

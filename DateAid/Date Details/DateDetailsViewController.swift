@@ -13,6 +13,11 @@ import UserNotifications
 class DateDetailsViewController: UIViewController {
 
     // MARK: UI - Details
+    
+    private lazy var editBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editEvent))
+        return barButtonItem
+    }()
 
     private let eventLabelStackView: UIStackView = {
         let stackView = UIStackView()
@@ -74,7 +79,7 @@ class DateDetailsViewController: UIViewController {
         circleImageView.isUserInteractionEnabled = true
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAddressIcon)))
         circleImageView.image = UIImage(named: "envelope")?.withRenderingMode(.alwaysTemplate)
-        circleImageView.tintColor = event.color
+        circleImageView.tintColor = event.dateType.color
         circleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
         return circleImageView
     }()
@@ -104,7 +109,7 @@ class DateDetailsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapGiftIdeas), for: .touchUpInside)
-        button.backgroundColor = event.color
+        button.backgroundColor = event.dateType.color
         button.setTitle("Gift Ideas", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         return button
@@ -114,7 +119,7 @@ class DateDetailsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventPlans), for: .touchUpInside)
-        button.backgroundColor = event.color
+        button.backgroundColor = event.dateType.color
         button.setTitle("Event Plans", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         return button
@@ -162,8 +167,8 @@ class DateDetailsViewController: UIViewController {
     private func setButtonState() {
         switch viewModel.toggledEvent {
         case .address:
-            addressCircleImageView.tintColor = event.color
-            addressCircleImageView.layer.borderColor = event.color.cgColor
+            addressCircleImageView.tintColor = event.dateType.color
+            addressCircleImageView.layer.borderColor = event.dateType.color.cgColor
             addressView.isHidden = false
             reminderCircleImageView.tintColor = .compatibleLabel
             reminderCircleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
@@ -172,14 +177,15 @@ class DateDetailsViewController: UIViewController {
             addressCircleImageView.tintColor = .compatibleLabel
             addressCircleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
             addressView.isHidden = true
-            reminderCircleImageView.tintColor = event.color
-            reminderCircleImageView.layer.borderColor = event.color.cgColor
+            reminderCircleImageView.tintColor = event.dateType.color
+            reminderCircleImageView.layer.borderColor = event.dateType.color.cgColor
             reminderView.isHidden = false
         }
     }
 
     private func configureView() {
         title = event.abbreviatedName
+        navigationItem.rightBarButtonItem = editBarButtonItem
         view.backgroundColor = .compatibleSystemBackground
     }
     
@@ -240,6 +246,13 @@ class DateDetailsViewController: UIViewController {
     }
     
     // MARK: Actions
+    
+    @objc
+    func editEvent() {
+        let viewController = DateSetupViewController()
+        viewController.event = event
+        navigationController?.pushViewController(viewController, animated: true)
+    }
     
     @objc
     private func didTapAddressIcon() {

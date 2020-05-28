@@ -25,7 +25,7 @@ class EditDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setColorTheme(for: dateObject.color)
+        setColorTheme(for: dateObject.dateType.color)
         populateAddressFields(withAddress: dateObject.address)
     }
     

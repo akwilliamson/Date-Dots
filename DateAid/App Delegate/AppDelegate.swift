@@ -41,12 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Persist data to disk when app enters background
     func applicationDidEnterBackground(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave { _ in }
+        coreDataStack.managedObjectContext.trySave { (_, _) in }
     }
 
     // Persist data to disk when app terminates
     func applicationWillTerminate(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave { _ in }
+        coreDataStack.managedObjectContext.trySave { (_, _) in }
     }
 }
 

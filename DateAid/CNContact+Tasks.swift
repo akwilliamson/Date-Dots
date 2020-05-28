@@ -35,7 +35,7 @@ extension CNContact {
     }
     
     var anniversary: Foundation.Date? {
-        let comps = dates.filter { date -> Bool in
+        let comps = dates.filter { date in
             guard let label = date.label else { return false }
             return label.contains("Anniversary")
         }

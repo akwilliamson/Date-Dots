@@ -11,6 +11,7 @@ import Foundation
 protocol DatesEventHandling: class {
     
     func viewLoaded()
+    func viewWillAppear()
     func datesToShow() -> [Date]
     func searchButtonPressed()
     func textChanged(to searchText: String)

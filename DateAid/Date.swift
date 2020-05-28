@@ -27,18 +27,6 @@ class Date: NSManagedObject {
         return name?.components(separatedBy: " ").last
     }
     
-    // TODO: REMOVE
-    var color: UIColor {
-        guard let type = self.type else { return DateType.birthday.color }
-    
-        switch type.lowercased() {
-        case "birthday":    return DateType.birthday.color
-        case "anniversary": return DateType.anniversary.color
-        case "holiday":     return DateType.holiday.color
-        default:            return DateType.other.color
-        }
-    }
-    
     public var dateType: DateType {
         guard let type = type else { return .other }
 

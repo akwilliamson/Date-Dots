@@ -57,6 +57,9 @@ extension DatesPresenter: DatesEventHandling {
         view?.configureTabBar(image: Constant.Image.iconUnselected, selectedImage: Constant.Image.iconSelected)
         view?.configureNavigationBar(title: Constant.String.title)
         view?.configureTableView(footerView: UIView())
+    }
+    
+    func viewWillAppear() {
         interactor?.fetchDotDates()
     }
     

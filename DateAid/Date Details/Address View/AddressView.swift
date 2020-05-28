@@ -23,16 +23,6 @@ class AddressView: UIView {
         return view
     }()
 
-    private lazy var editButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Edit", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
-        button.setTitleColor(.compatibleLabel, for: .normal)
-        button.addTarget(self, action: #selector(didTapEditButton), for: .touchUpInside)
-        return button
-    }()
-
     private lazy var stampImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,15 +122,10 @@ class AddressView: UIView {
     
     private func constructSubviews() {
         addSubview(containerView)
-        containerView.addSubview(editButton)
         containerView.addSubview(stampImageView)
         containerView.addSubview(addressStackView)
         addressStackView.addArrangedSubview(addressFieldLabel)
         addressStackView.addArrangedSubview(regionFieldLabel)
-        // Edit UI
-        containerView.addSubview(editStackView)
-        editStackView.addArrangedSubview(editAddressFieldTextView)
-        editStackView.addArrangedSubview(editRegionFieldTextView)
     }
     
     private func constrainSubviews() {
@@ -149,10 +134,6 @@ class AddressView: UIView {
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            editButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            editButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
         ])
         NSLayoutConstraint.activate([
             stampImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
@@ -164,31 +145,5 @@ class AddressView: UIView {
             addressStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             addressStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
-        NSLayoutConstraint.activate([
-            editAddressFieldTextView.topAnchor.constraint(equalTo: editButton.bottomAnchor),
-            editAddressFieldTextView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            editAddressFieldTextView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12)
-        ])
-        NSLayoutConstraint.activate([
-            editRegionFieldTextView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            editRegionFieldTextView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            editRegionFieldTextView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
-        ])
-    }
-    
-    // MARK: Actions
-    
-    @objc
-    func didTapEditButton() {
-        viewModel.didTapEditButton()
-        editButton.setTitle(viewModel.editButtonTitle, for: .normal)
-
-        if viewModel.isEditing {
-            addressStackView.isHidden = true
-            editStackView.isHidden = false
-        } else {
-            addressStackView.isHidden = false
-            editStackView.isHidden = true
-        }
     }
 }

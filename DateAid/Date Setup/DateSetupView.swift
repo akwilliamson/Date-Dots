@@ -8,6 +8,22 @@
 
 import UIKit
 
+enum DateSetupInputType {
+    case firstName
+    case lastName
+    case addressOne
+    case addressTwo
+}
+
+protocol DateSetupViewDelegate {
+    
+    func didBeginEditingFor(inputType: DateSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void)
+    func didEndEditingFor(inputType: DateSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void)
+    func firstNameDidChange(text: String?)
+    func eventDateTypeSelected(dateType: DateType, isSelected: Bool)
+    func datePickerValueChangedTo(date: Foundation.Date)
+}
+
 class DateSetupView: BaseView {
     
     // MARK: Content
@@ -18,11 +34,17 @@ class DateSetupView: BaseView {
         let whenText: String
         let whereText: String
         let whyText: String
-        let firstNamePlaceholderText: String
-        let lastNamePlaceholderText: String
-        let addressOnePlaceholderText: String
-        let addressTwoPlaceholderText: String
+        let firstNameText: String?
+        let firstNamePlaceholderText: String?
+        let lastNameText: String?
+        let lastNamePlaceholderText: String?
+        let addressOneText: String?
+        let addressOnePlaceholderText: String?
+        let addressTwoText: String?
+        let addressTwoPlaceholderText: String?
         let whyDescriptionText: String
+        let date: Foundation.Date?
+        let eventType: DateType?
     }
     
     // MARK: UI
@@ -31,8 +53,8 @@ class DateSetupView: BaseView {
     // Who
     private let whoLabel: UILabel
     private let whoStackView: UIStackView
-    private let firstNameTextView: UITextView
-    private let lastNameTextView: UITextView
+    private let firstNameTextField: PaddedTextField
+    private let lastNameTextField: PaddedTextField
     // What
     private let whatLabel: UILabel
     private let whatStackView: UIStackView
@@ -46,15 +68,15 @@ class DateSetupView: BaseView {
     // Where
     private let whereLabel: UILabel
     private let whereStackView: UIStackView
-    private let addressOneTextView: UITextView
-    private let addressTwoTextView: UITextView
+    private let addressOneTextField: PaddedTextField
+    private let addressTwoTextField: PaddedTextField
     // Why
     private let whyLabel: UILabel
     private let whyDescriptionLabel: UILabel
     
     // MARK: Properties
     
-    var textViewDelegate: UITextViewDelegate?
+    var delegate: DateSetupViewDelegate?
     
     // MARK: Initialization
     
@@ -74,6 +96,7 @@ class DateSetupView: BaseView {
         whoLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
             return label
         }()
@@ -86,27 +109,32 @@ class DateSetupView: BaseView {
             return stackView
         }()
         
-        firstNameTextView = {
-            let textView = UITextView()
-            textView.translatesAutoresizingMaskIntoConstraints = false
-            textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-            textView.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-            textView.layer.borderWidth = 3
-            return textView
+        firstNameTextField = {
+            let textField = PaddedTextField()
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.textColor = .compatiblePlaceholderText
+            textField.returnKeyType = .done
+            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
+            textField.layer.borderWidth = 3
+            return textField
         }()
         
-        lastNameTextView = {
-            let textView = UITextView()
-            textView.translatesAutoresizingMaskIntoConstraints = false
-            textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-            textView.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-            textView.layer.borderWidth = 3
-            return textView
+        lastNameTextField = {
+            let textField = PaddedTextField()
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.textColor = .compatiblePlaceholderText
+            textField.returnKeyType = .done
+            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
+            textField.layer.borderWidth = 3
+            return textField
         }()
         
         whatLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
             return label
         }()
@@ -122,30 +150,35 @@ class DateSetupView: BaseView {
         birthdayDot = {
             let imageView = IconCircleImageView(dateType: .birthday)
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         anniversaryDot = {
             let imageView = IconCircleImageView(dateType: .anniversary)
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         holidayDot = {
             let imageView = IconCircleImageView(dateType: .holiday)
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         otherDot = {
             let imageView = IconCircleImageView(dateType: .other)
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         whenLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
             return label
         }()
@@ -160,6 +193,7 @@ class DateSetupView: BaseView {
         whereLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
             return label
         }()
@@ -172,27 +206,32 @@ class DateSetupView: BaseView {
             return stackView
         }()
         
-        addressOneTextView = {
-            let textView = UITextView()
-            textView.translatesAutoresizingMaskIntoConstraints = false
-            textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-            textView.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-            textView.layer.borderWidth = 3
-            return textView
+        addressOneTextField = {
+            let textField = PaddedTextField()
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.textColor = .compatiblePlaceholderText
+            textField.returnKeyType = .done
+            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
+            textField.layer.borderWidth = 3
+            return textField
         }()
         
-        addressTwoTextView = {
-            let textView = UITextView()
-            textView.translatesAutoresizingMaskIntoConstraints = false
-            textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-            textView.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-            textView.layer.borderWidth = 3
-            return textView
+        addressTwoTextField = {
+            let textField = PaddedTextField()
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.textColor = .compatiblePlaceholderText
+            textField.returnKeyType = .done
+            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
+            textField.layer.borderWidth = 3
+            return textField
         }()
         
         whyLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
             return label
         }()
@@ -200,16 +239,12 @@ class DateSetupView: BaseView {
         whyDescriptionLabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
             label.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
             return label
         }()
         
         super.init(frame: frame)
-        
-        firstNameTextView.delegate  = textViewDelegate
-        lastNameTextView.delegate   = textViewDelegate
-        addressOneTextView.delegate = textViewDelegate
-        addressTwoTextView.delegate = textViewDelegate
 
         configureView()
     }
@@ -224,9 +259,9 @@ class DateSetupView: BaseView {
         containerStackView.setCustomSpacing(12, after: whoLabel)
         containerStackView.addArrangedSubview(whoStackView)
         containerStackView.setCustomSpacing(12, after: whoStackView)
-        whoStackView.addArrangedSubview(firstNameTextView)
-        whoStackView.addArrangedSubview(lastNameTextView)
-        containerStackView.setCustomSpacing(12, after: lastNameTextView)
+        whoStackView.addArrangedSubview(firstNameTextField)
+        whoStackView.addArrangedSubview(lastNameTextField)
+        containerStackView.setCustomSpacing(12, after: lastNameTextField)
         containerStackView.addArrangedSubview(whatLabel)
         containerStackView.setCustomSpacing(12, after: whatLabel)
         containerStackView.addArrangedSubview(whatStackView)
@@ -242,8 +277,8 @@ class DateSetupView: BaseView {
         containerStackView.addArrangedSubview(whereLabel)
         containerStackView.setCustomSpacing(12, after: whereLabel)
         containerStackView.addArrangedSubview(whereStackView)
-        whereStackView.addArrangedSubview(addressOneTextView)
-        whereStackView.addArrangedSubview(addressTwoTextView)
+        whereStackView.addArrangedSubview(addressOneTextField)
+        whereStackView.addArrangedSubview(addressTwoTextField)
         containerStackView.setCustomSpacing(12, after: whereStackView)
         containerStackView.addArrangedSubview(whyLabel)
         containerStackView.setCustomSpacing(12, after: whyLabel)
@@ -253,28 +288,19 @@ class DateSetupView: BaseView {
     override func constructLayout() {
         NSLayoutConstraint.activate([
             containerStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            containerStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+            containerStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
-            whoLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            whoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            whoLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            whoLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20)
+
         ])
         NSLayoutConstraint.activate([
-            firstNameTextView.heightAnchor.constraint(equalToConstant: 40),
-            firstNameTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            firstNameTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            firstNameTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         NSLayoutConstraint.activate([
-            lastNameTextView.heightAnchor.constraint(equalToConstant: 40),
-            lastNameTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            lastNameTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-        NSLayoutConstraint.activate([
-            whatStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            whatStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            lastNameTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         NSLayoutConstraint.activate([
             birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
@@ -284,18 +310,10 @@ class DateSetupView: BaseView {
             whenDatePicker.heightAnchor.constraint(equalToConstant: 100)
         ])
         NSLayoutConstraint.activate([
-            addressOneTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            addressOneTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            addressOneTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         NSLayoutConstraint.activate([
-            addressOneTextView.heightAnchor.constraint(equalToConstant: 40),
-            addressOneTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            addressOneTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        ])
-        NSLayoutConstraint.activate([
-            addressTwoTextView.heightAnchor.constraint(equalToConstant: 40),
-            addressTwoTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            addressTwoTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            addressTwoTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         NSLayoutConstraint.activate([
             whyDescriptionLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
@@ -313,10 +331,147 @@ extension DateSetupView: Populatable {
         whenLabel.text = content.whenText
         whereLabel.text = content.whereText
         whyLabel.text = content.whyText
-        firstNameTextView.text = content.firstNamePlaceholderText
-        lastNameTextView.text = content.lastNamePlaceholderText
-        addressOneTextView.text = content.addressOnePlaceholderText
-        addressTwoTextView.text = content.addressTwoPlaceholderText
         whyDescriptionLabel.text = content.whyDescriptionText
+        
+        if let firstNameText = content.firstNameText {
+            firstNameTextField.text = firstNameText
+            firstNameTextField.textColor = .compatibleLabel
+        } else {
+            firstNameTextField.text = content.firstNamePlaceholderText
+        }
+        
+        if let lastNameText = content.lastNameText {
+            lastNameTextField.text = lastNameText
+            lastNameTextField.textColor = .compatibleLabel
+        } else {
+            lastNameTextField.text = content.lastNamePlaceholderText
+        }
+        
+        if let addressOneText = content.addressOneText {
+            addressOneTextField.text = addressOneText
+            addressOneTextField.textColor = .compatibleLabel
+        } else {
+            addressOneTextField.text = content.addressOnePlaceholderText
+        }
+        
+        if let addressTwoText = content.addressTwoText {
+            addressTwoTextField.text = addressTwoText
+            addressTwoTextField.textColor = .compatibleLabel
+        } else {
+            addressTwoTextField.text = content.addressTwoPlaceholderText
+        }
+        
+        if let date = content.date {
+            whenDatePicker.date = date
+        } else {
+            let dateComponents = DateComponents(year: 2000, month: 7, day: 15)
+            whenDatePicker.date = Calendar.current.date(from: dateComponents) ?? Foundation.Date()
+        }
+        
+        if let eventType = content.eventType {
+            switch eventType {
+            case .birthday:
+                birthdayDot.setSelectedState(isSelected: true)
+            case .anniversary:
+                anniversaryDot.setSelectedState(isSelected: true)
+            case .holiday:
+                holidayDot.setSelectedState(isSelected: true)
+            case .other:
+                otherDot.setSelectedState(isSelected: true)
+            }
+        }
+        
+        birthdayDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
+        anniversaryDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
+        holidayDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
+        otherDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
+        
+        firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDidChange(_:)), for: .editingChanged)
+        whenDatePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        addressOneTextField.delegate = self
+        addressTwoTextField.delegate = self
+    }
+    
+    @objc
+    func firstNameTextFieldDidChange(_ sender: PaddedTextField) {
+        delegate?.firstNameDidChange(text: sender.text)
+    }
+    
+    @objc
+    func datePickerValueChanged(_ sender: UIDatePicker) {
+        delegate?.datePickerValueChangedTo(date: sender.date)
+    }
+    
+    @objc
+    func dotPressed(_ sender: UITapGestureRecognizer) {
+        guard let iconImageView = sender.view as? IconCircleImageView else { return }
+        
+        let isCurrentlySelected = iconImageView.isSelected
+        delegate?.eventDateTypeSelected(dateType: iconImageView.dateType, isSelected: !isCurrentlySelected)
+        
+        if isCurrentlySelected {
+            iconImageView.setSelectedState(isSelected: false)
+        } else {
+            switch iconImageView {
+            case birthdayDot:
+                [anniversaryDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+            case anniversaryDot:
+                [birthdayDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+            case holidayDot:
+                [birthdayDot, anniversaryDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+            case otherDot:
+                [birthdayDot, anniversaryDot, holidayDot].forEach { $0.setSelectedState(isSelected: false) }
+            default:
+                return
+            }
+            
+            iconImageView.setSelectedState(isSelected: true)
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension DateSetupView: UITextFieldDelegate {
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let inputType = getInputTypeForTextField(textField) else { return }
+        
+        delegate?.didBeginEditingFor(inputType: inputType, currentText: textField.text) { text, textColor in
+            textField.text = text
+            textField.textColor = textColor
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let inputType = getInputTypeForTextField(textField) else { return }
+        
+        delegate?.didEndEditingFor(inputType: inputType, currentText: textField.text) { text, textColor in
+            textField.text = text
+            textField.textColor = textColor
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
+        return true
+    }
+    
+    private func getInputTypeForTextField(_ textField: UITextField) -> DateSetupInputType? {
+        if textField == firstNameTextField {
+            return .firstName
+        } else if textField == lastNameTextField {
+            return .lastName
+        } else if textField == addressOneTextField {
+            return .addressOne
+        } else if textField == addressTwoTextField {
+            return .addressTwo
+        } else {
+            return nil
+        }
     }
 }

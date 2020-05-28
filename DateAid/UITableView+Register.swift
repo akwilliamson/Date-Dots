@@ -14,5 +14,4 @@ extension UITableView {
         guard let name = name else { print("nib name doesn't exist"); return }
         register(UINib(nibName: name, bundle: nil), forCellReuseIdentifier: name)
     }
-
 }

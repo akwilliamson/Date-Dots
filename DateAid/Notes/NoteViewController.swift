@@ -110,7 +110,7 @@ class NoteViewController: UIViewController {
         case .plans: textView.text = "A place for event plans"
         case .other: textView.text = "A place for other ideas"
         }
-        textView.textColor = UIColor.lightGray
+        textView.textColor = UIColor.compatiblePlaceholderText
     }
 
     // MARK: Actions
@@ -164,7 +164,7 @@ extension NoteViewController: UITextViewDelegate {
         if showPlaceholderText == true {
             showPlaceholderText = false
             textView.text = nil
-            textView.textColor = event.color
+            textView.textColor = event.dateType.color
         }
     }
     

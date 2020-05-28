@@ -14,6 +14,12 @@ class IconCircleImageView: CircleImageView {
     
     public let dateType: DateType
     
+    public var isSelected = false {
+        didSet {
+            updateImage(isSelected: isSelected)
+        }
+    }
+    
     // MARK: Initialization
     
     required init?(coder: NSCoder) {
@@ -36,7 +42,11 @@ class IconCircleImageView: CircleImageView {
 
     // MARK: Public Methods
     
-    public func updateImage(isSelected: Bool) {
+    public func setSelectedState(isSelected: Bool) {
+        self.isSelected = isSelected
+    }
+    
+    private func updateImage(isSelected: Bool) {
         if isSelected {
             backgroundColor = dateType.color
             image = dateType.selectedImage
