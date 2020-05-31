@@ -1,6 +1,6 @@
 //
 //  PaddedTextField.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 5/17/20.
 //  Copyright © 2020 Aaron Williamson. All rights reserved.

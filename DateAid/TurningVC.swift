@@ -1,6 +1,6 @@
 //
 //  CalendarVC.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 6/26/15.
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
@@ -14,7 +14,7 @@ class TurningVC: UIViewController {
     var fetchedResults: [Date]?
     var filteredResults: [Date]?
     let managedContext = CoreDataStack().managedObjectContext
-    let colorForType = ["birthday": DateType.birthday.color, "anniversary": DateType.anniversary.color, "custom": DateType.other.color]
+    let colorForType = ["birthday": EventType.birthday.color, "anniversary": EventType.anniversary.color, "custom": EventType.other.color]
 
 //    @IBOutlet weak var turningSlider: ValueSlider!
     @IBOutlet weak var tableView: UITableView!
@@ -140,7 +140,7 @@ extension TurningVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! DateCell
+        let dateCell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventCell
         
         if let results = filteredResults {
             dateCell.date = results[indexPath.row]

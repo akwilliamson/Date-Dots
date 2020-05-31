@@ -1,6 +1,6 @@
 //
 //  ContactManager.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 9/24/16.
 //  Copyright © 2016 Aaron Williamson. All rights reserved.
@@ -18,7 +18,7 @@ class ContactManager {
         authorized(complete: { success in
             let fetchedContacts: [CNContact] = success ? self.fetchContacts() : []
             fetchedContacts.forEach({ print($0.givenName) })
-            DateManager(contacts: fetchedContacts).syncDates()
+            ContactConverter(contacts: fetchedContacts).syncEvents()
             
             complete()
         })

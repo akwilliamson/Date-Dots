@@ -1,6 +1,6 @@
 //
 //  BaseView.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 5/9/20.
 //  Copyright © 2020 Aaron Williamson. All rights reserved.

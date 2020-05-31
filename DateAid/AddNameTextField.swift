@@ -1,6 +1,6 @@
 //
 //  AddNameTextField.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 10/7/15.
 //  Copyright © 2015 Aaron Williamson. All rights reserved.

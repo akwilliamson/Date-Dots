@@ -1,6 +1,6 @@
 //
-//  DateAidTests.swift
-//  DateAidTests
+//  Date DotsTests.swift
+//  Date DotsTests
 //
 //  Created by Aaron Williamson on 5/7/15.
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.

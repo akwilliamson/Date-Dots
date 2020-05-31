@@ -1,6 +1,6 @@
 //
 //  AlertControllerExtension.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 11/30/15.
 //  Copyright © 2015 Aaron Williamson. All rights reserved.

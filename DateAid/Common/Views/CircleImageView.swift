@@ -1,6 +1,6 @@
 //
 //  CircleView.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 4/25/20.
 //  Copyright © 2020 Aaron Williamson. All rights reserved.

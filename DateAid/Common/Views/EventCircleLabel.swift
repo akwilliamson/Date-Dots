@@ -1,6 +1,6 @@
 //
 //  CircleView.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 10/22/15.
 //  Copyright © 2015 Aaron Williamson. All rights reserved.
@@ -13,7 +13,7 @@ class EventCircleLabel: CircleLabel {
 
     // MARK: Properties
 
-    private let dateType: DateType
+    private let eventType: EventType
 
     /// TODO: Get rid of this shit
     public var index = 0
@@ -24,10 +24,10 @@ class EventCircleLabel: CircleLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(dateType: DateType) {
-        self.dateType = dateType
+    init(eventType: EventType) {
+        self.eventType = eventType
         super.init(frame: .zero)
-        backgroundColor = dateType.color
+        backgroundColor = eventType.color
         textColor = .white
         lineBreakMode = .byWordWrapping
     }

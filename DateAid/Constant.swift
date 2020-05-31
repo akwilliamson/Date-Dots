@@ -1,6 +1,6 @@
 //
 //  Constant.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 1/15/17.
 //  Copyright © 2017 Aaron Williamson. All rights reserved.
@@ -47,6 +47,6 @@ struct Constant {
     
     enum CellId: String, Stringable {
         
-        case dateCell = "DateCell"
+        case dateCell = "EventCell"
     }
 }

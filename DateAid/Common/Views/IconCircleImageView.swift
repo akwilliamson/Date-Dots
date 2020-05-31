@@ -1,6 +1,6 @@
 //
 //  DateDotView.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 3/30/20.
 //  Copyright © 2020 Aaron Williamson. All rights reserved.
@@ -12,7 +12,7 @@ class IconCircleImageView: CircleImageView {
 
     // MARK: Properties
     
-    public let dateType: DateType
+    public let eventType: EventType
     
     public var isSelected = false {
         didSet {
@@ -26,8 +26,8 @@ class IconCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(dateType: DateType) {
-        self.dateType = dateType
+    init(eventType: EventType) {
+        self.eventType = eventType
         super.init()
         configureView()
     }
@@ -36,8 +36,8 @@ class IconCircleImageView: CircleImageView {
     
     override func configureView() {
         super.configureView()
-        image = dateType.unselectedImage
-        layer.borderColor = dateType.color.cgColor
+        image = eventType.unselectedImage
+        layer.borderColor = eventType.color.cgColor
     }
 
     // MARK: Public Methods
@@ -48,11 +48,11 @@ class IconCircleImageView: CircleImageView {
     
     private func updateImage(isSelected: Bool) {
         if isSelected {
-            backgroundColor = dateType.color
-            image = dateType.selectedImage
+            backgroundColor = eventType.color
+            image = eventType.selectedImage
         } else {
             backgroundColor = .clear
-            image = dateType.unselectedImage
+            image = eventType.unselectedImage
         }
     }
 }

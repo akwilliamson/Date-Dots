@@ -1,6 +1,6 @@
 //
 //  DateExtension.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 6/14/15.
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 
 extension Foundation.Date {
     
-    static var today: Foundation.Date { return Foundation.Date() }
+    static var now: Foundation.Date { return Foundation.Date() }
     
     init(dateString: String) {
         let dateStringFormatter = DateFormatter()
