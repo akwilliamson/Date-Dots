@@ -6,6 +6,8 @@
 //  Copyright © 2020 Aaron Williamson. All rights reserved.
 //
 
+import UIKit
+
 class EventDetailsViewModel {
 
     /// The options for displaying extra information about an event.
@@ -16,28 +18,44 @@ class EventDetailsViewModel {
 
     // MARK: Properties
     
-    var toggledEvent: ToggledEvent = .address
-
-    // MARK: Details
-
-    func textForDateLabel(for event: Date) -> String {
-        guard let readableDate = event.date?.formatted("MMM dd") else { return String() }
-        return readableDate.replacingOccurrences(of: " ", with: "\n")
+    private var toggledEvent = ToggledEvent.address
+    public var event: Date
+    
+    public var eventColor: UIColor {
+        return event.eventType.color
     }
     
-    func textForAgeLabel(for event: Date) -> String {
-        if let age = event.date?.ageTurning {
-            return event.eventType == .birthday ? "\(age)" : "#\(age)"
-        } else {
-            return "?"
-        }
+    public var eventType: EventType {
+        return event.eventType
     }
     
-    func textForCountdownLabel(for event: Date) -> String {
-        guard let daysUntil = event.date?.daysUntil else {
-            return String()
-        }
-        
+    public var address: Address? {
+        return event.address
+    }
+    
+    // MARK: Initialization
+    init(event: Date) {
+        self.event = event
+    }
+
+    // MARK: Text Population
+    
+    var titleText: String {
+        return event.abbreviatedName ?? "Event"
+    }
+    
+    var dateLabelText: String {
+        guard let date = event.date else { return "?" }
+        return date.formatted("MMM dd").replacingOccurrences(of: " ", with: "\n")
+    }
+
+    var ageLabelText: String {
+        guard let date = event.date, let nextEventNumber = date.ageTurning else { return "?" }
+        return event.eventType == .birthday ? "\(nextEventNumber)" : "#\(nextEventNumber)"
+    }
+
+    var countdownLabelText: String {
+        guard let date = event.date, let daysUntil = date.daysUntil else { return "?" }
         switch daysUntil {
         case 0:  return "Today"
         case 1:  return "\(daysUntil)\nday"
@@ -46,8 +64,16 @@ class EventDetailsViewModel {
     }
 
     // MARK: Actions
+    
+    public func updateEvent(_ event: Date) {
+        self.event = event
+    }
 
-    func didToggleEvent(_ toggledEvent: ToggledEvent) {
+    public func didToggleEvent(_ toggledEvent: ToggledEvent) {
         self.toggledEvent = toggledEvent
+    }
+    
+    public func colorForToggle(toggledEvent: ToggledEvent) -> UIColor {
+        return self.toggledEvent == toggledEvent ? eventColor : .compatibleLabel
     }
 }

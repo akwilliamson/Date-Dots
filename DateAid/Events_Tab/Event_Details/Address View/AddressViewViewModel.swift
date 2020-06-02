@@ -19,8 +19,8 @@ class AddressViewViewModel {
     
     // MARK: Private Properties
     
-    private let address: Address?
-    private let eventType: EventType
+    private var address: Address?
+    private var eventType: EventType
     
     // MARK: Public Properties
 
@@ -46,5 +46,13 @@ class AddressViewViewModel {
     
     var regionFont: UIFont {
         return address?.region == nil ? UIFont(name: "AvenirNext-DemiBold", size: 18)! : UIFont(name: "Noteworthy-Bold", size: 20)!
+    }
+    
+    public func setAddress(address: Address?) {
+        self.address = address
+    }
+    
+    public func setEventType(eventType: EventType) {
+        self.eventType = eventType
     }
 }

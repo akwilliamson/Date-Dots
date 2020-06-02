@@ -66,36 +66,6 @@ class AddressView: UIView {
         return label
     }()
 
-    // MARK: Edit Address UI
-
-    private let editStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
-        stackView.isHidden = true
-        return stackView
-    }()
-    
-    private lazy var editAddressFieldTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .compatibleSecondaryLabel
-        textView.textAlignment = .center
-        textView.font = UIFont(name: "Noteworthy-Bold", size: 20)
-        return textView
-    }()
-    
-    private lazy var editRegionFieldTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .compatibleSecondaryLabel
-        textView.textAlignment = .center
-        textView.font = UIFont(name: "Noteworthy-Bold", size: 20)
-        return textView
-    }()
-
     // MARK: Properties
 
     let viewModel: AddressViewViewModel
@@ -147,8 +117,23 @@ class AddressView: UIView {
         ])
     }
     
-    public func updateAddressLabels(addressText: String?, regionText: String?) {
-        addressFieldLabel.text = addressText
-        regionFieldLabel.text = regionText
+    private func updateAddressText() {
+        addressFieldLabel.text = viewModel.addressText
+        regionFieldLabel.text = viewModel.regionText
+    }
+    
+    private func updateAddressColor() {
+        addressFieldLabel.textColor = viewModel.addressColor
+        regionFieldLabel.textColor = viewModel.addressColor
+    }
+    
+    public func updateViewModel(address: Address?) {
+        viewModel.setAddress(address: address)
+        updateAddressText()
+    }
+    
+    public func updateViewModel(eventType: EventType) {
+        viewModel.setEventType(eventType: eventType)
+        updateAddressColor()
     }
 }

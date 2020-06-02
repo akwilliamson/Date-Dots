@@ -19,8 +19,8 @@ protocol EventSetupViewDelegate {
     
     func didBeginEditingFor(inputType: EventSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void)
     func didEndEditingFor(inputType: EventSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void)
-    func firstNameDidChange(text: String?)
-    func eventDateTypeSelected(dateType: EventType, isSelected: Bool)
+    func textDidChange(inputType: EventSetupInputType, currentText: String?)
+    func eventTypeSelected(eventType: EventType, isSelected: Bool)
     func datePickerValueChangedTo(date: Foundation.Date)
 }
 
@@ -388,9 +388,13 @@ extension EventSetupView: Populatable {
         holidayDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
         otherDot.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:))))
         
-        firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDidChange(_:)), for: .editingChanged)
-        whenDatePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        firstNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        lastNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        addressOneTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        addressTwoTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
+        whenDatePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
         firstNameTextField.delegate = self
         lastNameTextField.delegate = self
         addressOneTextField.delegate = self
@@ -398,8 +402,9 @@ extension EventSetupView: Populatable {
     }
     
     @objc
-    func firstNameTextFieldDidChange(_ sender: PaddedTextField) {
-        delegate?.firstNameDidChange(text: sender.text)
+    func textFieldDidChange(_ sender: PaddedTextField) {
+        guard let inputType = getInputTypeForTextField(sender) else { return }
+        delegate?.textDidChange(inputType: inputType, currentText: sender.text)
     }
     
     @objc
@@ -412,7 +417,7 @@ extension EventSetupView: Populatable {
         guard let iconImageView = sender.view as? IconCircleImageView else { return }
         
         let isCurrentlySelected = iconImageView.isSelected
-        delegate?.eventDateTypeSelected(dateType: iconImageView.eventType, isSelected: !isCurrentlySelected)
+        delegate?.eventTypeSelected(eventType: iconImageView.eventType, isSelected: !isCurrentlySelected)
         
         if isCurrentlySelected {
             iconImageView.setSelectedState(isSelected: false)

@@ -32,39 +32,37 @@ class EventDetailsViewController: UIViewController {
     }()
 
     private lazy var dateLabel: EventCircleLabel = {
-        let eventCircleLabel = EventCircleLabel(eventType: event.eventType)
+        let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
         eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-        eventCircleLabel.text = viewModel.textForDateLabel(for: event)
         return eventCircleLabel
     }()
     
     private lazy var ageLabel: EventCircleLabel = {
-        let eventCircleLabel = EventCircleLabel(eventType: event.eventType)
+        let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
         eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 40)
-        eventCircleLabel.text = viewModel.textForAgeLabel(for: event)
         return eventCircleLabel
     }()
 
     private lazy var countdownLabel: EventCircleLabel = {
-        let eventCircleLabel = EventCircleLabel(eventType: event.eventType)
+        let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
         eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-        eventCircleLabel.text = viewModel.textForCountdownLabel(for: event)
         return eventCircleLabel
     }()
 
     // MARK: UI - Address
 
     private lazy var addressView: AddressView = {
-        let viewModel = AddressViewViewModel(address: event.address, eventType: event.eventType)
-        let view = AddressView(viewModel: viewModel)
+        let vm = AddressViewViewModel(address: viewModel.address, eventType: viewModel.eventType)
+        let view = AddressView(viewModel: vm)
         return view
     }()
 
     // MARK: UI - Reminder
     
     private lazy var reminderView: ReminderView = {
-        let viewModel = ReminderViewViewModel(eventID: event.objectID.uriRepresentation())
-        let view = ReminderView(viewModel: viewModel, delegate: self)
+        let vm = ReminderViewViewModel(eventID: viewModel.event.objectID.uriRepresentation())
+        let view = ReminderView(viewModel: vm, delegate: self)
+        view.isHidden = true
         return view
     }()
     
@@ -83,8 +81,6 @@ class EventDetailsViewController: UIViewController {
         circleImageView.isUserInteractionEnabled = true
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAddressIcon)))
         circleImageView.image = UIImage(named: "envelope")?.withRenderingMode(.alwaysTemplate)
-        circleImageView.tintColor = event.eventType.color
-        circleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
         return circleImageView
     }()
 
@@ -93,8 +89,6 @@ class EventDetailsViewController: UIViewController {
         circleImageView.isUserInteractionEnabled = true
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapReminderIcon)))
         circleImageView.image = UIImage(named: "reminder")?.withRenderingMode(.alwaysTemplate)
-        circleImageView.tintColor = .compatibleLabel
-        circleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
         return circleImageView
     }()
     
@@ -113,7 +107,6 @@ class EventDetailsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapGiftIdeas), for: .touchUpInside)
-        button.backgroundColor = event.eventType.color
         button.setTitle("Gift Ideas", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         return button
@@ -123,7 +116,6 @@ class EventDetailsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventPlans), for: .touchUpInside)
-        button.backgroundColor = event.eventType.color
         button.setTitle("Event Plans", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         return button
@@ -133,19 +125,16 @@ class EventDetailsViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapOtherNotes), for: .touchUpInside)
-        button.backgroundColor = event.eventType.color
         button.setTitle("Other Notes", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         return button
     }()
 
     // MARK: Properties
-
-    private let event: Date
+    
+    private let viewModel: EventDetailsViewModel
 
     var managedContext: NSManagedObjectContext?
-
-    private let viewModel = EventDetailsViewModel()
     
     // MARK: Initialization
     
@@ -154,7 +143,7 @@ class EventDetailsViewController: UIViewController {
     }
 
     init(event: Date) {
-        self.event = event
+        self.viewModel = EventDetailsViewModel(event: event)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -165,30 +154,15 @@ class EventDetailsViewController: UIViewController {
         configureView()
         constructSubviews()
         constrainSubviews()
-        setButtonState()
     }
-
-    private func setButtonState() {
-        switch viewModel.toggledEvent {
-        case .address:
-            addressCircleImageView.tintColor = event.eventType.color
-            addressCircleImageView.layer.borderColor = event.eventType.color.cgColor
-            addressView.isHidden = false
-            reminderCircleImageView.tintColor = .compatibleLabel
-            reminderCircleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
-            reminderView.isHidden = true
-        case .reminder:
-            addressCircleImageView.tintColor = .compatibleLabel
-            addressCircleImageView.layer.borderColor = UIColor.compatibleLabel.cgColor
-            addressView.isHidden = true
-            reminderCircleImageView.tintColor = event.eventType.color
-            reminderCircleImageView.layer.borderColor = event.eventType.color.cgColor
-            reminderView.isHidden = false
-        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        populateText()
+        setStyle()
     }
 
     private func configureView() {
-        title = event.abbreviatedName
         navigationItem.rightBarButtonItem = editBarButtonItem
         view.backgroundColor = .compatibleSystemBackground
     }
@@ -249,56 +223,77 @@ class EventDetailsViewController: UIViewController {
         ])
     }
     
+    private func populateText() {
+        title = viewModel.titleText
+        dateLabel.text = viewModel.dateLabelText
+        ageLabel.text = viewModel.ageLabelText
+        countdownLabel.text = viewModel.countdownLabelText
+        addressView.updateViewModel(address: viewModel.address)
+        addressView.updateViewModel(eventType: viewModel.eventType)
+    }
+    
+    private func setStyle() {
+        dateLabel.updateColor(to: viewModel.eventColor)
+        ageLabel.updateColor(to: viewModel.eventColor)
+        countdownLabel.updateColor(to: viewModel.eventColor)
+        setToggleStyle()
+        giftIdeasButton.backgroundColor = viewModel.eventColor
+        eventPlansButton.backgroundColor = viewModel.eventColor
+        otherNotesButton.backgroundColor = viewModel.eventColor
+    }
+    
+    private func setToggleStyle() {
+        addressCircleImageView.tintColor = viewModel.colorForToggle(toggledEvent: .address)
+        addressCircleImageView.layer.borderColor = viewModel.colorForToggle(toggledEvent: .address).cgColor
+        reminderCircleImageView.tintColor = viewModel.colorForToggle(toggledEvent: .reminder)
+        reminderCircleImageView.layer.borderColor = viewModel.colorForToggle(toggledEvent: .reminder).cgColor
+    }
+    
     // MARK: Actions
     
     @objc
     func editEvent() {
         let viewController = EventSetupViewController()
-        viewController.event = event
+        viewController.event = viewModel.event
         viewController.eventSetupDelegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapAddressIcon() {
-        viewModel.toggledEvent = .address
-        setButtonState()
+        viewModel.didToggleEvent(.address)
+        addressView.isHidden = false
+        reminderView.isHidden = true
+        setToggleStyle()
     }
     
     @objc
     private func didTapReminderIcon() {
-        viewModel.toggledEvent = .reminder
-        setButtonState()
+        viewModel.didToggleEvent(.reminder)
+        addressView.isHidden = true
+        reminderView.isHidden = false
+        setToggleStyle()
     }
 
     @objc
     private func didTapGiftIdeas() {
-        let viewController = NoteViewController(event: event, noteType: .gifts)
+        let viewController = NoteViewController(event: viewModel.event, noteType: .gifts)
         viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
     private func didTapEventPlans() {
-        let viewController = NoteViewController(event: event, noteType: .plans)
+        let viewController = NoteViewController(event: viewModel.event, noteType: .plans)
         viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapOtherNotes() {
-        let viewController = NoteViewController(event: event, noteType: .other)
+        let viewController = NoteViewController(event: viewModel.event, noteType: .other)
         viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: Transition
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowNotification" {
-            let singlePushSettingsVC = segue.destination as! SinglePushSettingsVC
-            singlePushSettingsVC.event = event
-        }
     }
 }
 
@@ -312,9 +307,6 @@ extension EventDetailsViewController: ReminderViewDelegate {
 extension EventDetailsViewController: EventSetupDelegate {
     
     func updateEvent(_ event: Date) {
-        dateLabel.text = viewModel.textForDateLabel(for: event)
-        ageLabel.text = viewModel.textForAgeLabel(for: event)
-        countdownLabel.text = viewModel.textForCountdownLabel(for: event)
-        addressView.updateAddressLabels(addressText: event.address?.street, regionText: event.address?.region)
+        viewModel.updateEvent(event)
     }
 }

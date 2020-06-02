@@ -13,8 +13,6 @@ class EventCircleLabel: CircleLabel {
 
     // MARK: Properties
 
-    private let eventType: EventType
-
     /// TODO: Get rid of this shit
     public var index = 0
 
@@ -24,12 +22,15 @@ class EventCircleLabel: CircleLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(eventType: EventType) {
-        self.eventType = eventType
+    init(color: UIColor) {
         super.init(frame: .zero)
-        backgroundColor = eventType.color
+        backgroundColor = color
         textColor = .white
         lineBreakMode = .byWordWrapping
+    }
+    
+    public func updateColor(to color: UIColor) {
+        backgroundColor = color
     }
 
     // MARK: Public Methods

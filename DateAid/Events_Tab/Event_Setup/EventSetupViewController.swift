@@ -77,7 +77,6 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
     }
     
     private func saveContext() {
-        
         guard
             let eventName = viewModel.eventName,
             let eventType = viewModel.eventType,
@@ -88,7 +87,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
             return
         }
         
-        let event = Date(entity: eventEntity, insertInto: moc)
+        let event = self.event ?? Date(entity: eventEntity, insertInto: moc)
         event.name = eventName
         event.type = eventType.rawValue
         event.date = eventDate
@@ -136,23 +135,25 @@ extension EventSetupViewController: EventSetupViewDelegate {
     
     func didBeginEditingFor(inputType: EventSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void) {
         let input = viewModel.inputValuesFor(inputType, currentText: currentText, isEditing: true)
-
         completion(input.text, input.textColor)
     }
     
     func didEndEditingFor(inputType: EventSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void) {
         let input = viewModel.inputValuesFor(inputType, currentText: currentText, isEditing: false)
-        
         completion(input.text, input.textColor)
+    }
+    
+    func textDidChange(inputType: EventSetupInputType, currentText: String?) {
+        viewModel.setValueFor(inputType: inputType, currentText: currentText)
     }
     
     func firstNameDidChange(text: String?) {
         title = text.isEmptyOrNil ? Constant.title : text
     }
     
-    func eventDateTypeSelected(dateType: EventType, isSelected: Bool) {
+    func eventTypeSelected(eventType: EventType, isSelected: Bool) {
         if isSelected {
-            viewModel.eventType = dateType
+            viewModel.eventType = eventType
         } else {
             viewModel.eventType = nil
         }

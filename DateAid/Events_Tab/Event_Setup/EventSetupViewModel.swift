@@ -182,21 +182,21 @@ class EventSetupViewModel {
         }
     }
     
+    func setValueFor(inputType: EventSetupInputType, currentText: String?) {
+        switch inputType {
+        case .firstName:  firstNameText = currentText
+        case .lastName:   lastNameText = currentText
+        case .addressOne: addressOneText = currentText
+        case .addressTwo: addressTwoText = currentText
+        }
+    }
+    
     private func placeholderTextForInputType(_ inputType: EventSetupInputType) -> String {
         switch inputType {
         case .firstName:  return Constant.String.firstNamePlaceholderText
         case .lastName:   return Constant.String.lastNamePlaceholderText
         case .addressOne: return Constant.String.addressOnePlaceholderText
         case .addressTwo: return Constant.String.addressTwoPlaceholderText
-        }
-    }
-    
-    private func setValueFor(inputType: EventSetupInputType, currentText: String?) {
-        switch inputType {
-        case .firstName:  firstNameText = currentText
-        case .lastName:   lastNameText = currentText
-        case .addressOne: addressOneText = currentText
-        case .addressTwo: addressTwoText = currentText
         }
     }
 }

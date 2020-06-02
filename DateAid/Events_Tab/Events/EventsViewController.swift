@@ -261,8 +261,8 @@ extension EventsViewController: EventsViewOutputting {
         }
     }
     
-    func updateDot(for dateType: EventType, isSelected: Bool) {
-        switch dateType {
+    func updateDot(for eventType: EventType, isSelected: Bool) {
+        switch eventType {
         case .birthday:    birthdayDot.setSelectedState(isSelected: isSelected)
         case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
         case .holiday:     holidayDot.setSelectedState(isSelected: isSelected)
@@ -272,6 +272,7 @@ extension EventsViewController: EventsViewOutputting {
     
     func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation) {
         tableView.reloadSections(sections, with: animation)
+        tableView.setContentOffset(.zero, animated: true)
     }
     
     func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation) {
