@@ -19,6 +19,10 @@ class Date: NSManagedObject {
     @NSManaged var address: Address?
     @NSManaged var notes: Set<Note>?
     
+    var objectIDString: String {
+        return objectID.uriRepresentation().absoluteString
+    }
+    
     public var firstName: String? {
         return name?.components(separatedBy: " ").first
     }

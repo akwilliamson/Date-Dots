@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Imports birthdays and anniversaries</string>
+	<string>This allows Date Dots to import any birthdays or anniversaries that  exist in your contacts into the app.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_US</string>
 	<key>CFBundleDisplayName</key>

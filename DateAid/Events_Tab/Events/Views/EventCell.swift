@@ -15,7 +15,7 @@ class EventCell: UITableViewCell {
     private let lastNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: 75)
+        label.font = FontType.avenirNextDemiBold(75).font
         label.textColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.15)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
@@ -25,7 +25,7 @@ class EventCell: UITableViewCell {
     private let firstNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: 35)
+        label.font = FontType.avenirNextDemiBold(35).font
         label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
         label.minimumScaleFactor = 0.5
         return label
@@ -34,7 +34,7 @@ class EventCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-Medium", size: 25)
+        label.font = FontType.avenirNextMedium(25).font
         label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
         label.minimumScaleFactor = 0.5
         return label

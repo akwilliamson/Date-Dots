@@ -20,7 +20,7 @@ class EventsNavigationPresenter {
             static let barTintColor = UIColor.compatibleSystemGray3
             static let tintColor = UIColor.compatibleLabel
             static let foregroundColor = UIColor.compatibleLabel
-            static let font = UIFont(name: "AvenirNext-Bold", size: 23)!
+            static let font = FontType.noteworthyBold(23).font
         }
     }
 }

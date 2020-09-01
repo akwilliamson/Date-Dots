@@ -33,7 +33,7 @@ class AddressViewViewModel {
     }
     
     var addressFont: UIFont {
-        return address?.street == nil ? UIFont(name: "AvenirNext-DemiBold", size: 18)! : UIFont(name: "Noteworthy-Bold", size: 20)!
+        return address?.street == nil ? FontType.avenirNextDemiBold(18).font : FontType.noteworthyBold(20).font
     }
     
     var regionText: String {
@@ -45,14 +45,16 @@ class AddressViewViewModel {
     }
     
     var regionFont: UIFont {
-        return address?.region == nil ? UIFont(name: "AvenirNext-DemiBold", size: 18)! : UIFont(name: "Noteworthy-Bold", size: 20)!
+        return address?.region == nil ? FontType.avenirNextDemiBold(18).font : FontType.noteworthyBold(20).font
     }
     
-    public func setAddress(address: Address?) {
+    // MARK: Public Methods
+    
+    public func updateAddress(address: Address?) {
         self.address = address
     }
     
-    public func setEventType(eventType: EventType) {
+    public func updateEventType(eventType: EventType) {
         self.eventType = eventType
     }
 }

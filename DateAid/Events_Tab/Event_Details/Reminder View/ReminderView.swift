@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ReminderViewDelegate {
-    func didTapReminderView()
+    func didTapReminderView(notificationRequest: UNNotificationRequest?)
 }
 
 class ReminderView: UIView {
@@ -28,10 +28,10 @@ class ReminderView: UIView {
     private lazy var reminderLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Noteworthy-Bold", size: 18)
-//        label.textColor = event.color
         label.textAlignment = .center
+        label.numberOfLines = 0
+        label.font = viewModel.reminderFont
+        label.text = viewModel.reminderText
         return label
     }()
     
@@ -53,13 +53,13 @@ class ReminderView: UIView {
         configureView()
         constructSubviews()
         constrainSubviews()
-        populateReminderLabel()
     }
     
     // MARK: View Setup
     
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapReminderView)))
     }
     
     private func constructSubviews() {
@@ -82,33 +82,29 @@ class ReminderView: UIView {
         ])
     }
     
+    // MARK: Private Interface
+    
+    private func updateReminderText() {
+        reminderLabel.text = viewModel.reminderText
+    }
+    
     // MARK: Actions
     
     @objc
     func didTapReminderView() {
-        delegate.didTapReminderView()
+        let notificationRequest = viewModel.getNotificationRequest()
+        delegate.didTapReminderView(notificationRequest: notificationRequest)
     }
     
-    // MARK: Helpers
+    // MARK: Public Interface
     
-    private func populateReminderLabel() {
-
-        var daysPrior: Int? = nil
-        var hourOfDay: Int? = nil
-        
-        if let notifications = UIApplication.shared.scheduledLocalNotifications {
-            for notification in notifications {
-                guard let notificationID = notification.userInfo?["date"] as? String else { continue }
-                
-                let dateObjectURL = String(describing: viewModel.eventID)
-                
-                if notificationID == dateObjectURL {
-                    daysPrior = Int(notification.userInfo?["daysPrior"] as! String)
-                    hourOfDay = Int(notification.userInfo?["hoursAfter"] as! String)
-                }
-            }
-        }
-
-        reminderLabel.text = viewModel.textForReminderLabel(for: daysPrior, hourOfDay: hourOfDay)
+    public func updateNotificationRequest(_ notificationRequest: UNNotificationRequest) {
+        viewModel.updateNotificationRequest(notificationRequest)
+        updateReminderText()
+    }
+    
+    public func clearNotificationRequest() {
+        viewModel.clearNotificationRequest()
+        updateReminderText()
     }
 }

@@ -16,6 +16,8 @@ enum EventSetupType {
 
 class EventSetupViewController: UIViewController, CoreDataInteractable {
     
+    // MARK: Constants
+    
     private enum Constant {
         static let title = "New Event"
         static let keyboardHeight: CGFloat = 216
@@ -69,7 +71,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    // MARK: Actions
+    // MARK: User Actions
 
     @objc
     func saveEvent() {

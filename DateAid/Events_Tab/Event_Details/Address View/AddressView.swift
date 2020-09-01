@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AddressViewDelegate {
+    func didTapAddressView()
+}
+
 class AddressView: UIView {
 
     // MARK: UI
@@ -45,11 +49,10 @@ class AddressView: UIView {
     private lazy var addressFieldLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = viewModel.addressColor
         label.textAlignment = .center
         label.numberOfLines = 1
         label.font = viewModel.addressFont
-        label.textAlignment = .center
+        label.textColor = viewModel.addressColor
         label.text = viewModel.addressText
         return label
     }()
@@ -57,11 +60,10 @@ class AddressView: UIView {
     private lazy var regionFieldLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = viewModel.regionColor
         label.textAlignment = .center
         label.numberOfLines = 1
         label.font = viewModel.regionFont
-        label.textAlignment = .center
+        label.textColor = viewModel.regionColor
         label.text = viewModel.regionText
         return label
     }()
@@ -69,6 +71,7 @@ class AddressView: UIView {
     // MARK: Properties
 
     let viewModel: AddressViewViewModel
+    let delegate: AddressViewDelegate
     
     // MARK: Initialization
     
@@ -76,8 +79,9 @@ class AddressView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(viewModel: AddressViewViewModel) {
+    init(viewModel: AddressViewViewModel, delegate: AddressViewDelegate) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(frame: .zero)
         configureView()
         constructSubviews()
@@ -88,6 +92,7 @@ class AddressView: UIView {
 
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAddressView)))
     }
     
     private func constructSubviews() {
@@ -127,13 +132,22 @@ class AddressView: UIView {
         regionFieldLabel.textColor = viewModel.addressColor
     }
     
-    public func updateViewModel(address: Address?) {
-        viewModel.setAddress(address: address)
+    // MARK: Actions
+    
+    @objc
+    func didTapAddressView() {
+        delegate.didTapAddressView()
+    }
+    
+    // MARK: Public Methods
+    
+    public func updateAddress(_ address: Address?) {
+        viewModel.updateAddress(address: address)
         updateAddressText()
     }
     
-    public func updateViewModel(eventType: EventType) {
-        viewModel.setEventType(eventType: eventType)
+    public func updateEventType(_ eventType: EventType) {
+        viewModel.updateEventType(eventType: eventType)
         updateAddressColor()
     }
 }

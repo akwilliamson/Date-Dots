@@ -36,14 +36,9 @@ class EventsPresenter {
 
     // MARK: Properties
     
-    private var categorizedEvents: [EventType: [Date]] = [:]
+    private let eventTypes: [EventType] = [.birthday, .anniversary, .holiday, .other]
     
-    private var eventFilters: [EventType: Bool] = [
-        .birthday:    false,
-        .anniversary: false,
-        .holiday:     false,
-        .other:       false
-    ]
+    private var categorizedEvents: [EventType: [Date]] = [:]
     
     private var isSearching = false
     private var deleteIndex: IndexPath?
@@ -67,12 +62,16 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func eventsToShow() -> [Date] {
-        let birthdays     = shouldShowEvents(for: .birthday)    ? categorizedEvents[.birthday]    ?? [] : []
-        let anniversaries = shouldShowEvents(for: .anniversary) ? categorizedEvents[.anniversary] ?? [] : []
-        let holidays      = shouldShowEvents(for: .holiday)     ? categorizedEvents[.holiday]     ?? [] : []
-        let other         = shouldShowEvents(for: .other)       ? categorizedEvents[.other]       ?? [] : []
+        var eventsToShow = [Date]()
+
+        eventTypes.forEach { eventType in
+            let eventsShouldShow = UserDefaults.standard.bool(forKey: eventType.rawValue)
+            view?.updateDot(for: eventType, isSelected: eventsShouldShow)
+            let events = eventsShouldShow ? categorizedEvents[eventType] ?? [] : []
+            eventsToShow.append(contentsOf: events)
+        }
         
-        return birthdays + anniversaries + holidays + other
+        return eventsToShow
     }
     
     func searchButtonPressed() {
@@ -88,9 +87,9 @@ extension EventsPresenter: EventsEventHandling {
     }
 
     func dotPressed(for eventType: EventType) {
-        let isSelected = !(eventFilters[eventType] ?? true)
-        eventFilters[eventType] = isSelected
-        view?.updateDot(for: eventType, isSelected: isSelected)
+        let currentState = UserDefaults.standard.bool(forKey: eventType.rawValue)
+        UserDefaults.standard.set(!currentState, forKey: eventType.rawValue)
+        view?.updateDot(for: eventType, isSelected: !currentState)
         view?.reloadTableView(sections: [0], animation: .fade)
     }
     
@@ -98,12 +97,6 @@ extension EventsPresenter: EventsEventHandling {
         deleteIndex = indexPath
         deleteEventType = event.eventType
         interactor?.delete(event)
-    }
-    
-    // MARK: Private Helpers
-    
-    private func shouldShowEvents(for eventType: EventType) -> Bool {
-        return eventFilters[eventType] == true
     }
 }
 

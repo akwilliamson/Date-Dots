@@ -6,32 +6,77 @@
 //  Copyright © 2020 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import UserNotifications
 
-struct ReminderViewViewModel {
+class ReminderViewViewModel {
     
-    var eventID: URL
-
-    func textForReminderLabel(for daysPrior: Int?, hourOfDay: Int?) -> String {
-        guard let daysPrior = daysPrior, let hourOfDay = hourOfDay  else {
-            return "Reminder\nNot Set"
+    // MARK: Constants
+    
+    private enum Constant {
+        enum Key {
+            static let index = "index"
         }
-
-        var text: String
-
-        switch daysPrior {
-        case 0:  text = "Day of\n"
-        case 1:  text = "\(daysPrior) day before\n"
-        default: text = "\(daysPrior) days before\n"
+        enum String {
+            static let reminderNotSet = "Reminder\nNot Set"
+        }
+        enum Font {
+            static let noReminder = FontType.avenirNextDemiBold(18).font
+            static let reminder = FontType.noteworthyBold(20).font
+        }
+    }
+    
+    // MARK: Properties
+    
+    private let notificationManager = NotificationManager()
+    
+    // MARK: Private Interface
+    
+    private var reminderDayText: String? {
+        guard
+            let index: Int = notificationManager.valueFor(key: Constant.Key.index),
+            let daysBefore = EventReminderWindow(rawValue: index)
+        else {
+            return nil
         }
         
-        switch hourOfDay {
-        case 0:      text += "at midnight"
-        case 1...11: text += "at \(hourOfDay)am"
-        case 12:     text += "at noon"
-        default:     text += "at \(hourOfDay - 12)pm"
+        return daysBefore.pickerText
+    }
+
+    private var reminderTimeText: String? {
+        guard let triggerTime = notificationManager.triggerTime() else { return nil }
+        
+        return triggerTime.formattedForTriggerTime
+    }
+    
+    // MARK: Public Interface
+    
+    /// The font of the text displayed within a `ReminderView`.
+    var reminderFont: UIFont {
+        return notificationManager.notificationExists ? Constant.Font.reminder : Constant.Font.noReminder
+    }
+    
+    /// The text displayed within a `ReminderView`.
+    var reminderText: String {
+        guard let dayText = reminderDayText, let timeText = reminderTimeText else {
+            return Constant.String.reminderNotSet
         }
         
-        return text
+        return "\(dayText)\n at \(timeText)"
+    }
+    
+    /// Retrieves the notification request
+    func getNotificationRequest() -> UNNotificationRequest? {
+        notificationManager.getNotificationRequest()
+    }
+    
+    /// Updates the notification request managed by the notification manager.
+    func updateNotificationRequest(_ notificationRequest: UNNotificationRequest) {
+        notificationManager.setNotificationRequest(notificationRequest)
+    }
+    
+    /// Removes the notification request managed by the notification manager.
+    func clearNotificationRequest() {
+        notificationManager.clearNotificationRequest()
     }
 }

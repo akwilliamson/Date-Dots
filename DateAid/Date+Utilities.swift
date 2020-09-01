@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum DateRoundingType {
+    case round
+    case ceiling
+    case floor
+}
+
 extension Foundation.Date {
     
     static var now: Foundation.Date { return Foundation.Date() }
@@ -24,6 +30,14 @@ extension Foundation.Date {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd"
+        
+        return formatter.string(from: self)
+    }
+    
+    var formattedForTriggerTime: String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
         
         return formatter.string(from: self)
     }
@@ -73,5 +87,22 @@ extension Foundation.Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
+    }
+    
+    func rounded(minutes: TimeInterval, rounding: DateRoundingType = .round) -> Foundation.Date {
+        return rounded(seconds: minutes * 60, rounding: rounding)
+    }
+
+    func rounded(seconds: TimeInterval, rounding: DateRoundingType = .round) -> Foundation.Date {
+        var roundedInterval: TimeInterval = 0
+        switch rounding  {
+        case .round:
+            roundedInterval = (timeIntervalSinceReferenceDate / seconds).rounded() * seconds
+        case .ceiling:
+            roundedInterval = ceil(timeIntervalSinceReferenceDate / seconds) * seconds
+        case .floor:
+            roundedInterval = floor(timeIntervalSinceReferenceDate / seconds) * seconds
+        }
+        return Foundation.Date(timeIntervalSinceReferenceDate: roundedInterval)
     }
 }

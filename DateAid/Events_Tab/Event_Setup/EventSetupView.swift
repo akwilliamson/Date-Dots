@@ -97,7 +97,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+            label.font = FontType.avenirNextDemiBold(16).font
             return label
         }()
         
@@ -105,14 +105,13 @@ class EventSetupView: BaseView {
             let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .vertical
-            stackView.spacing = 8
             return stackView
         }()
         
         firstNameTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
@@ -123,7 +122,7 @@ class EventSetupView: BaseView {
         lastNameTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
@@ -135,7 +134,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+            label.font = FontType.avenirNextDemiBold(16).font
             return label
         }()
         
@@ -179,7 +178,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+            label.font = FontType.avenirNextDemiBold(16).font
             return label
         }()
         
@@ -196,7 +195,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+            label.font = FontType.avenirNextDemiBold(16).font
             return label
         }()
         
@@ -204,14 +203,13 @@ class EventSetupView: BaseView {
             let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.axis = .vertical
-            stackView.spacing = 8
             return stackView
         }()
         
         addressOneTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
@@ -222,7 +220,7 @@ class EventSetupView: BaseView {
         addressTwoTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+            textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
@@ -234,7 +232,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+            label.font = FontType.avenirNextDemiBold(16).font
             return label
         }()
         
@@ -242,7 +240,7 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+            label.font = FontType.avenirNextDemiBold(25).font
             return label
         }()
         
@@ -250,6 +248,8 @@ class EventSetupView: BaseView {
 
         configureView()
     }
+    
+    // MARK: Lifecycle
     
     private func configureView() {
         backgroundColor = .compatibleSystemBackground
@@ -316,6 +316,7 @@ class EventSetupView: BaseView {
         ])
         NSLayoutConstraint.activate([
             addressTwoTextField.heightAnchor.constraint(equalToConstant: 40)
+            
         ])
         NSLayoutConstraint.activate([
             whyDescriptionLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),

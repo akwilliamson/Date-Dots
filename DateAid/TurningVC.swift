@@ -93,7 +93,7 @@ class TurningVC: UIViewController {
         if thereAreNoDates == true {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
             label.text = "Nobody"
-            label.font = UIFont(name: "AvenirNext-Bold", size: 25)
+            label.font = FontType.avenirNextBold(25).font
             label.textColor = UIColor.lightGray
             label.textAlignment = .center
             label.sizeToFit()
@@ -123,8 +123,6 @@ class TurningVC: UIViewController {
 //        filteredResults = fetchedResults?.filter({ $0.date!.ageTurning == Int(sender.value) })
 //        tableView.reloadData()
 //    }
-    
-    
 }
 
 extension TurningVC: UITableViewDataSource {

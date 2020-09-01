@@ -33,19 +33,19 @@ class EventDetailsViewController: UIViewController {
 
     private lazy var dateLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        eventCircleLabel.font = FontType.avenirNextDemiBold(25).font
         return eventCircleLabel
     }()
     
     private lazy var ageLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 40)
+        eventCircleLabel.font = FontType.avenirNextDemiBold(40).font
         return eventCircleLabel
     }()
 
     private lazy var countdownLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        eventCircleLabel.font = FontType.avenirNextDemiBold(25).font
         return eventCircleLabel
     }()
 
@@ -53,15 +53,14 @@ class EventDetailsViewController: UIViewController {
 
     private lazy var addressView: AddressView = {
         let vm = AddressViewViewModel(address: viewModel.address, eventType: viewModel.eventType)
-        let view = AddressView(viewModel: vm)
+        let view = AddressView(viewModel: vm, delegate: self)
         return view
     }()
 
     // MARK: UI - Reminder
     
     private lazy var reminderView: ReminderView = {
-        let vm = ReminderViewViewModel(eventID: viewModel.event.objectID.uriRepresentation())
-        let view = ReminderView(viewModel: vm, delegate: self)
+        let view = ReminderView(viewModel: ReminderViewViewModel(), delegate: self)
         view.isHidden = true
         return view
     }()
@@ -108,7 +107,7 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapGiftIdeas), for: .touchUpInside)
         button.setTitle("Gift Ideas", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
+        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         return button
     }()
     
@@ -117,7 +116,7 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventPlans), for: .touchUpInside)
         button.setTitle("Event Plans", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
+        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         return button
     }()
 
@@ -126,15 +125,13 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapOtherNotes), for: .touchUpInside)
         button.setTitle("Other Notes", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
+        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         return button
     }()
 
     // MARK: Properties
     
     private let viewModel: EventDetailsViewModel
-
-    var managedContext: NSManagedObjectContext?
     
     // MARK: Initialization
     
@@ -165,6 +162,7 @@ class EventDetailsViewController: UIViewController {
     private func configureView() {
         navigationItem.rightBarButtonItem = editBarButtonItem
         view.backgroundColor = .compatibleSystemBackground
+        fetchAndStoreNotification()
     }
     
     private func constructSubviews() {
@@ -223,13 +221,22 @@ class EventDetailsViewController: UIViewController {
         ])
     }
     
+    private func fetchAndStoreNotification() {
+        viewModel.getNotification { notificationRequest in
+            guard let notificationRequest = notificationRequest else { return }
+            DispatchQueue.main.async {
+                self.reminderView.updateNotificationRequest(notificationRequest)
+            }
+        }
+    }
+    
     private func populateText() {
         title = viewModel.titleText
         dateLabel.text = viewModel.dateLabelText
         ageLabel.text = viewModel.ageLabelText
         countdownLabel.text = viewModel.countdownLabelText
-        addressView.updateViewModel(address: viewModel.address)
-        addressView.updateViewModel(eventType: viewModel.eventType)
+        addressView.updateAddress(viewModel.address)
+        addressView.updateEventType(viewModel.eventType)
     }
     
     private func setStyle() {
@@ -278,29 +285,42 @@ class EventDetailsViewController: UIViewController {
     @objc
     private func didTapGiftIdeas() {
         let viewController = NoteViewController(event: viewModel.event, noteType: .gifts)
-        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
     private func didTapEventPlans() {
         let viewController = NoteViewController(event: viewModel.event, noteType: .plans)
-        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapOtherNotes() {
         let viewController = NoteViewController(event: viewModel.event, noteType: .other)
-        viewController.managedContext = managedContext
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
 extension EventDetailsViewController: ReminderViewDelegate {
 
-    func didTapReminderView() {
-        // Navigation to notifications
+    @objc
+    func didTapReminderView(notificationRequest: UNNotificationRequest?) {
+        let eventReminderDetails = viewModel.generateEventReminderDetails()
+        
+        let eventReminderViewController = EventReminderViewController(
+            eventReminderDetails: eventReminderDetails,
+            notificationRequest: notificationRequest,
+            delegate: self
+        )
+
+        navigationController?.pushViewController(eventReminderViewController, animated: true)
+    }
+}
+
+extension EventDetailsViewController: AddressViewDelegate {
+
+    @objc func didTapAddressView() {
+        editEvent()
     }
 }
 
@@ -308,5 +328,16 @@ extension EventDetailsViewController: EventSetupDelegate {
     
     func updateEvent(_ event: Date) {
         viewModel.updateEvent(event)
+    }
+}
+
+extension EventDetailsViewController: EventReminderDelegate {
+    
+    func didCancelNotificationRequest() {
+        reminderView.clearNotificationRequest()
+    }
+    
+    func didUpdateNotificationRequest(_ notificationRequest: UNNotificationRequest) {
+        reminderView.updateNotificationRequest(notificationRequest)
     }
 }

@@ -10,15 +10,24 @@ import UIKit
 
 class EventDetailsViewModel {
 
-    /// The options for displaying extra information about an event.
     enum ToggledEvent {
         case address
         case reminder
     }
 
-    // MARK: Properties
+    // MARK: Initialization
+
+    init(event: Date) {
+        self.event = event
+    }
+
+    // MARK: Private Interface
     
+    private let notificationManager = NotificationManager()
     private var toggledEvent = ToggledEvent.address
+    
+    // MARK: Public Interface
+    
     public var event: Date
     
     public var eventColor: UIColor {
@@ -32,13 +41,6 @@ class EventDetailsViewModel {
     public var address: Address? {
         return event.address
     }
-    
-    // MARK: Initialization
-    init(event: Date) {
-        self.event = event
-    }
-
-    // MARK: Text Population
     
     var titleText: String {
         return event.abbreviatedName ?? "Event"
@@ -63,17 +65,33 @@ class EventDetailsViewModel {
         }
     }
 
-    // MARK: Actions
+    // MARK: Public Methods
     
-    public func updateEvent(_ event: Date) {
+    func updateEvent(_ event: Date) {
         self.event = event
     }
 
-    public func didToggleEvent(_ toggledEvent: ToggledEvent) {
+    func didToggleEvent(_ toggledEvent: ToggledEvent) {
         self.toggledEvent = toggledEvent
     }
     
-    public func colorForToggle(toggledEvent: ToggledEvent) -> UIColor {
+    func colorForToggle(toggledEvent: ToggledEvent) -> UIColor {
         return self.toggledEvent == toggledEvent ? eventColor : .compatibleLabel
+    }
+    
+    func getNotification(completion: @escaping (UNNotificationRequest?) -> Void) {
+        notificationManager.notification(with: event.objectIDString) { foundNotification in
+            completion(foundNotification)
+        }
+    }
+    
+    /// Creates the details needed to instantiate an `EventReminderViewController`.
+    func generateEventReminderDetails() -> EventReminderDetails {
+        return EventReminderDetails(
+            identifier: event.objectIDString,
+            eventName: event.abbreviatedName ?? event.name!,
+            eventType: event.eventType,
+            eventDate: event.date!
+        )
     }
 }

@@ -23,7 +23,7 @@ enum NoteType {
     }
 }
 
-class NoteViewController: UIViewController {
+class NoteViewController: UIViewController, CoreDataInteractable {
     
     // MARK: UI
     
@@ -31,7 +31,7 @@ class NoteViewController: UIViewController {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
-        textView.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        textView.font = FontType.avenirNextDemiBold(25).font
         return textView
     }()
 
@@ -45,8 +45,6 @@ class NoteViewController: UIViewController {
     var event: Date
     var noteType: NoteType
     var note: Note?
-    
-    var managedContext: NSManagedObjectContext?
 
     var showPlaceholderText = true
     
@@ -95,9 +93,9 @@ class NoteViewController: UIViewController {
     // MARK: View Setup
 
     private func configureNote() {
-        if let note = note {
+        if let noteText = note?.body, !noteText.isEmpty {
             showPlaceholderText = false
-            textView.text = note.body
+            textView.text = noteText
         }  else {
             showPlaceholderText = true
             configurePlaceholderText()
@@ -118,12 +116,10 @@ class NoteViewController: UIViewController {
     @objc
     func saveNote() {
         saveContext()
-        _ = navigationController?.popViewController(animated: true)
     }
 
     private func saveContext() {
-        guard let managedContext = managedContext else { return }
-
+        
         if let note = note {
             note.body = textView.text
         } else {
@@ -131,7 +127,8 @@ class NoteViewController: UIViewController {
         }
         
         do {
-            try managedContext.save()
+            try moc.save()
+            _ = navigationController?.popViewController(animated: true)
         }  catch {
             print(error.localizedDescription)
         }
@@ -139,14 +136,13 @@ class NoteViewController: UIViewController {
     
     private func createNewNote() {
         guard
-            let managedContext = managedContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext),
+            let entity = NSEntityDescription.entity(forEntityName: "Note", in: moc),
             let existingNotes = event.notes as? NSMutableSet
         else {
             return
         }
 
-        let newNote = Note(entity: entity, insertInto: managedContext)
+        let newNote = Note(entity: entity, insertInto: moc)
         
         newNote.title = noteType.title
         newNote.body = textView.text
