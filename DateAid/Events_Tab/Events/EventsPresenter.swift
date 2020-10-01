@@ -79,10 +79,13 @@ extension EventsPresenter: EventsEventHandling {
         view?.showSearchBar(frame: Constant.Layout.searchBarFrame, duration: Constant.Animation.searchBarDisplay)
     }
 
-    func textChanged(to searchText: String) {}
+    func textChanged(to searchText: String) {
+        interactor?.getEvents(containing: searchText)
+    }
     
     func cancelButtonPressed() {
         isSearching = false
+        interactor?.getEvents()
         view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
     }
 

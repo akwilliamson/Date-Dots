@@ -19,6 +19,8 @@ class EventsInteractor: CoreDataInteractable {
     
     // A flag indicating if dates should be sorted by how far away they are from today.
     private var sortByToday = true
+    
+    private var events: [Date] = []
 }
 
 extension EventsInteractor: EventsInteractorInputting {
@@ -41,12 +43,41 @@ extension EventsInteractor: EventsInteractorInputting {
         
         do {
             let events: [Date] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
-            let sortedEvents = customSorted(events)
-            presenter?.eventsFetched(sortedEvents)
+            self.events = customSorted(events)
+            presenter?.eventsFetched(events)
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }
     }
+    
+    func getEvents() {
+        presenter?.eventsFetched(events)
+    }
+    
+    func getEvents(containing searchText: String) {
+        if searchText.isEmpty {
+            presenter?.eventsFetched(events)
+        } else {
+            let filteredEvents = events.filter { (event) -> Bool in
+                guard let eventName = event.name else { return false }
+                return eventName.contains(searchText)
+            }
+
+            presenter?.eventsFetched(filteredEvents)
+        }
+    }
+    
+    func delete(_ event: Date) {
+        moc.delete(event)
+        do {
+            try moc.save()
+            presenter?.eventDeleted(event)
+        } catch {
+            presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
+        }
+    }
+    
+    // MARK: Private Helpers
     
     private func customSorted(_ events: [Date]) -> [Date] {
         if sortByToday {
@@ -69,16 +100,6 @@ extension EventsInteractor: EventsInteractorInputting {
             return sortedEvents
         } else {
             return events
-        }
-    }
-    
-    func delete(_ event: Date) {
-        moc.delete(event)
-        do {
-            try moc.save()
-            presenter?.eventDeleted(event)
-        } catch {
-            presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
         }
     }
 }

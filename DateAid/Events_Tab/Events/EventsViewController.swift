@@ -99,6 +99,11 @@ class EventsViewController: UIViewController {
         super.viewWillAppear(animated)
         presenter?.viewWillAppear()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
 
     // MARK: View Setup
 
@@ -238,6 +243,7 @@ extension EventsViewController: EventsViewOutputting {
     }
 
     // MARK: Actions
+    
     
     func showSearchBar(frame: CGRect, duration: TimeInterval) {
         navigationItem.titleView = searchBar

@@ -81,7 +81,6 @@
 		97BB28D32459DFD7003854CC /* AddressViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB28D22459DFD7003854CC /* AddressViewViewModel.swift */; };
 		97D2669A1BD95380008F7EF8 /* EventCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D266991BD95380008F7EF8 /* EventCircleLabel.swift */; };
 		97D7E20E24D760E300A28F60 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D7E20D24D760E300A28F60 /* Font.swift */; };
-		97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC58891B3E19DD008FA222 /* TurningVC.swift */; };
 		97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */; };
 		97ED37601E45A70600B054FE /* AppDelegateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED375F1E45A70600B054FE /* AppDelegateWireframe.swift */; };
 		97ED37621E45A73200B054FE /* AppDelegatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */; };
@@ -185,7 +184,6 @@
 		97BB28D22459DFD7003854CC /* AddressViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewViewModel.swift; sourceTree = "<group>"; };
 		97D266991BD95380008F7EF8 /* EventCircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCircleLabel.swift; sourceTree = "<group>"; };
 		97D7E20D24D760E300A28F60 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
-		97DC58891B3E19DD008FA222 /* TurningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurningVC.swift; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		97ED375F1E45A70600B054FE /* AppDelegateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateWireframe.swift; sourceTree = "<group>"; };
 		97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegatePresenter.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 				97C901EC245A88D8005AF301 /* Initial_Import */,
 				97C901ED245A88E6005AF301 /* TabBar */,
 				9749E6CD2483717D00DAAB49 /* Events_Tab */,
-				977ED8C01BFDA3F400BC7EB9 /* Turning_Tab */,
 				970D93631BC47B9500D7F1FF /* Extensions */,
 			);
 			path = DateAid;
@@ -378,14 +375,6 @@
 				97901FAB2467C82C00912CB0 /* Populatable.swift */,
 			);
 			path = "Base View";
-			sourceTree = "<group>";
-		};
-		977ED8C01BFDA3F400BC7EB9 /* Turning_Tab */ = {
-			isa = PBXGroup;
-			children = (
-				97DC58891B3E19DD008FA222 /* TurningVC.swift */,
-			);
-			name = Turning_Tab;
 			sourceTree = "<group>";
 		};
 		97C901E5245A8846005AF301 /* Address View */ = {
@@ -622,7 +611,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Aaron Williamson";
 				TargetAttributes = {
 					97364CDF1AFBF44A0095BC57 = {
@@ -705,7 +694,6 @@
 				970622461E2C3F0B0020743C /* TabBarPresenter.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
 				9707A7EB1DBC073D00C4A9C0 /* EventsInteractor.swift in Sources */,
-				97DC588A1B3E19DD008FA222 /* TurningVC.swift in Sources */,
 				97FA131F1DBEF63D00C9DBFE /* EventsInteractorOutputting.swift in Sources */,
 				9774DB532467C5E800211D9A /* BaseView.swift in Sources */,
 				9781F98A1E3E8A5300E2C434 /* EventsNavigationEventHandling.swift in Sources */,
@@ -822,6 +810,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -847,7 +836,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -879,6 +868,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -899,7 +889,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -919,7 +909,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
@@ -944,7 +934,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";

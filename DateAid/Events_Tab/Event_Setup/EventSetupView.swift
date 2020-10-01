@@ -114,8 +114,10 @@ class EventSetupView: BaseView {
             textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
-            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
-            textField.layer.borderWidth = 3
+            textField.addTopBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addRightBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addBottomBorder(with: .compatiblePlaceholderText, andWidth: 3)
             return textField
         }()
         
@@ -125,8 +127,9 @@ class EventSetupView: BaseView {
             textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
-            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
-            textField.layer.borderWidth = 3
+            textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addRightBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addBottomBorder(with: .compatiblePlaceholderText, andWidth: 3)
             return textField
         }()
         
@@ -188,6 +191,9 @@ class EventSetupView: BaseView {
             datePicker.minimumDate = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1))
             datePicker.maximumDate = Foundation.Date()
             datePicker.datePickerMode = .date
+            if #available(iOS 14, *) {
+                datePicker.preferredDatePickerStyle = .wheels
+            }
             return datePicker
         }()
         
@@ -212,8 +218,10 @@ class EventSetupView: BaseView {
             textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
-            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
-            textField.layer.borderWidth = 3
+            textField.addTopBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addRightBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addBottomBorder(with: .compatiblePlaceholderText, andWidth: 3)
             return textField
         }()
         
@@ -223,8 +231,9 @@ class EventSetupView: BaseView {
             textField.font = FontType.avenirNextDemiBold(22).font
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
-            textField.layer.borderColor = UIColor.compatiblePlaceholderText.cgColor
-            textField.layer.borderWidth = 3
+            textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addRightBorder(with: .compatiblePlaceholderText, andWidth: 3)
+            textField.addBottomBorder(with: .compatiblePlaceholderText, andWidth: 3)
             return textField
         }()
         
@@ -367,8 +376,10 @@ extension EventSetupView: Populatable {
         if let date = content.date {
             whenDatePicker.date = date
         } else {
-            let dateComponents = DateComponents(year: 2000, month: 7, day: 15)
-            whenDatePicker.date = Calendar.current.date(from: dateComponents) ?? Foundation.Date()
+            let currentDate = Calendar.current.dateComponents([.month, .day], from: Foundation.Date())
+            let defaultComponents = DateComponents(year: 2000, month: currentDate.month, day: currentDate.day)
+            let defaultDate = Calendar.current.date(from: defaultComponents) ?? Foundation.Date()
+            whenDatePicker.setDate(defaultDate, animated: false)
         }
         
         if let eventType = content.eventType {

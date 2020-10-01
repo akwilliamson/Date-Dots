@@ -101,7 +101,7 @@ class EventReminderViewModel {
                 }
             case .denied:
                 completion(.displayAlertPermissions, nil)
-            @unknown default:
+            default:
                 completion(.displayAlertError, nil)
             }
         }

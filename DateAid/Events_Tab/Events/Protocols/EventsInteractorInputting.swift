@@ -9,5 +9,7 @@
 protocol EventsInteractorInputting: class {
     
     func fetchEvents() -> Void
+    func getEvents() -> Void
+    func getEvents(containing searchText: String) -> Void
     func delete(_ event: Date)
 }
