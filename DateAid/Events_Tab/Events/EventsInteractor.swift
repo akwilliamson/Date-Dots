@@ -44,7 +44,7 @@ extension EventsInteractor: EventsInteractorInputting {
         do {
             let events: [Date] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
             self.events = customSorted(events)
-            presenter?.eventsFetched(events)
+            presenter?.eventsFetched(self.events)
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }

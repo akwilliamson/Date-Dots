@@ -59,6 +59,7 @@ extension EventsPresenter: EventsEventHandling {
     
     func viewWillAppear() {
         interactor?.fetchEvents()
+        view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
     }
     
     func eventsToShow() -> [Date] {
