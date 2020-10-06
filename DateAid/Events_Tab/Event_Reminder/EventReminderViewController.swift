@@ -135,13 +135,13 @@ class EventReminderViewController: UIViewController {
 
 extension EventReminderViewController: EventReminderViewDelegate {
     
-    func didSelectDaysBefore(at row: Int) {
-        viewModel.selectedDaysBeforeIndex = row
+    func didSelectDaysBefore(_ daysBefore: Int) {
+        viewModel.selectedDaysBefore = daysBefore
         baseView.updateDescriptionLabel(text: viewModel.descriptionLabelText)
     }
     
     func didSelectTimeOfDay(date: Foundation.Date) {
-        viewModel.selectedTimeOfDayDate = date
+        viewModel.selectedTimeOfDay = date
         baseView.updateDescriptionLabel(text: viewModel.descriptionLabelText)
     }
     

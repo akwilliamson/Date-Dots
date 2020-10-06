@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EventReminderViewDelegate {
-    func didSelectDaysBefore(at row: Int)
+    func didSelectDaysBefore(_ daysBefore: Int)
     func didSelectTimeOfDay(date: Foundation.Date)
     func didTapCancelReminder()
 }
@@ -19,7 +19,6 @@ class EventReminderView: BaseView {
     // MARK: Content
     
     struct Content {
-        let daysBeforePickerOptions: [String]
         let selectedDaysBeforeIndex: Int
         let selectedTimeOfDayDate: Foundation.Date
         let descriptionLabelText: String
@@ -30,15 +29,23 @@ class EventReminderView: BaseView {
     
     private let containerStackView: UIStackView
     private let descriptionLabel: UILabel
-    private let pickerStackView: UIStackView
-    private let daysBeforePickerView: UIPickerView
+    private let daysBeforeLabel: UILabel
+    private let daysBeforeContainerStackView: UIStackView
+    private let daysBeforeFirstRowStackView: UIStackView
+    private let zeroDaysBeforeLabel: ReminderCircleLabel
+    private let oneDayBeforeLabel: ReminderCircleLabel
+    private let twoDaysBeforeLabel: ReminderCircleLabel
+    private let threeDaysBeforeLabel: ReminderCircleLabel
+    private let daysBeforeSecondRowStackView: UIStackView
+    private let fourDaysBeforeLabel: ReminderCircleLabel
+    private let fiveDaysBeforeLabel: ReminderCircleLabel
+    private let sixDaysBeforeLabel: ReminderCircleLabel
+    private let sevenDaysBeforeLabel: ReminderCircleLabel
+    private let timeOfDayLabel: UILabel
     private let timeOfDayPickerView: UIDatePicker
     private let cancelReminderButton: UIButton
     
     // MARK: Properties
-    
-    private var pickerViewNumberOfComponents: Int = 0
-    private var pickerViewOptions: [String] = []
     
     var delegate: EventReminderViewDelegate?
     
@@ -64,25 +71,114 @@ class EventReminderView: BaseView {
             return label
         }()
         
-        pickerStackView = {
+        daysBeforeLabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
+            label.font = FontType.avenirNextDemiBold(20).font
+            label.text = "Days Before"
+            return label
+        }()
+        
+        daysBeforeContainerStackView = {
             let stackView = UIStackView()
             stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.spacing = 20
             stackView.axis = .vertical
             return stackView
         }()
         
-        daysBeforePickerView = {
-            let pickerView = UIPickerView()
-            pickerView.translatesAutoresizingMaskIntoConstraints = false
-            return pickerView
+        daysBeforeFirstRowStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.distribution = .fillEqually
+            stackView.spacing = 8
+            return stackView
+        }()
+        
+        zeroDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .zero)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        oneDayBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .one)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        twoDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .two)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        threeDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .three)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        daysBeforeSecondRowStackView = {
+            let stackView = UIStackView()
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.distribution = .fillEqually
+            stackView.spacing = 8
+            return stackView
+        }()
+        
+        fourDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .four)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        fiveDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .five)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        sixDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .six)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        sevenDaysBeforeLabel = {
+            let label = ReminderCircleLabel(daysBefore: .seven)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.isUserInteractionEnabled = true
+            return label
+        }()
+        
+        timeOfDayLabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.textAlignment = .center
+            label.font = FontType.avenirNextDemiBold(20).font
+            label.text = "Time of Day"
+            return label
         }()
         
         timeOfDayPickerView = {
-            let pickerView = UIDatePicker()
-            pickerView.translatesAutoresizingMaskIntoConstraints = false
-            pickerView.datePickerMode = .time
-            pickerView.minuteInterval = 15
-            return pickerView
+            let datePicker = UIDatePicker()
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+            datePicker.datePickerMode = .time
+            datePicker.timeZone = .current
+            if #available(iOS 14, *) {
+                datePicker.preferredDatePickerStyle = .wheels
+            }
+            datePicker.minuteInterval = 15
+            return datePicker
         }()
         
         cancelReminderButton = {
@@ -103,36 +199,71 @@ class EventReminderView: BaseView {
     
     private func configureView() {
         backgroundColor = .compatibleSystemBackground
-        daysBeforePickerView.delegate = self
-        daysBeforePickerView.dataSource = self
         timeOfDayPickerView.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)
         cancelReminderButton.addTarget(self, action: #selector(didCancelReminder), for: .touchUpInside)
+        
+        let zeroTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let oneTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let twoTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let threeTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let fourTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let fiveTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let sixTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        let sevenTapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectDaysBeforeLabel))
+        
+        zeroDaysBeforeLabel.addGestureRecognizer(zeroTapGesture)
+        oneDayBeforeLabel.addGestureRecognizer(oneTapGesture)
+        twoDaysBeforeLabel.addGestureRecognizer(twoTapGesture)
+        threeDaysBeforeLabel.addGestureRecognizer(threeTapGesture)
+        fourDaysBeforeLabel.addGestureRecognizer(fourTapGesture)
+        fiveDaysBeforeLabel.addGestureRecognizer(fiveTapGesture)
+        sixDaysBeforeLabel.addGestureRecognizer(sixTapGesture)
+        sevenDaysBeforeLabel.addGestureRecognizer(sevenTapGesture)
     }
     
     override func constructSubviewHierarchy() {
         addSubview(containerStackView)
         containerStackView.addArrangedSubview(descriptionLabel)
-        containerStackView.addArrangedSubview(pickerStackView)
-        pickerStackView.addArrangedSubview(daysBeforePickerView)
-        pickerStackView.addArrangedSubview(timeOfDayPickerView)
-        containerStackView.setCustomSpacing(20, after: pickerStackView)
+        containerStackView.addArrangedSubview(daysBeforeLabel)
+        containerStackView.setCustomSpacing(20, after: daysBeforeLabel)
+        containerStackView.addArrangedSubview(daysBeforeContainerStackView)
+        daysBeforeContainerStackView.addArrangedSubview(daysBeforeFirstRowStackView)
+        daysBeforeFirstRowStackView.addArrangedSubview(zeroDaysBeforeLabel)
+        daysBeforeFirstRowStackView.addArrangedSubview(oneDayBeforeLabel)
+        daysBeforeFirstRowStackView.addArrangedSubview(twoDaysBeforeLabel)
+        daysBeforeFirstRowStackView.addArrangedSubview(threeDaysBeforeLabel)
+        daysBeforeContainerStackView.addArrangedSubview(daysBeforeSecondRowStackView)
+        daysBeforeSecondRowStackView.addArrangedSubview(fourDaysBeforeLabel)
+        daysBeforeSecondRowStackView.addArrangedSubview(fiveDaysBeforeLabel)
+        daysBeforeSecondRowStackView.addArrangedSubview(sixDaysBeforeLabel)
+        daysBeforeSecondRowStackView.addArrangedSubview(sevenDaysBeforeLabel)
+        containerStackView.setCustomSpacing(20, after: daysBeforeContainerStackView)
+        containerStackView.addArrangedSubview(timeOfDayLabel)
+        containerStackView.setCustomSpacing(20, after: timeOfDayLabel)
+        containerStackView.addArrangedSubview(timeOfDayPickerView)
         containerStackView.addArrangedSubview(cancelReminderButton)
     }
     
     override func constructLayout() {
         NSLayoutConstraint.activate([
             containerStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            containerStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
+        
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)
+            descriptionLabel.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/8)
         ])
         
         NSLayoutConstraint.activate([
-            daysBeforePickerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)
+            daysBeforeContainerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            daysBeforeContainerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+        
+        NSLayoutConstraint.activate([
+            zeroDaysBeforeLabel.heightAnchor.constraint(equalTo: zeroDaysBeforeLabel.widthAnchor),
+            fourDaysBeforeLabel.heightAnchor.constraint(equalTo: zeroDaysBeforeLabel.widthAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -158,6 +289,12 @@ class EventReminderView: BaseView {
     func didCancelReminder(_ sender: UIButton) {
         delegate?.didTapCancelReminder()
     }
+    
+    @objc
+    func didSelectDaysBeforeLabel(_ sender: UITapGestureRecognizer) {
+        guard let daysBeforeLabel = sender.view as? ReminderCircleLabel else { return }
+        delegate?.didSelectDaysBefore(daysBeforeLabel.daysBefore.rawValue)
+    }
 }
 
 // MARK: - Populatable
@@ -165,40 +302,12 @@ class EventReminderView: BaseView {
 extension EventReminderView: Populatable {
 
     func populate(with content: Content) {
-        self.pickerViewOptions = content.daysBeforePickerOptions
         self.descriptionLabel.text = content.descriptionLabelText
-        self.daysBeforePickerView.selectRow(content.selectedDaysBeforeIndex, inComponent: 0, animated: false)
         self.timeOfDayPickerView.date = content.selectedTimeOfDayDate
         self.cancelReminderButton.isHidden = !content.shouldShowCancelButton
     }
 
     func updateDescriptionLabel(text: String) {
         descriptionLabel.text = text
-    }
-}
-
-// MARK: - UIPickerViewDataSource
-
-extension EventReminderView: UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerViewOptions.count
-    }
-}
-
-// MARK: - UIPickerViewDelegate
-
-extension EventReminderView: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerViewOptions[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.didSelectDaysBefore(at: row)
     }
 }

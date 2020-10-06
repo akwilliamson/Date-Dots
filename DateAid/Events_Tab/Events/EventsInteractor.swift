@@ -81,7 +81,7 @@ extension EventsInteractor: EventsInteractorInputting {
     
     private func customSorted(_ events: [Date]) -> [Date] {
         if sortByToday {
-            let today = Foundation.Date.now.formatted("MM/dd")
+            let today = Foundation.Date().formatted("MM/dd")
             
             let sortedEvents = events.sorted { event1, event2 -> Bool in
                 guard

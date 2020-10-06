@@ -34,8 +34,8 @@ class ReminderViewViewModel {
     
     private var reminderDayText: String? {
         guard
-            let index: Int = notificationManager.valueFor(key: Constant.Key.index),
-            let daysBefore = EventReminderWindow(rawValue: index)
+            let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.index),
+            let daysBefore = EventReminderDaysBefore(rawValue: daysBeforeIndex)
         else {
             return nil
         }
@@ -45,8 +45,8 @@ class ReminderViewViewModel {
 
     private var reminderTimeText: String? {
         guard let triggerTime = notificationManager.triggerTime() else { return nil }
-        
-        return triggerTime.formattedForTriggerTime
+
+        return triggerTime.formatted("h:mm a")
     }
     
     // MARK: Public Interface

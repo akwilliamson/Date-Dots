@@ -34,9 +34,10 @@
 		975713B12455507E00EDD963 /* EventDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975713B02455507E00EDD963 /* EventDetailsViewModel.swift */; };
 		975DBBBD1DAB748600D4CCC3 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975DBBBC1DAB748600D4CCC3 /* EventDetailsViewController.swift */; };
 		976473AC24330CE000D2F11D /* IconCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976473AB24330CE000D2F11D /* IconCircleImageView.swift */; };
-		9765045524909F9F00C916C2 /* EventReminderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* EventReminderWindow.swift */; };
+		9765045524909F9F00C916C2 /* EventReminderDaysBefore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* EventReminderDaysBefore.swift */; };
 		976504572490A2D000C916C2 /* EventReminderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976504562490A2D000C916C2 /* EventReminderDetails.swift */; };
 		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
+		97690A6E2526EAD200E396EB /* ReminderCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */; };
 		976BD4F71B2D079200415D65 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* EventCell.swift */; };
 		976BE68124888E0C00D48682 /* EventReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BE68024888E0C00D48682 /* EventReminderViewController.swift */; };
 		976BE68324888E1400D48682 /* EventReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BE68224888E1400D48682 /* EventReminderView.swift */; };
@@ -135,9 +136,10 @@
 		975713B02455507E00EDD963 /* EventDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewModel.swift; sourceTree = "<group>"; };
 		975DBBBC1DAB748600D4CCC3 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		976473AB24330CE000D2F11D /* IconCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCircleImageView.swift; sourceTree = "<group>"; };
-		9765045424909F9F00C916C2 /* EventReminderWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderWindow.swift; sourceTree = "<group>"; };
+		9765045424909F9F00C916C2 /* EventReminderDaysBefore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderDaysBefore.swift; sourceTree = "<group>"; };
 		976504562490A2D000C916C2 /* EventReminderDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderDetails.swift; sourceTree = "<group>"; };
 		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
+		97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCircleLabel.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		976BE68024888E0C00D48682 /* EventReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderViewController.swift; sourceTree = "<group>"; };
 		976BE68224888E1400D48682 /* EventReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderView.swift; sourceTree = "<group>"; };
@@ -358,10 +360,10 @@
 		976BE67F24888DF000D48682 /* Event_Reminder */ = {
 			isa = PBXGroup;
 			children = (
-				976BE68224888E1400D48682 /* EventReminderView.swift */,
-				976BE68424888E1F00D48682 /* EventReminderViewModel.swift */,
 				976BE68024888E0C00D48682 /* EventReminderViewController.swift */,
-				9765045424909F9F00C916C2 /* EventReminderWindow.swift */,
+				976BE68424888E1F00D48682 /* EventReminderViewModel.swift */,
+				976BE68224888E1400D48682 /* EventReminderView.swift */,
+				9765045424909F9F00C916C2 /* EventReminderDaysBefore.swift */,
 				976504562490A2D000C916C2 /* EventReminderDetails.swift */,
 			);
 			path = Event_Reminder;
@@ -427,6 +429,7 @@
 				976473AB24330CE000D2F11D /* IconCircleImageView.swift */,
 				975713AC24553A9900EDD963 /* CircleLabel.swift */,
 				97D266991BD95380008F7EF8 /* EventCircleLabel.swift */,
+				97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -699,13 +702,14 @@
 				9781F98A1E3E8A5300E2C434 /* EventsNavigationEventHandling.swift in Sources */,
 				97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */,
 				97B67D861E512F86006C3216 /* InitialImportInteractor.swift in Sources */,
+				97690A6E2526EAD200E396EB /* ReminderCircleLabel.swift in Sources */,
 				97AEAC0E1B2EA58000ADF181 /* Date+Utilities.swift in Sources */,
 				9774DB562467C61300211D9A /* ConstructableView.swift in Sources */,
 				9706223F1E2C31880020743C /* TabBarViewController.swift in Sources */,
 				972E3241245A903300E9DAAA /* ReminderViewViewModel.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */,
-				9765045524909F9F00C916C2 /* EventReminderWindow.swift in Sources */,
+				9765045524909F9F00C916C2 /* EventReminderDaysBefore.swift in Sources */,
 				9749E6D524837F0C00DAAB49 /* CoreDataInteractable.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				975713AD24553A9900EDD963 /* CircleLabel.swift in Sources */,

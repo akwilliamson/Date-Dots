@@ -10,6 +10,15 @@ import UIKit
 
 extension UIColor {
     
+    static func randomColor() -> UIColor {
+            return UIColor(
+               red:   CGFloat(arc4random()) / CGFloat(UInt32.max),
+               green: CGFloat(arc4random()) / CGFloat(UInt32.max),
+               blue:  CGFloat(arc4random()) / CGFloat(UInt32.max),
+               alpha: 1.0
+            )
+        }
+    
     class var compatibleSecondaryLabel: UIColor {
         if #available(iOS 13.0, *) {
             return .secondaryLabel

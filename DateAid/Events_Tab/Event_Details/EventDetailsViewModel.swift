@@ -23,6 +23,7 @@ class EventDetailsViewModel {
 
     // MARK: Private Interface
     
+    private let calendar = Calendar.current
     private let notificationManager = NotificationManager()
     private var toggledEvent = ToggledEvent.address
     
@@ -52,16 +53,23 @@ class EventDetailsViewModel {
     }
 
     var ageLabelText: String {
-        guard let date = event.date, let nextEventNumber = date.ageTurning else { return "?" }
-        return event.eventType == .birthday ? "\(nextEventNumber)" : "#\(nextEventNumber)"
+        guard let eventDate = event.date else { return "?" }
+        let numberOfYears = nextEventAgeTurning(on: eventDate)
+        
+        switch event.eventType {
+        case .birthday: return "\(numberOfYears)"
+        default:        return "#\(numberOfYears)"
+        }
     }
 
     var countdownLabelText: String {
-        guard let date = event.date, let daysUntil = date.daysUntil else { return "?" }
-        switch daysUntil {
+        guard let eventDate = event.date else { return "?" }
+        let numberOfDays = nextEventDaysLeft(until: eventDate)
+        
+        switch numberOfDays {
         case 0:  return "Today"
-        case 1:  return "\(daysUntil)\nday"
-        default: return "\(daysUntil)\ndays"
+        case 1:  return "\(numberOfDays)\nday"
+        default: return "\(numberOfDays)\ndays"
         }
     }
 
@@ -93,5 +101,25 @@ class EventDetailsViewModel {
             eventType: event.eventType,
             eventDate: event.date!
         )
+    }
+    
+    // MARK: Private Methods
+    
+    private func nextEventAgeTurning(on eventDate: Foundation.Date) -> Int {
+        let dateToday  = calendar.startOfDay(for: Foundation.Date())
+        let components = calendar.dateComponents([.day, .month], from: eventDate)
+        let nextEvent  = calendar.nextDate(after: dateToday, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)!
+        let numOfYears = calendar.dateComponents([.year], from: eventDate, to: nextEvent)
+        
+        return numOfYears.year ?? 0
+    }
+    
+    private func nextEventDaysLeft(until eventDate: Foundation.Date) -> Int {
+        let dateToday  = calendar.startOfDay(for: Foundation.Date())
+        let components = calendar.dateComponents([.day, .month], from: eventDate)
+        let nextEvent  = calendar.nextDate(after: dateToday, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)!
+        let numOfDays  = calendar.dateComponents([.day], from: dateToday, to: nextEvent)
+
+        return numOfDays.day ?? 0
     }
 }

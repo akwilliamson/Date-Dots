@@ -41,4 +41,13 @@ enum EventType: String {
         case .other:       return UIImage(named: "unselected-other.png")!
         }
     }
+
+    public var emoji: String {
+        switch self {
+        case .birthday:    return "🎈"
+        case .anniversary: return "💞"
+        case .holiday:     return "🎉"
+        case .other:       return "💡"
+        }
+    }
 }

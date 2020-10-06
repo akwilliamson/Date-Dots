@@ -32,38 +32,4 @@ class EventCircleLabel: CircleLabel {
     public func updateColor(to color: UIColor) {
         backgroundColor = color
     }
-
-    // MARK: Public Methods
-
-    public func rollRight(forDuration duration: TimeInterval, inView view: UIView, closure: @escaping (EventCircleLabel) -> ()) {
-        UIView.animate(withDuration: duration, animations: { 
-            self.center.x = view.frame.width - (self.center.x)
-        }, completion: { _ in
-            closure(self)
-        }) 
-    }
-    
-    public func rollLeft(forDuration duration: TimeInterval, toPosition position: CGFloat, closure: @escaping (EventCircleLabel, String) -> ()) {
-        let text = self.text!
-        UIView.animate(withDuration: duration, animations: { 
-            self.center.x = position
-            self.text = "✓"
-            }, completion: { _ in
-                closure(self, text)
-        }) 
-    }
-
-    public func addTapGestureRecognizer(forAction action: String, inController controller: UIViewController) {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: controller, action: Selector(action))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    public func animate(intoView view: UIView, toPosition position: CGFloat, withDelay delay: TimeInterval) {
-        center.x = -view.frame.width - frame.height
-        UIView.animate(withDuration: 0.8, delay: delay, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [], animations: {
-            self.center.x = position
-            }) { _ in
-        }
-    }
 }

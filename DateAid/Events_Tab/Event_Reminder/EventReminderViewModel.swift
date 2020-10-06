@@ -24,29 +24,24 @@ class EventReminderViewModel {
     private let notificationManager: NotificationManager
     
     private var notificationFound = false
-
-    private var daysBeforePickerOptions: [String] {
-        return [
-            EventReminderWindow.dayOf.pickerText,
-            EventReminderWindow.oneDay.pickerText,
-            EventReminderWindow.twoDays.pickerText,
-            EventReminderWindow.threeDays.pickerText,
-            EventReminderWindow.fourDays.pickerText,
-            EventReminderWindow.fiveDays.pickerText,
-            EventReminderWindow.sixDays.pickerText,
-            EventReminderWindow.sevenDays.pickerText
-        ]
-    }
     
     private var selectedTimeOfDayPicker: Foundation.Date {
-        return selectedTimeOfDayDate.rounded(minutes: 15, rounding: .ceiling)
+        return selectedTimeOfDay.rounded(minutes: 15, rounding: .ceiling)
     }
     
-    var selectedDaysBeforeIndex = 0
-    var selectedTimeOfDayDate = Foundation.Date()
+    var selectedDaysBefore = 0
+    var selectedTimeOfDay = Foundation.Date()
+    
+    private var selectedDaysBeforeString: String {
+        return EventReminderDaysBefore(rawValue: selectedDaysBefore)?.pickerText ?? "?"
+    }
+    
+    private var selectedTimeOfDayString: String {
+        return selectedTimeOfDay.formatted("h:mm a")
+    }
     
     var descriptionLabelText: String {
-        return selectedDaysBeforeText + " at " + selectedTimeOfDayText
+        return selectedDaysBeforeString + " at " + selectedTimeOfDayString
     }
     
     // MARK: Initialization
@@ -63,15 +58,14 @@ class EventReminderViewModel {
     // MARK: Public Interface
     
     func generateContent() -> EventReminderView.Content {
-        selectedDaysBeforeIndex = notificationManager.valueFor(key: "index") ?? selectedDaysBeforeIndex
-        selectedTimeOfDayDate = notificationManager.triggerTime() ?? selectedTimeOfDayDate
+        selectedDaysBefore = notificationManager.valueFor(key: "index") ?? selectedDaysBefore
+        selectedTimeOfDay = notificationManager.triggerTime() ?? selectedTimeOfDay
         
         return EventReminderView.Content(
-            daysBeforePickerOptions: self.daysBeforePickerOptions,
-            selectedDaysBeforeIndex: self.selectedDaysBeforeIndex,
-            selectedTimeOfDayDate: self.selectedTimeOfDayPicker,
-            descriptionLabelText: self.descriptionLabelText,
-            shouldShowCancelButton: self.notificationFound
+            selectedDaysBeforeIndex: selectedDaysBefore,
+            selectedTimeOfDayDate: selectedTimeOfDayPicker,
+            descriptionLabelText: descriptionLabelText,
+            shouldShowCancelButton: notificationFound
         )
     }
     
@@ -83,17 +77,19 @@ class EventReminderViewModel {
     func saveReminder(_ completion: @escaping (EventReminderAction, UNNotificationRequest?) -> Void) {
         notificationManager.permissionStatus { status in
             switch status {
-            case .authorized, .provisional:
-                let notificationDetails = self.createNotificationDetails()
-                self.notificationManager.scheduleNotification(with: notificationDetails) { notificationRequest in
-                    completion(.dismissView, notificationRequest)
+            case .authorized:
+                self.scheduleNotification {
+                    completion(.dismissView, $0)
+                }
+            case .provisional:
+                self.scheduleNotification {
+                    completion(.dismissView, $0)
                 }
             case .notDetermined:
                 self.notificationManager.requestPermission { (success, error) in
                     if success {
-                        let notificationDetails = self.createNotificationDetails()
-                        self.notificationManager.scheduleNotification(with: notificationDetails) { notificationRequest in
-                            completion(.dismissView, notificationRequest)
+                        self.scheduleNotification {
+                            completion(.dismissView, $0)
                         }
                     } else {
                         completion(.displayAlertError, nil)
@@ -107,73 +103,57 @@ class EventReminderViewModel {
         }
     }
     
-    private func createNotificationDetails() -> NotificationDetails {
-        let title: String
-        let body: String
+    private func scheduleNotification(_ completion: @escaping (UNNotificationRequest?) -> Void) {
+        let notificationDetails = createNotificationDetails()
         
-        let reminderText = EventReminderWindow(rawValue: selectedDaysBeforeIndex)?.reminderText ?? "event is coming up"
-
-        switch eventReminderDetails.eventType {
-        case .birthday:
-            title = "🎈 \(eventReminderDetails.eventName) "
-            body = "birthday \(reminderText)"
-        case .anniversary:
-            title = "💞 \(eventReminderDetails.eventName)"
-            body = "anniversary \(reminderText)"
-        case .holiday:
-            title = "🎉 \(eventReminderDetails.eventName)"
-            body = "holiday \(reminderText)"
-        case .other:
-            title = "💡 \(eventReminderDetails.eventName)"
-            body = "event \(reminderText)"
+        notificationManager.scheduleNotification(with: notificationDetails) { notificationRequest in
+            completion(notificationRequest)
         }
+    }
+    
+    private func createNotificationDetails() -> NotificationDetails {
+        let titlePrefix = eventReminderDetails.eventType.emoji
+        let bodyPrefix = eventReminderDetails.eventType.rawValue
+        
+        let titleSuffix = eventReminderDetails.eventName
+        let bodySuffix = EventReminderDaysBefore(rawValue: selectedDaysBefore)?.reminderText ?? "event is coming up... 👀"
+
+        let title = [titlePrefix, titleSuffix].joined(separator: " ")
+        let body = [bodyPrefix, bodySuffix].joined(separator: " ")
         
         let details = NotificationDetails(
             id: eventReminderDetails.identifier,
             title: title,
             body: body,
-            index: selectedDaysBeforeIndex,
-            dateComponents: generateReminderDateComponents()
+            daysBefore: selectedDaysBefore,
+            dateComponents: generateFireDateComponents()
         )
         
         return details
     }
     
-    private func generateReminderDateComponents() -> DateComponents {
+    private func generateFireDateComponents() -> DateComponents {
+        let eventDateComponents = eventReminderDetails.eventDate.dateComponents
         
-        let eventDateComponents = DateComponents(
-            month: eventReminderDetails.eventDate.components.month,
-            day: eventReminderDetails.eventDate.components.day
-        )
+        let today = Foundation.Date()
+        let monthAndDayOfEvent = DateComponents(month: eventDateComponents.month, day: eventDateComponents.day)
         
         let nextEventDate = Calendar.current.nextDate(
-            after: Foundation.Date(),
-            matching: eventDateComponents,
+            after: today,
+            matching: monthAndDayOfEvent,
             matchingPolicy: .nextTime,
             repeatedTimePolicy: .first,
             direction: .forward
         )
         
         let fireDateComponents = DateComponents(
-            year: nextEventDate?.components.year,
-            month: nextEventDate?.components.month,
-            day: nextEventDate?.components.day,
-            hour: selectedTimeOfDayDate.components.hour,
-            minute: selectedTimeOfDayDate.components.minute
+            year: nextEventDate?.dateComponents.year,
+            month: nextEventDate?.dateComponents.month,
+            day: nextEventDate!.dateComponents.day! - selectedDaysBefore,
+            hour: selectedTimeOfDay.dateComponents.hour,
+            minute: selectedTimeOfDay.dateComponents.minute
         )
 
         return fireDateComponents
-    }
-    
-    // MARK: Private Helpers
-    
-    private var selectedDaysBeforeText: String {
-        daysBeforePickerOptions[selectedDaysBeforeIndex]
-    }
-    
-    private var selectedTimeOfDayText: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        return dateFormatter.string(from: selectedTimeOfDayDate)
     }
 }

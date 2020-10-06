@@ -13,11 +13,17 @@ struct NotificationDetails {
     var id: String
     var title: String
     var body: String
-    var index: Int
+    var daysBefore: Int
     var dateComponents: DateComponents
 }
 
 class NotificationManager {
+    
+    private enum Constant {
+        enum Key {
+            static let daysBefore = "DaysBefore"
+        }
+    }
     
     // MARK: Properties
     
@@ -64,12 +70,12 @@ class NotificationManager {
             completion(self.notificationRequest)
         }
     }
-    
+
     func scheduleNotification(with details: NotificationDetails, completion: @escaping (UNNotificationRequest) -> Void) {
         let content = UNMutableNotificationContent()
         content.title = details.title
         content.body = details.body
-        content.userInfo = ["index": details.index]
+        content.userInfo = [Constant.Key.daysBefore: details.daysBefore]
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: details.dateComponents, repeats: false)
 
