@@ -43,6 +43,8 @@ class EventsPresenter {
     private var isSearching = false
     private var deleteIndex: IndexPath?
     private var deleteEventType: EventType?
+    
+    private let notificationManager = NotificationManager()
 }
 
 // MARK: - EventsEventHandling
@@ -128,6 +130,8 @@ extension EventsPresenter: EventsInteractorOutputting {
         else {
             return
         }
+        
+        notificationManager.cancelNotificationWith(identifier: event.objectIDString)
 
         categorizedEvents[deleteEventType]?.removeAll(where: { $0.objectID == event.objectID })
         view?.deleteTableView(rows: [indexPath], animation: .automatic)

@@ -10,41 +10,59 @@ import Foundation
 import Contacts
 
 extension CNContact {
+    
+    private enum Constant {
+        enum String {
+            static let home = "Home"
+            static let anniversary = "Anniversary"
+        }
+    }
 
     var fullName: String {
-        return givenName + " " + familyName
+        [givenName, familyName].joined(separator: " ")
     }
     
     var abbreviatedName: String {
-        guard let character = familyName.first else { return givenName }
-        return givenName + " " + String(character)
+        if let familyNameFirstCharacter = familyName.first {
+            return [givenName, String(familyNameFirstCharacter)].joined(separator: " ")
+        } else {
+            return givenName
+        }
     }
     
     var postalAddress: CNPostalAddress? {
-        return postalAddresses.filter({ address -> Bool in
-            guard let label = address.label else { return false }
-            return label.contains("Home")
-        }).first?.value
+        let possibleHomeAddress = postalAddresses.filter { address in
+            guard let label = address.label else {
+                return false
+            }
+            
+            return label.contains(Constant.String.home)
+        }
+        
+        return possibleHomeAddress.first?.value
     }
     
     var birthdate: Foundation.Date? {
-        var comps = birthday
+        var birthdayDateComponents = birthday
+        birthdayDateComponents?.timeZone = .current
         
-        comps?.timeZone = TimeZone.current
-        return comps?.date ?? nil
+        return birthdayDateComponents?.date
     }
     
     var anniversary: Foundation.Date? {
-        let comps = dates.filter { date in
-            guard let label = date.label else { return false }
-            return label.contains("Anniversary")
+        let possibleAnniversary = dates.filter { date in
+            guard let label = date.label else {
+                return false
+            }
+
+            return label.contains(Constant.String.anniversary)
         }
         
-        guard let components = comps.first?.value else { return nil }
+        guard let anniversaryComponents = possibleAnniversary.first?.value else { return nil }
         
-        var finalComps = components as DateComponents
-
-        finalComps.timeZone = TimeZone.current
-        return finalComps.date
+        var anniversary = anniversaryComponents as DateComponents
+        anniversary.timeZone = .current
+        
+        return anniversary.date
     }
 }

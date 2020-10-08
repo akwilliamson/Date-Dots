@@ -38,8 +38,7 @@ class EventReminderViewController: UIViewController {
     // MARK: UI
     
     private lazy var saveBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: Constant.String.saveButtonTitle, style: .done, target: self, action: #selector(saveReminder))
-        return barButtonItem
+        return UIBarButtonItem(title: Constant.String.saveButtonTitle, style: .done, target: self, action: #selector(saveReminder))
     }()
     
     private lazy var baseView: EventReminderView = {
@@ -147,5 +146,7 @@ extension EventReminderViewController: EventReminderViewDelegate {
     
     func didTapCancelReminder() {
         viewModel.cancelReminder()
+        delegate.didCancelNotificationRequest()
+        navigationController?.popViewController(animated: true)
     }
 }

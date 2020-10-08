@@ -15,7 +15,7 @@ class ReminderViewViewModel {
     
     private enum Constant {
         enum Key {
-            static let index = "index"
+            static let daysBefore = "DaysBefore"
         }
         enum String {
             static let reminderNotSet = "Reminder\nNot Set"
@@ -34,7 +34,7 @@ class ReminderViewViewModel {
     
     private var reminderDayText: String? {
         guard
-            let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.index),
+            let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.daysBefore),
             let daysBefore = EventReminderDaysBefore(rawValue: daysBeforeIndex)
         else {
             return nil
@@ -58,7 +58,10 @@ class ReminderViewViewModel {
     
     /// The text displayed within a `ReminderView`.
     var reminderText: String {
-        guard let dayText = reminderDayText, let timeText = reminderTimeText else {
+        guard
+            let dayText = reminderDayText,
+            let timeText = reminderTimeText
+        else {
             return Constant.String.reminderNotSet
         }
         

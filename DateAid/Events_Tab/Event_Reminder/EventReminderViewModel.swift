@@ -18,6 +18,15 @@ enum EventReminderAction {
 
 class EventReminderViewModel {
     
+    private enum Constant {
+        enum Key {
+            static let daysBefore = "DaysBefore"
+        }
+        enum String {
+            static let eventIsComingUp = "event is coming up... 👀"
+        }
+    }
+    
     // MARK: Properties
     
     private let eventReminderDetails: EventReminderDetails
@@ -29,9 +38,6 @@ class EventReminderViewModel {
         return selectedTimeOfDay.rounded(minutes: 15, rounding: .ceiling)
     }
     
-    var selectedDaysBefore = 0
-    var selectedTimeOfDay = Foundation.Date()
-    
     private var selectedDaysBeforeString: String {
         return EventReminderDaysBefore(rawValue: selectedDaysBefore)?.pickerText ?? "?"
     }
@@ -40,8 +46,15 @@ class EventReminderViewModel {
         return selectedTimeOfDay.formatted("h:mm a")
     }
     
+    var selectedDaysBefore = 0
+    var selectedTimeOfDay = Foundation.Date().rounded(minutes: 15, rounding: .ceiling)
+    
     var descriptionLabelText: String {
         return selectedDaysBeforeString + " at " + selectedTimeOfDayString
+    }
+    
+    var daysUntilEvent: Int {
+        return eventReminderDetails.daysRemaining
     }
     
     // MARK: Initialization
@@ -58,14 +71,15 @@ class EventReminderViewModel {
     // MARK: Public Interface
     
     func generateContent() -> EventReminderView.Content {
-        selectedDaysBefore = notificationManager.valueFor(key: "index") ?? selectedDaysBefore
+        selectedDaysBefore = notificationManager.valueFor(key: Constant.Key.daysBefore) ?? selectedDaysBefore
         selectedTimeOfDay = notificationManager.triggerTime() ?? selectedTimeOfDay
         
         return EventReminderView.Content(
             selectedDaysBeforeIndex: selectedDaysBefore,
             selectedTimeOfDayDate: selectedTimeOfDayPicker,
             descriptionLabelText: descriptionLabelText,
-            shouldShowCancelButton: notificationFound
+            notificationFound: notificationFound,
+            daysUntilEvent: daysUntilEvent
         )
     }
     
@@ -116,7 +130,7 @@ class EventReminderViewModel {
         let bodyPrefix = eventReminderDetails.eventType.rawValue
         
         let titleSuffix = eventReminderDetails.eventName
-        let bodySuffix = EventReminderDaysBefore(rawValue: selectedDaysBefore)?.reminderText ?? "event is coming up... 👀"
+        let bodySuffix = EventReminderDaysBefore(rawValue: selectedDaysBefore)?.reminderText ?? Constant.String.eventIsComingUp
 
         let title = [titlePrefix, titleSuffix].joined(separator: " ")
         let body = [bodyPrefix, bodySuffix].joined(separator: " ")
@@ -133,10 +147,11 @@ class EventReminderViewModel {
     }
     
     private func generateFireDateComponents() -> DateComponents {
-        let eventDateComponents = eventReminderDetails.eventDate.dateComponents
+        let eventMonth = eventReminderDetails.eventDate.month
+        let eventDay = eventReminderDetails.eventDate.day
         
         let today = Foundation.Date()
-        let monthAndDayOfEvent = DateComponents(month: eventDateComponents.month, day: eventDateComponents.day)
+        let monthAndDayOfEvent = DateComponents(month: eventMonth, day: eventDay)
         
         let nextEventDate = Calendar.current.nextDate(
             after: today,
@@ -147,11 +162,11 @@ class EventReminderViewModel {
         )
         
         let fireDateComponents = DateComponents(
-            year: nextEventDate?.dateComponents.year,
-            month: nextEventDate?.dateComponents.month,
-            day: nextEventDate!.dateComponents.day! - selectedDaysBefore,
-            hour: selectedTimeOfDay.dateComponents.hour,
-            minute: selectedTimeOfDay.dateComponents.minute
+            year: nextEventDate?.year,
+            month: nextEventDate?.month,
+            day: nextEventDate!.day! - selectedDaysBefore,
+            hour: selectedTimeOfDay.hour,
+            minute: selectedTimeOfDay.minute
         )
 
         return fireDateComponents

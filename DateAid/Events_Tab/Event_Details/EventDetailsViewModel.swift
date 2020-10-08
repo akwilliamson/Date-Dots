@@ -99,7 +99,8 @@ class EventDetailsViewModel {
             identifier: event.objectIDString,
             eventName: event.abbreviatedName ?? event.name!,
             eventType: event.eventType,
-            eventDate: event.date!
+            eventDate: event.date!,
+            daysRemaining: nextEventDaysLeft(until: event.date!)
         )
     }
     

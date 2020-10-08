@@ -20,21 +20,16 @@ enum EventReminderDaysBefore: Int {
     
     var pickerText: String {
         switch self {
-        case .zero:
-            return "Day of"
-        default:
-            return "\(rawValue) day before"
+        case .zero: return "Day of"
+        default:    return "\(rawValue) day before"
         }
     }
     
     var reminderText: String {
         switch self {
-        case .zero:
-            return "is today"
-        case .one:
-            return "is tomorrow"
-        default:
-            return "is \(rawValue) days away"
+        case .zero: return "is today"
+        case .one:  return "is tomorrow"
+        default:    return "is \(rawValue) days away"
         }
     }
 }
