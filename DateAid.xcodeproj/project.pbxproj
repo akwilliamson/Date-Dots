@@ -33,6 +33,7 @@
 		975713AF24553BD400EDD963 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975713AE24553BD400EDD963 /* CircleImageView.swift */; };
 		975713B12455507E00EDD963 /* EventDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975713B02455507E00EDD963 /* EventDetailsViewModel.swift */; };
 		975DBBBD1DAB748600D4CCC3 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975DBBBC1DAB748600D4CCC3 /* EventDetailsViewController.swift */; };
+		9763D5292535749000EB10BC /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763D5282535749000EB10BC /* Device.swift */; };
 		976473AC24330CE000D2F11D /* IconCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976473AB24330CE000D2F11D /* IconCircleImageView.swift */; };
 		9765045524909F9F00C916C2 /* EventReminderDaysBefore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* EventReminderDaysBefore.swift */; };
 		976504572490A2D000C916C2 /* EventReminderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976504562490A2D000C916C2 /* EventReminderDetails.swift */; };
@@ -135,6 +136,7 @@
 		975713AE24553BD400EDD963 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
 		975713B02455507E00EDD963 /* EventDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewModel.swift; sourceTree = "<group>"; };
 		975DBBBC1DAB748600D4CCC3 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		9763D5282535749000EB10BC /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		976473AB24330CE000D2F11D /* IconCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCircleImageView.swift; sourceTree = "<group>"; };
 		9765045424909F9F00C916C2 /* EventReminderDaysBefore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderDaysBefore.swift; sourceTree = "<group>"; };
 		976504562490A2D000C916C2 /* EventReminderDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventReminderDetails.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				97C901EA245A88B4005AF301 /* Managers */,
 				97C901E9245A88A7005AF301 /* Views */,
 				97C901F6245A89B6005AF301 /* Models */,
+				9763D5282535749000EB10BC /* Device.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				9749E6D524837F0C00DAAB49 /* CoreDataInteractable.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				975713AD24553A9900EDD963 /* CircleLabel.swift in Sources */,
+				9763D5292535749000EB10BC /* Device.swift in Sources */,
 				9716321A246132570024875B /* EventSetupViewModel.swift in Sources */,
 				979C36A71E0E14A80098345E /* InitialImportEventHandling.swift in Sources */,
 				97FA131B1DBEF5D200C9DBFE /* EventsViewOutputting.swift in Sources */,

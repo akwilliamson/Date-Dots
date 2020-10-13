@@ -13,6 +13,9 @@ class EventSetupViewModel {
     // MARK: Constants
     
     private enum Constant {
+        enum Key {
+            static let daysBefore = "DaysBefore"
+        }
         enum String {
             static let whoText = "Who"
             static let whatText = "What"
@@ -24,6 +27,7 @@ class EventSetupViewModel {
             static let addressOnePlaceholderText = "Address 1"
             static let addressTwoPlaceholderText = "Address 2"
             static let whyDescriptionText = "Because you care!"
+            static let eventIsComingUp = "event is coming up... 👀"
         }
     }
     
@@ -57,6 +61,11 @@ class EventSetupViewModel {
         addressTwoText = event.address?.region
         eventType = event.eventType
         eventDate = event.date
+        eventId = event.objectIDString
+        notificationManager = NotificationManager()
+        notificationManager.notification(with: event.objectIDString) { existingNotificationRequest in
+            self.existingNotificationRequest = existingNotificationRequest
+        }
         
         return EventSetupView.Content(
             whoText: Constant.String.whoText,
@@ -80,8 +89,7 @@ class EventSetupViewModel {
     
     // MARK: Properties
     
-    var activeEventSetupInputType: EventSetupInputType?
-    
+    var eventId: String?
     var eventType: EventType?
     var eventDate: Foundation.Date?
     
@@ -89,6 +97,10 @@ class EventSetupViewModel {
     private var lastNameText: String?
     private var addressOneText: String?
     private var addressTwoText: String?
+    private var activeEventSetupInputType: EventSetupInputType?
+    
+    private var notificationManager = NotificationManager()
+    private var existingNotificationRequest: UNNotificationRequest?
     
     var eventName: String? {
         if let firstNameText = firstNameText, !firstNameText.isEmpty, let lastNameText = lastNameText, !lastNameText.isEmpty {
@@ -189,6 +201,73 @@ class EventSetupViewModel {
         case .addressOne: addressOneText = currentText
         case .addressTwo: addressTwoText = currentText
         }
+    }
+    
+    func rescheduleNotificationIfNeeded(completion:  @escaping () -> Void) {
+        if
+            let existingNotificationRequest = existingNotificationRequest,
+            let triggerDate = existingNotificationRequest.trigger as? UNCalendarNotificationTrigger,
+            let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.daysBefore),
+            let daysBefore = EventReminderDaysBefore(rawValue: daysBeforeIndex)?.rawValue,
+            let eventType = eventType,
+            let eventName = eventName
+        {
+            notificationManager.cancelNotificationWith(identifier: existingNotificationRequest.identifier)
+
+            let titlePrefix = eventType.emoji
+            let titleSuffix = eventName
+            let title = [titlePrefix, titleSuffix].joined(separator: " ")
+            
+            let bodyPrefix = eventType.rawValue
+            let bodySuffix = EventReminderDaysBefore(rawValue: daysBefore)?.reminderText ?? Constant.String.eventIsComingUp
+            let body = [bodyPrefix, bodySuffix].joined(separator: " ")
+            
+            let dateComponents = generateFireDateComponents(triggerDate.dateComponents, daysBefore: daysBefore)
+            
+            let details = NotificationDetails(
+                id: existingNotificationRequest.identifier,
+                title: title,
+                body: body,
+                daysBefore: daysBefore,
+                dateComponents: dateComponents
+            )
+            
+            notificationManager.scheduleNotification(with: details) { newNotificationRequest in
+                completion()
+            }
+        } else {
+            completion()
+        }
+    }
+    
+    private func generateFireDateComponents(_ dateComponents: DateComponents, daysBefore: Int) -> DateComponents {
+        guard let eventDate = eventDate else {
+            return dateComponents
+        }
+        
+        let eventMonth = eventDate.month
+        let eventDay = eventDate.day
+        
+        let today = Foundation.Date()
+        let monthAndDayOfEvent = DateComponents(month: eventMonth, day: eventDay)
+        
+        let nextEventDate = Calendar.current.nextDate(
+            after: today,
+            matching: monthAndDayOfEvent,
+            matchingPolicy: .nextTime,
+            repeatedTimePolicy: .first,
+            direction: .forward
+        )
+        
+        let fireDateComponents = DateComponents(
+            year: nextEventDate?.year,
+            month: nextEventDate?.month,
+            day: nextEventDate!.day! - daysBefore,
+            hour: dateComponents.hour,
+            minute: dateComponents.minute
+        )
+
+        return fireDateComponents
     }
     
     private func placeholderTextForInputType(_ inputType: EventSetupInputType) -> String {

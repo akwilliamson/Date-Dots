@@ -104,8 +104,10 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
         
         do {
             try moc.save()
-            eventSetupDelegate?.updateEvent(event)
-            navigationController?.popViewController(animated: true)
+            viewModel.rescheduleNotificationIfNeeded {
+                self.eventSetupDelegate?.updateEvent(event)
+                self.navigationController?.popViewController(animated: true)
+            }
         } catch {
             showAlert(withError: error.localizedDescription)
         }

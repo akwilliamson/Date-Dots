@@ -33,19 +33,40 @@ class EventDetailsViewController: UIViewController {
 
     private lazy var dateLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = FontType.avenirNextDemiBold(25).font
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(20).font
+        default:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(30).font
+        }
+        
         return eventCircleLabel
     }()
     
     private lazy var ageLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = FontType.avenirNextDemiBold(40).font
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(30).font
+        default:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(40).font
+        }
+        
         return eventCircleLabel
     }()
 
     private lazy var countdownLabel: EventCircleLabel = {
         let eventCircleLabel = EventCircleLabel(color: viewModel.eventColor)
-        eventCircleLabel.font = FontType.avenirNextDemiBold(25).font
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(20).font
+        default:
+            eventCircleLabel.font = FontType.avenirNextDemiBold(30).font
+        }
+        
         return eventCircleLabel
     }()
 
@@ -107,6 +128,14 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapGiftIdeas), for: .touchUpInside)
         button.setTitle("Gift Ideas", for: .normal)
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(25).font
+        default:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
+        }
+        
         button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         return button
     }()
@@ -116,7 +145,14 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventPlans), for: .touchUpInside)
         button.setTitle("Event Plans", for: .normal)
-        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(25).font
+        default:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
+        }
+        
         return button
     }()
 
@@ -125,7 +161,14 @@ class EventDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapOtherNotes), for: .touchUpInside)
         button.setTitle("Other Notes", for: .normal)
-        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(25).font
+        default:
+            button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
+        }
+        
         return button
     }()
 
@@ -197,7 +240,7 @@ class EventDetailsViewController: UIViewController {
             notesStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         NSLayoutConstraint.activate([
-            giftIdeasButton.heightAnchor.constraint(equalToConstant: 50)
+            giftIdeasButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.06)
         ])
         NSLayoutConstraint.activate([
             toggleButtonStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -20),
