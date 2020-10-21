@@ -20,9 +20,8 @@ class ReminderViewViewModel {
         enum String {
             static let reminderNotSet = "Reminder\nNot Set"
         }
-        enum Font {
-            static let noReminder = FontType.avenirNextDemiBold(18).font
-            static let reminder = FontType.noteworthyBold(20).font
+        enum Color {
+            static let reminder: UIColor = .compatibleLabel
         }
     }
     
@@ -53,7 +52,20 @@ class ReminderViewViewModel {
     
     /// The font of the text displayed within a `ReminderView`.
     var reminderFont: UIFont {
-        return notificationManager.notificationExists ? Constant.Font.reminder : Constant.Font.noReminder
+        let fontSize: CGFloat
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            fontSize = 14
+        default:
+            fontSize = 18
+        }
+
+        return notificationManager.notificationExists ? FontType.noteworthyBold(fontSize).font : FontType.avenirNextDemiBold(fontSize).font
+    }
+    
+    var reminderColor: UIColor {
+        return Constant.Color.reminder
     }
     
     /// The text displayed within a `ReminderView`.

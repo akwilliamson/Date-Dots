@@ -33,7 +33,16 @@ class AddressViewViewModel {
     }
     
     var addressFont: UIFont {
-        return address?.street == nil ? FontType.avenirNextDemiBold(18).font : FontType.noteworthyBold(20).font
+        let fontSize: CGFloat
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            fontSize = 14
+        default:
+            fontSize = 18
+        }
+
+        return address?.street == nil ? FontType.avenirNextDemiBold(fontSize).font : FontType.noteworthyBold(fontSize).font
     }
     
     var regionText: String {
@@ -45,7 +54,16 @@ class AddressViewViewModel {
     }
     
     var regionFont: UIFont {
-        return address?.region == nil ? FontType.avenirNextDemiBold(18).font : FontType.noteworthyBold(20).font
+        let fontSize: CGFloat
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            fontSize = 14
+        default:
+            fontSize = 18
+        }
+        
+        return address?.region == nil ? FontType.avenirNextDemiBold(fontSize).font : FontType.noteworthyBold(fontSize).font
     }
     
     // MARK: Public Methods

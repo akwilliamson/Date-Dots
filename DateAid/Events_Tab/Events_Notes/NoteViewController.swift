@@ -31,7 +31,12 @@ class NoteViewController: UIViewController, CoreDataInteractable {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
-        textView.font = FontType.avenirNextDemiBold(25).font
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            textView.font = FontType.avenirNextDemiBold(20).font
+        default:
+            textView.font = FontType.avenirNextDemiBold(25).font
+        }
         return textView
     }()
 
@@ -82,12 +87,22 @@ class NoteViewController: UIViewController, CoreDataInteractable {
     }
     
     private func constrainSubviews() {
-        NSLayoutConstraint.activate([
-            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
-        ])
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            NSLayoutConstraint.activate([
+                textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+                textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+                textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+                textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12)
+            ])
+        default:
+            NSLayoutConstraint.activate([
+                textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+                textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            ])
+        }
     }
 
     // MARK: View Setup

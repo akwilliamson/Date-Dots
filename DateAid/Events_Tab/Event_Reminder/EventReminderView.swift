@@ -79,6 +79,7 @@ class EventReminderView: BaseView {
             label.translatesAutoresizingMaskIntoConstraints = false
             label.font = FontType.avenirNextBold(25).font
             label.textAlignment = .center
+            label.adjustsFontSizeToFitWidth = true
             return label
         }()
         
@@ -86,7 +87,7 @@ class EventReminderView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(20).font
+            label.font = FontType.noteworthyBold(20).font
             label.text = Constant.String.daysBefore
             return label
         }()
@@ -183,7 +184,7 @@ class EventReminderView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(20).font
+            label.font = FontType.noteworthyBold(20).font
             label.text = Constant.String.timeOfDay
             return label
         }()
@@ -236,11 +237,20 @@ class EventReminderView: BaseView {
     }
     
     override func constructSubviewHierarchy() {
+        let customSpacing: CGFloat
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            customSpacing = 20
+        default:
+            customSpacing = 30
+        }
+        
         addSubview(containerStackView)
         containerStackView.addArrangedSubview(descriptionLabel)
-        containerStackView.setCustomSpacing(30, after: descriptionLabel)
+        containerStackView.setCustomSpacing(customSpacing, after: descriptionLabel)
         containerStackView.addArrangedSubview(cancelReminderButton)
-        containerStackView.setCustomSpacing(30, after: cancelReminderButton)
+        containerStackView.setCustomSpacing(customSpacing, after: cancelReminderButton)
         containerStackView.addArrangedSubview(daysBeforeLabel)
         containerStackView.setCustomSpacing(20, after: daysBeforeLabel)
         containerStackView.addArrangedSubview(daysBeforeContainerStackView)
@@ -254,7 +264,7 @@ class EventReminderView: BaseView {
         daysBeforeSecondRowStackView.addArrangedSubview(fiveDaysBeforeLabel)
         daysBeforeSecondRowStackView.addArrangedSubview(sixDaysBeforeLabel)
         daysBeforeSecondRowStackView.addArrangedSubview(sevenDaysBeforeLabel)
-        containerStackView.setCustomSpacing(40, after: daysBeforeContainerStackView)
+        containerStackView.setCustomSpacing(customSpacing, after: daysBeforeContainerStackView)
         containerStackView.addArrangedSubview(timeOfDayLabel)
         containerStackView.addArrangedSubview(timeOfDayPickerView)
     }
@@ -267,10 +277,18 @@ class EventReminderView: BaseView {
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         
-        NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 30)
-        ])
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            NSLayoutConstraint.activate([
+                descriptionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+                descriptionLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        default:
+            NSLayoutConstraint.activate([
+                descriptionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
+                descriptionLabel.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        }
         
         NSLayoutConstraint.activate([
             cancelReminderButton.heightAnchor.constraint(equalToConstant: 50),

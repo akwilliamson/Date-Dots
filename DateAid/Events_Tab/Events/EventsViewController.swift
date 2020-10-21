@@ -230,7 +230,7 @@ extension EventsViewController: EventsViewOutputting {
     // MARK: Configuration
     
     func configureTabBar(image: UIImage, selectedImage: UIImage) {
-        tabBarItem = UITabBarItem(title: "Dates", image: image, selectedImage: selectedImage)
+        tabBarItem = UITabBarItem(title: "Events", image: image, selectedImage: selectedImage)
         tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.compatibleLabel], for: .normal)
     }
     

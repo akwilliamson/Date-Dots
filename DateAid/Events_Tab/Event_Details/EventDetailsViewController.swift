@@ -136,7 +136,6 @@ class EventDetailsViewController: UIViewController {
             button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         }
         
-        button.titleLabel?.font = FontType.avenirNextDemiBold(30).font
         return button
     }()
     
@@ -242,26 +241,43 @@ class EventDetailsViewController: UIViewController {
         NSLayoutConstraint.activate([
             giftIdeasButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.06)
         ])
-        NSLayoutConstraint.activate([
-            toggleButtonStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -20),
-            toggleButtonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            addressCircleImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
-            addressCircleImageView.heightAnchor.constraint(equalTo: addressCircleImageView.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            reminderView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 10),
-            reminderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            reminderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.8),
-            reminderView.heightAnchor.constraint(equalTo: reminderView.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            addressView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 40),
-            addressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addressView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.3),
-            addressView.heightAnchor.constraint(equalTo: addressView.widthAnchor, multiplier: 0.5)
-        ])
+
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            NSLayoutConstraint.activate([
+                toggleButtonStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -10),
+                toggleButtonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
+            NSLayoutConstraint.activate([
+                addressView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 20),
+                addressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                addressView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.5),
+                addressView.heightAnchor.constraint(equalTo: addressView.widthAnchor, multiplier: 0.5)
+            ])
+            NSLayoutConstraint.activate([
+                reminderView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 5),
+                reminderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                reminderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2.1),
+                reminderView.heightAnchor.constraint(equalTo: reminderView.widthAnchor)
+            ])
+        default:
+            NSLayoutConstraint.activate([
+                toggleButtonStackView.bottomAnchor.constraint(equalTo: notesStackView.topAnchor, constant: -20),
+                toggleButtonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
+            NSLayoutConstraint.activate([
+                addressView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 40),
+                addressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                addressView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.3),
+                addressView.heightAnchor.constraint(equalTo: addressView.widthAnchor, multiplier: 0.5)
+            ])
+            NSLayoutConstraint.activate([
+                reminderView.topAnchor.constraint(equalTo: eventLabelStackView.bottomAnchor, constant: 10),
+                reminderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                reminderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.8),
+                reminderView.heightAnchor.constraint(equalTo: reminderView.widthAnchor)
+            ])
+        }
     }
     
     private func fetchAndStoreNotification() {

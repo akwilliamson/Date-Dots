@@ -15,7 +15,12 @@ class EventCell: UITableViewCell {
     private let lastNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FontType.avenirNextDemiBold(75).font
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextDemiBold(55).font
+        default:
+            label.font = FontType.avenirNextDemiBold(75).font
+        }
         label.textColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.15)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
@@ -25,7 +30,12 @@ class EventCell: UITableViewCell {
     private let firstNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FontType.avenirNextDemiBold(35).font
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextDemiBold(25).font
+        default:
+            label.font = FontType.avenirNextDemiBold(35).font
+        }
         label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
         label.minimumScaleFactor = 0.5
         return label
@@ -34,7 +44,12 @@ class EventCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FontType.avenirNextMedium(25).font
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextMedium(18).font
+        default:
+            label.font = FontType.avenirNextMedium(25).font
+        }
         label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
         label.minimumScaleFactor = 0.5
         return label
@@ -74,23 +89,44 @@ class EventCell: UITableViewCell {
     }
     
     private func constrainViews() {
-        NSLayoutConstraint.activate([
-            lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            lastNameLabel.heightAnchor.constraint(equalToConstant: 80),
-            lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
-        ])
-        NSLayoutConstraint.activate([
-            firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
-            firstNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            firstNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            dateLabel.topAnchor.constraint(equalTo: topAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            NSLayoutConstraint.activate([
+                lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+                lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+                lastNameLabel.heightAnchor.constraint(equalToConstant: 55),
+                lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            ])
+            NSLayoutConstraint.activate([
+                firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
+                firstNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                firstNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+            NSLayoutConstraint.activate([
+                dateLabel.topAnchor.constraint(equalTo: topAnchor),
+                dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+                dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+        default:
+            NSLayoutConstraint.activate([
+                lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+                lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+                lastNameLabel.heightAnchor.constraint(equalToConstant: 80),
+                lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+            ])
+            NSLayoutConstraint.activate([
+                firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
+                firstNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                firstNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+            NSLayoutConstraint.activate([
+                dateLabel.topAnchor.constraint(equalTo: topAnchor),
+                dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+                dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+        }
     }
 
     // MARK: Helper Methods

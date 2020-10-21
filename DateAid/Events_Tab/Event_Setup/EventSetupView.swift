@@ -97,7 +97,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(16).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.noteworthyBold(12).font
+            default:
+                label.font = FontType.noteworthyBold(16).font
+            }
             return label
         }()
         
@@ -111,7 +116,12 @@ class EventSetupView: BaseView {
         firstNameTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = FontType.avenirNextDemiBold(22).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                textField.font = FontType.avenirNextDemiBold(18).font
+            default:
+                textField.font = FontType.avenirNextDemiBold(22).font
+            }
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.addTopBorder(with: .compatiblePlaceholderText, andWidth: 3)
@@ -124,7 +134,12 @@ class EventSetupView: BaseView {
         lastNameTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = FontType.avenirNextDemiBold(22).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                textField.font = FontType.avenirNextDemiBold(18).font
+            default:
+                textField.font = FontType.avenirNextDemiBold(22).font
+            }
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
@@ -137,7 +152,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(16).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.noteworthyBold(12).font
+            default:
+                label.font = FontType.noteworthyBold(16).font
+            }
             return label
         }()
         
@@ -181,7 +201,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(16).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.noteworthyBold(12).font
+            default:
+                label.font = FontType.noteworthyBold(16).font
+            }
             return label
         }()
         
@@ -201,7 +226,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(16).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.noteworthyBold(12).font
+            default:
+                label.font = FontType.noteworthyBold(16).font
+            }
             return label
         }()
         
@@ -215,7 +245,12 @@ class EventSetupView: BaseView {
         addressOneTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = FontType.avenirNextDemiBold(22).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                textField.font = FontType.avenirNextDemiBold(18).font
+            default:
+                textField.font = FontType.avenirNextDemiBold(22).font
+            }
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.addTopBorder(with: .compatiblePlaceholderText, andWidth: 3)
@@ -228,7 +263,12 @@ class EventSetupView: BaseView {
         addressTwoTextField = {
             let textField = PaddedTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = FontType.avenirNextDemiBold(22).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                textField.font = FontType.avenirNextDemiBold(18).font
+            default:
+                textField.font = FontType.avenirNextDemiBold(22).font
+            }
             textField.textColor = .compatiblePlaceholderText
             textField.returnKeyType = .done
             textField.addLeftBorder(with: .compatiblePlaceholderText, andWidth: 3)
@@ -241,7 +281,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(16).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.noteworthyBold(12).font
+            default:
+                label.font = FontType.noteworthyBold(16).font
+            }
             return label
         }()
         
@@ -249,7 +294,12 @@ class EventSetupView: BaseView {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = FontType.avenirNextDemiBold(25).font
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                label.font = FontType.avenirNextDemiBold(20).font
+            default:
+                label.font = FontType.avenirNextDemiBold(25).font
+            }
             return label
         }()
         
@@ -265,34 +315,47 @@ class EventSetupView: BaseView {
     }
     
     override func constructSubviewHierarchy() {
+        
+        let customSpacing: CGFloat
+        let specialSpacing: CGFloat
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            customSpacing = 8
+            specialSpacing = 4
+        default:
+            customSpacing = 12
+            specialSpacing = 12
+        }
+        
         addSubview(containerStackView)
         containerStackView.addArrangedSubview(whoLabel)
-        containerStackView.setCustomSpacing(12, after: whoLabel)
+        containerStackView.setCustomSpacing(specialSpacing, after: whoLabel)
         containerStackView.addArrangedSubview(whoStackView)
-        containerStackView.setCustomSpacing(12, after: whoStackView)
+        containerStackView.setCustomSpacing(customSpacing, after: whoStackView)
         whoStackView.addArrangedSubview(firstNameTextField)
         whoStackView.addArrangedSubview(lastNameTextField)
-        containerStackView.setCustomSpacing(12, after: lastNameTextField)
+        containerStackView.setCustomSpacing(customSpacing, after: lastNameTextField)
         containerStackView.addArrangedSubview(whatLabel)
-        containerStackView.setCustomSpacing(12, after: whatLabel)
+        containerStackView.setCustomSpacing(specialSpacing, after: whatLabel)
         containerStackView.addArrangedSubview(whatStackView)
         whatStackView.addArrangedSubview(birthdayDot)
         whatStackView.addArrangedSubview(anniversaryDot)
         whatStackView.addArrangedSubview(holidayDot)
         whatStackView.addArrangedSubview(otherDot)
-        containerStackView.setCustomSpacing(12, after: whatStackView)
+        containerStackView.setCustomSpacing(customSpacing, after: whatStackView)
         containerStackView.addArrangedSubview(whenLabel)
-        containerStackView.setCustomSpacing(12, after: whenLabel)
+        containerStackView.setCustomSpacing(specialSpacing, after: whenLabel)
         containerStackView.addArrangedSubview(whenDatePicker)
-        containerStackView.setCustomSpacing(12, after: whenDatePicker)
+        containerStackView.setCustomSpacing(customSpacing, after: whenDatePicker)
         containerStackView.addArrangedSubview(whereLabel)
-        containerStackView.setCustomSpacing(12, after: whereLabel)
+        containerStackView.setCustomSpacing(specialSpacing, after: whereLabel)
         containerStackView.addArrangedSubview(whereStackView)
         whereStackView.addArrangedSubview(addressOneTextField)
         whereStackView.addArrangedSubview(addressTwoTextField)
-        containerStackView.setCustomSpacing(12, after: whereStackView)
+        containerStackView.setCustomSpacing(customSpacing, after: whereStackView)
         containerStackView.addArrangedSubview(whyLabel)
-        containerStackView.setCustomSpacing(12, after: whyLabel)
+        containerStackView.setCustomSpacing(specialSpacing, after: whyLabel)
         containerStackView.addArrangedSubview(whyDescriptionLabel)
     }
     
@@ -303,33 +366,34 @@ class EventSetupView: BaseView {
             containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
-        NSLayoutConstraint.activate([
-            whoLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20)
-
-        ])
-        NSLayoutConstraint.activate([
-            firstNameTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        NSLayoutConstraint.activate([
-            lastNameTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        NSLayoutConstraint.activate([
-            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
-            birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            whenDatePicker.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        NSLayoutConstraint.activate([
-            addressOneTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        NSLayoutConstraint.activate([
-            addressTwoTextField.heightAnchor.constraint(equalToConstant: 40)
-            
-        ])
-        NSLayoutConstraint.activate([
-            whyDescriptionLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
-        ])
+        
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            NSLayoutConstraint.activate([
+                whoLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+                firstNameTextField.heightAnchor.constraint(equalToConstant: 30),
+                lastNameTextField.heightAnchor.constraint(equalToConstant: 30),
+                birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor),
+                birthdayDot.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 20),
+                otherDot.trailingAnchor.constraint(equalTo: containerStackView.trailingAnchor, constant: -20),
+                addressOneTextField.heightAnchor.constraint(equalToConstant: 30),
+                addressTwoTextField.heightAnchor.constraint(equalToConstant: 30),
+                whenDatePicker.heightAnchor.constraint(equalToConstant: 80),
+                whyDescriptionLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            ])
+        default:
+            NSLayoutConstraint.activate([
+                whoLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+                firstNameTextField.heightAnchor.constraint(equalToConstant: 40),
+                lastNameTextField.heightAnchor.constraint(equalToConstant: 40),
+                addressOneTextField.heightAnchor.constraint(equalToConstant: 40),
+                addressTwoTextField.heightAnchor.constraint(equalToConstant: 40),
+                birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
+                birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor),
+                whenDatePicker.heightAnchor.constraint(equalToConstant: 100),
+                whyDescriptionLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            ])
+        }
     }
 }
 

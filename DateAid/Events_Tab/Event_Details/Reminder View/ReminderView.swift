@@ -31,6 +31,7 @@ class ReminderView: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = viewModel.reminderFont
+        label.textColor = viewModel.reminderColor
         label.text = viewModel.reminderText
         return label
     }()
