@@ -12,7 +12,7 @@ enum EventType: String {
 
     case birthday
     case anniversary
-    case holiday
+    case holiday = "custom"
     case other
     
     public var color: UIColor {
