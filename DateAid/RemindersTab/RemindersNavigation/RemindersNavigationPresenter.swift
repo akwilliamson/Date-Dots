@@ -1,19 +1,25 @@
 //
-//  DatesNavigationPresenter.swift
-//  Date Dots
+//  RemindersNavigationPresenter.swift
+//  DateAid
 //
-//  Created by Aaron Williamson on 1/29/17.
-//  Copyright © 2017 Aaron Williamson. All rights reserved.
+//  Created by Aaron Williamson on 2/8/21.
+//  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
 import UIKit
 
-class EventsNavigationPresenter {
+protocol RemindersNavigationEventHandling: class {
+
+    func viewDidLoad()
+    func showReminders(in navigation: RemindersNavigationViewController?)
+}
+
+class RemindersNavigationPresenter {
     
     // MARK: Properties
     
-    weak var wireframe: EventsNavigationWireframe?
-    var view: EventsNavigationViewController?
+    weak var wireframe: RemindersNavigationWireframe?
+    var view: RemindersNavigationViewController?
 
     private enum Constant {
         enum Style {
@@ -27,7 +33,7 @@ class EventsNavigationPresenter {
 
 // MARK: EventsNavigationEventHandling
 
-extension EventsNavigationPresenter: EventsNavigationEventHandling {
+extension RemindersNavigationPresenter: RemindersNavigationEventHandling {
     
     func viewDidLoad() {
         view?.configureNavigation(barTintColor: Constant.Style.barTintColor, tintColor: Constant.Style.tintColor)
@@ -37,7 +43,7 @@ extension EventsNavigationPresenter: EventsNavigationEventHandling {
         ])
     }
 
-    func showEvents(in navigation: EventsNavigationViewController?) {
-        wireframe?.presentDates(in: navigation)
+    func showReminders(in navigation: RemindersNavigationViewController?) {
+        wireframe?.presentReminders(in: navigation)
     }
 }

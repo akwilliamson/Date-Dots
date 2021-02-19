@@ -17,14 +17,10 @@ enum FontType {
     
     var font: UIFont {
         switch self {
-        case .avenirNextBold(let size):
-            return UIFont(name: "AvenirNext-Bold", size: size)!
-        case .avenirNextDemiBold(let size):
-            return UIFont(name: "AvenirNext-DemiBold", size: size)!
-        case .avenirNextMedium(let size):
-            return UIFont(name: "AvenirNext-Medium", size: size)!
-        case .noteworthyBold(let size):
-            return UIFont(name: "Noteworthy-Bold", size: size)!
+        case .avenirNextBold(let size):     return UIFont(name: "AvenirNext-Bold", size: size)!
+        case .avenirNextDemiBold(let size): return UIFont(name: "AvenirNext-DemiBold", size: size)!
+        case .avenirNextMedium(let size):   return UIFont(name: "AvenirNext-Medium", size: size)!
+        case .noteworthyBold(let size):     return UIFont(name: "Noteworthy-Bold", size: size)!
         }
     }
 }

@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol EventsNavigationViewOutputting: class {
+
+    func configureNavigation(barTintColor: UIColor, tintColor: UIColor)
+    func configureNavigation(titleTextAttributes:  [NSAttributedString.Key : Any]?)
+}
+
 class EventsNavigationViewController: UINavigationController {
     
     // MARK: Properties

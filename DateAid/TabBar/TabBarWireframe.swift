@@ -14,6 +14,8 @@ class TabBarWireframe: NSObject {
     
     private let presenter = TabBarPresenter()
     private var eventsNavigationWireframe: EventsNavigationWireframe?
+    private var notesNavigationWireframe: NotesNavigationWireframe?
+    private var remindersNavigationWireframe: RemindersNavigationWireframe?
     
     // MARK: Initialization
     
@@ -30,9 +32,16 @@ class TabBarWireframe: NSObject {
         window?.rootViewController = view
     }
     
-    func presentDatesNavigation(in tabBar: TabBarViewController?) {
+    func presentTabs(in tabBar: TabBarViewController?) {
         eventsNavigationWireframe = EventsNavigationWireframe(parentWireframe: self)
-        eventsNavigationWireframe?.presentModule(in: tabBar)
+        let eventsView = eventsNavigationWireframe?.eventsNavigationView()
+        notesNavigationWireframe = NotesNavigationWireframe(parentWireframe: self)
+        let notesView = notesNavigationWireframe?.notesNavigationView()
+        remindersNavigationWireframe = RemindersNavigationWireframe(parentWireframe: self)
+        let remindersView = remindersNavigationWireframe?.remindersNavigationView()
+        
+        let viewControllers = [eventsView, notesView, remindersView].compactMap { $0 }
+        tabBar?.viewControllers = viewControllers
     }
 
     // MARK: Helpers

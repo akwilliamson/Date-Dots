@@ -21,6 +21,6 @@ class TabBarPresenter {
 extension TabBarPresenter: TabBarEventHandling {
     
     func showTabs(in tabBar: TabBarViewController) {
-        wireframe?.presentDatesNavigation(in: tabBar)
+        wireframe?.presentTabs(in: tabBar)
     }
 }

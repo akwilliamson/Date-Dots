@@ -1,48 +1,16 @@
 //
-//  Device.swift
+//  UIDevice+Type.swift
 //  DateAid
 //
-//  Created by Aaron Williamson on 10/12/20.
-//  Copyright © 2020 Aaron Williamson. All rights reserved.
+//  Created by Aaron Williamson on 2/8/21.
+//  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
 import UIKit
 
-public enum Model: String {
-
-    case simulator      = "simulator/sandbox"
-    case iPhone4        = "iPhone 4"
-    case iPhone4S       = "iPhone 4S"
-    case iPhone5        = "iPhone 5"
-    case iPhone5S       = "iPhone 5S"
-    case iPhone5C       = "iPhone 5C"
-    case iPhone6        = "iPhone 6"
-    case iPhone6Plus    = "iPhone 6 Plus"
-    case iPhone6S       = "iPhone 6S"
-    case iPhone6SPlus   = "iPhone 6S Plus"
-    case iPhoneSE       = "iPhone SE"
-    case iPhone7        = "iPhone 7"
-    case iPhone7Plus    = "iPhone 7 Plus"
-    case iPhone8        = "iPhone 8"
-    case iPhone8Plus    = "iPhone 8 Plus"
-    case iPhoneX        = "iPhone X"
-    case iPhoneXS       = "iPhone XS"
-    case iPhoneXSMax    = "iPhone XS Max"
-    case iPhoneXR       = "iPhone XR"
-    case iPhone11       = "iPhone 11"
-    case iPhone11Pro    = "iPhone 11 Pro"
-    case iPhone11ProMax = "iPhone 11 Pro Max"
-    case iPhoneSE2      = "iPhone SE 2nd gen"
-    case unrecognized   = "?unrecognized?"
-}
-
-// #-#-#-#-#-#-#-#-#-#-#-#-#
-// MARK: UIDevice extensions
-// #-#-#-#-#-#-#-#-#-#-#-#-#
-
 public extension UIDevice {
 
-    static var type: Model {
+    static var type: DeviceModel {
         var systemInfo = utsname()
         uname(&systemInfo)
         let modelCode = withUnsafePointer(to: &systemInfo.machine) {
@@ -51,7 +19,7 @@ public extension UIDevice {
             }
         }
 
-        let modelMap : [String: Model] = [
+        let deviceModelMap : [String: DeviceModel] = [
 
             //Simulator
             "i386":       .simulator,
@@ -88,17 +56,21 @@ public extension UIDevice {
             "iPhone12,1": .iPhone11,
             "iPhone12,3": .iPhone11Pro,
             "iPhone12,5": .iPhone11ProMax,
-            "iPhone12,8": .iPhoneSE2
+            "iPhone12,8": .iPhoneSE2,
+            "iPhone13,1": .iPhone12Mini,
+            "iPhone13,2": .iPhone12,
+            "iPhone13,3": .iPhone12Pro,
+            "iPhone13,4": .iPhone12ProMax
         ]
 
         guard let existingModelCode = modelCode, let modelValue = String.init(validatingUTF8: existingModelCode) else {
             return .unrecognized
         }
         
-        if let model = modelMap[modelValue] {
+        if let model = deviceModelMap[modelValue] {
             if model == .simulator {
                 if let simModelCode = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
-                    if let simModel = modelMap[String.init(validatingUTF8: simModelCode)!] {
+                    if let simModel = deviceModelMap[String.init(validatingUTF8: simModelCode)!] {
                         return simModel
                     }
                 }

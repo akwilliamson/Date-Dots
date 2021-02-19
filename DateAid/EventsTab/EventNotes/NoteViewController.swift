@@ -23,7 +23,7 @@ enum NoteType {
     }
 }
 
-class NoteViewController: UIViewController, CoreDataInteractable {
+class EventNoteViewController: UIViewController, CoreDataInteractable {
     
     // MARK: UI
     
@@ -169,7 +169,7 @@ class NoteViewController: UIViewController, CoreDataInteractable {
  
 // MARK: UITextViewDelegate
 
-extension NoteViewController: UITextViewDelegate {
+extension EventNoteViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if showPlaceholderText == true {

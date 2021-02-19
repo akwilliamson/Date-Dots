@@ -343,19 +343,19 @@ class EventDetailsViewController: UIViewController {
 
     @objc
     private func didTapGiftIdeas() {
-        let viewController = NoteViewController(event: viewModel.event, noteType: .gifts)
+        let viewController = EventNoteViewController(event: viewModel.event, noteType: .gifts)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
     private func didTapEventPlans() {
-        let viewController = NoteViewController(event: viewModel.event, noteType: .plans)
+        let viewController = EventNoteViewController(event: viewModel.event, noteType: .plans)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
     private func didTapOtherNotes() {
-        let viewController = NoteViewController(event: viewModel.event, noteType: .other)
+        let viewController = EventNoteViewController(event: viewModel.event, noteType: .other)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -25,9 +25,8 @@ class EventsNavigationWireframe {
     
     // MARK: Routing
     
-    func presentModule(in tabBar: TabBarViewController?) {
-        guard let view = presenter.view else { return }
-        tabBar?.viewControllers = [view]
+    func eventsNavigationView() -> UIViewController? {
+        return presenter.view
     }
     
     func presentDates(in navigation: EventsNavigationViewController?) {
