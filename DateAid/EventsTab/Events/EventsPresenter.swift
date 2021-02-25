@@ -53,8 +53,7 @@ extension EventsPresenter: EventsEventHandling {
 
     // MARK: Properties
     
-    func viewLoaded() {
-        view?.configureTabBar(image: Constant.Image.iconUnselected, selectedImage: Constant.Image.iconSelected)
+    func viewDidLoad() {
         view?.configureNavigationBar(title: Constant.String.title)
         view?.configureTableView(footerView: UIView())
     }

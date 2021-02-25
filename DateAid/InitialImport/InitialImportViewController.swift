@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  InitialImportViewController.swift
 //  Date Dots
 //
 //  Created by Aaron Williamson on 5/7/15.
@@ -14,7 +14,7 @@ class InitialImportViewController: UIViewController {
     
     var presenter: InitialImportEventHandling?
     
-// MARK: - Actions
+    // MARK: - Actions
     
     @IBAction func syncContacts(_ sender: AnyObject) {
         presenter?.syncContactsPressed(in: view.window)

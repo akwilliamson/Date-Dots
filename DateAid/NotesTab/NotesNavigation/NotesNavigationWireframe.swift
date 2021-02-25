@@ -29,9 +29,9 @@ class NotesNavigationWireframe {
         return presenter.view
     }
     
-    func presentNotes(in navigation: NotesNavigationViewController?) {
+    func presentNotes() {
         let datesWireframe = NotesWireframe(parentWireframe: self)
-        datesWireframe.presentModule(in: navigation)
+        datesWireframe.presentModule(in: presenter.view)
     }
     
     // MARK: Helpers

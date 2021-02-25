@@ -10,7 +10,7 @@ import Foundation
 
 protocol EventsEventHandling: class {
     
-    func viewLoaded()
+    func viewDidLoad()
     func viewWillAppear()
     func eventsToShow() -> [Date]
     func searchButtonPressed()

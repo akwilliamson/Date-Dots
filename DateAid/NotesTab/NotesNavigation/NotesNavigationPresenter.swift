@@ -11,7 +11,7 @@ import UIKit
 protocol NotesNavigationEventHandling: class {
 
     func viewDidLoad()
-    func showNotes(in navigation: NotesNavigationViewController?)
+    func presentNotes()
 }
 
 class NotesNavigationPresenter {
@@ -43,7 +43,7 @@ extension NotesNavigationPresenter: NotesNavigationEventHandling {
         ])
     }
 
-    func showNotes(in navigation: NotesNavigationViewController?) {
-        wireframe?.presentNotes(in: navigation)
+    func presentNotes() {
+        wireframe?.presentNotes()
     }
 }

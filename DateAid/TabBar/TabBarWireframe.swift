@@ -13,9 +13,18 @@ class TabBarWireframe: NSObject {
     // MARK: Properties
     
     private let presenter = TabBarPresenter()
-    private var eventsNavigationWireframe: EventsNavigationWireframe?
-    private var notesNavigationWireframe: NotesNavigationWireframe?
-    private var remindersNavigationWireframe: RemindersNavigationWireframe?
+    
+    private lazy var eventsNavigationWireframe = {
+        EventsNavigationWireframe(parentWireframe: self)
+    }()
+    
+    private lazy var notesNavigationWireframe = {
+        NotesNavigationWireframe(parentWireframe: self)
+    }()
+    
+    private lazy var remindersNavigationWireframe = {
+        RemindersNavigationWireframe(parentWireframe: self)
+    }()
     
     // MARK: Initialization
     
@@ -32,16 +41,16 @@ class TabBarWireframe: NSObject {
         window?.rootViewController = view
     }
     
-    func presentTabs(in tabBar: TabBarViewController?) {
-        eventsNavigationWireframe = EventsNavigationWireframe(parentWireframe: self)
-        let eventsView = eventsNavigationWireframe?.eventsNavigationView()
-        notesNavigationWireframe = NotesNavigationWireframe(parentWireframe: self)
-        let notesView = notesNavigationWireframe?.notesNavigationView()
-        remindersNavigationWireframe = RemindersNavigationWireframe(parentWireframe: self)
-        let remindersView = remindersNavigationWireframe?.remindersNavigationView()
+    func presentTabs(in tabBarViewController: TabBarViewController?) {
+        tabBarViewController?.setViewControllers(viewControllers(), animated: false)
+    }
+    
+    private func viewControllers() -> [UIViewController] {
+        let eventsView = eventsNavigationWireframe.eventsNavigationView()
+        let notesView = notesNavigationWireframe.notesNavigationView()
+        let remindersView = remindersNavigationWireframe.remindersNavigationView()
         
-        let viewControllers = [eventsView, notesView, remindersView].compactMap { $0 }
-        tabBar?.viewControllers = viewControllers
+        return [eventsView, notesView, remindersView].compactMap { $0 }
     }
 
     // MARK: Helpers

@@ -31,17 +31,13 @@ class RemindersPresenter {
         enum String {
             static let title = "Reminders"
         }
-        enum Image {
-            static let iconSelected = UIImage(named: "selected-reminder")!.withRenderingMode(.alwaysTemplate)
-            static let iconUnselected =  UIImage(named: "unselected-reminder")!.withRenderingMode(.alwaysTemplate)
-        }
     }
 }
 
 extension RemindersPresenter: RemindersEventHandling {
     
     func viewLoaded() {
-        view?.configureTabBar(image: Constant.Image.iconUnselected, selectedImage: Constant.Image.iconSelected)
+        
     }
 }
     

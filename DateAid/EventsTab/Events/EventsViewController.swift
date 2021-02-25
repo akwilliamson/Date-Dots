@@ -84,12 +84,33 @@ class EventsViewController: UIViewController {
     // MARK: Properties
 
     var presenter: EventsEventHandling?
+    
+    var tab: UITabBarItem = {
+        let image =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
+        let selectedImage = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
+        
+        let tab = UITabBarItem(title: "Events", image: image, selectedImage: selectedImage)
+        tab.setTitleTextAttributes([.foregroundColor : UIColor.compatibleLabel], for: .normal)
+        
+        return tab
+    }()
+    
+    // MARK: Initialization
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem = tab
+    }
 
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewLoaded()
+        presenter?.viewDidLoad()
         configureView()
         constructSubviews()
         constrainSubviews()
@@ -228,11 +249,6 @@ extension EventsViewController: UISearchBarDelegate {
 extension EventsViewController: EventsViewOutputting {
     
     // MARK: Configuration
-    
-    func configureTabBar(image: UIImage, selectedImage: UIImage) {
-        tabBarItem = UITabBarItem(title: "Events", image: image, selectedImage: selectedImage)
-        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.compatibleLabel], for: .normal)
-    }
     
     func configureNavigationBar(title: String) {
         navigationItem.title = title

@@ -20,12 +20,33 @@ class NotesNavigationViewController: UINavigationController {
     
     var presenter: NotesNavigationEventHandling?
     
+    var tab: UITabBarItem = {
+        let image =  UIImage(named: "unselected-pencil")!.withRenderingMode(.alwaysTemplate)
+        let selectedImage = UIImage(named: "selected-pencil")!.withRenderingMode(.alwaysTemplate)
+        
+        let tab = UITabBarItem(title: "Notes", image: image, selectedImage: selectedImage)
+        tab.setTitleTextAttributes([.foregroundColor : UIColor.compatibleLabel], for: .normal)
+        
+        return tab
+    }()
+    
     // MARK: Initialization
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem = tab
+    }
+    
+    // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        presenter?.showNotes(in: self)
+        presenter?.presentNotes()
     }
 }
 

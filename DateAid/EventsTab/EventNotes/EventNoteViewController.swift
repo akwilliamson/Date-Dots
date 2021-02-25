@@ -8,20 +8,6 @@
 
 import UIKit
 import CoreData
- 
-enum NoteType {
-    case gifts
-    case plans
-    case other
-    
-    var title: String {
-        switch self {
-        case .gifts:  return "Gifts"
-        case .plans: return "Plans"
-        case .other:  return "Other"
-        }
-    }
-}
 
 class EventNoteViewController: UIViewController, CoreDataInteractable {
     

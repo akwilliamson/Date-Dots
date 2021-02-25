@@ -9,8 +9,6 @@
 import UIKit
 
 protocol RemindersViewOutputting: class {
-    
-    func configureTabBar(image: UIImage, selectedImage: UIImage)
 }
 
 class RemindersViewController: UIViewController {
@@ -25,9 +23,4 @@ class RemindersViewController: UIViewController {
 }
 
 extension RemindersViewController: RemindersViewOutputting {
-    
-    func configureTabBar(image: UIImage, selectedImage: UIImage) {
-        tabBarItem = UITabBarItem(title: "Reminders", image: image, selectedImage: selectedImage)
-        tabBarItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.compatibleLabel], for: .normal)
-    }
 }

@@ -65,7 +65,7 @@
 		979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */; };
 		97A00A91248C84D900AB7F85 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A00A90248C84D900AB7F85 /* NotificationManager.swift */; };
 		97A94F0A245FD57F0049F8FF /* EventSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A94F09245FD57F0049F8FF /* EventSetupViewController.swift */; };
-		97AD26A31BD77439004C1C7D /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* NoteViewController.swift */; };
+		97AD26A31BD77439004C1C7D /* EventNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A21BD77439004C1C7D /* EventNoteViewController.swift */; };
 		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; };
 		97AD26A81BD81C59004C1C7D /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */; };
 		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
@@ -101,6 +101,7 @@
 		97ED37621E45A73200B054FE /* AppDelegatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */; };
 		97ED37641E45A76000B054FE /* AppDelegateEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37631E45A76000B054FE /* AppDelegateEventHandling.swift */; };
 		97ED37661E45A77400B054FE /* AppDelegateViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED37651E45A77400B054FE /* AppDelegateViewOutputting.swift */; };
+		97F7AE5525E779BF0023BFA5 /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7AE5425E779BF0023BFA5 /* NoteType.swift */; };
 		97FA131B1DBEF5D200C9DBFE /* EventsViewOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131A1DBEF5D200C9DBFE /* EventsViewOutputting.swift */; };
 		97FA131D1DBEF61500C9DBFE /* EventsEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131C1DBEF61500C9DBFE /* EventsEventHandling.swift */; };
 		97FA131F1DBEF63D00C9DBFE /* EventsInteractorOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FA131E1DBEF63D00C9DBFE /* EventsInteractorOutputting.swift */; };
@@ -183,7 +184,7 @@
 		979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportWireframe.swift; sourceTree = "<group>"; };
 		97A00A90248C84D900AB7F85 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		97A94F09245FD57F0049F8FF /* EventSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSetupViewController.swift; sourceTree = "<group>"; };
-		97AD26A21BD77439004C1C7D /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		97AD26A21BD77439004C1C7D /* EventNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventNoteViewController.swift; sourceTree = "<group>"; };
 		97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V2_V3.xcmappingmodel; sourceTree = "<group>"; };
 		97AD26A61BD81C59004C1C7D /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 		97ED37611E45A73200B054FE /* AppDelegatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegatePresenter.swift; sourceTree = "<group>"; };
 		97ED37631E45A76000B054FE /* AppDelegateEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateEventHandling.swift; sourceTree = "<group>"; };
 		97ED37651E45A77400B054FE /* AppDelegateViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateViewOutputting.swift; sourceTree = "<group>"; };
+		97F7AE5425E779BF0023BFA5 /* NoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteType.swift; sourceTree = "<group>"; };
 		97FA131A1DBEF5D200C9DBFE /* EventsViewOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewOutputting.swift; sourceTree = "<group>"; };
 		97FA131C1DBEF61500C9DBFE /* EventsEventHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsEventHandling.swift; sourceTree = "<group>"; };
 		97FA131E1DBEF63D00C9DBFE /* EventsInteractorOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsInteractorOutputting.swift; sourceTree = "<group>"; };
@@ -604,7 +606,7 @@
 		97C901F5245A8995005AF301 /* EventNotes */ = {
 			isa = PBXGroup;
 			children = (
-				97AD26A21BD77439004C1C7D /* NoteViewController.swift */,
+				97AD26A21BD77439004C1C7D /* EventNoteViewController.swift */,
 			);
 			path = EventNotes;
 			sourceTree = "<group>";
@@ -615,6 +617,7 @@
 				977E3B031DA1A4A1005D131F /* EventType.swift */,
 				9706223C1E2C2FF60020743C /* Constant.swift */,
 				97D7E20D24D760E300A28F60 /* Font.swift */,
+				97F7AE5425E779BF0023BFA5 /* NoteType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				979C36A71E0E14A80098345E /* InitialImportEventHandling.swift in Sources */,
 				97E5D6B025DF816C00D321B1 /* RemindersPresenter.swift in Sources */,
 				97E5D6A825DF816600D321B1 /* RemindersNavigationPresenter.swift in Sources */,
+				97F7AE5525E779BF0023BFA5 /* NoteType.swift in Sources */,
 				97FA131B1DBEF5D200C9DBFE /* EventsViewOutputting.swift in Sources */,
 				976BE68324888E1400D48682 /* EventReminderView.swift in Sources */,
 				97BB28D12459DEBA003854CC /* AddressView.swift in Sources */,
@@ -839,7 +843,7 @@
 				972E323F245A902B00E9DAAA /* ReminderView.swift in Sources */,
 				97EBD0AD25D3AB1E00545A7F /* NotesWireframe.swift in Sources */,
 				97EBD0B525D3AB5300545A7F /* NotesPresenter.swift in Sources */,
-				97AD26A31BD77439004C1C7D /* NoteViewController.swift in Sources */,
+				97AD26A31BD77439004C1C7D /* EventNoteViewController.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Date.swift in Sources */,
 				978E711825D2605C0052AD24 /* NotesNavigationWireframe.swift in Sources */,

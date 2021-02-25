@@ -20,7 +20,28 @@ class RemindersNavigationViewController: UINavigationController {
     
     var presenter: RemindersNavigationEventHandling?
     
+    var tab: UITabBarItem = {
+        let image =  UIImage(named: "unselected-reminder")!.withRenderingMode(.alwaysTemplate)
+        let selectedImage = UIImage(named: "selected-reminder")!.withRenderingMode(.alwaysTemplate)
+        
+        let tabBarItem = UITabBarItem(title: "Reminders", image: image, selectedImage: selectedImage)
+        tabBarItem.setTitleTextAttributes([.foregroundColor : UIColor.compatibleLabel], for: .normal)
+        
+        return tabBarItem
+    }()
+    
     // MARK: Initialization
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem = tab
+    }
+    
+    // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
