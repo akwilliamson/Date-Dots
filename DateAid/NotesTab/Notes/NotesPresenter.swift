@@ -11,12 +11,10 @@ import UIKit
 protocol NotesEventHandling: class {
 
     func viewDidLoad()
-    
     func numberOfSections() -> Int
+    func title(for section: Int) -> String
     func numberOfNotes(for section: Int) -> Int
-    func noteTitle(for section: Int) -> String
-    func cellTitle(for indexPath: IndexPath) -> String
-    func cellSubtitle(for indexPath: IndexPath) -> String
+    func note(for indexPath: IndexPath) -> Note?
 }
 
 protocol NotesInteractorOutputting: class {}
@@ -51,15 +49,16 @@ class NotesPresenter {
     private var otherNotes: [Note] = []
     
     private func set(notes: [Note]) {
-        giftsNotes = notes.filter({ $0.title?.lowercased() == NoteType.gifts.title.lowercased() })
-        plansNotes = notes.filter({ $0.title?.lowercased() == NoteType.plans.title.lowercased() })
-        otherNotes = notes.filter({ $0.title?.lowercased() == NoteType.other.title.lowercased() })
+        giftsNotes = notes.filter({ $0.type?.lowercased() == NoteType.gifts.title })
+        plansNotes = notes.filter({ $0.type?.lowercased() == NoteType.plans.title })
+        otherNotes = notes.filter({ $0.type?.lowercased() == NoteType.other.title })
     }
 }
 
 extension NotesPresenter: NotesEventHandling {
     
     func viewDidLoad() {
+        view?.configureNavigationBar(title: Constant.String.title)
         interactor?.fetchNotes { result in
             switch result {
             case .success(let notes):
@@ -75,6 +74,10 @@ extension NotesPresenter: NotesEventHandling {
         return 3 // Gifts, Plans, Notes
     }
     
+    func title(for section: Int) -> String {
+        return NoteType(rawValue: section)?.title.capitalized ?? String()
+    }
+    
     func numberOfNotes(for section: Int) -> Int {
         switch section {
         case 0: return giftsNotes.count
@@ -85,33 +88,13 @@ extension NotesPresenter: NotesEventHandling {
         }
     }
     
-    func noteTitle(for section: Int) -> String {
-        switch section {
-        case 0: return Constant.String.gifts
-        case 1: return Constant.String.plans
-        case 2: return Constant.String.other
-        default:
-            return String()
-        }
-    }
-    
-    func cellTitle(for indexPath: IndexPath) -> String {
+    func note(for indexPath: IndexPath) -> Note? {
         switch indexPath.section {
-        case 0: return giftsNotes[indexPath.row].date?.abbreviatedName ?? String()
-        case 1: return plansNotes[indexPath.row].date?.abbreviatedName ?? String()
-        case 2: return otherNotes[indexPath.row].date?.abbreviatedName ?? String()
+        case 0: return giftsNotes[safe: indexPath.row]
+        case 1: return plansNotes[safe: indexPath.row]
+        case 2: return otherNotes[safe: indexPath.row]
         default:
-            return String()
-        }
-    }
-    
-    func cellSubtitle(for indexPath: IndexPath) -> String {
-        switch indexPath.section {
-        case 0: return giftsNotes[indexPath.row].body ?? String()
-        case 1: return plansNotes[indexPath.row].body ?? String()
-        case 2: return otherNotes[indexPath.row].body ?? String()
-        default:
-            return String()
+            return Note()
         }
     }
 }

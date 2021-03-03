@@ -6,7 +6,7 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
-enum NoteType {
+enum NoteType: Int {
     
     case gifts
     case plans
@@ -14,9 +14,9 @@ enum NoteType {
     
     var title: String {
         switch self {
-        case .gifts:  return "Gifts"
-        case .plans: return "Plans"
-        case .other:  return "Other"
+        case .gifts: return "gifts"
+        case .plans: return "plans"
+        case .other: return "other"
         }
     }
 }

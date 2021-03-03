@@ -8,6 +8,27 @@
 
 import UIKit
 
+protocol EventsEventHandling: class {
+    
+    func viewDidLoad()
+    func viewWillAppear()
+    func eventsToShow() -> [Event]
+    func searchButtonPressed()
+    func textChanged(to searchText: String)
+    func cancelButtonPressed()
+
+    func dotPressed(for eventType: EventType)
+    func deleteEventPressed(for event: Event, at indexPath: IndexPath)
+}
+
+protocol EventsInteractorOutputting: class {
+    
+    func eventsFetched(_ events: [Event])
+    func eventsFetchedFailed(_ error: EventsInteractorError)
+    func eventDeleted(_ event: Event)
+    func eventDeleteFailed(_ error: EventsInteractorError)
+}
+
 class EventsPresenter {
 
     // MARK: VIPER
@@ -38,7 +59,7 @@ class EventsPresenter {
     
     private let eventTypes: [EventType] = [.birthday, .anniversary, .holiday, .other]
     
-    private var categorizedEvents: [EventType: [Date]] = [:]
+    private var categorizedEvents: [EventType: [Event]] = [:]
     
     private var isSearching = false
     private var deleteIndex: IndexPath?
@@ -63,8 +84,8 @@ extension EventsPresenter: EventsEventHandling {
         view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
     }
     
-    func eventsToShow() -> [Date] {
-        var eventsToShow = [Date]()
+    func eventsToShow() -> [Event] {
+        var eventsToShow = [Event]()
 
         eventTypes.forEach { eventType in
             let eventsShouldShow = UserDefaults.standard.bool(forKey: eventType.rawValue)
@@ -98,7 +119,7 @@ extension EventsPresenter: EventsEventHandling {
         view?.reloadTableView(sections: [0], animation: .fade)
     }
     
-    func deleteEventPressed(for event: Date, at indexPath: IndexPath) {
+    func deleteEventPressed(for event: Event, at indexPath: IndexPath) {
         deleteIndex = indexPath
         deleteEventType = event.eventType
         interactor?.delete(event)
@@ -109,7 +130,7 @@ extension EventsPresenter: EventsEventHandling {
 
 extension EventsPresenter: EventsInteractorOutputting {
     
-    func eventsFetched(_ events: [Date]) {
+    func eventsFetched(_ events: [Event]) {
         categorizedEvents[.birthday]    = events.filter { $0.eventType == .birthday }
         categorizedEvents[.anniversary] = events.filter { $0.eventType == .anniversary }
         categorizedEvents[.holiday]     = events.filter { $0.eventType == .holiday }
@@ -122,7 +143,7 @@ extension EventsPresenter: EventsInteractorOutputting {
         print(error.localizedDescription)
     }
     
-    func eventDeleted(_ event: Date) {
+    func eventDeleted(_ event: Event) {
         guard
             let indexPath = deleteIndex,
             let deleteEventType = deleteEventType

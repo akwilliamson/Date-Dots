@@ -45,7 +45,7 @@ class ContactConverter: CoreDataInteractable {
             return
         }
 
-        let storedEvents: [Date]
+        let storedEvents: [Event]
 
         do {
             storedEvents = try moc.fetch()
@@ -60,7 +60,7 @@ class ContactConverter: CoreDataInteractable {
             
             if !exists {
                 if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc) {
-                    let date = Date(entity: entity, insertInto: moc)
+                    let date = Event(entity: entity, insertInto: moc)
                     date.type            = EventType.holiday.rawValue
                     date.name            = givenName
                     date.abbreviatedName = givenName
@@ -73,7 +73,7 @@ class ContactConverter: CoreDataInteractable {
     
     private func event(for contact: CNContact?, of type: EventType) {
         
-        let storedEvents: [Date]
+        let storedEvents: [Event]
         
         do {
             try storedEvents = moc.fetch()
@@ -87,7 +87,7 @@ class ContactConverter: CoreDataInteractable {
             if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc),
                 let contact = contact {
                 
-                let event = Date(entity: entity, insertInto: moc)
+                let event = Event(entity: entity, insertInto: moc)
                 
                 event.type            = type.rawValue
                 event.name            = contact.fullName
@@ -114,11 +114,11 @@ class ContactConverter: CoreDataInteractable {
         
     }
     
-    private func create(_ postalAddress: CNPostalAddress, for event: Date) -> Address? {
+    private func create(_ postalAddress: CNPostalAddress, for event: Event) -> Address? {
         
         if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc) {
             let address = Address(entity: entity, insertInto: moc)
-            address.date = event
+            address.event = event
             address.street = postalAddress.street
             address.region = "\(postalAddress.city) \(postalAddress.state), \(postalAddress.postalCode)"
             return address

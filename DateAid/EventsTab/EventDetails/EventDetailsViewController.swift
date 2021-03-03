@@ -11,7 +11,7 @@ import CoreData
 import UserNotifications
 
 protocol EventSetupDelegate {
-    func updateEvent(_ event: Date)
+    func updateEvent(_ event: Event)
 }
 
 class EventDetailsViewController: UIViewController {
@@ -181,7 +181,7 @@ class EventDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(event: Date) {
+    init(event: Event) {
         self.viewModel = EventDetailsViewModel(event: event)
         super.init(nibName: nil, bundle: nil)
     }
@@ -385,7 +385,7 @@ extension EventDetailsViewController: AddressViewDelegate {
 
 extension EventDetailsViewController: EventSetupDelegate {
     
-    func updateEvent(_ event: Date) {
+    func updateEvent(_ event: Event) {
         viewModel.updateEvent(event)
     }
 }

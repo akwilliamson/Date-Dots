@@ -17,9 +17,9 @@ class EventCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextDemiBold(55).font
+            label.font = FontType.avenirNextDemiBold(45).font
         default:
-            label.font = FontType.avenirNextDemiBold(75).font
+            label.font = FontType.avenirNextDemiBold(65).font
         }
         label.textColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.15)
         label.adjustsFontSizeToFitWidth = true
@@ -32,9 +32,9 @@ class EventCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextDemiBold(25).font
+            label.font = FontType.avenirNextDemiBold(20).font
         default:
-            label.font = FontType.avenirNextDemiBold(35).font
+            label.font = FontType.avenirNextDemiBold(25).font
         }
         label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
         label.minimumScaleFactor = 0.5
@@ -57,9 +57,9 @@ class EventCell: UITableViewCell {
 
     // MARK: Properties
     
-    public var date: Date? {
+    public var event: Event? {
         didSet {
-            populate(date)
+            populate(event)
         }
     }
     
@@ -92,11 +92,9 @@ class EventCell: UITableViewCell {
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             NSLayoutConstraint.activate([
-                lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+                lastNameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
                 lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-                lastNameLabel.heightAnchor.constraint(equalToConstant: 55),
-                lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30)
             ])
             NSLayoutConstraint.activate([
                 firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -110,11 +108,9 @@ class EventCell: UITableViewCell {
             ])
         default:
             NSLayoutConstraint.activate([
-                lastNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+                lastNameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
                 lastNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-                lastNameLabel.heightAnchor.constraint(equalToConstant: 80),
-                lastNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+                lastNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30)
             ])
             NSLayoutConstraint.activate([
                 firstNameLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -131,7 +127,7 @@ class EventCell: UITableViewCell {
 
     // MARK: Helper Methods
 
-    private func populate(_ event: Date?) {
+    private func populate(_ event: Event?) {
         guard let event = event else { return }
 
         firstNameLabel.textColor = event.eventType.color

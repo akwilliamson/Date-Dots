@@ -20,7 +20,26 @@ class EventsNavigationViewController: UINavigationController {
     
     var presenter: EventsNavigationEventHandling?
     
+    var tab: UITabBarItem = {
+        let image =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
+        let selectedImage = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
+        
+        let tab = UITabBarItem(title: "Events", image: image, selectedImage: selectedImage)
+        tab.setTitleTextAttributes([.foregroundColor : UIColor.compatibleLabel], for: .normal)
+        
+        return tab
+    }()
+    
     // MARK: Initialization
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem = tab
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

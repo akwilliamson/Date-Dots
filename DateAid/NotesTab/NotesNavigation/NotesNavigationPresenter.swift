@@ -22,6 +22,9 @@ class NotesNavigationPresenter {
     var view: NotesNavigationViewController?
 
     private enum Constant {
+        enum String {
+            static let title = "Notes"
+        }
         enum Style {
             static let barTintColor = UIColor.compatibleSystemGray3
             static let tintColor = UIColor.compatibleLabel
@@ -36,6 +39,7 @@ class NotesNavigationPresenter {
 extension NotesNavigationPresenter: NotesNavigationEventHandling {
     
     func viewDidLoad() {
+        view?.configureNavigationBar(title: Constant.String.title)
         view?.configureNavigation(barTintColor: Constant.Style.barTintColor, tintColor: Constant.Style.tintColor)
         view?.configureNavigation(titleTextAttributes: [
             NSAttributedString.Key.foregroundColor: Constant.Style.foregroundColor,

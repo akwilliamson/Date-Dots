@@ -54,7 +54,7 @@ class EventSetupViewModel {
         )
     }
     
-    func generateEditContent(for event: Date) -> EventSetupView.Content {
+    func generateEditContent(for event: Event) -> EventSetupView.Content {
         firstNameText = event.firstName
         lastNameText = event.lastName
         addressOneText = event.address?.street
@@ -91,7 +91,7 @@ class EventSetupViewModel {
     
     var eventId: String?
     var eventType: EventType?
-    var eventDate: Foundation.Date?
+    var eventDate: Date?
     
     private var firstNameText: String?
     private var lastNameText: String?

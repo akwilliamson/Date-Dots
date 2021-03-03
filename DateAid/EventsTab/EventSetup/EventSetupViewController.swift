@@ -41,7 +41,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
     var eventSetupDelegate: EventSetupDelegate?
     private let viewModel = EventSetupViewModel()
 
-    var event: Date?
+    var event: Event?
     
     // MARK: Lifecycle
  
@@ -89,7 +89,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
             return
         }
         
-        let event = self.event ?? Date(entity: eventEntity, insertInto: moc)
+        let event = self.event ?? Event(entity: eventEntity, insertInto: moc)
         event.name = eventName
         event.type = eventType.rawValue
         event.date = eventDate

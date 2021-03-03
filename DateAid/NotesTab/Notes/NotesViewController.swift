@@ -10,21 +10,13 @@ import UIKit
 
 protocol NotesViewOutputting: class {
     
+    func configureNavigationBar(title: String)
     func reloadData()
 }
 
 class NotesViewController: UIViewController {
     
     // MARK: UI
-    
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
-    }()
     
     private var dotStackView: UIStackView = {
         let stacKView = UIStackView()
@@ -33,29 +25,17 @@ class NotesViewController: UIViewController {
         stacKView.spacing = 8
         return stacKView
     }()
-
-    private lazy var giftsDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .birthday)
-        dotView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var plansDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .anniversary)
-        dotView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var otherDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .other)
-        dotView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView()
+        tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
+        tableView.register(NoteSampleCell.self, forCellReuseIdentifier: "NoteSampleCell")
+        tableView.register(NotesSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "SectionHeader")
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
     }()
     
     private lazy var addButton: UIBarButtonItem = {
@@ -86,24 +66,12 @@ class NotesViewController: UIViewController {
     
     private  func constructSubviews() {
         view.addSubview(dotStackView)
-        dotStackView.addArrangedSubview(giftsDot)
-        dotStackView.addArrangedSubview(plansDot)
-        dotStackView.addArrangedSubview(otherDot)
         view.addSubview(tableView)
     }
     
     private func constrainSubviews() {
         NSLayoutConstraint.activate([
-            dotStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            dotStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            dotStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ])
-        NSLayoutConstraint.activate([
-            giftsDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
-            giftsDot.heightAnchor.constraint(equalTo: giftsDot.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -134,28 +102,46 @@ extension NotesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let presenter = presenter else { return 0 }
-        return presenter.numberOfNotes(for: section)
+        let existingNotesInSection = presenter.numberOfNotes(for: section)
+        
+        return existingNotesInSection > 0 ? existingNotesInSection : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "NoteCell")
-
-        cell.textLabel?.text = presenter?.cellTitle(for: indexPath)
-        cell.detailTextLabel?.text = presenter?.cellSubtitle(for: indexPath)
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell") as? NoteCell,
+            let note = presenter?.note(for: indexPath)
+        else {
+            if let noteType = NoteType(rawValue: indexPath.section) {
+                return NoteSampleCell(noteType: noteType, reuseIdentifier: "NoteSampleCell")
+            } else {
+                return UITableViewCell()
+            }
+        }
+        
+        cell.note = note
         
         return cell
     }
 }
 
 extension NotesViewController: UITableViewDelegate {
- 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let presenter = presenter else { return nil }
-        return presenter.noteTitle(for: section)
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let noteType = NoteType(rawValue: section) else { return nil }
+        return NotesSectionHeaderView(noteType: noteType, reuseIdentifier: "SectionHeader")
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 70
     }
 }
 
 extension NotesViewController: NotesViewOutputting {
+    
+    func configureNavigationBar(title: String) {
+        navigationItem.title = title
+    }
     
     func reloadData() {
         tableView.reloadData()

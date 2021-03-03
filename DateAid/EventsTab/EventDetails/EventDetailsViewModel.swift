@@ -17,7 +17,7 @@ class EventDetailsViewModel {
 
     // MARK: Initialization
 
-    init(event: Date) {
+    init(event: Event) {
         self.event = event
     }
 
@@ -29,7 +29,7 @@ class EventDetailsViewModel {
     
     // MARK: Public Interface
     
-    public var event: Date
+    public var event: Event
     
     public var eventColor: UIColor {
         return event.eventType.color
@@ -75,7 +75,7 @@ class EventDetailsViewModel {
 
     // MARK: Public Methods
     
-    func updateEvent(_ event: Date) {
+    func updateEvent(_ event: Event) {
         self.event = event
     }
 

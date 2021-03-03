@@ -21,7 +21,7 @@ class CoreDataStack {
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let psc = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.documentDirectoryUrl.appendingPathComponent("DateAid")
-        let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]
+        let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
         
         do {
             try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)

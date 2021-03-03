@@ -9,6 +9,20 @@
 import UIKit
 import CoreData
 
+protocol EventsViewOutputting: class {
+ 
+    func configureNavigationBar(title: String)
+    func configureTableView(footerView: UIView)
+
+    func showSearchBar(frame: CGRect, duration: TimeInterval)
+    func hideSearchBar(duration: TimeInterval)
+
+    func updateDot(for eventType: EventType, isSelected: Bool)
+    
+    func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation)
+    func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation)
+}
+
 class EventsViewController: UIViewController {
 
     // MARK: UI
@@ -84,27 +98,6 @@ class EventsViewController: UIViewController {
     // MARK: Properties
 
     var presenter: EventsEventHandling?
-    
-    var tab: UITabBarItem = {
-        let image =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
-        let selectedImage = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
-        
-        let tab = UITabBarItem(title: "Events", image: image, selectedImage: selectedImage)
-        tab.setTitleTextAttributes([.foregroundColor : UIColor.compatibleLabel], for: .normal)
-        
-        return tab
-    }()
-    
-    // MARK: Initialization
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        tabBarItem = tab
-    }
 
     // MARK: Lifecycle
     
@@ -204,9 +197,13 @@ extension EventsViewController: UITableViewDataSource {
         }
 
         let eventsToShow = presenter.eventsToShow()
-        cell.date = eventsToShow[indexPath.row]
+        cell.event = eventsToShow[indexPath.row]
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -214,7 +211,7 @@ extension EventsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? EventCell, let event = cell.date else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? EventCell, let event = cell.event else { return }
 
         if editingStyle == .delete {
             presenter?.deleteEventPressed(for: event, at: indexPath)

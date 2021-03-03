@@ -12,6 +12,7 @@ protocol NotesNavigationViewOutputting: class {
 
     func configureNavigation(barTintColor: UIColor, tintColor: UIColor)
     func configureNavigation(titleTextAttributes:  [NSAttributedString.Key : Any]?)
+    func configureNavigationBar(title: String)
 }
 
 class NotesNavigationViewController: UINavigationController {
@@ -33,7 +34,7 @@ class NotesNavigationViewController: UINavigationController {
     // MARK: Initialization
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
     
     init() {
@@ -53,6 +54,10 @@ class NotesNavigationViewController: UINavigationController {
 // MARK: DatesNavigationViewOutputting
 
 extension NotesNavigationViewController: NotesNavigationViewOutputting {
+    
+    func configureNavigationBar(title: String) {
+        navigationItem.title = title
+    }
 
     func configureNavigation(barTintColor: UIColor, tintColor: UIColor) {
         navigationBar.barTintColor = barTintColor

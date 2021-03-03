@@ -11,6 +11,8 @@ import CoreData
 
 class Note: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    @NSManaged var subject: String?
+    @NSManaged var body: String?
+    @NSManaged var type: String?
+    @NSManaged var event: Event?
 }

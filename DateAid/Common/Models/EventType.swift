@@ -26,19 +26,19 @@ enum EventType: String {
     
     public var selectedImage: UIImage {
         switch self {
-        case .birthday:    return UIImage(named: "selected-birthday.png")!
-        case .anniversary: return UIImage(named: "selected-anniversary.png")!
-        case .holiday:     return UIImage(named: "selected-holiday.png")!
-        case .other:       return UIImage(named: "selected-other.png")!
+        case .birthday:    return UIImage(named: "selected-birthday")!
+        case .anniversary: return UIImage(named: "selected-anniversary")!
+        case .holiday:     return UIImage(named: "selected-holiday")!
+        case .other:       return UIImage(named: "selected-other")!
         }
     }
 
     public var unselectedImage: UIImage {
         switch self {
-        case .birthday:    return UIImage(named: "unselected-birthday.png")!
-        case .anniversary: return UIImage(named: "unselected-anniversary.png")!
-        case .holiday:     return UIImage(named: "unselected-holiday.png")!
-        case .other:       return UIImage(named: "unselected-other.png")!
+        case .birthday:    return UIImage(named: "unselected-birthday")!
+        case .anniversary: return UIImage(named: "unselected-anniversary")!
+        case .holiday:     return UIImage(named: "unselected-holiday")!
+        case .other:       return UIImage(named: "unselected-other")!
         }
     }
 

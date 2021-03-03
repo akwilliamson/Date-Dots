@@ -33,7 +33,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
 
     // MARK: Properties
 
-    var event: Date
+    var event: Event
     var noteType: NoteType
     var note: Note?
 
@@ -45,7 +45,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(event: Date, noteType: NoteType) {
+    init(event: Event, noteType: NoteType) {
         self.event = event
         self.noteType = noteType
         self.note = event.note(forType: noteType)
@@ -63,7 +63,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
     }
 
     private func configureView() {
-        title = noteType.title
+        title = noteType.title.capitalized
         view.backgroundColor = .compatibleSystemBackground
         navigationItem.rightBarButtonItem = saveBarButtonItem
     }
@@ -145,7 +145,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
 
         let newNote = Note(entity: entity, insertInto: moc)
         
-        newNote.title = noteType.title
+        newNote.type = noteType.title
         newNote.body = textView.text
         
         existingNotes.add(newNote)

@@ -11,6 +11,7 @@ import CoreData
 
 class Address: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    @NSManaged var street: String?
+    @NSManaged var region: String?
+    @NSManaged var event: Event?
 }

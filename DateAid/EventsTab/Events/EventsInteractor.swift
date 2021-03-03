@@ -8,6 +8,14 @@
 
 import CoreData
 
+protocol EventsInteractorInputting: class {
+    
+    func fetchEvents() -> Void
+    func getEvents() -> Void
+    func getEvents(containing searchText: String) -> Void
+    func delete(_ event: Event)
+}
+
 enum EventsInteractorError: Error {
     case deleteFailed
     case fetchFailed
@@ -20,7 +28,7 @@ class EventsInteractor: CoreDataInteractable {
     // A flag indicating if dates should be sorted by how far away they are from today.
     private var sortByToday = true
     
-    private var events: [Date] = []
+    private var events: [Event] = []
 }
 
 extension EventsInteractor: EventsInteractorInputting {
@@ -42,7 +50,7 @@ extension EventsInteractor: EventsInteractorInputting {
         let sortDescriptorName = NSSortDescriptor(key: Constant.SortDescriptor.name, ascending: true)
         
         do {
-            let events: [Date] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
+            let events: [Event] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
             self.events = customSorted(events)
             presenter?.eventsFetched(self.events)
         } catch {
@@ -67,7 +75,7 @@ extension EventsInteractor: EventsInteractorInputting {
         }
     }
     
-    func delete(_ event: Date) {
+    func delete(_ event: Event) {
         moc.delete(event)
         do {
             try moc.save()
@@ -79,7 +87,7 @@ extension EventsInteractor: EventsInteractorInputting {
     
     // MARK: Private Helpers
     
-    private func customSorted(_ events: [Date]) -> [Date] {
+    private func customSorted(_ events: [Event]) -> [Event] {
         if sortByToday {
             let today = Foundation.Date().formatted("MM/dd")
             

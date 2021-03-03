@@ -42,10 +42,10 @@ class TabBarWireframe: NSObject {
     }
     
     func presentTabs(in tabBarViewController: TabBarViewController?) {
-        tabBarViewController?.setViewControllers(viewControllers(), animated: false)
+        tabBarViewController?.setViewControllers(childViewControllers(), animated: false)
     }
     
-    private func viewControllers() -> [UIViewController] {
+    private func childViewControllers() -> [UIViewController] {
         let eventsView = eventsNavigationWireframe.eventsNavigationView()
         let notesView = notesNavigationWireframe.notesNavigationView()
         let remindersView = remindersNavigationWireframe.remindersNavigationView()
