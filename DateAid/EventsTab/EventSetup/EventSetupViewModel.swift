@@ -55,8 +55,8 @@ class EventSetupViewModel {
     }
     
     func generateEditContent(for event: Event) -> EventSetupView.Content {
-        firstNameText = event.firstName
-        lastNameText = event.lastName
+        firstNameText = event.givenName
+        lastNameText = event.familyName
         addressOneText = event.address?.street
         addressTwoText = event.address?.region
         eventType = event.eventType
@@ -73,10 +73,10 @@ class EventSetupViewModel {
             whenText: Constant.String.whenText,
             whereText: Constant.String.whereText,
             whyText: Constant.String.whyText,
-            firstNameText: event.firstName,
-            firstNamePlaceholderText: event.firstName == nil ? Constant.String.firstNamePlaceholderText : nil,
-            lastNameText: event.lastName,
-            lastNamePlaceholderText: event.lastName == nil ? Constant.String.lastNamePlaceholderText : nil,
+            firstNameText: event.givenName,
+            firstNamePlaceholderText: nil,
+            lastNameText: event.familyName,
+            lastNamePlaceholderText: event.familyName.isEmpty ? Constant.String.lastNamePlaceholderText : nil,
             addressOneText: event.address?.street,
             addressOnePlaceholderText: event.address?.street == nil ? Constant.String.addressOnePlaceholderText : nil,
             addressTwoText: event.address?.region,
@@ -102,6 +102,7 @@ class EventSetupViewModel {
     private var notificationManager = NotificationManager()
     private var existingNotificationRequest: UNNotificationRequest?
     
+    // Deprecated
     var eventName: String? {
         if let firstNameText = firstNameText, !firstNameText.isEmpty, let lastNameText = lastNameText, !lastNameText.isEmpty {
             let firstName = firstNameText.trimmingCharacters(in: .whitespaces)
@@ -114,6 +115,7 @@ class EventSetupViewModel {
         }
     }
     
+    // Deprecated
     var eventNameAbbreviated: String? {
         if let firstNameText = firstNameText, !firstNameText.isEmpty, let lastNameInitial = lastNameText?.first {
             let firstName = firstNameText.trimmingCharacters(in: .whitespaces)
@@ -122,6 +124,22 @@ class EventSetupViewModel {
             return firstNameText.trimmingCharacters(in: .whitespaces)
         } else {
             return nil
+        }
+    }
+    
+    var givenName: String? {
+        if let firstName = firstNameText, !firstName.isEmpty {
+            return firstName.trimmingCharacters(in: .whitespaces)
+        } else {
+            return nil
+        }
+    }
+    
+    var familyName: String {
+        if let lastName = lastNameText, !lastName.isEmpty {
+            return lastName.trimmingCharacters(in: .whitespaces)
+        } else {
+            return String()
         }
     }
     

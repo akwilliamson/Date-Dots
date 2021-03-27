@@ -132,8 +132,8 @@ class EventCell: UITableViewCell {
 
         firstNameLabel.textColor = event.eventType.color
         
-        if let lastName  = event.lastName  { lastNameLabel.text = lastName }
-        if let firstName = event.firstName { firstNameLabel.text = firstName }
-        if let date      = event.date      { dateLabel.text = date.formatted("MMM dd") }
+        firstNameLabel.text = event.givenName
+        lastNameLabel.text = event.familyName
+        dateLabel.text = event.date.formatted("MMM dd")
     }
 }

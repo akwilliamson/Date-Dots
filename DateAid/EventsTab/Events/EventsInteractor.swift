@@ -10,8 +10,8 @@ import CoreData
 
 protocol EventsInteractorInputting: class {
     
-    func fetchEvents() -> Void
-    func getEvents() -> Void
+    func fetchEvents()
+    func getEvents()
     func getEvents(containing searchText: String) -> Void
     func delete(_ event: Event)
 }
@@ -52,7 +52,9 @@ extension EventsInteractor: EventsInteractorInputting {
         do {
             let events: [Event] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
             self.events = customSorted(events)
-            presenter?.eventsFetched(self.events)
+            migrateOldEvents {
+                presenter?.eventsFetched(self.events)
+            }
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }
@@ -67,8 +69,7 @@ extension EventsInteractor: EventsInteractorInputting {
             presenter?.eventsFetched(events)
         } else {
             let filteredEvents = events.filter { (event) -> Bool in
-                guard let eventName = event.name else { return false }
-                return eventName.contains(searchText)
+                return event.name.contains(searchText)
             }
 
             presenter?.eventsFetched(filteredEvents)
@@ -89,15 +90,11 @@ extension EventsInteractor: EventsInteractorInputting {
     
     private func customSorted(_ events: [Event]) -> [Event] {
         if sortByToday {
-            let today = Foundation.Date().formatted("MM/dd")
+            let today = Date().formatted("MM/dd")
             
             let sortedEvents = events.sorted { event1, event2 -> Bool in
-                guard
-                    let event1 = event1.equalizedDate,
-                    let event2 = event2.equalizedDate
-                else {
-                    return false
-                }
+                let event1 = event1.equalizedDate
+                let event2 = event2.equalizedDate
                 
                 if (event1 >= today && event2 < today) {
                     return (event1 > event2)
@@ -108,6 +105,36 @@ extension EventsInteractor: EventsInteractorInputting {
             return sortedEvents
         } else {
             return events
+        }
+    }
+}
+
+// MARK: Pseudo-migration to reset event names for old app events
+
+extension EventsInteractor {
+    
+    // Old events don't have a given/family name, so create them to eventually delete the old properties.
+    func migrateOldEvents(completion: () -> Void) {
+        events = events.map { event -> Event in
+            if event.givenName.isEmpty {
+                let nameComponents = event.name.components(separatedBy: " ")
+                if nameComponents.count == 2 {
+                    event.givenName = nameComponents.first ?? "No Name"
+                    event.familyName = nameComponents.last ?? String()
+                } else {
+                    event.givenName = nameComponents.first ?? "No Name"
+                    event.familyName = String()
+                }
+            }
+            return event
+        }
+        
+        do {
+            try moc.save()
+            completion()
+        } catch {
+            print("wtf \(error.localizedDescription))")
+            completion()
         }
     }
 }

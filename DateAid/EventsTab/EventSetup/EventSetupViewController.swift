@@ -26,8 +26,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
     // MARK: UI
     
     private lazy var saveBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveEvent))
-        return barButtonItem
+        return UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveEvent))
     }()
     
     private lazy var baseView: EventSetupView = {
@@ -80,21 +79,30 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
     
     private func saveContext() {
         guard
+            // Deprecated
             let eventName = viewModel.eventName,
+            let eventNameAbbreviated = viewModel.eventNameAbbreviated,
+            
+            let eventGivenName = viewModel.givenName,
             let eventType = viewModel.eventType,
             let eventDate = viewModel.eventDate,
-            let eventEntity = NSEntityDescription.entity(forEntityName: "Date", in: moc),
+            let eventDateString = viewModel.eventDateString,
+            let eventEntity = NSEntityDescription.entity(forEntityName: "Event", in: moc),
             let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: moc)
         else {
             return
         }
         
         let event = self.event ?? Event(entity: eventEntity, insertInto: moc)
+        // Deprecated
         event.name = eventName
+        event.abbreviatedName = eventNameAbbreviated
+        
+        event.givenName = eventGivenName
+        event.familyName = viewModel.familyName
         event.type = eventType.rawValue
         event.date = eventDate
-        event.abbreviatedName = viewModel.eventNameAbbreviated
-        event.equalizedDate = viewModel.eventDateString
+        event.equalizedDate = eventDateString
         
         let address = Address(entity: addressEntity, insertInto: moc)
         address.street = viewModel.eventAddressOne
@@ -148,6 +156,7 @@ extension EventSetupViewController: EventSetupViewDelegate {
     }
     
     func textDidChange(inputType: EventSetupInputType, currentText: String?) {
+        guard let currentText = currentText, !currentText.isEmpty else { return }
         viewModel.setValueFor(inputType: inputType, currentText: currentText)
     }
     
@@ -163,7 +172,7 @@ extension EventSetupViewController: EventSetupViewDelegate {
         }
     }
     
-    func datePickerValueChangedTo(date: Foundation.Date) {
+    func datePickerValueChangedTo(date: Date) {
         viewModel.eventDate = date
     }
 }

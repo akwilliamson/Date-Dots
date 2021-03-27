@@ -17,7 +17,7 @@ struct EventReminderDetails {
     /// The type of the event
     var eventType: EventType
     /// The date of the event
-    var eventDate: Foundation.Date
+    var eventDate: Date
     /// The days remaining until the event
     var daysRemaining: Int
 }

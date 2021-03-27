@@ -10,7 +10,7 @@ import UIKit
 
 protocol EventReminderViewDelegate {
     func didSelectDaysBefore(_ daysBefore: Int)
-    func didSelectTimeOfDay(date: Foundation.Date)
+    func didSelectTimeOfDay(date: Date)
     func didTapCancelReminder()
 }
 
@@ -20,7 +20,7 @@ class EventReminderView: BaseView {
     
     struct Content {
         let selectedDaysBeforeIndex: Int
-        let selectedTimeOfDayDate: Foundation.Date
+        let selectedTimeOfDayDate: Date
         let descriptionLabelText: String
         let notificationFound: Bool
         let daysUntilEvent: Int

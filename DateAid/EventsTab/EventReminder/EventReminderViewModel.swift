@@ -34,7 +34,7 @@ class EventReminderViewModel {
     
     private var notificationFound = false
     
-    private var selectedTimeOfDayPicker: Foundation.Date {
+    private var selectedTimeOfDayPicker: Date {
         return selectedTimeOfDay.rounded(minutes: 15, rounding: .ceiling)
     }
     
@@ -47,7 +47,7 @@ class EventReminderViewModel {
     }
     
     var selectedDaysBefore = 0
-    var selectedTimeOfDay = Foundation.Date().rounded(minutes: 15, rounding: .ceiling)
+    var selectedTimeOfDay = Date().rounded(minutes: 15, rounding: .ceiling)
     
     var descriptionLabelText: String {
         return selectedDaysBeforeString + " at " + selectedTimeOfDayString
@@ -150,7 +150,7 @@ class EventReminderViewModel {
         let eventMonth = eventReminderDetails.eventDate.month
         let eventDay = eventReminderDetails.eventDate.day
         
-        let today = Foundation.Date()
+        let today = Date()
         let monthAndDayOfEvent = DateComponents(month: eventMonth, day: eventDay)
         
         let nextEventDate = Calendar.current.nextDate(

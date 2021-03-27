@@ -10,7 +10,11 @@ import UIKit
 
 protocol NotesEventHandling: class {
 
+    // Actions
     func viewDidLoad()
+    func didSelectRow(at indexPath: IndexPath)
+    func didSelectSection(at section: Int)
+    // Data
     func numberOfSections() -> Int
     func title(for section: Int) -> String
     func numberOfNotes(for section: Int) -> Int
@@ -23,9 +27,9 @@ class NotesPresenter {
 
     // MARK: VIPER
     
-    public var view: NotesViewOutputting?
-    public var interactor: NotesInteractorInputting?
-    public weak var wireframe: NotesWireframe?
+    var view: NotesViewOutputting?
+    var interactor: NotesInteractorInputting?
+    var wireframe: NotesWireframe?
     
     // MARK: Constants
 
@@ -49,9 +53,9 @@ class NotesPresenter {
     private var otherNotes: [Note] = []
     
     private func set(notes: [Note]) {
-        giftsNotes = notes.filter({ $0.type?.lowercased() == NoteType.gifts.title })
-        plansNotes = notes.filter({ $0.type?.lowercased() == NoteType.plans.title })
-        otherNotes = notes.filter({ $0.type?.lowercased() == NoteType.other.title })
+        giftsNotes = notes.filter({ $0.type.lowercased() == NoteType.gifts.title })
+        plansNotes = notes.filter({ $0.type.lowercased() == NoteType.plans.title })
+        otherNotes = notes.filter({ $0.type.lowercased() == NoteType.other.title })
     }
 }
 
@@ -68,6 +72,27 @@ extension NotesPresenter: NotesEventHandling {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func didSelectRow(at indexPath: IndexPath) {
+        guard let note = note(for: indexPath) else { return }
+        
+        let noteState = NoteState.existingNote(note)
+        wireframe?.presentNoteDetails(noteState: noteState)
+    }
+    
+    func didSelectSection(at section: Int) {
+        let noteState: NoteState
+        
+        switch section {
+        case 0: noteState = .newNote(.gifts)
+        case 1: noteState = .newNote(.plans)
+        case 2: noteState = .newNote(.other)
+        default:
+            return
+        }
+        
+        wireframe?.presentNoteDetails(noteState: noteState)
     }
     
     func numberOfSections() -> Int {

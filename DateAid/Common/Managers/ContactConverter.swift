@@ -41,7 +41,7 @@ class ContactConverter: CoreDataInteractable {
     
     private func createHolidays() {
         guard let path = Bundle.main.path(forResource: "Holidays", ofType: "plist"),
-        let dict = NSDictionary(contentsOfFile: path) as? [String: Foundation.Date] else {
+        let dict = NSDictionary(contentsOfFile: path) as? [String: Date] else {
             return
         }
 
@@ -61,11 +61,15 @@ class ContactConverter: CoreDataInteractable {
             if !exists {
                 if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc) {
                     let date = Event(entity: entity, insertInto: moc)
-                    date.type            = EventType.holiday.rawValue
+                    // Deprecated
                     date.name            = givenName
+                    // Deprecated
                     date.abbreviatedName = givenName
+                    date.givenName       = givenName
+                    date.familyName      = String()
                     date.date            = givenDate
                     date.equalizedDate   = givenDate.formatted("MM/dd")
+                    date.type            = EventType.holiday.rawValue
                 }
             }
         }
@@ -89,21 +93,23 @@ class ContactConverter: CoreDataInteractable {
                 
                 let event = Event(entity: entity, insertInto: moc)
                 
-                event.type            = type.rawValue
-                event.name            = contact.fullName
-                event.abbreviatedName = contact.abbreviatedName
+                event.type = type.rawValue
+                // Deprecated
+                event.name = contact.fullName
                 
                 switch type {
                 case .birthday:
-                    event.date            = contact.birthdate
-                    event.equalizedDate   = contact.birthdate?.formatted("MM/dd")
+                    let birthdate = contact.birthdate ?? Date() // TODO: default to something smarter
+                    event.date = birthdate
+                    event.equalizedDate = birthdate.formatted("MM/dd")
                 case .anniversary:
-                    event.date            = contact.anniversary
-                    event.equalizedDate   = contact.anniversary?.formatted("MM/dd")
+                    let anniversaryDate = contact.anniversary ?? Date() // TODO: default to something smarter
+                    event.date = anniversaryDate
+                    event.equalizedDate = anniversaryDate.formatted("MM/dd")
                 case .holiday:
-                    return // Fix later
+                    return // TODO: Fix later
                 case .other:
-                    return // Fix later
+                    return // TODO: Fix later
                 }
                 
                 if let address = contact.postalAddress {

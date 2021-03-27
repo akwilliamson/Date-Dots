@@ -139,7 +139,7 @@ extension EventReminderViewController: EventReminderViewDelegate {
         baseView.updateDescriptionLabel(text: viewModel.descriptionLabelText)
     }
     
-    func didSelectTimeOfDay(date: Foundation.Date) {
+    func didSelectTimeOfDay(date: Date) {
         viewModel.selectedTimeOfDay = date
         baseView.updateDescriptionLabel(text: viewModel.descriptionLabelText)
     }

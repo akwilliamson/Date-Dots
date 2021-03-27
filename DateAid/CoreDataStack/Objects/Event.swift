@@ -9,13 +9,18 @@
 import UIKit
 import CoreData
 
-class Event: NSManagedObject {
+class Event: NSManagedObject, EventNaming {
 
-    @NSManaged var abbreviatedName: String?
-    @NSManaged var date: Date?
-    @NSManaged var equalizedDate: String?
-    @NSManaged var name: String?
-    @NSManaged var type: String?
+    // Deprecated
+    @NSManaged var abbreviatedName: String
+    // Deprecated
+    @NSManaged var name: String
+    
+    @NSManaged var givenName: String
+    @NSManaged var familyName: String
+    @NSManaged var date: Date
+    @NSManaged var equalizedDate: String
+    @NSManaged var type: String
     @NSManaged var address: Address?
     @NSManaged var notes: Set<Note>?
     
@@ -23,17 +28,7 @@ class Event: NSManagedObject {
         return objectID.uriRepresentation().absoluteString
     }
     
-    public var firstName: String? {
-        return name?.components(separatedBy: " ").first
-    }
-    
-    public var lastName: String? {
-        return name?.components(separatedBy: " ").last
-    }
-    
     public var eventType: EventType {
-        guard let type = type else { return .other }
-
         switch type {
         case "birthday":    return .birthday
         case "anniversary": return .anniversary
@@ -46,6 +41,6 @@ class Event: NSManagedObject {
     public func note(forType noteType: NoteType) -> Note? {
         guard let notes = notes else { return nil }
 
-        return Array(notes).filter { $0.type == noteType.title.lowercased() }.first
+        return Array(notes).filter { $0.type.lowercased() == noteType.title.lowercased() }.first
     }
 }

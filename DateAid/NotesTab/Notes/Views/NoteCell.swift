@@ -100,22 +100,19 @@ class NoteCell: UITableViewCell {
     // MARK: Helper Methods
 
     private func populate(_ note: Note?) {
-        guard let note = note, let event = note.event else { return }
+        guard let note = note else { return }
         
-        if let name = event.abbreviatedName {
-            nameLabel.text = name
-        }
+        eventTypeIcon.image = note.event.eventType.selectedImage
+        eventTypeIcon.layer.cornerRadius = 12
+        
+        nameLabel.text = note.event.fullName
+        nameLabel.textColor = note.event.eventType.color
         
         if let subject = note.subject {
             noteLabel.text = subject.capitalized
         } else {
             noteLabel.text = note.type
         }
-        
-        nameLabel.textColor = event.eventType.color
         noteLabel.textColor = UIColor.compatibleLabel
-        
-        eventTypeIcon.image = event.eventType.selectedImage
-        eventTypeIcon.layer.cornerRadius = 12
     }
 }

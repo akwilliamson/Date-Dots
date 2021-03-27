@@ -10,9 +10,19 @@ import UIKit
 
 class NotesNavigationWireframe {
     
-    // MARK: Properties
+    // MARK: Wireframes
 
     private var parentWireframe: TabBarWireframe?
+    private var childWireframe: NotesRouting?
+    
+    // MARK: Navigation
+    
+    var navigation: UINavigationController? {
+        return presenter.view
+    }
+    
+    // MARK: Presenter
+    
     private let presenter = NotesNavigationPresenter()
     
     // MARK: Initialization
@@ -25,13 +35,10 @@ class NotesNavigationWireframe {
     
     // MARK: Routing
     
-    func notesNavigationView() -> UIViewController? {
-        return presenter.view
-    }
-    
     func presentNotes() {
-        let datesWireframe = NotesWireframe(parentWireframe: self)
-        datesWireframe.presentModule(in: presenter.view)
+        let notesWireframe = NotesWireframe(parentWireframe: self)
+        notesWireframe.navigation = navigation
+        notesWireframe.present()
     }
     
     // MARK: Helpers

@@ -1,5 +1,5 @@
 //
-//  DateDotView.swift
+//  EventCircleImageView.swift
 //  Date Dots
 //
 //  Created by Aaron Williamson on 3/30/20.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-class IconCircleImageView: CircleImageView {
+class EventCircleImageView: CircleImageView {
 
     // MARK: Properties
     
     public let eventType: EventType
+    public var scaledSize: CGSize
     
     public var isSelected = false {
         didSet {
@@ -26,8 +27,9 @@ class IconCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(eventType: EventType) {
+    init(eventType: EventType, scaledSize: CGSize = .zero) {
         self.eventType = eventType
+        self.scaledSize = scaledSize
         super.init()
         configureView()
     }
@@ -38,6 +40,10 @@ class IconCircleImageView: CircleImageView {
         super.configureView()
         image = eventType.unselectedImage
         layer.borderColor = eventType.color.cgColor
+        
+        if scaledSize != .zero {
+            downsizeImage(to: scaledSize)
+        }
     }
 
     // MARK: Public Methods
@@ -53,6 +59,10 @@ class IconCircleImageView: CircleImageView {
         } else {
             backgroundColor = .clear
             image = eventType.unselectedImage
+        }
+        
+        if scaledSize != .zero {
+            downsizeImage(to: scaledSize)
         }
     }
 }

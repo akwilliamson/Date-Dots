@@ -47,7 +47,7 @@ class TabBarWireframe: NSObject {
     
     private func childViewControllers() -> [UIViewController] {
         let eventsView = eventsNavigationWireframe.eventsNavigationView()
-        let notesView = notesNavigationWireframe.notesNavigationView()
+        let notesView = notesNavigationWireframe.navigation
         let remindersView = remindersNavigationWireframe.remindersNavigationView()
         
         return [eventsView, notesView, remindersView].compactMap { $0 }

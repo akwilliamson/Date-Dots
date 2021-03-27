@@ -44,7 +44,7 @@ class NotesViewController: UIViewController {
     
     // MARK: Properties
     
-    var presenter: NotesEventHandling?
+    weak var presenter: NotesEventHandling?
     
     // MARK: Lifecycle
     
@@ -129,11 +129,27 @@ extension NotesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let noteType = NoteType(rawValue: section) else { return nil }
-        return NotesSectionHeaderView(noteType: noteType, reuseIdentifier: "SectionHeader")
+        let sectionHeader = NotesSectionHeaderView(noteType: noteType, reuseIdentifier: "SectionHeader")
+        sectionHeader.tag = section
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
+        sectionHeader.addGestureRecognizer(tapGesture)
+        
+        return sectionHeader
+    }
+    
+    @objc
+    func headerTapped(sender: UITapGestureRecognizer) {
+        guard let section = sender.view?.tag else { return }
+        presenter?.didSelectSection(at: section)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter?.didSelectRow(at: indexPath)
     }
 }
 

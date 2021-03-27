@@ -9,6 +9,8 @@
         <attribute name="abbreviatedName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="equalizedDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="familyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="givenName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="event" inverseEntity="Address" syncable="YES"/>
@@ -22,7 +24,7 @@
     </entity>
     <elements>
         <element name="Address" positionX="-27" positionY="54" width="128" height="74"/>
-        <element name="Event" positionX="-279" positionY="-15" width="128" height="134"/>
+        <element name="Event" positionX="-279" positionY="-15" width="128" height="164"/>
         <element name="Note" positionX="-101" positionY="207" width="128" height="89"/>
     </elements>
 </model>

@@ -13,7 +13,7 @@ class CircleImageView: UIImageView {
     // MARK: Constant
 
     private enum Constant {
-        static let borderWidth: CGFloat = 4
+        static let borderWidth: CGFloat = 5
     }
 
     // MARK: Initialization
@@ -40,5 +40,13 @@ class CircleImageView: UIImageView {
     func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.borderWidth = Constant.borderWidth
+    }
+    
+    // MARK: Public Methods
+    
+    public func style(for eventType: EventType) {
+        image = eventType.selectedImage
+        backgroundColor = eventType.color
+        layer.borderColor = eventType.color.cgColor
     }
 }

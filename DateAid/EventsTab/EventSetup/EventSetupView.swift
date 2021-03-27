@@ -21,7 +21,7 @@ protocol EventSetupViewDelegate {
     func didEndEditingFor(inputType: EventSetupInputType, currentText: String?, _ completion: (String?, UIColor) -> Void)
     func textDidChange(inputType: EventSetupInputType, currentText: String?)
     func eventTypeSelected(eventType: EventType, isSelected: Bool)
-    func datePickerValueChangedTo(date: Foundation.Date)
+    func datePickerValueChangedTo(date: Date)
 }
 
 class EventSetupView: BaseView {
@@ -43,7 +43,7 @@ class EventSetupView: BaseView {
         let addressTwoText: String?
         let addressTwoPlaceholderText: String?
         let whyDescriptionText: String
-        let date: Foundation.Date?
+        let date: Date?
         let eventType: EventType?
     }
     
@@ -58,10 +58,10 @@ class EventSetupView: BaseView {
     // What
     private let whatLabel: UILabel
     private let whatStackView: UIStackView
-    private let birthdayDot: IconCircleImageView
-    private let anniversaryDot: IconCircleImageView
-    private let holidayDot: IconCircleImageView
-    private let otherDot: IconCircleImageView
+    private let birthdayDot: EventCircleImageView
+    private let anniversaryDot: EventCircleImageView
+    private let holidayDot: EventCircleImageView
+    private let otherDot: EventCircleImageView
     // When
     private let whenLabel: UILabel
     private let whenDatePicker: UIDatePicker
@@ -170,28 +170,32 @@ class EventSetupView: BaseView {
         }()
         
         birthdayDot = {
-            let imageView = IconCircleImageView(eventType: .birthday)
+            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+            let imageView = EventCircleImageView(eventType: .birthday, scaledSize: size)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         anniversaryDot = {
-            let imageView = IconCircleImageView(eventType: .anniversary)
+            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+            let imageView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         holidayDot = {
-            let imageView = IconCircleImageView(eventType: .holiday)
+            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+            let imageView = EventCircleImageView(eventType: .holiday, scaledSize: size)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         otherDot = {
-            let imageView = IconCircleImageView(eventType: .other)
+            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+            let imageView = EventCircleImageView(eventType: .other, scaledSize: size)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
@@ -214,7 +218,7 @@ class EventSetupView: BaseView {
             let datePicker = UIDatePicker()
             datePicker.translatesAutoresizingMaskIntoConstraints = false
             datePicker.minimumDate = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1))
-            datePicker.maximumDate = Foundation.Date()
+            datePicker.maximumDate = Date()
             datePicker.datePickerMode = .date
             if #available(iOS 14, *) {
                 datePicker.preferredDatePickerStyle = .wheels
@@ -440,9 +444,9 @@ extension EventSetupView: Populatable {
         if let date = content.date {
             whenDatePicker.date = date
         } else {
-            let currentDate = Calendar.current.dateComponents([.month, .day], from: Foundation.Date())
+            let currentDate = Calendar.current.dateComponents([.month, .day], from: Date())
             let defaultComponents = DateComponents(year: 2000, month: currentDate.month, day: currentDate.day)
-            let defaultDate = Calendar.current.date(from: defaultComponents) ?? Foundation.Date()
+            let defaultDate = Calendar.current.date(from: defaultComponents) ?? Date()
             whenDatePicker.setDate(defaultDate, animated: false)
         }
         
@@ -490,7 +494,7 @@ extension EventSetupView: Populatable {
     
     @objc
     func dotPressed(_ sender: UITapGestureRecognizer) {
-        guard let iconImageView = sender.view as? IconCircleImageView else { return }
+        guard let iconImageView = sender.view as? EventCircleImageView else { return }
         
         let isCurrentlySelected = iconImageView.isSelected
         delegate?.eventTypeSelected(eventType: iconImageView.eventType, isSelected: !isCurrentlySelected)

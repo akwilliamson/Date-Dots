@@ -9,24 +9,12 @@
 import Foundation
 import Contacts
 
-extension CNContact {
+extension CNContact: EventNaming {
     
     private enum Constant {
         enum String {
             static let home = "Home"
             static let anniversary = "Anniversary"
-        }
-    }
-
-    var fullName: String {
-        [givenName, familyName].joined(separator: " ")
-    }
-    
-    var abbreviatedName: String {
-        if let familyNameFirstCharacter = familyName.first {
-            return [givenName, String(familyNameFirstCharacter)].joined(separator: " ")
-        } else {
-            return givenName
         }
     }
     
@@ -42,14 +30,14 @@ extension CNContact {
         return possibleHomeAddress.first?.value
     }
     
-    var birthdate: Foundation.Date? {
+    var birthdate: Date? {
         var birthdayDateComponents = birthday
         birthdayDateComponents?.timeZone = .current
         
         return birthdayDateComponents?.date
     }
     
-    var anniversary: Foundation.Date? {
+    var anniversary: Date? {
         let possibleAnniversary = dates.filter { date in
             guard let label = date.label else {
                 return false

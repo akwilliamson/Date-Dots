@@ -6,6 +6,8 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
+import UIKit
+
 enum NoteType: Int {
     
     case gifts
@@ -18,5 +20,9 @@ enum NoteType: Int {
         case .plans: return "plans"
         case .other: return "other"
         }
+    }
+    
+    public var image: UIImage {
+        return UIImage(named: title)!
     }
 }

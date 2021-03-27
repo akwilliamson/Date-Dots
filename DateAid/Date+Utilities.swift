@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Foundation.Date {
+extension Date {
     
     /// The direction of which to round a specific time.
     enum DateRoundingType {
@@ -60,19 +60,19 @@ extension Foundation.Date {
     }
     
     /// Rounds the current date to a specific time, rounded to a given time interval.
-    func rounded(minutes: TimeInterval, rounding: DateRoundingType = .round) -> Foundation.Date {
+    func rounded(minutes: TimeInterval, rounding: DateRoundingType = .round) -> Date {
         return rounded(seconds: minutes * 60, rounding: rounding)
     }
     
     // MARK: Private Methodss
 
-    private func rounded(seconds: TimeInterval, rounding: DateRoundingType = .round) -> Foundation.Date {
+    private func rounded(seconds: TimeInterval, rounding: DateRoundingType = .round) -> Date {
         var roundedInterval: TimeInterval = 0
         switch rounding  {
         case .round:   roundedInterval = (timeIntervalSinceReferenceDate / seconds).rounded() * seconds
         case .ceiling: roundedInterval = ceil(timeIntervalSinceReferenceDate / seconds) * seconds
         case .floor:   roundedInterval = floor(timeIntervalSinceReferenceDate / seconds) * seconds
         }
-        return Foundation.Date(timeIntervalSinceReferenceDate: roundedInterval)
+        return Date(timeIntervalSinceReferenceDate: roundedInterval)
     }
 }

@@ -98,7 +98,7 @@ class NotificationManager {
         return notificationRequest?.content.userInfo[key] as? T
     }
     
-    func triggerTime() -> Foundation.Date? {
+    func triggerTime() -> Date? {
         let trigger = notificationRequest?.trigger as? UNCalendarNotificationTrigger
         return trigger?.nextTriggerDate()
     }

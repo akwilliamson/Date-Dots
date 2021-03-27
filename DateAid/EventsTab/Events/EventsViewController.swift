@@ -35,40 +35,48 @@ class EventsViewController: UIViewController {
     }()
 
     private var dotStackView: UIStackView = {
-        let stacKView = UIStackView()
-        stacKView.translatesAutoresizingMaskIntoConstraints = false
-        stacKView.distribution = .fillEqually
-        stacKView.spacing = 8
-        return stacKView
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        return stackView
     }()
 
-    private lazy var birthdayDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .birthday)
+    private lazy var birthdayDot: EventCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = EventCircleImageView(eventType: .birthday, scaledSize: size)
         dotView.isUserInteractionEnabled = true
+        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var anniversaryDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .anniversary)
+    private lazy var anniversaryDot: EventCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
         dotView.isUserInteractionEnabled = true
+        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var holidayDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .holiday)
+    private lazy var holidayDot: EventCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = EventCircleImageView(eventType: .holiday, scaledSize: size)
         dotView.isUserInteractionEnabled = true
+        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
-    private lazy var otherDot: IconCircleImageView = {
-        let dotView = IconCircleImageView(eventType: .other)
+    private lazy var otherDot: EventCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = EventCircleImageView(eventType: .other, scaledSize: size)
         dotView.isUserInteractionEnabled = true
+        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -142,7 +150,7 @@ class EventsViewController: UIViewController {
             dotStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
-            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
+            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
         ])
         NSLayoutConstraint.activate([
@@ -173,7 +181,7 @@ class EventsViewController: UIViewController {
     
     @objc
     func dotPressed(_ sender: UITapGestureRecognizer) {
-        guard let dotView = sender.view as? IconCircleImageView else { return }
+        guard let dotView = sender.view as? EventCircleImageView else { return }
         presenter?.dotPressed(for: dotView.eventType)
     }
 }

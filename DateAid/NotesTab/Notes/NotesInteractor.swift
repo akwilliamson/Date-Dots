@@ -6,7 +6,7 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
-protocol NotesInteractorInputting {
+protocol NotesInteractorInputting: class {
     func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void)
 }
 

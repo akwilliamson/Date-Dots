@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
         
+        appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
         appWireframe?.presenter.setupApp()
 
         showInitialView()
