@@ -15,14 +15,14 @@ class NotesSectionHeaderView: UITableViewHeaderFooterView {
     private lazy var sectionImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: noteType.title)
+        imageView.image = UIImage(named: noteType.rawValue)
         return imageView
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = noteType.title.capitalized
+        label.text = noteType.rawValue.capitalized
         label.font = FontType.noteworthyBold(18).font
         return label
     }()

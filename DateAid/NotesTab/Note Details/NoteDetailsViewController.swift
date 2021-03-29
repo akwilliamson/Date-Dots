@@ -12,6 +12,7 @@ protocol NoteDetailsViewOutputting: class {
     
     func setContent(_ content: NoteDetailsView.Content)
     
+    func enableInputFields()
     func startEditTextField(isPlaceholder: Bool)
     func endEditTextField(isPlaceholder: Bool)
     func startEditTextView(isPlaceholder: Bool)
@@ -82,6 +83,10 @@ extension NoteDetailsViewController: NoteDetailsViewOutputting {
         }
         
         baseView.populate(with: content)
+    }
+    
+    func enableInputFields() {
+        baseView.beginEdit()
     }
     
     func startEditTextField(isPlaceholder: Bool) {

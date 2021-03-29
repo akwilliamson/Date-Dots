@@ -8,21 +8,13 @@
 
 import UIKit
 
-enum NoteType: Int {
+enum NoteType: String {
     
     case gifts
     case plans
     case other
     
-    var title: String {
-        switch self {
-        case .gifts: return "gifts"
-        case .plans: return "plans"
-        case .other: return "other"
-        }
-    }
-    
     public var image: UIImage {
-        return UIImage(named: title)!
+        return UIImage(named: rawValue)!
     }
 }

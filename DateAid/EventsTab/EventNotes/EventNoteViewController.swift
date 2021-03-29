@@ -63,7 +63,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
     }
 
     private func configureView() {
-        title = noteType.title.capitalized
+        title = noteType.rawValue.capitalized
         view.backgroundColor = .compatibleSystemBackground
         navigationItem.rightBarButtonItem = saveBarButtonItem
     }
@@ -145,7 +145,7 @@ class EventNoteViewController: UIViewController, CoreDataInteractable {
 
         let newNote = Note(entity: entity, insertInto: moc)
         
-        newNote.type = noteType.title
+        newNote.type = noteType.rawValue
         newNote.body = textView.text
         
         existingNotes.add(newNote)

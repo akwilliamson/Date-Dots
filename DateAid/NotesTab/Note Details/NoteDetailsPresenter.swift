@@ -107,6 +107,8 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
         
         if let note = event.note(forType: noteType) {
             noteState = .existingNote(note)
+            subjectText = note.subject
+            descriptionText = note.body
         } else {
             noteState = .newNote(noteType)
         }
@@ -170,22 +172,22 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
     }
     
     func didTapEdit() {
-        print("didTapEdit")
+        view?.enableInputFields()
+        view?.startEditTextField(isPlaceholder: false)
     }
     
     func didTapSave() {
-        guard let event = event, let type = noteState?.noteType?.title else {
-            let noteType = noteState?.noteType?.title ?? String()
-            view?.showAlert(title: "Missing Event", description: "Choose an event for this \(noteType) note")
+        guard let event = event, let noteType = NoteType(rawValue: noteState?.noteType?.rawValue ?? String()) else {
+            view?.showAlert(title: "Missing Event", description: "Choose an event for this note")
             return
         }
 
         guard !subjectText.isEmptyOrNil, let subjectText = subjectText else {
-            view?.showAlert(title: "Missing Note Title", description: "Enter a title for this \(type) note")
+            view?.showAlert(title: "Missing Note Title", description: "Enter a title for this note")
             return
         }
         
-        interactor?.saveNote(type: type, title: subjectText, description: descriptionText, for: event)
+        interactor?.saveNote(type: noteType, title: subjectText, description: descriptionText, for: event)
     }
     
     func didTapViewEventDetails() {

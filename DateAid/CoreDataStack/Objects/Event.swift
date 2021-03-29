@@ -41,6 +41,6 @@ class Event: NSManagedObject, EventNaming {
     public func note(forType noteType: NoteType) -> Note? {
         guard let notes = notes else { return nil }
 
-        return Array(notes).filter { $0.type.lowercased() == noteType.title.lowercased() }.first
+        return Array(notes).filter { $0.type.lowercased() == noteType.rawValue.lowercased() }.first
     }
 }

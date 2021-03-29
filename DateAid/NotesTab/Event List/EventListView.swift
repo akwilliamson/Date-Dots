@@ -21,7 +21,7 @@ class EventListView: BaseView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = FontType.avenirNextMedium(25).font
+        label.font = FontType.avenirNextDemiBold(30).font
         label.textColor = UIColor.compatibleLabel
         return label
     }()

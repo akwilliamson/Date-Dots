@@ -32,7 +32,7 @@ class NoteDetailsView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -40,29 +40,22 @@ class NoteDetailsView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 20
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.spacing = 8
         return stackView
     }()
     
-    private var eventIconImageView: CircleImageView = {
+    private lazy var eventIconImageView: CircleImageView = {
         let imageView = CircleImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEventSelectionButton)))
+        imageView.isUserInteractionEnabled = true
         imageView.contentMode = .center
         return imageView
     }()
     
-    private var eventNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .center
-        label.font = FontType.avenirNextDemiBold(35).font
-        return label
-    }()
-    
-    private var eventSelectionButton: UIButton = {
+    private lazy var eventSelectionButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventSelectionButton), for: .touchUpInside)
@@ -75,22 +68,21 @@ class NoteDetailsView: BaseView {
         return button
     }()
     
-    private var selectedEventEditButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        button.clipsToBounds = true
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 2
-        button.layer.cornerRadius = 6
-        button.addTarget(self, action: #selector(didTapEventSelectionButton), for: .touchUpInside)
-        button.setImage(UIImage(named: "edit"), for: .normal)
-        return button
+    private lazy var eventNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapEventSelectionButton)))
+        label.isUserInteractionEnabled = true
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        label.font = FontType.avenirNextDemiBold(35).font
+        return label
     }()
     
     private var noteTypeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 12
         return stackView
@@ -222,27 +214,21 @@ class NoteDetailsView: BaseView {
         
         addSubview(containerView)
         containerView.addArrangedSubview(headerStackView)
-        headerStackView.addArrangedSubview(eventIconImageView)
-        headerStackView.setCustomSpacing(25, after: eventIconImageView)
-        headerStackView.addArrangedSubview(eventNameLabel)
-        headerStackView.setCustomSpacing(25, after: eventNameLabel)
-        headerStackView.addArrangedSubview(selectedEventEditButton)
-        headerStackView.setCustomSpacing(25, after: selectedEventEditButton)
-        headerStackView.addArrangedSubview(eventSelectionButton)
-        headerStackView.setCustomSpacing(25, after: eventSelectionButton)
-        headerStackView.addArrangedSubview(noteTypeStackView)
-        noteTypeStackView.addArrangedSubview(giftsDot)
-        noteTypeStackView.addArrangedSubview(plansDot)
-        noteTypeStackView.addArrangedSubview(otherDot)
-        containerView.setCustomSpacing(25, after: headerStackView)
+            headerStackView.addArrangedSubview(eventIconImageView)
+            headerStackView.addArrangedSubview(eventSelectionButton)
+            headerStackView.addArrangedSubview(eventNameLabel)
+            headerStackView.addArrangedSubview(noteTypeStackView)
+                noteTypeStackView.addArrangedSubview(giftsDot)
+                noteTypeStackView.addArrangedSubview(plansDot)
+                noteTypeStackView.addArrangedSubview(otherDot)
         containerView.addArrangedSubview(backgroundView)
-        backgroundView.addSubview(inputStackView)
-        inputStackView.addArrangedSubview(inputSubjectTextField)
-        inputStackView.addArrangedSubview(inputDescriptionTextView)
-        backgroundView.addSubview(buttonContainerView)
-        buttonContainerView.addSubview(buttonStackView)
-        buttonStackView.addArrangedSubview(viewEventDetailsButton)
-        buttonStackView.addArrangedSubview(deleteNoteButton)
+            backgroundView.addSubview(inputStackView)
+                inputStackView.addArrangedSubview(inputSubjectTextField)
+                inputStackView.addArrangedSubview(inputDescriptionTextView)
+            backgroundView.addSubview(buttonContainerView)
+                buttonContainerView.addSubview(buttonStackView)
+                    buttonStackView.addArrangedSubview(viewEventDetailsButton)
+                    buttonStackView.addArrangedSubview(deleteNoteButton)
     }
     
     override func constructLayout() {
@@ -256,12 +242,9 @@ class NoteDetailsView: BaseView {
         ])
         NSLayoutConstraint.activate([
             eventNameLabel.heightAnchor.constraint(equalToConstant: 30),
-            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            selectedEventEditButton.heightAnchor.constraint(equalToConstant: 44),
-            selectedEventEditButton.widthAnchor.constraint(equalToConstant: 44),
-            selectedEventEditButton.centerXAnchor.constraint(equalTo: centerXAnchor)
+            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            eventNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            eventNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         NSLayoutConstraint.activate([
             eventSelectionButton.heightAnchor.constraint(equalToConstant: 60),
@@ -303,6 +286,12 @@ class NoteDetailsView: BaseView {
             deleteNoteButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
             deleteNoteButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
         ])
+        
+        layoutIfNeeded()
+        
+        [eventSelectionButton, viewEventDetailsButton, deleteNoteButton].forEach { button in
+            button.layer.cornerRadius = button.frame.height/2
+        }
     }
     
     @objc
@@ -360,10 +349,9 @@ extension NoteDetailsView: Populatable {
             eventIconImageView.downsizeImage(to: imageSize)
         }
         
-        // Event Selection
+        // Event Info
         
         eventSelectionButton.isHidden = content.hasEvent
-        selectedEventEditButton.isHidden = !content.isEditable || !content.hasEvent
         
         // Name
         
@@ -373,6 +361,8 @@ extension NoteDetailsView: Populatable {
         } else {
             eventNameLabel.isHidden = true
         }
+        
+        eventNameLabel.isUserInteractionEnabled = content.isEditable
         
         // Note Type
         
@@ -416,16 +406,15 @@ extension NoteDetailsView: Populatable {
         
         viewEventDetailsButton.isHidden = content.isNewNote && !content.hasEvent
         deleteNoteButton.isHidden = content.isNewNote
-        
-        // Layout & Styling
-        
-        [eventSelectionButton, selectedEventEditButton, viewEventDetailsButton, deleteNoteButton].forEach { button in
-            button.layoutIfNeeded()
-            button.layer.cornerRadius = button.bounds.height/2
-        }
     }
     
     // MARK: Public Interface
+    
+    func beginEdit() {
+        inputSubjectTextField.isUserInteractionEnabled = true
+        inputDescriptionTextView.isEditable = true
+        inputSubjectTextField.becomeFirstResponder()
+    }
     
     func startEditTextField(isPlaceholder: Bool) {
         let cursorPosition: UITextPosition

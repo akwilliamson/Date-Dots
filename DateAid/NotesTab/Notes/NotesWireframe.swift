@@ -73,7 +73,7 @@ extension NotesWireframe: NotesRouting {
     }
     
     func dismissNoteDetails() {
-        navigation?.dismiss(animated: true, completion: nil)
+        navigation?.popViewController(animated: true)
         self.childWireframe = nil
     }
 }

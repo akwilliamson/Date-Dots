@@ -10,7 +10,7 @@ import CoreData
 
 protocol NoteDetailsInteractorInputting: class {
     
-    func saveNote(type: String, title: String, description: String?, for event: Event)
+    func saveNote(type: NoteType, title: String, description: String?, for event: Event)
 }
 
 class NoteDetailsInteractor: CoreDataInteractable {
@@ -20,7 +20,7 @@ class NoteDetailsInteractor: CoreDataInteractable {
 
 extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
     
-    func saveNote(type: String, title: String, description: String?, for event: Event) {
+    func saveNote(type: NoteType, title: String, description: String?, for event: Event) {
         guard
             let entity = NSEntityDescription.entity(forEntityName: "Note", in: moc)
         else {
@@ -28,17 +28,26 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
             return
         }
         
-        let newNote = Note(entity: entity, insertInto: moc)
+        if let existingNote = event.note(forType: type) {
+            existingNote.subject = title
+            existingNote.body = description
+        } else {
+            let newNote = Note(entity: entity, insertInto: moc)
+            newNote.type = type.rawValue
+            newNote.subject = title
+            newNote.body = description
+            newNote.event = event
+            
+            let existingNotes = event.notes as? NSMutableSet ?? []
+            existingNotes.add(newNote)
+            event.notes = existingNotes.copy() as? Set<Note>
+        }
         
-        newNote.type = ""
-        newNote.subject = title
-        newNote.body = description
-        
-        let existingNotes = event.notes as? NSMutableSet ?? []
-        
-        existingNotes.add(newNote)
-        event.notes = existingNotes.copy() as? Set<Note>
-        
-        presenter?.noteSaved()
+        do {
+            try moc.save()
+            presenter?.noteSaved()
+        } catch {
+            presenter?.noteSaveFailed()
+        }
     }
 }

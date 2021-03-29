@@ -12,6 +12,7 @@ protocol NotesEventHandling: class {
 
     // Actions
     func viewDidLoad()
+    func viewWillAppear()
     func didSelectRow(at indexPath: IndexPath)
     func didSelectSection(at section: Int)
     // Data
@@ -53,9 +54,9 @@ class NotesPresenter {
     private var otherNotes: [Note] = []
     
     private func set(notes: [Note]) {
-        giftsNotes = notes.filter({ $0.type.lowercased() == NoteType.gifts.title })
-        plansNotes = notes.filter({ $0.type.lowercased() == NoteType.plans.title })
-        otherNotes = notes.filter({ $0.type.lowercased() == NoteType.other.title })
+        giftsNotes = notes.filter({ $0.type.lowercased() == NoteType.gifts.rawValue })
+        plansNotes = notes.filter({ $0.type.lowercased() == NoteType.plans.rawValue })
+        otherNotes = notes.filter({ $0.type.lowercased() == NoteType.other.rawValue })
     }
 }
 
@@ -63,6 +64,9 @@ extension NotesPresenter: NotesEventHandling {
     
     func viewDidLoad() {
         view?.configureNavigationBar(title: Constant.String.title)
+    }
+    
+    func viewWillAppear() {
         interactor?.fetchNotes { result in
             switch result {
             case .success(let notes):
@@ -100,7 +104,13 @@ extension NotesPresenter: NotesEventHandling {
     }
     
     func title(for section: Int) -> String {
-        return NoteType(rawValue: section)?.title.capitalized ?? String()
+        switch section {
+        case 0: return NoteType.gifts.rawValue.capitalized
+        case 1: return NoteType.plans.rawValue.capitalized
+        case 2: return NoteType.other.rawValue.capitalized
+        default:
+            return String()
+        }
     }
     
     func numberOfNotes(for section: Int) -> Int {

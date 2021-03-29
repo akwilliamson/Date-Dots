@@ -30,6 +30,7 @@ class NotesViewController: UIViewController {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView()
+        tableView.alwaysBounceVertical = false
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
         tableView.register(NoteSampleCell.self, forCellReuseIdentifier: "NoteSampleCell")
         tableView.register(NotesSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "SectionHeader")
@@ -55,6 +56,11 @@ class NotesViewController: UIViewController {
         configureView()
         constructSubviews()
         constrainSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewWillAppear()
     }
     
     // MARK: View Setup
@@ -112,9 +118,11 @@ extension NotesViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell") as? NoteCell,
             let note = presenter?.note(for: indexPath)
         else {
-            if let noteType = NoteType(rawValue: indexPath.section) {
-                return NoteSampleCell(noteType: noteType, reuseIdentifier: "NoteSampleCell")
-            } else {
+            switch indexPath.section {
+            case 0: return NoteSampleCell(noteType: .gifts, reuseIdentifier: "NoteSampleCell")
+            case 1: return NoteSampleCell(noteType: .plans, reuseIdentifier: "NoteSampleCell")
+            case 2: return NoteSampleCell(noteType: .other, reuseIdentifier: "NoteSampleCell")
+            default:
                 return UITableViewCell()
             }
         }
@@ -128,9 +136,14 @@ extension NotesViewController: UITableViewDataSource {
 extension NotesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let noteType = NoteType(rawValue: section) else { return nil }
-        let sectionHeader = NotesSectionHeaderView(noteType: noteType, reuseIdentifier: "SectionHeader")
-        sectionHeader.tag = section
+        let sectionHeader: NotesSectionHeaderView
+        switch section {
+        case 0: sectionHeader = NotesSectionHeaderView(noteType: .gifts, reuseIdentifier: "SectionHeader")
+        case 1: sectionHeader = NotesSectionHeaderView(noteType: .plans, reuseIdentifier: "SectionHeader")
+        case 2: sectionHeader = NotesSectionHeaderView(noteType: .other, reuseIdentifier: "SectionHeader")
+        default:
+            return nil
+        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
         sectionHeader.addGestureRecognizer(tapGesture)
