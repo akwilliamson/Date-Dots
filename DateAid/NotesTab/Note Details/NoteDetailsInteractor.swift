@@ -11,6 +11,7 @@ import CoreData
 protocol NoteDetailsInteractorInputting: class {
     
     func saveNote(type: NoteType, title: String, description: String?, for event: Event)
+    func deleteNote(type: NoteType, for event: Event)
 }
 
 class NoteDetailsInteractor: CoreDataInteractable {
@@ -48,6 +49,20 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
             presenter?.noteSaved()
         } catch {
             presenter?.noteSaveFailed()
+        }
+    }
+    
+    func deleteNote(type: NoteType, for event: Event) {
+        if let existingNote = event.note(forType: type) {
+            moc.delete(existingNote)
+            do {
+                try moc.save()
+                presenter?.noteDeleted()
+            } catch {
+                presenter?.noteDeleteFailed()
+            }
+        } else {
+            presenter?.noteDeleteFailed()
         }
     }
 }

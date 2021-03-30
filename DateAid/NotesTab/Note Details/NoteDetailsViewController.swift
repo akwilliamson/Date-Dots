@@ -10,6 +10,7 @@ import UIKit
 
 protocol NoteDetailsViewOutputting: class {
     
+    func setNavigation(isNewNote: Bool, isEditableNote: Bool)
     func setContent(_ content: NoteDetailsView.Content)
     
     func enableInputFields()
@@ -18,7 +19,7 @@ protocol NoteDetailsViewOutputting: class {
     func startEditTextView(isPlaceholder: Bool)
     func endEditTextView(isPlaceholder: Bool)
     
-    func showAlert(title: String, description: String)
+    func showAlert(title: String, description: String, shouldConfirm: Bool)
 }
 
 class NoteDetailsViewController: UIViewController {
@@ -42,6 +43,8 @@ class NoteDetailsViewController: UIViewController {
         super.viewDidLoad()
         configureView()
         presenter?.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: View Setup
@@ -49,6 +52,8 @@ class NoteDetailsViewController: UIViewController {
     private func configureView() {
         view.backgroundColor = .compatibleSystemBackground
         view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         baseView.delegate = self
     }
     
@@ -63,25 +68,36 @@ class NoteDetailsViewController: UIViewController {
     func editEvent() {
         presenter?.didTapEdit()
     }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        if view.frame.origin.y == 0 {
+            view.frame.origin.y -= keyboardSize.height/2
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
+    }
 }
 
 // MARK: - NoteDetailsViewOutputting
 
 extension NoteDetailsViewController: NoteDetailsViewOutputting {
     
-    func setContent(_ content: NoteDetailsView.Content) {
-        if content.isNewNote {
-            navigationItem.title = "New Note"
-        } else {
-            navigationItem.title = "Note Details"
-        }
+    func setNavigation(isNewNote: Bool, isEditableNote: Bool) {
+        navigationItem.title = isNewNote ? "New Note" : "Note Details"
         
-        if content.isEditable {
+        if isEditableNote {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveEvent))
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editEvent))
         }
-        
+    }
+    
+    func setContent(_ content: NoteDetailsView.Content) {
         baseView.populate(with: content)
     }
     
@@ -105,10 +121,19 @@ extension NoteDetailsViewController: NoteDetailsViewOutputting {
         baseView.endEditTextView(isPlaceholder: isPlaceholder)
     }
     
-    func showAlert(title: String, description: String) {
+    func showAlert(title: String, description: String, shouldConfirm: Bool = false) {
         let alertController = UIAlertController(title: title, message: description, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(alertAction)
+        if shouldConfirm {
+            let confirmAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                self.presenter?.didConfirmDelete()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(confirmAction)
+            alertController.addAction(cancelAction)
+        } else {
+            let dismissAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(dismissAction)
+        }
         present(alertController, animated: true, completion: nil)
     }
 }

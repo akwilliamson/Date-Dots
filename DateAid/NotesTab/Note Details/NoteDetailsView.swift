@@ -241,10 +241,8 @@ class NoteDetailsView: BaseView {
             eventIconImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
         ])
         NSLayoutConstraint.activate([
-            eventNameLabel.heightAnchor.constraint(equalToConstant: 30),
-            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            eventNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            eventNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            eventNameLabel.heightAnchor.constraint(equalToConstant: 60),
+            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
             eventSelectionButton.heightAnchor.constraint(equalToConstant: 60),
@@ -262,7 +260,7 @@ class NoteDetailsView: BaseView {
             inputSubjectTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         NSLayoutConstraint.activate([
-            backgroundView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
             backgroundView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
         ])
@@ -363,6 +361,7 @@ extension NoteDetailsView: Populatable {
         }
         
         eventNameLabel.isUserInteractionEnabled = content.isEditable
+        eventIconImageView.isUserInteractionEnabled = content.isEditable
         
         // Note Type
         
@@ -411,6 +410,8 @@ extension NoteDetailsView: Populatable {
     // MARK: Public Interface
     
     func beginEdit() {
+        eventIconImageView.isUserInteractionEnabled = true
+        eventNameLabel.isUserInteractionEnabled = true
         inputSubjectTextField.isUserInteractionEnabled = true
         inputDescriptionTextView.isEditable = true
         inputSubjectTextField.becomeFirstResponder()

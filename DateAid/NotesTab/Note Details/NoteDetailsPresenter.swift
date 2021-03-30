@@ -26,6 +26,7 @@ protocol NoteDetailsEventHandling: class {
     func didTapEdit()
     func didTapSave()
     func didTapDelete()
+    func didConfirmDelete()
 }
 
 protocol NoteDetailsInteractorOutputting: class {
@@ -63,11 +64,12 @@ class NoteDetailsPresenter {
 extension NoteDetailsPresenter: NoteDetailsEventHandling {
     
     func viewDidLoad() {
-        // TODO: set event here, we'll need to pass it in via the wireframe
         guard let noteState = noteState else { return }
         
         switch noteState {
         case .existingNote(let note):
+            event = note.event
+            view?.setNavigation(isNewNote: false, isEditableNote: false)
             view?.setContent(
                 NoteDetailsView.Content(
                     isNewNote: false,
@@ -81,6 +83,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
                 )
             )
         case .newNote(let newNoteType):
+            view?.setNavigation(isNewNote: true, isEditableNote: true)
             view?.setContent(
                 NoteDetailsView.Content(
                     isNewNote: true,
@@ -117,6 +120,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
         
         switch noteState {
         case .existingNote(let note):
+            view?.setNavigation(isNewNote: false, isEditableNote: true)
             view?.setContent(
                 NoteDetailsView.Content(
                     isNewNote: false,
@@ -130,6 +134,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
                 )
             )
         case .newNote(let newNoteType):
+            view?.setNavigation(isNewNote: true, isEditableNote: true)
             view?.setContent(
                 NoteDetailsView.Content(
                     isNewNote: true,
@@ -172,18 +177,19 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
     }
     
     func didTapEdit() {
+        view?.setNavigation(isNewNote: false, isEditableNote: true)
         view?.enableInputFields()
         view?.startEditTextField(isPlaceholder: false)
     }
     
     func didTapSave() {
         guard let event = event, let noteType = NoteType(rawValue: noteState?.noteType?.rawValue ?? String()) else {
-            view?.showAlert(title: "Missing Event", description: "Choose an event for this note")
+            view?.showAlert(title: "Missing Event", description: "Choose an event for this note", shouldConfirm: false)
             return
         }
 
         guard !subjectText.isEmptyOrNil, let subjectText = subjectText else {
-            view?.showAlert(title: "Missing Note Title", description: "Enter a title for this note")
+            view?.showAlert(title: "Missing Note Title", description: "Enter a title for this note", shouldConfirm: false)
             return
         }
         
@@ -191,11 +197,20 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
     }
     
     func didTapViewEventDetails() {
-        print("didTapViewEventDetails")
+        guard let event = event else { return }
+        wireframe?.pushEventDetails(event)
     }
     
     func didTapDelete() {
-        print("didTapDelete")
+        view?.showAlert(title: "Are you sure?", description: "This note will permanently be deleted", shouldConfirm: true)
+    }
+    
+    func didConfirmDelete() {
+        guard let event = event, let noteType = NoteType(rawValue: noteState?.noteType?.rawValue ?? String()) else {
+            view?.showAlert(title: "Delete Error", description: "Something went wrong. Try again", shouldConfirm: false)
+            return
+        }
+        interactor?.deleteNote(type: noteType, for: event)
     }
 }
 
@@ -206,14 +221,14 @@ extension NoteDetailsPresenter: NoteDetailsInteractorOutputting {
     }
     
     func noteSaveFailed() {
-        view?.showAlert(title: "Save Error", description: "Something went wrong. Try again")
+        view?.showAlert(title: "Save Error", description: "Something went wrong, please try again", shouldConfirm: false)
     }
     
     func noteDeleted() {
-        
+        wireframe?.dismiss()
     }
     
     func noteDeleteFailed() {
-        
+        view?.showAlert(title: "Delete Error", description: "Something went wrong. Try again", shouldConfirm: false)
     }
 }

@@ -14,9 +14,11 @@ protocol NoteDetailsRouting: class {
     
     func present()
     func dismiss()
-
+    // Event List
     func presentEventList()
     func dismissEventList(_ event: Event)
+    // Event Details
+    func pushEventDetails(_ event: Event)
 }
 
 class NoteDetailsWireframe {
@@ -81,5 +83,10 @@ extension NoteDetailsWireframe: NoteDetailsRouting {
     func dismissEventList(_ event: Event) {
         presenter.didChooseEvent(event)
         navigation?.dismiss(animated: true, completion: nil)
+    }
+    
+    func pushEventDetails(_ event: Event) {
+        let eventDetailsViewController = EventDetailsViewController(event: event)
+        navigation?.pushViewController(eventDetailsViewController, animated: true)
     }
 }
