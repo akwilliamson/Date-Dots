@@ -74,10 +74,11 @@ class NoteSampleCell: UITableViewCell {
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         NSLayoutConstraint.activate([
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 30),
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 80),
             descriptionLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     

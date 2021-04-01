@@ -39,9 +39,11 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
             newNote.body = description
             newNote.event = event
             
-            let existingNotes = event.notes as? NSMutableSet ?? []
-            existingNotes.add(newNote)
-            event.notes = existingNotes.copy() as? Set<Note>
+            let existingNotes = event.notes as? NSMutableSet
+            let mutableNotes = existingNotes?.mutableCopy() as? NSMutableSet ?? []
+            mutableNotes.add(newNote)
+            
+            event.notes = mutableNotes as? Set<Note>
         }
         
         do {

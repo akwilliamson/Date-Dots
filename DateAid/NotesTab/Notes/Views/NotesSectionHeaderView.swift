@@ -1,5 +1,5 @@
 //
-//  NotesSectionHeader.swift
+//  NotesSectionHeaderView.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 3/1/21.
@@ -7,6 +7,10 @@
 //
 
 import UIKit
+
+protocol NotesSectionHeaderViewDelegate {
+    func didTapSectionHeader(for noteType: NoteType)
+}
 
 class NotesSectionHeaderView: UITableViewHeaderFooterView {
     
@@ -37,6 +41,8 @@ class NotesSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: Properties
     
     private let noteType: NoteType
+    
+    var delegate: NotesSectionHeaderViewDelegate?
 
     // MARK: Initialization
     
@@ -46,8 +52,6 @@ class NotesSectionHeaderView: UITableViewHeaderFooterView {
     
     init(noteType: NoteType, reuseIdentifier: String) {
         self.noteType = noteType
-//        self.viewModel = viewModel
-//        self.delegate = delegate
         super.init(reuseIdentifier: reuseIdentifier)
         configureView()
         constructSubviews()
@@ -87,6 +91,6 @@ class NotesSectionHeaderView: UITableViewHeaderFooterView {
     
     @objc
     func didTapSectionHeader() {
-//        delegate?.didTapSectionHeader(for: noteType)
+        delegate?.didTapSectionHeader(for: noteType)
     }
 }

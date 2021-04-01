@@ -13,8 +13,8 @@ protocol NotesEventHandling: class {
     // Actions
     func viewDidLoad()
     func viewWillAppear()
-    func didSelectRow(at indexPath: IndexPath)
-    func didSelectSection(at section: Int)
+    func didSelectExistingNote(at indexPath: IndexPath)
+    func didSelectNewNote(type: NoteType)
     // Data
     func numberOfSections() -> Int
     func title(for section: Int) -> String
@@ -78,25 +78,15 @@ extension NotesPresenter: NotesEventHandling {
         }
     }
     
-    func didSelectRow(at indexPath: IndexPath) {
+    func didSelectExistingNote(at indexPath: IndexPath) {
         guard let note = note(for: indexPath) else { return }
         
         let noteState = NoteState.existingNote(note)
         wireframe?.presentNoteDetails(noteState: noteState)
     }
     
-    func didSelectSection(at section: Int) {
-        let noteState: NoteState
-        
-        switch section {
-        case 0: noteState = .newNote(.gifts)
-        case 1: noteState = .newNote(.plans)
-        case 2: noteState = .newNote(.other)
-        default:
-            return
-        }
-        
-        wireframe?.presentNoteDetails(noteState: noteState)
+    func didSelectNewNote(type: NoteType) {
+        wireframe?.presentNoteDetails(noteState: .newNote(type))
     }
     
     func numberOfSections() -> Int {

@@ -55,8 +55,8 @@ class NoteDetailsView: BaseView {
         return imageView
     }()
     
-    private lazy var eventSelectionButton: UIButton = {
-        let button = UIButton()
+    private lazy var eventSelectionButton: RoundedButton = {
+        let button = RoundedButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapEventSelectionButton), for: .touchUpInside)
         button.setTitle("Choose Event", for: .normal)
@@ -176,8 +176,8 @@ class NoteDetailsView: BaseView {
         return stackView
     }()
     
-    private lazy var viewEventDetailsButton: UIButton = {
-        let button = UIButton()
+    private lazy var viewEventDetailsButton: RoundedButton = {
+        let button = RoundedButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         button.addTarget(self, action: #selector(didTapViewEventDetailsButton), for: .touchUpInside)
@@ -191,8 +191,8 @@ class NoteDetailsView: BaseView {
         return button
     }()
     
-    private lazy var deleteNoteButton: UIButton = {
-        let button = UIButton()
+    private lazy var deleteNoteButton: RoundedButton = {
+        let button = RoundedButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapDeleteNoteButton), for: .touchUpInside)
         button.setImage(UIImage(named: "trash"), for: .normal)
@@ -284,12 +284,6 @@ class NoteDetailsView: BaseView {
             deleteNoteButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
             deleteNoteButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
         ])
-        
-        layoutIfNeeded()
-        
-        [eventSelectionButton, viewEventDetailsButton, deleteNoteButton].forEach { button in
-            button.layer.cornerRadius = button.frame.height/2
-        }
     }
     
     @objc

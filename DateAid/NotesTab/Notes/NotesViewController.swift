@@ -88,14 +88,7 @@ class NotesViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        let alertController = UIAlertController(title: "Add", message: "was tapped", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "dismiss", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    @objc
-    func dotPressed(_ sender: UITapGestureRecognizer) {
-        print("Note dot pressed")
+        presenter?.didSelectNewNote(type: .gifts)
     }
 }
 
@@ -145,16 +138,9 @@ extension NotesViewController: UITableViewDelegate {
             return nil
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
-        sectionHeader.addGestureRecognizer(tapGesture)
-        
+        sectionHeader.delegate = self
+
         return sectionHeader
-    }
-    
-    @objc
-    func headerTapped(sender: UITapGestureRecognizer) {
-        guard let section = sender.view?.tag else { return }
-        presenter?.didSelectSection(at: section)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -162,7 +148,7 @@ extension NotesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.didSelectRow(at: indexPath)
+        presenter?.didSelectExistingNote(at: indexPath)
     }
 }
 
@@ -174,5 +160,12 @@ extension NotesViewController: NotesViewOutputting {
     
     func reloadData() {
         tableView.reloadData()
+    }
+}
+
+extension NotesViewController: NotesSectionHeaderViewDelegate {
+    
+    func didTapSectionHeader(for noteType: NoteType) {
+        presenter?.didSelectNewNote(type: noteType)
     }
 }

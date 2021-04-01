@@ -19,6 +19,7 @@
 		9712376125F0A9F600924986 /* NoteCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712376025F0A9F600924986 /* NoteCircleImageView.swift */; };
 		971632182461294B0024875B /* EventSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971632172461294B0024875B /* EventSetupView.swift */; };
 		9716321A246132570024875B /* EventSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97163219246132570024875B /* EventSetupViewModel.swift */; };
+		972BFE7A26159F87003B7429 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972BFE7926159F87003B7429 /* RoundedButton.swift */; };
 		972E323F245A902B00E9DAAA /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972E323E245A902B00E9DAAA /* ReminderView.swift */; };
 		972E3241245A903300E9DAAA /* ReminderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972E3240245A903300E9DAAA /* ReminderViewViewModel.swift */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
@@ -61,7 +62,7 @@
 		97811EF3247236D2009787DA /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97811EF2247236D2009787DA /* PaddedTextField.swift */; };
 		9781F9861E3E8A3A00E2C434 /* EventsNavigationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9851E3E8A3A00E2C434 /* EventsNavigationPresenter.swift */; };
 		9781F9881E3E8A4500E2C434 /* EventsNavigationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9871E3E8A4500E2C434 /* EventsNavigationWireframe.swift */; };
-		9787822A25ED572E001CD9C8 /* NotesSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787822925ED572E001CD9C8 /* NotesSectionHeader.swift */; };
+		9787822A25ED572E001CD9C8 /* NotesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787822925ED572E001CD9C8 /* NotesSectionHeaderView.swift */; };
 		978E710525D25E060052AD24 /* UIDevice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978E710425D25E060052AD24 /* UIDevice+Type.swift */; };
 		978E711825D2605C0052AD24 /* NotesNavigationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978E711725D2605C0052AD24 /* NotesNavigationWireframe.swift */; };
 		978E711C25D2606B0052AD24 /* NotesNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978E711B25D2606B0052AD24 /* NotesNavigationViewController.swift */; };
@@ -144,6 +145,7 @@
 		9712376025F0A9F600924986 /* NoteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCircleImageView.swift; sourceTree = "<group>"; };
 		971632172461294B0024875B /* EventSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSetupView.swift; sourceTree = "<group>"; };
 		97163219246132570024875B /* EventSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSetupViewModel.swift; sourceTree = "<group>"; };
+		972BFE7926159F87003B7429 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
 		972E323E245A902B00E9DAAA /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		972E3240245A903300E9DAAA /* ReminderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewViewModel.swift; sourceTree = "<group>"; };
@@ -191,7 +193,7 @@
 		97811EF2247236D2009787DA /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		9781F9851E3E8A3A00E2C434 /* EventsNavigationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsNavigationPresenter.swift; sourceTree = "<group>"; };
 		9781F9871E3E8A4500E2C434 /* EventsNavigationWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsNavigationWireframe.swift; sourceTree = "<group>"; };
-		9787822925ED572E001CD9C8 /* NotesSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSectionHeader.swift; sourceTree = "<group>"; };
+		9787822925ED572E001CD9C8 /* NotesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSectionHeaderView.swift; sourceTree = "<group>"; };
 		978E710425D25E060052AD24 /* UIDevice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Type.swift"; sourceTree = "<group>"; };
 		978E711725D2605C0052AD24 /* NotesNavigationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesNavigationWireframe.swift; sourceTree = "<group>"; };
 		978E711B25D2606B0052AD24 /* NotesNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesNavigationViewController.swift; sourceTree = "<group>"; };
@@ -454,7 +456,7 @@
 		9787822825ED571E001CD9C8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9787822925ED572E001CD9C8 /* NotesSectionHeader.swift */,
+				9787822925ED572E001CD9C8 /* NotesSectionHeaderView.swift */,
 				975975E425EDDDCB006C5285 /* NoteCell.swift */,
 				975975E825EE08F9006C5285 /* NoteSampleCell.swift */,
 			);
@@ -569,6 +571,7 @@
 				975713AC24553A9900EDD963 /* CircleLabel.swift */,
 				97D266991BD95380008F7EF8 /* EventCircleLabel.swift */,
 				97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */,
+				972BFE7926159F87003B7429 /* RoundedButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -831,6 +834,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9796AECC25EFF69C003933C5 /* NoteDetailsWireframe.swift in Sources */,
+				972BFE7A26159F87003B7429 /* RoundedButton.swift in Sources */,
 				971632182461294B0024875B /* EventSetupView.swift in Sources */,
 				97D9CDB425FAC64A009DA686 /* EventListCell.swift in Sources */,
 				97ED37641E45A76000B054FE /* AppDelegateEventHandling.swift in Sources */,
@@ -914,7 +918,7 @@
 				972E323F245A902B00E9DAAA /* ReminderView.swift in Sources */,
 				9764938625F743330094BE9E /* EventListInteractor.swift in Sources */,
 				97EBD0AD25D3AB1E00545A7F /* NotesWireframe.swift in Sources */,
-				9787822A25ED572E001CD9C8 /* NotesSectionHeader.swift in Sources */,
+				9787822A25ED572E001CD9C8 /* NotesSectionHeaderView.swift in Sources */,
 				97EBD0B525D3AB5300545A7F /* NotesPresenter.swift in Sources */,
 				97AD26A31BD77439004C1C7D /* EventNoteViewController.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
