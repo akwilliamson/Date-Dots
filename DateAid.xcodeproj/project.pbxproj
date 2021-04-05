@@ -349,7 +349,7 @@
 				970D93631BC47B9500D7F1FF /* Extensions */,
 				97C901EC245A88D8005AF301 /* InitialImport */,
 				97C901ED245A88E6005AF301 /* TabBar */,
-				9749E6CD2483717D00DAAB49 /* EventsTab */,
+				9749E6CD2483717D00DAAB49 /* Events */,
 				978E710925D25FEE0052AD24 /* NotesTab */,
 				97E5D6A125DF80E600D321B1 /* RemindersTab */,
 			);
@@ -373,7 +373,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9749E6CD2483717D00DAAB49 /* EventsTab */ = {
+		9749E6CD2483717D00DAAB49 /* Events */ = {
 			isa = PBXGroup;
 			children = (
 				97C901EF245A8908005AF301 /* EventsNavigation */,
@@ -383,7 +383,7 @@
 				976BE67F24888DF000D48682 /* EventReminder */,
 				97C901F5245A8995005AF301 /* EventNotes */,
 			);
-			path = EventsTab;
+			path = Events;
 			sourceTree = "<group>";
 		};
 		9749E6D124837D3900DAAB49 /* CoreDataStack */ = {
