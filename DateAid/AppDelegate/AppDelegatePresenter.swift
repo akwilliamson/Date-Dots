@@ -10,27 +10,16 @@ import UIKit
 
 class AppDelegatePresenter {
     
-    weak var view: AppDelegateOutputting?
     weak var wireframe: AppDelegateWireframe?
-    
-    private enum Constant {
-        static let tintColor = UIColor.compatibleLabel
-        static let barTintColor = UIColor.compatibleSystemGray3
-    }
 }
 
 extension AppDelegatePresenter: AppDelegateEventHandling {
     
-    func setupApp() {
-        view?.setTabBar(tintColor: Constant.tintColor)
-        view?.setTabBar(barTintColor: Constant.barTintColor)
+    func showImport(in window: UIWindow?) {
+        wireframe?.presentImportModule(in: window)
     }
     
-    func showInitialImport(in window: UIWindow?) {
-        wireframe?.presentInitialImportModule(in: window)
-    }
-    
-    func showDatesTabBar(in window: UIWindow?) {
-        wireframe?.presentNavigationModule(in: window)
+    func showEvents(in window: UIWindow?) {
+        wireframe?.presentEventsModule(in: window)
     }
 }

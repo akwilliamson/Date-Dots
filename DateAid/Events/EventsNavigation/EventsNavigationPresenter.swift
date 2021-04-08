@@ -26,7 +26,7 @@ class EventsNavigationPresenter {
             static let barTintColor = UIColor.compatibleSystemGray3
             static let tintColor = UIColor.compatibleLabel
             static let foregroundColor = UIColor.compatibleLabel
-            static let font = FontType.noteworthyBold(23).font
+            static let font = FontType.avenirNextDemiBold(23).font
         }
     }
 }
@@ -44,6 +44,6 @@ extension EventsNavigationPresenter: EventsNavigationEventHandling {
     }
 
     func showEvents(in navigation: EventsNavigationViewController?) {
-        wireframe?.presentDates(in: navigation)
+        wireframe?.presentEvents()
     }
 }

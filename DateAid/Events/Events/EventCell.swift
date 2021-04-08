@@ -19,7 +19,7 @@ class EventCell: UITableViewCell {
         return imageView
     }()
     
-    private let nameLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         switch UIDevice.type {
@@ -32,26 +32,12 @@ class EventCell: UITableViewCell {
         label.minimumScaleFactor = 0.5
         return label
     }()
-    
-    private let dateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        switch UIDevice.type {
-        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextMedium(18).font
-        default:
-            label.font = FontType.avenirNextMedium(25).font
-        }
-        label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
 
     // MARK: Properties
     
-    public var event: Event? {
+    public var note: Note? {
         didSet {
-            populate(event)
+            populate(note)
         }
     }
     
@@ -76,8 +62,7 @@ class EventCell: UITableViewCell {
     
     private func constructViews() {
         addSubview(iconImageView)
-        addSubview(nameLabel)
-        addSubview(dateLabel)
+        addSubview(titleLabel)
     }
     
     private func constrainViews() {
@@ -88,28 +73,21 @@ class EventCell: UITableViewCell {
             iconImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: topAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
-            nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            dateLabel.topAnchor.constraint(equalTo: topAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -12),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
     // MARK: Helper Methods
 
-    private func populate(_ event: Event?) {
-        guard let event = event else { return }
+    private func populate(_ note: Note?) {
+        guard let note = note else { return }
 
-        iconImageView.image = event.eventType.selectedImage
+        iconImageView.image = note.noteType.image
         iconImageView.layer.cornerRadius = 12
         
-        nameLabel.textColor = event.eventType.color
-        nameLabel.text = event.fullName
-        
-        dateLabel.text = event.date.formatted("MMM dd")
+        titleLabel.textColor = .compatibleLabel
+        titleLabel.text = note.noteType.rawValue.capitalized
     }
 }

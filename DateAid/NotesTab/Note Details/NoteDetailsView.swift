@@ -207,7 +207,7 @@ class NoteDetailsView: BaseView {
     
     weak var delegate: NoteDetailsViewDelegate?
     
-    // MARK: Lifecycle
+    // MARK: View Setup
     
     override func constructSubviewHierarchy() {
         super.constructSubviewHierarchy()
@@ -285,6 +285,8 @@ class NoteDetailsView: BaseView {
             deleteNoteButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
         ])
     }
+    
+    // MARK: Actions
     
     @objc
     func didTapEventSelectionButton() {

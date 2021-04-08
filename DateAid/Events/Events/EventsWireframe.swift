@@ -8,32 +8,51 @@
 
 import UIKit
 
+protocol EventsRouting: class {
+    
+    var navigation: UINavigationController? { get set }
+    
+    func present()
+}
+
 class EventsWireframe {
     
-    private var presenter = EventsPresenter()
-    private var parentWireframe: EventsNavigationWireframe?
+    // MARK: Routers
     
-    init(parentWireframe: EventsNavigationWireframe) {
-        self.parentWireframe = parentWireframe
+    private var parentRouter: EventsNavigationRouting?
+    
+    // MARK: Navigation
+    
+    var navigation: UINavigationController?
+    
+    // MARK: Presenter
+    
+    private var presenter: EventsPresenter
+    
+    init(parentRouter: EventsNavigationRouting) {
+        self.parentRouter = parentRouter
+        
+        let presenter = EventsPresenter()
+        
+        let view = EventsViewController()
+        presenter.view = view
+        view.presenter = presenter
+        
+        let interactor = EventsInteractor()
+        interactor.presenter = presenter
+        presenter.interactor = interactor
+        
+        self.presenter = presenter
         presenter.wireframe = self
-        presenter.view = viewController()
-        presenter.interactor = eventsInteractor()
     }
+}
 
-    func presentModule(in navigation: UINavigationController?) {
+// MARK: - EventsRouting
+
+extension EventsWireframe: EventsRouting {
+    
+    func present() {
         guard let view = presenter.view as? EventsViewController else { return }
         navigation?.setViewControllers([view], animated: false)
-    }
-    
-    private func viewController() -> EventsViewOutputting {
-        let vc = EventsViewController()
-        vc.presenter = presenter
-        return vc
-    }
-    
-    private func eventsInteractor() -> EventsInteractorInputting {
-        let di = EventsInteractor()
-        di.presenter = presenter
-        return di
     }
 }

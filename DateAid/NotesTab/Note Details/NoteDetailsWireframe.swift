@@ -42,7 +42,7 @@ class NoteDetailsWireframe {
     
     // MARK: Initialization
     
-    init(parentWireframe: NotesWireframe, noteState: NoteState) {
+    init(parentWireframe: NotesRouting, noteState: NoteState) {
         self.parentWireframe = parentWireframe
         
         let presenter = NoteDetailsPresenter()

@@ -22,11 +22,12 @@ class EventListCell: UITableViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byTruncatingTail
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextDemiBold(20).font
+            label.font = FontType.avenirNextMedium(20).font
         default:
-            label.font = FontType.avenirNextDemiBold(25).font
+            label.font = FontType.avenirNextMedium(25).font
         }
         return label
     }()

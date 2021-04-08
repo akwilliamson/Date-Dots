@@ -10,7 +10,6 @@ import UIKit
 
 protocol AppDelegateEventHandling: class {
 
-    func setupApp()
-    func showInitialImport(in window: UIWindow?)
-    func showDatesTabBar(in window: UIWindow?)
+    func showImport(in window: UIWindow?)
+    func showEvents(in window: UIWindow?)
 }

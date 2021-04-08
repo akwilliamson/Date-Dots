@@ -55,15 +55,14 @@ class NotesWireframe {
         self.presenter = presenter
         presenter.wireframe = self
     }
-
-    func present() {
-        guard let view = view else { return }
-
-        navigation?.setViewControllers([view], animated: false)
-    }
 }
 
 extension NotesWireframe: NotesRouting {
+    
+    func present() {
+        guard let view = view else { return }
+        navigation?.setViewControllers([view], animated: false)
+    }
     
     func presentNoteDetails(noteState: NoteState) {
         let wireframe = NoteDetailsWireframe(parentWireframe: self, noteState: noteState)

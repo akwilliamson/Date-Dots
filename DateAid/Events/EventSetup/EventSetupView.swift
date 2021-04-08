@@ -314,7 +314,8 @@ class EventSetupView: BaseView {
     
     // MARK: Lifecycle
     
-    private func configureView() {
+    override func configureView() {
+        super.configureView()
         backgroundColor = .compatibleSystemBackground
     }
     

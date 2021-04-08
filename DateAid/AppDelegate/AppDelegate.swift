@@ -12,10 +12,16 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var window: UIWindow?
+    // MARK: Constants
+    
+    private enum Constant {
+        static let hasLaunchedOnce = "hasLaunchedOnce"
+    }
     
     private var appWireframe: AppDelegateWireframe?
     private let coreDataStack = CoreDataStack()
+    
+    var window: UIWindow?
     
     /// The main, shared managed object context throughout the app.
     public lazy var moc: NSManagedObjectContext = {
@@ -23,9 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
-        appWireframe?.presenter.setupApp()
+        appWireframe = AppDelegateWireframe()
 
         showInitialView()
         
@@ -33,45 +37,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func showInitialView() {
-        let key = Constant.UserDefaults.hasLaunchedOnce.value
-        let userHasLaunchedAppOnce = UserDefaults.standard.value(forKey: key)
+        let hasLaunchedOnce = UserDefaults.standard.bool(forKey: Constant.hasLaunchedOnce)
         
-        if userHasLaunchedAppOnce == nil {
-            UserDefaults.standard.setValue(true, forKey: key)
-            appWireframe?.presenter.showInitialImport(in: window)
+        if hasLaunchedOnce == false {
+            UserDefaults.standard.set(true, forKey: Constant.hasLaunchedOnce)
+            appWireframe?.presenter.showImport(in: window)
         } else {
-            appWireframe?.presenter.showDatesTabBar(in: window)
+            appWireframe?.presenter.showEvents(in: window)
         }
     }
 
-    // Persist data to disk when app enters background
     func applicationDidEnterBackground(_ application: UIApplication) {
-        do {
-            try coreDataStack.managedObjectContext.save()
-        } catch {
-            
-        }
+        // Persist data to disk when app enters background
+        do { try coreDataStack.managedObjectContext.save() } catch {}
     }
 
-    // Persist data to disk when app terminates
     func applicationWillTerminate(_ application: UIApplication) {
-        do {
-            try coreDataStack.managedObjectContext.save()
-        } catch {
-           
-        }
-    }
-}
-
-// MARK: AppDelegateOutputting
-
-extension AppDelegate: AppDelegateOutputting {
-    
-    func setTabBar(tintColor: UIColor) {
-        UITabBar.appearance().tintColor = tintColor
-    }
-    
-    func setTabBar(barTintColor: UIColor) {
-        UITabBar.appearance().barTintColor = barTintColor
+        // Persist data to disk when app terminates
+        do { try coreDataStack.managedObjectContext.save() } catch {}
     }
 }

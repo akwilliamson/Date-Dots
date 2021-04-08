@@ -23,6 +23,10 @@ class BaseView: UIView, ConstructableView {
     
     // MARK: - ConstructableView
     
+    func configureView() {
+        // No-op, implement in subclass.
+    }
+    
     func constructSubviewHierarchy() {
         // No-op, implement in subclass.
     }

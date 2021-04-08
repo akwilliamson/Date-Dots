@@ -8,37 +8,53 @@
 
 import UIKit
 
+protocol EventsNavigationRouting: class {
+    
+    func present(in window: UIWindow?)
+    func presentEvents()
+}
+
 class EventsNavigationWireframe {
     
-    // MARK: Properties
+    // MARK: Routers
 
-    private var parentWireframe: TabBarWireframe?
-    private let presenter = EventsNavigationPresenter()
+    private var parentRouter: AppDelegateWireframe
+    private var childRouter: EventsRouting?
+    
+    // MARK: Presenter
+    
+    private let presenter: EventsNavigationPresenter
     
     // MARK: Initialization
     
-    init(parentWireframe: TabBarWireframe) {
-        self.parentWireframe = parentWireframe
+    init(parentRouter: AppDelegateWireframe) {
+        self.parentRouter = parentRouter
+        
+        let presenter = EventsNavigationPresenter()
+        
+        let view = EventsNavigationViewController()
+        presenter.view = view
+        view.presenter = presenter
+        
+        self.presenter = presenter
         presenter.wireframe = self
-        presenter.view = viewController()
+    }
+}
+
+// MARK: - EventsNavigationRouting
+
+extension EventsNavigationWireframe: EventsNavigationRouting {
+    
+    func present(in window: UIWindow?) {
+        guard let view = presenter.view else { return }
+
+        window?.rootViewController = view
     }
     
-    // MARK: Routing
-    
-    func eventsNavigationView() -> UIViewController? {
-        return presenter.view
-    }
-    
-    func presentDates(in navigation: EventsNavigationViewController?) {
-        let datesWireframe = EventsWireframe(parentWireframe: self)
-        datesWireframe.presentModule(in: navigation)
-    }
-    
-    // MARK: Helpers
-    
-    private func viewController() -> EventsNavigationViewController {
-        let vc = EventsNavigationViewController()
-        vc.presenter = presenter
-        return vc
+    func presentEvents() {
+        let childRouter = EventsWireframe(parentRouter: self)
+        self.childRouter = childRouter
+        self.childRouter?.navigation = presenter.view
+        self.childRouter?.present()
     }
 }

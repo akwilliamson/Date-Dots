@@ -220,7 +220,8 @@ class EventReminderView: BaseView {
     
     // MARK: Lifecycle
     
-    private func configureView() {
+    override func configureView() {
+        super.configureView()
         backgroundColor = .compatibleSystemBackground
 
         timeOfDayPickerView.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)

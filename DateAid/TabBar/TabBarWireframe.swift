@@ -14,9 +14,9 @@ class TabBarWireframe: NSObject {
     
     private let presenter = TabBarPresenter()
     
-    private lazy var eventsNavigationWireframe = {
-        EventsNavigationWireframe(parentWireframe: self)
-    }()
+//    private lazy var eventsNavigationWireframe = {
+//        EventsNavigationWireframe(parentWireframe: self)
+//    }()
     
     private lazy var notesNavigationWireframe = {
         NotesNavigationWireframe(parentWireframe: self)
@@ -46,11 +46,11 @@ class TabBarWireframe: NSObject {
     }
     
     private func childViewControllers() -> [UIViewController] {
-        let eventsView = eventsNavigationWireframe.eventsNavigationView()
+//        let eventsView = eventsNavigationWireframe.eventsNavigationView()
         let notesView = notesNavigationWireframe.navigation
         let remindersView = remindersNavigationWireframe.remindersNavigationView()
         
-        return [eventsView, notesView, remindersView].compactMap { $0 }
+        return [notesView, remindersView].compactMap { $0 }
     }
 
     // MARK: Helpers

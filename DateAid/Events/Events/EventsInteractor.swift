@@ -44,14 +44,8 @@ extension EventsInteractor: EventsInteractorInputting {
     }
 
     func fetchEvents() {
-        // Sort events by date
-        let sortDescriptorDate = NSSortDescriptor(key: Constant.SortDescriptor.date, ascending: true)
-        // Then sort events by name
-        let sortDescriptorName = NSSortDescriptor(key: Constant.SortDescriptor.name, ascending: true)
-        
         do {
-            let events: [Event] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
-            self.events = customSorted(events)
+            self.events = try moc.fetch()
             migrateOldEvents {
                 presenter?.eventsFetched(self.events)
             }
@@ -85,35 +79,13 @@ extension EventsInteractor: EventsInteractorInputting {
             presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
         }
     }
-    
-    // MARK: Private Helpers
-    
-    private func customSorted(_ events: [Event]) -> [Event] {
-        if sortByToday {
-            let today = Date().formatted("MM/dd")
-            
-            let sortedEvents = events.sorted { event1, event2 -> Bool in
-                let event1 = event1.equalizedDate
-                let event2 = event2.equalizedDate
-                
-                if (event1 >= today && event2 < today) {
-                    return (event1 > event2)
-                } else {
-                    return (event1 < event2)
-                }
-            }
-            return sortedEvents
-        } else {
-            return events
-        }
-    }
 }
 
 // MARK: Pseudo-migration to reset event names for old app events
 
 extension EventsInteractor {
     
-    // Old events don't have a given/family name, so create them to eventually delete the old properties.
+    // Old events don't have a given/family name, so set those values to eventually delete the old properties.
     func migrateOldEvents(completion: () -> Void) {
         events = events.map { event -> Event in
             if event.givenName.isEmpty {

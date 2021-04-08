@@ -10,21 +10,37 @@ import UIKit
 
 class AppDelegateWireframe {
     
-    var presenter = AppDelegatePresenter()
+    // MARK: Routers
     
-    let initialImportWireframe = InitialImportWireframe()
-    let tabBarWireframe = TabBarWireframe()
+    private var childImportRouter: InitialImportWireframe?
+    private var childEventsRouter: EventsNavigationRouting?
     
-    init(appDelegateOutputting: AppDelegateOutputting) {
-        presenter.view = appDelegateOutputting
+    // MARK: Presenter
+    
+    var presenter: AppDelegatePresenter
+    
+    // MARK: Initialization
+    
+    init() {
+        let presenter = AppDelegatePresenter()
+        self.presenter = presenter
         presenter.wireframe = self
     }
+}
+
+// MARK: Routing
+
+extension AppDelegateWireframe {
     
-    func presentInitialImportModule(in window: UIWindow?) {
-        initialImportWireframe.presentModule(in: window)
+    func presentImportModule(in window: UIWindow?) {
+        let childRouter = InitialImportWireframe()
+        childImportRouter = childRouter
+        childImportRouter?.presentModule(in: window)
     }
     
-    func presentNavigationModule(in window: UIWindow?) {
-        tabBarWireframe.presentModule(in: window)
+    func presentEventsModule(in window: UIWindow?) {
+        let childRouter = EventsNavigationWireframe(parentRouter: self)
+        childEventsRouter = childRouter
+        childEventsRouter?.present(in: window)
     }
 }
