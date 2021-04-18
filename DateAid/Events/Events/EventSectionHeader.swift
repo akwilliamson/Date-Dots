@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol EventSectionHeaderDelegate: class {
+    
+    func didSelectSectionHeader(event: Event)
+}
+
 class EventSectionHeader: UIView {
     
     // MARK: UI
@@ -22,14 +27,13 @@ class EventSectionHeader: UIView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byTruncatingTail
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.avenirNextMedium(20).font
         default:
             label.font = FontType.avenirNextMedium(25).font
         }
-        label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
-        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -42,7 +46,7 @@ class EventSectionHeader: UIView {
         default:
             label.font = FontType.avenirNextMedium(22).font
         }
-        label.textColor = UIColor(red: 101/255, green: 101/255, blue: 101/255, alpha: 1.0)
+        label.textColor = UIColor.systemGray
         label.minimumScaleFactor = 0.5
         return label
     }()
@@ -56,7 +60,10 @@ class EventSectionHeader: UIView {
     
     // MARK: Properties
     
-    public var event: Event?
+    /// The event to populate the section header with
+    var event: Event?
+    /// The delegate to handle user-driven events
+    var delegate: EventSectionHeaderDelegate?
     
     // MARK: Lifecycle
 
@@ -66,11 +73,17 @@ class EventSectionHeader: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureView()
         constructViews()
         constrainViews()
     }
 
     // MARK: View Setup
+    
+    private func configureView() {
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectSectionHeader)))
+    }
     
     private func constructViews() {
         addSubview(iconImageView)
@@ -95,6 +108,7 @@ class EventSectionHeader: UIView {
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -8),
             nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         NSLayoutConstraint.activate([
@@ -108,6 +122,14 @@ class EventSectionHeader: UIView {
             horizontalRule.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             horizontalRule.heightAnchor.constraint(equalToConstant: 1)
         ])
+    }
+    
+    // MARK: Interface
+    
+    @objc
+    func didSelectSectionHeader() {
+        guard let event = event else { return }
+        delegate?.didSelectSectionHeader(event: event)
     }
 
     // MARK: Helper Methods

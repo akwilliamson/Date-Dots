@@ -16,9 +16,14 @@ protocol EventsViewOutputting: class {
     func configureNavigation(state: EventsPresenter.NavigationState)
 
     // Base View
-    func toggleDotFor(_ eventType: EventType, isSelected: Bool)
-    func reload(events: [Event])
-    func removeRowFor(event: Event)
+    func toggleDotFor(eventType: EventType, isSelected: Bool)
+    func toggleDotFor(noteType: NoteType, isSelected: Bool)
+    
+    func hideNoteDots()
+    func showNoteDots()
+
+    func reload(activeEvents: [Event], activeNoteTypes: [NoteType])
+    func removeSectionFor(event: Event)
 }
 
 class EventsViewController: UIViewController {
@@ -66,6 +71,8 @@ class EventsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.viewWillAppear()
+        /// In case search bar was previously active, reset to initial bar buttons on appear
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -120,8 +127,6 @@ extension EventsViewController: EventsViewOutputting {
     
     func configureNavigation(state: EventsPresenter.NavigationState) {
         switch state {
-        case .initial:
-            navigationItem.rightBarButtonItems = [addButton, searchButton]
         case .normal:
             navigationItem.titleView = nil
             navigationItem.rightBarButtonItems = [addButton, searchButton]
@@ -143,16 +148,33 @@ extension EventsViewController: EventsViewOutputting {
         }
     }
     
-    func toggleDotFor(_ eventType: EventType, isSelected: Bool) {
-        baseView.toggleDot(for: eventType, isSelected: isSelected)
+    func toggleDotFor(eventType: EventType, isSelected: Bool) {
+        baseView.toggleDotFor(eventType: eventType, isSelected: isSelected)
     }
     
-    func reload(events: [Event]) {
-        baseView.reloadTableView(events: events)
+    func toggleDotFor(noteType: NoteType, isSelected: Bool) {
+        baseView.toggleDotFor(noteType: noteType, isSelected: isSelected)
     }
     
-    func removeRowFor(event: Event) {
-        baseView.deleteTableViewRowFor(event: event)
+    func hideNoteDots() {
+        baseView.hideNoteDots()
+    }
+    
+    func showNoteDots() {
+        baseView.showNoteDots()
+    }
+    
+    func reload(activeEvents: [Event], activeNoteTypes: [NoteType]) {
+        baseView.populate(
+            with: EventsView.Content(
+                events: activeEvents,
+                noteTypes: activeNoteTypes
+            )
+        )
+    }
+    
+    func removeSectionFor(event: Event) {
+        baseView.deleteTableViewSectionFor(event: event)
     }
 }
 
@@ -166,11 +188,19 @@ extension EventsViewController: EventsViewDelegate {
         presenter?.noteDotPressed(type: noteType)
     }
     
+    func didSelectEvent(_ event: Event) {
+        presenter?.selectEventPressed(event: event)
+    }
+    
     func didDeleteEvent(_ event: Event) {
         presenter?.deleteEventPressed(event: event)
     }
     
-    func didSelectEvent(_ event: Event) {
-        presenter?.selectEventPressed(event: event)
+    func didSelectNote(_ note: Note) {
+        
+    }
+    
+    func didDeleteNote(_ note: Note) {
+        
     }
 }

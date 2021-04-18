@@ -65,10 +65,10 @@ extension NotesWireframe: NotesRouting {
     }
     
     func presentNoteDetails(noteState: NoteState) {
-        let wireframe = NoteDetailsWireframe(parentWireframe: self, noteState: noteState)
-        wireframe.navigation = navigation
-        self.childWireframe = wireframe
-        childWireframe?.present()
+//        let wireframe = NoteDetailsWireframe(parent: self, noteState: noteState)
+//        wireframe.navigation = navigation
+//        self.childWireframe = wireframe
+//        childWireframe?.present()
     }
     
     func dismissNoteDetails() {

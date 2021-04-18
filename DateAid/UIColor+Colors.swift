@@ -34,6 +34,14 @@ extension UIColor {
             return .white
         }
     }
+    
+    class var compatibleSystemGray: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return UIColor.white
+        }
+    }
 
     class var compatibleSystemGray3: UIColor {
         if #available(iOS 13.0, *) {

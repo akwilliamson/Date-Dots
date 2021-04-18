@@ -11,15 +11,23 @@ import UIKit
 protocol EventsRouting: class {
     
     var navigation: UINavigationController? { get set }
-    
+    // Self
     func present()
+    // Event Details
+    func presentEventDetails(event: Event)
+    func dismissEventDetails()
+    // Note Details
+    func presentEventNote(state: NoteState)
+    func dismissEventNote()
 }
 
 class EventsWireframe {
     
     // MARK: Routers
     
-    private var parentRouter: EventsNavigationRouting?
+    private let parent: EventsNavigationRouting
+    private var childEventDetails: EventDetailsRouting?
+    private var childEventNote: NoteDetailsRouting?
     
     // MARK: Navigation
     
@@ -29,8 +37,10 @@ class EventsWireframe {
     
     private var presenter: EventsPresenter
     
-    init(parentRouter: EventsNavigationRouting) {
-        self.parentRouter = parentRouter
+    // MARK: Initialization
+    
+    init(parent: EventsNavigationRouting) {
+        self.parent = parent
         
         let presenter = EventsPresenter()
         
@@ -51,8 +61,36 @@ class EventsWireframe {
 
 extension EventsWireframe: EventsRouting {
     
+    // MARK: Self
+    
     func present() {
         guard let view = presenter.view as? EventsViewController else { return }
         navigation?.setViewControllers([view], animated: false)
+    }
+    
+    // MARK: Event Details
+    
+    func presentEventDetails(event: Event) {
+        self.childEventDetails = EventDetailsWireframe(parent: self, event: event)
+        childEventDetails?.navigation = navigation
+        childEventDetails?.present()
+    }
+    
+    func dismissEventDetails() {
+        navigation?.popViewController(animated: true)
+        childEventDetails = nil
+    }
+    
+    // MARK: Event Note
+    
+    func presentEventNote(state: NoteState) {
+        self.childEventNote = NoteDetailsWireframe(parent: self, noteState: state)
+        childEventNote?.navigation = navigation
+        childEventNote?.present()
+    }
+    
+    func dismissEventNote() {
+        navigation?.popViewController(animated: true)
+        childEventNote = nil
     }
 }

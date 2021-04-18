@@ -6,7 +6,6 @@
 //  Copyright © 2016 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
 import Contacts
 import CoreData
 

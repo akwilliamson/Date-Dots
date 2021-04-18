@@ -12,8 +12,8 @@ class AppDelegateWireframe {
     
     // MARK: Routers
     
-    private var childImportRouter: InitialImportWireframe?
-    private var childEventsRouter: EventsNavigationRouting?
+    private var childImport: InitialImportWireframe?
+    private var childEvents: EventsNavigationRouting?
     
     // MARK: Presenter
     
@@ -33,14 +33,12 @@ class AppDelegateWireframe {
 extension AppDelegateWireframe {
     
     func presentImportModule(in window: UIWindow?) {
-        let childRouter = InitialImportWireframe()
-        childImportRouter = childRouter
-        childImportRouter?.presentModule(in: window)
+        childImport = InitialImportWireframe()
+        childImport?.presentModule(in: window)
     }
     
     func presentEventsModule(in window: UIWindow?) {
-        let childRouter = EventsNavigationWireframe(parentRouter: self)
-        childEventsRouter = childRouter
-        childEventsRouter?.present(in: window)
+        childEvents = EventsNavigationWireframe(parent: self)
+        childEvents?.display(in: window)
     }
 }

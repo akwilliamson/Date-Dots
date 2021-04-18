@@ -10,16 +10,16 @@ import UIKit
 
 protocol EventsNavigationRouting: class {
     
-    func present(in window: UIWindow?)
-    func presentEvents()
+    func display(in window: UIWindow?)
+    func displayEvents()
 }
 
 class EventsNavigationWireframe {
     
     // MARK: Routers
 
-    private var parentRouter: AppDelegateWireframe
-    private var childRouter: EventsRouting?
+    private let parent: AppDelegateWireframe
+    private var child: EventsRouting?
     
     // MARK: Presenter
     
@@ -27,8 +27,8 @@ class EventsNavigationWireframe {
     
     // MARK: Initialization
     
-    init(parentRouter: AppDelegateWireframe) {
-        self.parentRouter = parentRouter
+    init(parent: AppDelegateWireframe) {
+        self.parent = parent
         
         let presenter = EventsNavigationPresenter()
         
@@ -45,16 +45,15 @@ class EventsNavigationWireframe {
 
 extension EventsNavigationWireframe: EventsNavigationRouting {
     
-    func present(in window: UIWindow?) {
+    func display(in window: UIWindow?) {
         guard let view = presenter.view else { return }
 
         window?.rootViewController = view
     }
     
-    func presentEvents() {
-        let childRouter = EventsWireframe(parentRouter: self)
-        self.childRouter = childRouter
-        self.childRouter?.navigation = presenter.view
-        self.childRouter?.present()
+    func displayEvents() {
+        self.child = EventsWireframe(parent: self)
+        self.child?.navigation = presenter.view
+        self.child?.present()
     }
 }

@@ -20,8 +20,11 @@ protocol EventsEventHandling: class {
     func eventDotPressed(type: EventType)
     func noteDotPressed(type: NoteType)
     
-    func deleteEventPressed(event: Event)
     func selectEventPressed(event: Event)
+    func deleteEventPressed(event: Event)
+    
+    func selectNotePressed(note: Note)
+    func deleteNotePressed(note: Note)
 
     func searchTextChanged(text: String)
 }
@@ -52,7 +55,6 @@ class EventsPresenter {
     }
     
     enum NavigationState {
-        case initial
         case normal
         case search
     }
@@ -63,13 +65,25 @@ class EventsPresenter {
     
     private var activeEventTypes: [EventType] {
         return [.birthday, .anniversary, .holiday, .other].filter {
-            UserDefaults.standard.bool(forKey: $0.rawValue)
+            UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
     private var inactiveEventTypes: [EventType] {
         return [.birthday, .anniversary, .holiday, .other].filter {
-            !UserDefaults.standard.bool(forKey: $0.rawValue)
+            !UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var activeNoteTypes: [NoteType] {
+        return [.gifts, .plans, .other].filter {
+            UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var inactiveNoteTypes: [NoteType] {
+        return [.gifts, .plans, .other].filter {
+            !UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
@@ -91,6 +105,47 @@ class EventsPresenter {
     private var deleteEventType: EventType?
     
     private let notificationManager = NotificationManager()
+    
+    // MARK: Private Helpers
+    
+    private func setupDots() {
+        activeEventTypes.forEach {
+            view?.toggleDotFor(eventType: $0, isSelected: true)
+        }
+        inactiveEventTypes.forEach {
+            view?.toggleDotFor(eventType: $0, isSelected: false)
+        }
+        activeNoteTypes.forEach {
+            view?.toggleDotFor(noteType: $0, isSelected: true)
+        }
+        inactiveNoteTypes.forEach {
+            view?.toggleDotFor(noteType: $0, isSelected: false)
+        }
+        
+        if activeEvents.isEmpty {
+            view?.hideNoteDots()
+        } else {
+            view?.showNoteDots()
+        }
+    }
+    
+    private func togglePreferenceFor(eventType: EventType) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let oldPreference = userDefaults.bool(forKey: eventType.key)
+        let newPreference = !oldPreference
+        userDefaults.set(newPreference, forKey: eventType.key)
+        
+        return newPreference
+    }
+    
+    private func togglePreferenceFor(noteType: NoteType) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let oldPreference = userDefaults.bool(forKey: noteType.key)
+        let newPreference = !oldPreference
+        userDefaults.set(newPreference, forKey: noteType.key)
+        
+        return newPreference
+    }
 }
 
 // MARK: - EventsEventHandling
@@ -98,13 +153,12 @@ class EventsPresenter {
 extension EventsPresenter: EventsEventHandling {
     
     func viewDidLoad() {
-        setupNavigation()
-        setupDots()
+        let dateText = Date().formatted("MMM dd")
+        view?.configureNavigation(title: dateText)
     }
     
     func viewWillAppear() {
         interactor?.fetchEvents()
-        view?.configureNavigation(state: .initial)
     }
     
     func searchButtonPressed() {
@@ -119,17 +173,25 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func addButtonPressed() {
-        // TODO: Navigate to new event
+        // TODO: Route to edit event details
     }
 
     func eventDotPressed(type: EventType) {
         let isSelected = togglePreferenceFor(eventType: type)
-        view?.toggleDotFor(type, isSelected: isSelected)
-        view?.reload(events: activeEvents)
+        view?.toggleDotFor(eventType: type, isSelected: isSelected)
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        
+        if activeEvents.isEmpty {
+            view?.hideNoteDots()
+        } else {
+            view?.showNoteDots()
+        }
     }
     
     func noteDotPressed(type: NoteType) {
-        // TODO: signify which notes to show/hide
+        let isSelected = togglePreferenceFor(noteType: type)
+        view?.toggleDotFor(noteType: type, isSelected: isSelected)
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
     }
     
     func deleteEventPressed(event: Event) {
@@ -138,37 +200,19 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func selectEventPressed(event: Event) {
-        // TODO: Navigate to existing event
+        wireframe?.presentEventDetails(event: event)
     }
     
     func searchTextChanged(text: String) {
         interactor?.getEvents(containing: text)
     }
     
-    // MARK: Private Helpers
-    
-    private func setupNavigation() {
-        let dateText = Date().formatted("MMM dd")
-        view?.configureNavigation(title: dateText)
+    func selectNotePressed(note: Note) {
+        // TODO: Route to event note details
     }
     
-    private func setupDots() {
-        activeEventTypes.forEach {
-            view?.toggleDotFor($0, isSelected: true)
-        }
-        
-        inactiveEventTypes.forEach {
-            view?.toggleDotFor($0, isSelected: false)
-        }
-    }
-    
-    private func togglePreferenceFor(eventType: EventType) -> Bool {
-        let userDefaults = UserDefaults.standard
-        let oldPreference = userDefaults.bool(forKey: eventType.rawValue)
-        let newPreference = !oldPreference
-        userDefaults.set(newPreference, forKey: eventType.rawValue)
-        
-        return newPreference
+    func deleteNotePressed(note: Note) {
+        // TODO: Delete event note
     }
 }
 
@@ -178,7 +222,8 @@ extension EventsPresenter: EventsInteractorOutputting {
     
     func eventsFetched(_ events: [Event]) {
         self.events = events
-        view?.reload(events: activeEvents)
+        setupDots()
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
     }
     
     func eventsFetchedFailed(_ error: EventsInteractorError) {
@@ -189,7 +234,7 @@ extension EventsPresenter: EventsInteractorOutputting {
         notificationManager.cancelNotificationWith(identifier: event.objectIDString)
 
         events.removeAll(where: { $0.objectID == event.objectID })
-        view?.removeRowFor(event: event)
+        view?.removeSectionFor(event: event)
     }
     
     func eventDeleteFailed(_ error: EventsInteractorError) {

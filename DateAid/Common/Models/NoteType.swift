@@ -14,7 +14,23 @@ enum NoteType: String {
     case plans
     case other
     
-    public var image: UIImage {
-        return UIImage(named: rawValue)!
+    var key: String {
+        return "note-\(rawValue)"
+    }
+    
+    var selectedImage: UIImage {
+        switch self {
+        case .gifts: return UIImage(named: "selected-note-gifts")!
+        case .plans: return UIImage(named: "selected-note-plans")!
+        case .other: return UIImage(named: "selected-note-other")!
+        }
+    }
+
+    var unselectedImage: UIImage {
+        switch self {
+        case .gifts: return UIImage(named: "unselected-note-gifts")!
+        case .plans: return UIImage(named: "unselected-note-plans")!
+        case .other: return UIImage(named: "unselected-note-other")!
+        }
     }
 }

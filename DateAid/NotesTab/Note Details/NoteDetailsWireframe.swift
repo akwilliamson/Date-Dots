@@ -25,7 +25,7 @@ class NoteDetailsWireframe {
     
     // MARK: Wireframes
     
-    private var parentWireframe: NotesRouting
+    private var parent: EventsRouting
     private var childWireframe: EventListRouting?
     
     // MARK: Navigation
@@ -42,8 +42,8 @@ class NoteDetailsWireframe {
     
     // MARK: Initialization
     
-    init(parentWireframe: NotesRouting, noteState: NoteState) {
-        self.parentWireframe = parentWireframe
+    init(parent: EventsRouting, noteState: NoteState) {
+        self.parent = parent
         
         let presenter = NoteDetailsPresenter()
         presenter.noteState = noteState
@@ -67,7 +67,7 @@ class NoteDetailsWireframe {
     }
     
     func dismiss() {
-        parentWireframe.dismissNoteDetails()
+        parent.dismissEventNote()
     }
 }
 
@@ -86,7 +86,7 @@ extension NoteDetailsWireframe: NoteDetailsRouting {
     }
     
     func pushEventDetails(_ event: Event) {
-        let eventDetailsViewController = EventDetailsViewController(event: event)
+        let eventDetailsViewController = EventDetailsViewControllerz(event: event)
         navigation?.pushViewController(eventDetailsViewController, animated: true)
     }
 }

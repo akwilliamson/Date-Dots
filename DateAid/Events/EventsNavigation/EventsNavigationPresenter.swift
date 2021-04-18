@@ -44,6 +44,6 @@ extension EventsNavigationPresenter: EventsNavigationEventHandling {
     }
 
     func showEvents(in navigation: EventsNavigationViewController?) {
-        wireframe?.presentEvents()
+        wireframe?.displayEvents()
     }
 }

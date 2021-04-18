@@ -13,8 +13,11 @@ protocol EventsViewDelegate: AnyObject {
     func didPressDot(eventType: EventType)
     func didPressDot(noteType: NoteType)
     
-    func didDeleteEvent(_ event: Event)
     func didSelectEvent(_ event: Event)
+    func didDeleteEvent(_ event: Event)
+    
+    func didSelectNote(_ note: Note)
+    func didDeleteNote(_ note: Note)
 }
 
 class EventsView: BaseView {
@@ -27,7 +30,7 @@ class EventsView: BaseView {
     
     // MARK: UI
     
-    private var dotStackView: UIStackView = {
+    private var eventDotStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
@@ -39,7 +42,6 @@ class EventsView: BaseView {
         let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
         let dotView = EventCircleImageView(eventType: .birthday, scaledSize: size)
         dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -48,8 +50,6 @@ class EventsView: BaseView {
     private lazy var anniversaryDot: EventCircleImageView = {
         let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
         let dotView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -58,8 +58,6 @@ class EventsView: BaseView {
     private lazy var holidayDot: EventCircleImageView = {
         let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
         let dotView = EventCircleImageView(eventType: .holiday, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -68,8 +66,6 @@ class EventsView: BaseView {
     private lazy var otherDot: EventCircleImageView = {
         let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
         let dotView = EventCircleImageView(eventType: .other, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -78,11 +74,43 @@ class EventsView: BaseView {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
+        tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
+    }()
+    
+    private var noteDotStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private lazy var giftsNoteDot: NoteCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = NoteCircleImageView(noteType: .gifts, scaledSize: size)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var plansNoteDot: NoteCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = NoteCircleImageView(noteType: .plans, scaledSize: size)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+
+    private lazy var otherNoteDot: NoteCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = NoteCircleImageView(noteType: .other, scaledSize: size)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
     }()
     
     // MARK: Properties
@@ -90,7 +118,7 @@ class EventsView: BaseView {
     weak var delegate: EventsViewDelegate?
     
     private var activeEvents: [Event] = []
-    private var activeNotes: [NoteType] = []
+    private var activeNoteTypes: [NoteType] = []
     
     // MARK: View Setup
     
@@ -101,52 +129,73 @@ class EventsView: BaseView {
     
     override func constructSubviewHierarchy() {
         super.constructSubviewHierarchy()
-        addSubview(dotStackView)
-        dotStackView.addArrangedSubview(birthdayDot)
-        dotStackView.addArrangedSubview(anniversaryDot)
-        dotStackView.addArrangedSubview(holidayDot)
-        dotStackView.addArrangedSubview(otherDot)
         addSubview(tableView)
+        addSubview(eventDotStackView)
+        eventDotStackView.addArrangedSubview(birthdayDot)
+        eventDotStackView.addArrangedSubview(anniversaryDot)
+        eventDotStackView.addArrangedSubview(holidayDot)
+        eventDotStackView.addArrangedSubview(otherDot)
+        addSubview(noteDotStackView)
+        noteDotStackView.addArrangedSubview(giftsNoteDot)
+        noteDotStackView.addArrangedSubview(plansNoteDot)
+        noteDotStackView.addArrangedSubview(otherNoteDot)
     }
     
     override func constructLayout() {
         super.constructLayout()
         NSLayoutConstraint.activate([
-            dotStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            dotStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            dotStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            eventDotStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            eventDotStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            eventDotStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
             birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
         ])
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+        ])
+        NSLayoutConstraint.activate([
+            noteDotStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noteDotStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
+        NSLayoutConstraint.activate([
+            giftsNoteDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
+            giftsNoteDot.heightAnchor.constraint(equalTo: giftsNoteDot.widthAnchor)
         ])
     }
     
-    // MARK: Public Methods
+    // MARK: Interface
     
-    func toggleDot(for eventType: EventType, isSelected: Bool) {
+    func toggleDotFor(eventType: EventType, isSelected: Bool) {
         switch eventType {
-        case .birthday:    birthdayDot.setSelectedState(isSelected: isSelected)
+        case .birthday:       birthdayDot.setSelectedState(isSelected: isSelected)
         case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
-        case .holiday:     holidayDot.setSelectedState(isSelected: isSelected)
-        case .other:       otherDot.setSelectedState(isSelected: isSelected)
+        case .holiday:         holidayDot.setSelectedState(isSelected: isSelected)
+        case .other:             otherDot.setSelectedState(isSelected: isSelected)
         }
     }
     
-    func reloadTableView(events: [Event]) {
-        self.activeEvents = events
-        
-        tableView.reloadData()
-        tableView.setContentOffset(.zero, animated: true)
+    func toggleDotFor(noteType: NoteType, isSelected: Bool) {
+        switch noteType {
+        case .gifts: giftsNoteDot.setSelectedState(isSelected: isSelected)
+        case .plans: plansNoteDot.setSelectedState(isSelected: isSelected)
+        case .other: otherNoteDot.setSelectedState(isSelected: isSelected)
+        }
     }
     
-    func deleteTableViewRowFor(event: Event) {
+    func hideNoteDots() {
+        noteDotStackView.isHidden = true
+    }
+    
+    func showNoteDots() {
+        noteDotStackView.isHidden = false
+    }
+    
+    func deleteTableViewSectionFor(event: Event) {
         guard let index = activeEvents.firstIndex(where: { $0 == event }) else { return }
         let indexPath = IndexPath(index: index)
         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -159,45 +208,79 @@ class EventsView: BaseView {
         guard let dot = sender.view as? EventCircleImageView else { return }
         delegate?.didPressDot(eventType: dot.eventType)
     }
+    
+    @objc
+    func noteDotPressed(_ sender: UITapGestureRecognizer) {
+        guard let dot = sender.view as? NoteCircleImageView else { return }
+        delegate?.didPressDot(noteType: dot.noteType)
+    }
 }
+
+// MARK: - UITableViewDataSource
 
 extension EventsView: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        activeEvents.count
+        let beginSection = 1
+        let finalSection = 1
+        return beginSection + activeEvents.count + finalSection
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let eventNotes = activeEvents[safe: section]?.notes else { return 0 }
-
-        return Array(Set(eventNotes.map { $0.noteType }).intersection(Set(activeNotes))).count
+        return activeNoteTypes.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
+        if section == 0 || section == activeEvents.count + 1 {
+            return UIScreen.main.bounds.width/9 + 60
+        } else {
+            return 45
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let event = activeEvents[safe: section] else { return nil }
-        
-        return EventSectionHeader(event: event)
+        if section == 0 || section == activeEvents.count + 1 {
+            let spacerView = UIView()
+            spacerView.translatesAutoresizingMaskIntoConstraints = false
+            return spacerView
+        } else {
+            guard let event = activeEvents[safe: section - 1] else { return nil }
+            let header = EventSectionHeader(event: event)
+            header.delegate = self
+            return header
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let _ = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as? EventCell
+   
+        guard
+            indexPath.section != 0,
+            indexPath.section != activeEvents.count + 1,
+            let noteCell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as? NoteCell
         else {
             return UITableViewCell()
         }
-
-        return UITableViewCell()
+        
+        if
+            let eventNotes = activeEvents[safe: indexPath.section - 1]?.notes,
+            !eventNotes.isEmpty,
+            let noteType = activeNoteTypes[safe: indexPath.row],
+            let noteToShow = eventNotes.filter({ $0.noteType == noteType }).first
+        {
+            noteCell.populate(NoteCell.Content(note: noteToShow, noteType: nil))
+            return noteCell
+        } else {
+            let noteType = activeNoteTypes[indexPath.row]
+            noteCell.populate(NoteCell.Content(note: nil, noteType: noteType))
+            return noteCell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constant.rowHeight
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if indexPath.section == 0 {
+            return 0
+        }
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -214,13 +297,32 @@ extension EventsView: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension EventsView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let event = activeEvents[safe: indexPath.section] else { return }
+        if
+            let eventNotes = activeEvents[safe: indexPath.section - 1]?.notes,
+            !eventNotes.isEmpty,
+            let noteType = activeNoteTypes[safe: indexPath.row],
+            let selectedNote = eventNotes.filter({ $0.noteType == noteType }).first
+        {
+            delegate?.didSelectNote(selectedNote)
+        }
+    }
+}
+
+// MARK: - EventSectionHeaderDelegate
+
+extension EventsView: EventSectionHeaderDelegate {
+    
+    func didSelectSectionHeader(event: Event) {
         delegate?.didSelectEvent(event)
     }
 }
+
+// MARK: - Populatable
 
 extension EventsView: Populatable {
     
@@ -233,7 +335,7 @@ extension EventsView: Populatable {
     
     func populate(with content: Content) {
         self.activeEvents = content.events
-        self.activeNotes = content.noteTypes
+        self.activeNoteTypes = content.noteTypes
         tableView.reloadData()
     }
 }

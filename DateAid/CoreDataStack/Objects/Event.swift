@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class Event: NSManagedObject, EventNaming {
+class Event: NSManagedObject {
 
     // Deprecated
     @NSManaged var abbreviatedName: String
@@ -44,3 +44,11 @@ class Event: NSManagedObject, EventNaming {
         return Array(notes).filter { $0.type.lowercased() == noteType.rawValue.lowercased() }.first
     }
 }
+
+// MARK: - EventNaming
+
+extension Event: EventNaming {}
+
+// MARK: - EventAging
+
+extension Event: EventAging {}

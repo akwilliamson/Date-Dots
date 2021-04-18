@@ -89,34 +89,24 @@ class NoteDetailsView: BaseView {
     }()
     
     private lazy var giftsDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView()
+        let dot = NoteCircleImageView(noteType: .gifts)
         dot.translatesAutoresizingMaskIntoConstraints = false
         dot.contentMode = .center
-        dot.setImage(for: .gifts)
         dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/16, height: UIScreen.main.bounds.width/13))
         return dot
     }()
     
     private lazy var plansDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView()
+        let dot = NoteCircleImageView(noteType: .plans)
         dot.translatesAutoresizingMaskIntoConstraints = false
         dot.contentMode = .center
-        dot.tintColor = UIColor.compatibleSystemGray3
-        dot.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-        dot.layer.borderWidth = 5
-        dot.setImage(for: .plans)
         dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/11, height: UIScreen.main.bounds.width/11))
         return dot
     }()
     
     private lazy var otherDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView()
+        let dot = NoteCircleImageView(noteType: .other)
         dot.translatesAutoresizingMaskIntoConstraints = false
-        dot.contentMode = .center
-        dot.tintColor = UIColor.compatibleSystemGray3
-        dot.layer.borderColor = UIColor.compatibleSystemGray3.cgColor
-        dot.layer.borderWidth = 5
-        dot.setImage(for: .other)
         dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/12, height: UIScreen.main.bounds.width/12))
         return dot
     }()
@@ -363,17 +353,17 @@ extension NoteDetailsView: Populatable {
         
         switch content.noteType {
         case .gifts:
-            giftsDot.setSelectedState(isSelected: true, color: content.eventType?.color)
+            giftsDot.setSelectedState(isSelected: true)
             plansDot.setSelectedState(isSelected: false)
             otherDot.setSelectedState(isSelected: false)
         case .plans:
             giftsDot.setSelectedState(isSelected: false)
-            plansDot.setSelectedState(isSelected: true, color: content.eventType?.color)
+            plansDot.setSelectedState(isSelected: true)
             otherDot.setSelectedState(isSelected: false)
         case .other:
             giftsDot.setSelectedState(isSelected: false)
             plansDot.setSelectedState(isSelected: false)
-            otherDot.setSelectedState(isSelected: true, color: content.eventType?.color)
+            otherDot.setSelectedState(isSelected: true)
         }
         
         // Input Fields

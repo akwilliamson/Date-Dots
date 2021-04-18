@@ -15,7 +15,11 @@ enum EventType: String {
     case holiday = "custom"
     case other
     
-    public var color: UIColor {
+    var key: String {
+        return "event-\(rawValue)"
+    }
+    
+    var color: UIColor {
         switch self {
         case .birthday:    return UIColor(red:  17/255.0, green: 132/255.0, blue: 151/255.0, alpha: 1)
         case .anniversary: return UIColor(red: 214/255.0, green: 87/255.0, blue: 69/255.0, alpha: 1)
@@ -24,7 +28,7 @@ enum EventType: String {
         }
     }
     
-    public var selectedImage: UIImage {
+    var selectedImage: UIImage {
         switch self {
         case .birthday:    return UIImage(named: "selected-birthday")!
         case .anniversary: return UIImage(named: "selected-anniversary")!
@@ -33,7 +37,7 @@ enum EventType: String {
         }
     }
 
-    public var unselectedImage: UIImage {
+    var unselectedImage: UIImage {
         switch self {
         case .birthday:    return UIImage(named: "unselected-birthday")!
         case .anniversary: return UIImage(named: "unselected-anniversary")!
@@ -42,7 +46,7 @@ enum EventType: String {
         }
     }
 
-    public var emoji: String {
+    var emoji: String {
         switch self {
         case .birthday:    return "🎈"
         case .anniversary: return "💞"
