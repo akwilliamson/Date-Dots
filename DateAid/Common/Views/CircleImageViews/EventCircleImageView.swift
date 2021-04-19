@@ -12,14 +12,15 @@ class EventCircleImageView: CircleImageView {
 
     // MARK: Properties
     
-    public let eventType: EventType
-    public var scaledSize: CGSize
+    let eventType: EventType
     
-    public var isSelected = false {
+    var isSelected = false {
         didSet {
             updateImage(isSelected: isSelected)
         }
     }
+    
+    private var scaledSize: CGSize
     
     // MARK: Initialization
     
@@ -48,11 +49,13 @@ class EventCircleImageView: CircleImageView {
         }
     }
 
-    // MARK: Public Methods
+    // MARK: Interface
     
-    public func setSelectedState(isSelected: Bool) {
+    func setSelectedState(isSelected: Bool) {
         self.isSelected = isSelected
     }
+    
+    // MARK: Private Methods
     
     private func updateImage(isSelected: Bool) {
         if isSelected {

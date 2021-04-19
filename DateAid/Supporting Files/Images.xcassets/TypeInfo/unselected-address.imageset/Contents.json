@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "selected-calendar.png",
+      "filename" : "unselected-address.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "selected-calendar@2x.png",
+      "filename" : "unselected-address@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "selected-calendar@3x.png",
+      "filename" : "unselected-address@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "original"
   }
 }

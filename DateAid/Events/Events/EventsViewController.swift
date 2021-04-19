@@ -95,8 +95,7 @@ class EventsViewController: UIViewController {
     @objc
     func addButtonPressed() {
         presenter?.addButtonPressed()
-//        let eventSetupViewController = EventSetupViewController()
-//        navigationController?.pushViewController(eventSetupViewController, animated: true)
+        print("TODO: Navigate to new event creation")
     }
     
     @objc
@@ -178,6 +177,8 @@ extension EventsViewController: EventsViewOutputting {
     }
 }
 
+// MARK: - EventsViewDelegate
+
 extension EventsViewController: EventsViewDelegate {
     
     func didPressDot(eventType: EventType) {
@@ -197,10 +198,10 @@ extension EventsViewController: EventsViewDelegate {
     }
     
     func didSelectNote(_ note: Note) {
-        
+        print("TODO: navigate to selected note details")
     }
     
     func didDeleteNote(_ note: Note) {
-        
+        print("TODO: delete note and animate table view cell row deletion")
     }
 }

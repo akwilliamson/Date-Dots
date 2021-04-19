@@ -1,18 +1,18 @@
 //
-//  NoteTypeCircleImageView.swift
+//  InfoCircleImageView.swift
 //  DateAid
 //
-//  Created by Aaron Williamson on 3/3/21.
+//  Created by Aaron Williamson on 4/18/21.
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
 import UIKit
 
-class NoteCircleImageView: CircleImageView {
-
+class InfoCircleImageView: CircleImageView {
+    
     // MARK: Properties
     
-    let noteType: NoteType
+    let infoType: InfoType
     
     var isSelected = false {
         didSet {
@@ -20,7 +20,7 @@ class NoteCircleImageView: CircleImageView {
         }
     }
     
-    private var scaledSize: CGSize
+    private let scaledSize: CGSize
     
     // MARK: Initialization
     
@@ -28,8 +28,8 @@ class NoteCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(noteType: NoteType, scaledSize: CGSize = .zero) {
-        self.noteType = noteType
+    init(infoType: InfoType, scaledSize: CGSize = .zero) {
+        self.infoType = infoType
         self.scaledSize = scaledSize
         super.init()
         configureView()
@@ -60,11 +60,11 @@ class NoteCircleImageView: CircleImageView {
         if isSelected {
             backgroundColor = .white
             layer.borderColor = UIColor.white.cgColor
-            image = noteType.selectedImage
+            image = infoType.selectedImage
         } else {
             backgroundColor = .compatibleSystemBackground
             layer.borderColor = UIColor.compatibleSystemGray.cgColor
-            image = noteType.unselectedImage
+            image = infoType.unselectedImage
         }
         
         if scaledSize != .zero {

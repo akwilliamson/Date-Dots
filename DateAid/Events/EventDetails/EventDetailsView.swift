@@ -8,7 +8,10 @@
 
 import UIKit
 
-protocol EventDetailsViewDelegate: class {}
+protocol EventDetailsViewDelegate: class {
+    
+    func didSelectInfoType(_ infoType: InfoType)
+}
 
 class EventDetailsView: BaseView {
     
@@ -49,13 +52,6 @@ class EventDetailsView: BaseView {
         stackView.spacing = 8
         stackView.distribution = .fillEqually
         return stackView
-    }()
-    
-    private let detailsEditButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "edit"), for: .normal)
-        return button
     }()
     
     // Details - Days
@@ -221,11 +217,33 @@ class EventDetailsView: BaseView {
         return label
     }()
     
-    private let addressEditButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "edit"), for: .normal)
-        return button
+    private let infoContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let infoButtonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 16
+        return stackView
+    }()
+    
+    private lazy var addressInfoDotView: InfoCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = InfoCircleImageView(infoType: .address, scaledSize: size)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addressDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+    
+    private lazy var reminderInfoDotView: InfoCircleImageView = {
+        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
+        let dotView = InfoCircleImageView(infoType: .reminder, scaledSize: size)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(reminderDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
     }()
     
     // MARK: Properties
@@ -255,19 +273,21 @@ class EventDetailsView: BaseView {
                 detailsStackView.addArrangedSubview(dateStackView)
                     dateStackView.addArrangedSubview(onLabel)
                     dateStackView.addArrangedSubview(dateLabel)
-//        addSubview(detailsEditButton)
         containerStackView.setCustomSpacing(36, after: detailsContainerView)
         containerStackView.addArrangedSubview(addressImageView)
             addressImageView.addSubview(addressLabelStackView)
                 addressLabelStackView.addArrangedSubview(addressLabelOne)
                 addressLabelStackView.addArrangedSubview(addressLabelTwo)
-//        addSubview(addressEditButton)
+        containerStackView.addArrangedSubview(infoContainerView)
+            infoContainerView.addSubview(infoButtonStackView)
+                infoButtonStackView.addArrangedSubview(addressInfoDotView)
+                infoButtonStackView.addArrangedSubview(reminderInfoDotView)
     }
     
     override func constructLayout() {
         super.constructLayout()
         NSLayoutConstraint.activate([
-            detailsContainerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            detailsContainerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
             detailsContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             detailsContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             detailsContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/9)
@@ -286,11 +306,49 @@ class EventDetailsView: BaseView {
             addressLabelStackView.centerXAnchor.constraint(equalTo: addressImageView.centerXAnchor),
             addressLabelStackView.centerYAnchor.constraint(equalTo: addressImageView.centerYAnchor, constant: 12)
         ])
+        NSLayoutConstraint.activate([
+            infoContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            infoContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            infoContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/12)
+        ])
+        NSLayoutConstraint.activate([
+            infoButtonStackView.centerXAnchor.constraint(equalTo: infoContainerView.centerXAnchor),
+            infoButtonStackView.centerYAnchor.constraint(equalTo: infoContainerView.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            addressInfoDotView.heightAnchor.constraint(equalTo: infoContainerView.heightAnchor),
+            addressInfoDotView.widthAnchor.constraint(equalTo: addressInfoDotView.heightAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            reminderInfoDotView.heightAnchor.constraint(equalTo: infoContainerView.heightAnchor),
+            reminderInfoDotView.widthAnchor.constraint(equalTo: reminderInfoDotView.heightAnchor)
+        ])
     }
     
     // MARK: Interface
     
+    func selectDotFor(infoType: InfoType) {
+        switch infoType {
+        case .address:
+            addressInfoDotView.setSelectedState(isSelected: true)
+            reminderInfoDotView.setSelectedState(isSelected: false)
+        case .reminder:
+            reminderInfoDotView.setSelectedState(isSelected: true)
+            addressInfoDotView.setSelectedState(isSelected: false)
+        }
+    }
+    
     // MARK: Actions
+    
+    @objc
+    func addressDotPressed() {
+        delegate?.didSelectInfoType(.address)
+    }
+    
+    @objc
+    func reminderDotPressed() {
+        delegate?.didSelectInfoType(.reminder)
+    }
 }
 
 // MARK: - Populatable

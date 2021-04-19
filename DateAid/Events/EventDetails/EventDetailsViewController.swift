@@ -10,7 +10,11 @@ import UIKit
 
 protocol EventDetailsViewOutputting: class {
     
+    // Navigation View
     func configureNavigation(title: String)
+    
+    // Base View
+    func selectDotFor(infoType: InfoType)
     func setDetailsFor(event: Event)
 }
 
@@ -19,7 +23,8 @@ class EventDetailsViewController: UIViewController {
     // MARK: UI
     
     private var editButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonPressed))
+        let button =  UIBarButtonItem(image: UIImage(named: "edit"), style: .plain, target: self, action: #selector(editButtonPressed))
+        return button
     }
     
     private let baseView = EventDetailsView()
@@ -33,12 +38,13 @@ class EventDetailsViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view = baseView
+        baseView.delegate = self
+        navigationItem.rightBarButtonItem = editButton
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        navigationItem.rightBarButtonItems = [editButton]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,5 +70,18 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
     
     func setDetailsFor(event: Event) {
         baseView.populate(with: EventDetailsView.Content(event: event))
+    }
+    
+    func selectDotFor(infoType: InfoType) {
+        baseView.selectDotFor(infoType: infoType)
+    }
+}
+
+// MARK: - EventDetailsViewDelegate
+
+extension EventDetailsViewController: EventDetailsViewDelegate {
+    
+    func didSelectInfoType(_ infoType: InfoType) {
+        presenter?.infoDotPressed(type: infoType)
     }
 }

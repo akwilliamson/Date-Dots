@@ -1,5 +1,5 @@
 //
-//  ReminderCircleLabel.swift
+//  EventReminderCircleLabel.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 10/1/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReminderCircleLabel: CircleLabel {
+class EventReminderCircleLabel: CircleLabel {
 
     // MARK: Properties
 

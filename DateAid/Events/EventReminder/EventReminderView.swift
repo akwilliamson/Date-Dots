@@ -43,15 +43,15 @@ class EventReminderView: BaseView {
     private let daysBeforeLabel: UILabel
     private let daysBeforeContainerStackView: UIStackView
     private let daysBeforeFirstRowStackView: UIStackView
-    private let zeroDaysBeforeLabel: ReminderCircleLabel
-    private let oneDayBeforeLabel: ReminderCircleLabel
-    private let twoDaysBeforeLabel: ReminderCircleLabel
-    private let threeDaysBeforeLabel: ReminderCircleLabel
+    private let zeroDaysBeforeLabel: EventReminderCircleLabel
+    private let oneDayBeforeLabel: EventReminderCircleLabel
+    private let twoDaysBeforeLabel: EventReminderCircleLabel
+    private let threeDaysBeforeLabel: EventReminderCircleLabel
     private let daysBeforeSecondRowStackView: UIStackView
-    private let fourDaysBeforeLabel: ReminderCircleLabel
-    private let fiveDaysBeforeLabel: ReminderCircleLabel
-    private let sixDaysBeforeLabel: ReminderCircleLabel
-    private let sevenDaysBeforeLabel: ReminderCircleLabel
+    private let fourDaysBeforeLabel: EventReminderCircleLabel
+    private let fiveDaysBeforeLabel: EventReminderCircleLabel
+    private let sixDaysBeforeLabel: EventReminderCircleLabel
+    private let sevenDaysBeforeLabel: EventReminderCircleLabel
     private let timeOfDayLabel: UILabel
     private let timeOfDayPickerView: UIDatePicker
     private let cancelReminderButton: UIButton
@@ -109,7 +109,7 @@ class EventReminderView: BaseView {
         }()
         
         zeroDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .zero)
+            let label = EventReminderCircleLabel(daysBefore: .zero)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 0
@@ -117,7 +117,7 @@ class EventReminderView: BaseView {
         }()
         
         oneDayBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .one)
+            let label = EventReminderCircleLabel(daysBefore: .one)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 1
@@ -125,7 +125,7 @@ class EventReminderView: BaseView {
         }()
         
         twoDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .two)
+            let label = EventReminderCircleLabel(daysBefore: .two)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 2
@@ -133,7 +133,7 @@ class EventReminderView: BaseView {
         }()
         
         threeDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .three)
+            let label = EventReminderCircleLabel(daysBefore: .three)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 3
@@ -149,7 +149,7 @@ class EventReminderView: BaseView {
         }()
         
         fourDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .four)
+            let label = EventReminderCircleLabel(daysBefore: .four)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 4
@@ -157,7 +157,7 @@ class EventReminderView: BaseView {
         }()
         
         fiveDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .five)
+            let label = EventReminderCircleLabel(daysBefore: .five)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 5
@@ -165,7 +165,7 @@ class EventReminderView: BaseView {
         }()
         
         sixDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .six)
+            let label = EventReminderCircleLabel(daysBefore: .six)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 6
@@ -173,7 +173,7 @@ class EventReminderView: BaseView {
         }()
         
         sevenDaysBeforeLabel = {
-            let label = ReminderCircleLabel(daysBefore: .seven)
+            let label = EventReminderCircleLabel(daysBefore: .seven)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.isUserInteractionEnabled = true
             label.tag = 7
@@ -341,7 +341,7 @@ class EventReminderView: BaseView {
     
     @objc
     func didSelectDaysBeforeLabel(_ sender: UITapGestureRecognizer) {
-        guard let daysBeforeLabel = sender.view as? ReminderCircleLabel else { return }
+        guard let daysBeforeLabel = sender.view as? EventReminderCircleLabel else { return }
         
         selectedDaysBeforeLabel = daysBeforeLabel
         
