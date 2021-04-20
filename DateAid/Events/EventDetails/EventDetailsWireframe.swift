@@ -53,6 +53,10 @@ class EventDetailsWireframe {
         presenter.view = view
         view.presenter = presenter
         
+        let interactor = EventDetailsInteractor()
+        interactor.presenter = presenter
+        presenter.interactor = interactor
+        
         self.presenter = presenter
         presenter.wireframe = self
     }

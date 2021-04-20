@@ -41,9 +41,9 @@ class EventsPresenter {
 
     // MARK: VIPER
     
-    public var view: EventsViewOutputting?
-    public var interactor: EventsInteractorInputting?
-    public weak var wireframe: EventsWireframe?
+    var view: EventsViewOutputting?
+    var interactor: EventsInteractorInputting?
+    weak var wireframe: EventsWireframe?
 
     // MARK: Constants
 

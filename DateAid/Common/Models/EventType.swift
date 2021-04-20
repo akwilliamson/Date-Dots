@@ -28,21 +28,12 @@ enum EventType: String {
         }
     }
     
-    var selectedImage: UIImage {
+    var image: UIImage {
         switch self {
-        case .birthday:    return UIImage(named: "selected-birthday")!
-        case .anniversary: return UIImage(named: "selected-anniversary")!
-        case .holiday:     return UIImage(named: "selected-holiday")!
-        case .other:       return UIImage(named: "selected-other")!
-        }
-    }
-
-    var unselectedImage: UIImage {
-        switch self {
-        case .birthday:    return UIImage(named: "unselected-birthday")!
-        case .anniversary: return UIImage(named: "unselected-anniversary")!
-        case .holiday:     return UIImage(named: "unselected-holiday")!
-        case .other:       return UIImage(named: "unselected-other")!
+        case .birthday:    return UIImage(named: "birthday")!
+        case .anniversary: return UIImage(named: "anniversary")!
+        case .holiday:     return UIImage(named: "holiday")!
+        case .other:       return UIImage(named: "custom")!
         }
     }
 

@@ -17,17 +17,10 @@ enum InfoType: String {
         return "info-\(rawValue)"
     }
     
-    var selectedImage: UIImage {
+    var image: UIImage {
         switch self {
-        case .address:  return UIImage(named: "selected-address")!
-        case .reminder: return UIImage(named: "selected-reminder")!
-        }
-    }
-
-    var unselectedImage: UIImage {
-        switch self {
-        case .address:  return UIImage(named: "unselected-address")!
-        case .reminder: return UIImage(named: "unselected-reminder")!
+        case .address:  return UIImage(named: "address")!
+        case .reminder: return UIImage(named: "reminder")!
         }
     }
 }

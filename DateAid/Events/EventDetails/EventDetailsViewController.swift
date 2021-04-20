@@ -14,8 +14,9 @@ protocol EventDetailsViewOutputting: class {
     func configureNavigation(title: String)
     
     // Base View
+    func setInitialSelected(infoType: InfoType)
     func selectDotFor(infoType: InfoType)
-    func setDetailsFor(event: Event)
+    func setDetailsFor(event: Event, daysBefore: Int?, timeOfDay: Date?)
 }
 
 class EventDetailsViewController: UIViewController {
@@ -68,8 +69,20 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
         navigationItem.title = title
     }
     
-    func setDetailsFor(event: Event) {
-        baseView.populate(with: EventDetailsView.Content(event: event))
+    func setDetailsFor(event: Event, daysBefore: Int?, timeOfDay: Date?) {
+        DispatchQueue.main.async {
+            self.baseView.populate(
+                with: EventDetailsView.Content(
+                    event: event,
+                    daysBefore: EventReminderDaysBefore(rawValue: daysBefore ?? 999),
+                    timeOfDay: timeOfDay
+                )
+            )
+        }
+    }
+    
+    func setInitialSelected(infoType: InfoType) {
+        baseView.setInitialInfoType(infoType: infoType)
     }
     
     func selectDotFor(infoType: InfoType) {

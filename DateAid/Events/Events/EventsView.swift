@@ -39,8 +39,7 @@ class EventsView: BaseView {
     }()
 
     private lazy var birthdayDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .birthday, scaledSize: size)
+        let dotView = EventCircleImageView(eventType: .birthday)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
@@ -48,24 +47,21 @@ class EventsView: BaseView {
     }()
 
     private lazy var anniversaryDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
+        let dotView = EventCircleImageView(eventType: .anniversary)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
     private lazy var holidayDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .holiday, scaledSize: size)
+        let dotView = EventCircleImageView(eventType: .holiday)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
     private lazy var otherDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .other, scaledSize: size)
+        let dotView = EventCircleImageView(eventType: .other)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -232,7 +228,7 @@ extension EventsView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 || section == activeEvents.count + 1 {
-            return UIScreen.main.bounds.width/9 + 60
+            return UIScreen.main.bounds.width/9 + 65
         } else {
             return 45
         }

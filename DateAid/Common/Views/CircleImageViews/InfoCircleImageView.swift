@@ -13,14 +13,9 @@ class InfoCircleImageView: CircleImageView {
     // MARK: Properties
     
     let infoType: InfoType
+    var eventType: EventType
     
-    var isSelected = false {
-        didSet {
-            updateImage(isSelected: isSelected)
-        }
-    }
-    
-    private let scaledSize: CGSize
+    private let scaledSize: CGSize = .zero
     
     // MARK: Initialization
     
@@ -28,9 +23,9 @@ class InfoCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(infoType: InfoType, scaledSize: CGSize = .zero) {
+    init(infoType: InfoType, eventType: EventType) {
         self.infoType = infoType
-        self.scaledSize = scaledSize
+        self.eventType = eventType
         super.init()
         configureView()
     }
@@ -40,8 +35,8 @@ class InfoCircleImageView: CircleImageView {
     override func configureView() {
         super.configureView()
         isUserInteractionEnabled = true
-        contentMode = .center
-        layer.borderWidth = 5
+        contentMode = .scaleAspectFit
+        layer.borderColor = eventType.color.cgColor
         
         if scaledSize != .zero {
             downsizeImage(to: scaledSize)
@@ -51,24 +46,27 @@ class InfoCircleImageView: CircleImageView {
     // MARK: Interface
     
     func setSelectedState(isSelected: Bool) {
-        self.isSelected = isSelected
+        updateImage(isSelected: isSelected)
     }
     
     // MARK: Private Methods
     
     private func updateImage(isSelected: Bool) {
         if isSelected {
-            backgroundColor = .white
-            layer.borderColor = UIColor.white.cgColor
-            image = infoType.selectedImage
+            backgroundColor = eventType.color
+            if #available(iOS 13.0, *) {
+                image = infoType.image
+            } else {
+                tintColor = .white
+            }
+
         } else {
             backgroundColor = .compatibleSystemBackground
-            layer.borderColor = UIColor.compatibleSystemGray.cgColor
-            image = infoType.unselectedImage
-        }
-        
-        if scaledSize != .zero {
-            downsizeImage(to: scaledSize)
+            if #available(iOS 13.0, *) {
+                image = infoType.image.withTintColor(eventType.color)
+            } else {
+                tintColor = eventType.color
+            }
         }
     }
 }

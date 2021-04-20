@@ -170,32 +170,28 @@ class EventSetupView: BaseView {
         }()
         
         birthdayDot = {
-            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-            let imageView = EventCircleImageView(eventType: .birthday, scaledSize: size)
+            let imageView = EventCircleImageView(eventType: .birthday)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         anniversaryDot = {
-            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-            let imageView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
+            let imageView = EventCircleImageView(eventType: .anniversary)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         holidayDot = {
-            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-            let imageView = EventCircleImageView(eventType: .holiday, scaledSize: size)
+            let imageView = EventCircleImageView(eventType: .holiday)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
         }()
         
         otherDot = {
-            let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-            let imageView = EventCircleImageView(eventType: .other, scaledSize: size)
+            let imageView = EventCircleImageView(eventType: .other)
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.isUserInteractionEnabled = true
             return imageView
@@ -495,29 +491,29 @@ extension EventSetupView: Populatable {
     
     @objc
     func dotPressed(_ sender: UITapGestureRecognizer) {
-        guard let iconImageView = sender.view as? EventCircleImageView else { return }
-        
-        let isCurrentlySelected = iconImageView.isSelected
-        delegate?.eventTypeSelected(eventType: iconImageView.eventType, isSelected: !isCurrentlySelected)
-        
-        if isCurrentlySelected {
-            iconImageView.setSelectedState(isSelected: false)
-        } else {
-            switch iconImageView {
-            case birthdayDot:
-                [anniversaryDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
-            case anniversaryDot:
-                [birthdayDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
-            case holidayDot:
-                [birthdayDot, anniversaryDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
-            case otherDot:
-                [birthdayDot, anniversaryDot, holidayDot].forEach { $0.setSelectedState(isSelected: false) }
-            default:
-                return
-            }
-            
-            iconImageView.setSelectedState(isSelected: true)
-        }
+//        guard let iconImageView = sender.view as? EventCircleImageView else { return }
+//        
+//        let isCurrentlySelected = iconImageView.isSelected
+//        delegate?.eventTypeSelected(eventType: iconImageView.eventType, isSelected: !isCurrentlySelected)
+//        
+//        if isCurrentlySelected {
+//            iconImageView.setSelectedState(isSelected: false)
+//        } else {
+//            switch iconImageView {
+//            case birthdayDot:
+//                [anniversaryDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+//            case anniversaryDot:
+//                [birthdayDot, holidayDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+//            case holidayDot:
+//                [birthdayDot, anniversaryDot, otherDot].forEach { $0.setSelectedState(isSelected: false) }
+//            case otherDot:
+//                [birthdayDot, anniversaryDot, holidayDot].forEach { $0.setSelectedState(isSelected: false) }
+//            default:
+//                return
+//            }
+//            
+//            iconImageView.setSelectedState(isSelected: true)
+//        }
     }
 }
 

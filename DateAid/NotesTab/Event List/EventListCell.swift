@@ -12,8 +12,8 @@ class EventListCell: UITableViewCell {
 
     // MARK: UI
     
-    private let eventTypeIcon: UIImageView = {
-        let imageView = UIImageView()
+    private let eventCircleImageView: EventCircleImageView = {
+        let imageView = EventCircleImageView(eventType: .birthday)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
         return imageView
@@ -75,21 +75,21 @@ class EventListCell: UITableViewCell {
     }
     
     private func constructViews() {
-        addSubview(eventTypeIcon)
+        addSubview(eventCircleImageView)
         addSubview(nameLabel)
         addSubview(dateLabel)
     }
     
     private func constrainViews() {
         NSLayoutConstraint.activate([
-            eventTypeIcon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            eventTypeIcon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            eventTypeIcon.widthAnchor.constraint(equalToConstant: 24),
-            eventTypeIcon.heightAnchor.constraint(equalToConstant: 24)
+            eventCircleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            eventCircleImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            eventCircleImageView.widthAnchor.constraint(equalToConstant: 24),
+            eventCircleImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
         NSLayoutConstraint.activate([
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: eventTypeIcon.trailingAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: eventCircleImageView.trailingAnchor, constant: 8),
             nameLabel.heightAnchor.constraint(equalToConstant: 100)
         ])
         NSLayoutConstraint.activate([
@@ -103,8 +103,8 @@ class EventListCell: UITableViewCell {
     private func populate(_ event: Event?) {
         guard let event = event else { return }
 
-        eventTypeIcon.image = event.eventType.selectedImage
-        eventTypeIcon.layer.cornerRadius = 12
+        eventCircleImageView.eventType = event.eventType
+        eventCircleImageView.setSelectedState(isSelected: true)
         
         nameLabel.text = event.fullName
         nameLabel.textColor = event.eventType.color

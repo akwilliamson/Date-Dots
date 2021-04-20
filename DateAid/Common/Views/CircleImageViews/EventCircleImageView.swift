@@ -12,15 +12,9 @@ class EventCircleImageView: CircleImageView {
 
     // MARK: Properties
     
-    let eventType: EventType
+    var eventType: EventType
     
-    var isSelected = false {
-        didSet {
-            updateImage(isSelected: isSelected)
-        }
-    }
-    
-    private var scaledSize: CGSize
+    private var scaledSize: CGSize = .zero
     
     // MARK: Initialization
     
@@ -28,9 +22,8 @@ class EventCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(eventType: EventType, scaledSize: CGSize = .zero) {
+    init(eventType: EventType) {
         self.eventType = eventType
-        self.scaledSize = scaledSize
         super.init()
         configureView()
     }
@@ -40,19 +33,14 @@ class EventCircleImageView: CircleImageView {
     override func configureView() {
         super.configureView()
         isUserInteractionEnabled = true
-        image = eventType.unselectedImage
-        contentMode = .center
+        contentMode = .scaleAspectFit
         layer.borderColor = eventType.color.cgColor
-        
-        if scaledSize != .zero {
-            downsizeImage(to: scaledSize)
-        }
     }
 
     // MARK: Interface
     
     func setSelectedState(isSelected: Bool) {
-        self.isSelected = isSelected
+        updateImage(isSelected: isSelected)
     }
     
     // MARK: Private Methods
@@ -60,14 +48,18 @@ class EventCircleImageView: CircleImageView {
     private func updateImage(isSelected: Bool) {
         if isSelected {
             backgroundColor = eventType.color
-            image = eventType.selectedImage
+            if #available(iOS 13.0, *) {
+                image = eventType.image
+            } else {
+                tintColor = .white
+            }
         } else {
             backgroundColor = .compatibleSystemBackground
-            image = eventType.unselectedImage
-        }
-        
-        if scaledSize != .zero {
-            downsizeImage(to: scaledSize)
+            if #available(iOS 13.0, *) {
+                image = eventType.image.withTintColor(eventType.color)
+            } else {
+                tintColor = eventType.color
+            }
         }
     }
 }

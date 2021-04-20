@@ -20,7 +20,8 @@ class EventSectionHeader: UIView {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 12
         return imageView
     }()
     
@@ -137,8 +138,8 @@ class EventSectionHeader: UIView {
     private func populate(_ event: Event?) {
         guard let event = event else { return }
 
-        iconImageView.image = event.eventType.selectedImage
-        iconImageView.layer.cornerRadius = 12
+        iconImageView.backgroundColor = event.eventType.color
+        iconImageView.image = event.eventType.image
         
         nameLabel.textColor = event.eventType.color
         nameLabel.text = event.fullName

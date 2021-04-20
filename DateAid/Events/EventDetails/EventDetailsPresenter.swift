@@ -6,7 +6,7 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UserNotifications
 
 protocol EventDetailsEventHandling: class {
     
@@ -17,11 +17,18 @@ protocol EventDetailsEventHandling: class {
     func noteDotPressed(type: NoteType)
 }
 
+protocol EventDetailsInteractorOutputting: class {
+    
+    func handleNotificationNotFound()
+    func handleNotification(daysBefore: Int, timeOfDay: Date)
+}
+
 class EventDetailsPresenter {
     
     // MARK: VIPER
     
     var view: EventDetailsViewOutputting?
+    var interactor: EventDetailsInteractorInputting?
     weak var wireframe: EventDetailsWireframe?
     
     // MARK: Properties
@@ -56,13 +63,13 @@ class EventDetailsPresenter {
 extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewDidLoad() {
-        let title = "\(event.abbreviatedName) \(event.eventType.emoji)"
+        let title = "\(event.eventType.emoji) \(event.givenName)"
         view?.configureNavigation(title: title)
     }
     
     func viewWillAppear() {
-        view?.setDetailsFor(event: event)
-        view?.selectDotFor(infoType: activeInfoType)
+        interactor?.fetchNotification(id: event.objectIDString)
+        view?.setInitialSelected(infoType: activeInfoType)
     }
     
     func infoDotPressed(type: InfoType) {
@@ -72,5 +79,18 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func noteDotPressed(type: NoteType) {
         print("TODO: Animate to selected note view, set note view preference")
+    }
+}
+
+// MARK: - EventDetailsInteractorOutputting
+
+extension EventDetailsPresenter: EventDetailsInteractorOutputting {
+    
+    func handleNotification(daysBefore: Int, timeOfDay: Date) {
+        view?.setDetailsFor(event: event, daysBefore: daysBefore, timeOfDay: timeOfDay)
+    }
+    
+    func handleNotificationNotFound() {
+        view?.setDetailsFor(event: event, daysBefore: nil, timeOfDay: nil)
     }
 }

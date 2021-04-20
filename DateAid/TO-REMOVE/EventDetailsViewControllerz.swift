@@ -108,7 +108,7 @@ class EventDetailsViewControllerz: UIViewController {
         let circleImageView = CircleImageView()
         circleImageView.isUserInteractionEnabled = true
         circleImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapReminderIcon)))
-        circleImageView.image = UIImage(named: "reminder")?.withRenderingMode(.alwaysTemplate)
+        circleImageView.image = UIImage(named: "notification-set")?.withRenderingMode(.alwaysTemplate)
         return circleImageView
     }()
     

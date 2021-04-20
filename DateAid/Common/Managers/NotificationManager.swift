@@ -65,9 +65,11 @@ class NotificationManager {
     }
     
     func notification(with notificationId: String, completion: @escaping (UNNotificationRequest?) -> Void) {
-        storedNotifications { existingNotifications in
-            self.notificationRequest = existingNotifications.first(where: { $0.identifier == notificationId })
-            completion(self.notificationRequest)
+        DispatchQueue.main.async {
+            self.storedNotifications { existingNotifications in
+                self.notificationRequest = existingNotifications.first(where: { $0.identifier == notificationId })
+                completion(self.notificationRequest)
+            }
         }
     }
 

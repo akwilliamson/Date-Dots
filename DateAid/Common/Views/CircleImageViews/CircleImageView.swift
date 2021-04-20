@@ -45,7 +45,6 @@ class CircleImageView: UIImageView {
     // MARK: Public Methods
     
     public func style(for eventType: EventType) {
-        image = eventType.selectedImage
         backgroundColor = eventType.color
         layer.borderColor = eventType.color.cgColor
     }
