@@ -14,9 +14,11 @@ protocol EventDetailsViewOutputting: class {
     func configureNavigation(title: String)
     
     // Base View
-    func setInitialSelected(infoType: InfoType)
-    func selectDotFor(infoType: InfoType)
-    func setDetailsFor(event: Event, daysBefore: Int?, timeOfDay: Date?)
+    func setDetails(content: EventDetailsView.Content)
+
+    // Actions
+    func select(infoType: InfoType)
+    func select(noteType: NoteType)
 }
 
 class EventDetailsViewController: UIViewController {
@@ -65,28 +67,28 @@ class EventDetailsViewController: UIViewController {
 
 extension EventDetailsViewController: EventDetailsViewOutputting {
     
+    // Navigation View
+    
     func configureNavigation(title: String) {
         navigationItem.title = title
     }
     
-    func setDetailsFor(event: Event, daysBefore: Int?, timeOfDay: Date?) {
+    // Base View
+    
+    func setDetails(content: EventDetailsView.Content) {
         DispatchQueue.main.async {
-            self.baseView.populate(
-                with: EventDetailsView.Content(
-                    event: event,
-                    daysBefore: EventReminderDaysBefore(rawValue: daysBefore ?? 999),
-                    timeOfDay: timeOfDay
-                )
-            )
+            self.baseView.populate(with: content)
         }
     }
     
-    func setInitialSelected(infoType: InfoType) {
-        baseView.setInitialInfoType(infoType: infoType)
+    // Actions
+    
+    func select(infoType: InfoType) {
+        baseView.select(infoType: infoType)
     }
     
-    func selectDotFor(infoType: InfoType) {
-        baseView.selectDotFor(infoType: infoType)
+    func select(noteType: NoteType) {
+        baseView.select(noteType: noteType)
     }
 }
 
@@ -95,6 +97,10 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
 extension EventDetailsViewController: EventDetailsViewDelegate {
     
     func didSelectInfoType(_ infoType: InfoType) {
-        presenter?.infoDotPressed(type: infoType)
+        presenter?.didSelect(infoType: infoType)
+    }
+    
+    func didSelectNoteType(_ noteType: NoteType) {
+        presenter?.didSelect(noteType: noteType)
     }
 }

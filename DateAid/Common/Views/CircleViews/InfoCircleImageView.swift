@@ -10,12 +10,16 @@ import UIKit
 
 class InfoCircleImageView: CircleImageView {
     
+    // MARK: Constant
+    
+    private enum Constant {
+        static let borderWidth: CGFloat = 3
+    }
+    
     // MARK: Properties
     
     let infoType: InfoType
-    var eventType: EventType
-    
-    private let scaledSize: CGSize = .zero
+    var eventType: EventType = .birthday
     
     // MARK: Initialization
     
@@ -23,9 +27,8 @@ class InfoCircleImageView: CircleImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(infoType: InfoType, eventType: EventType) {
+    init(infoType: InfoType) {
         self.infoType = infoType
-        self.eventType = eventType
         super.init()
         configureView()
     }
@@ -36,11 +39,8 @@ class InfoCircleImageView: CircleImageView {
         super.configureView()
         isUserInteractionEnabled = true
         contentMode = .scaleAspectFit
+        layer.borderWidth = Constant.borderWidth
         layer.borderColor = eventType.color.cgColor
-        
-        if scaledSize != .zero {
-            downsizeImage(to: scaledSize)
-        }
     }
     
     // MARK: Interface
@@ -52,6 +52,8 @@ class InfoCircleImageView: CircleImageView {
     // MARK: Private Methods
     
     private func updateImage(isSelected: Bool) {
+        layer.borderColor = eventType.color.cgColor
+        
         if isSelected {
             backgroundColor = eventType.color
             if #available(iOS 13.0, *) {

@@ -1,5 +1,5 @@
 //
-//  EventReminderWindow.swift
+//  ReminderDaysBefore.swift
 //  DateAid
 //
 //  Created by Aaron Williamson on 6/9/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EventReminderDaysBefore: Int {
+enum ReminderDaysBefore: Int {
     case zero
     case one
     case two

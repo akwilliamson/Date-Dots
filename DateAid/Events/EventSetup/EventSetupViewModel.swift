@@ -226,7 +226,7 @@ class EventSetupViewModel {
             let existingNotificationRequest = existingNotificationRequest,
             let triggerDate = existingNotificationRequest.trigger as? UNCalendarNotificationTrigger,
             let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.daysBefore),
-            let daysBefore = EventReminderDaysBefore(rawValue: daysBeforeIndex)?.rawValue,
+            let daysBefore = ReminderDaysBefore(rawValue: daysBeforeIndex)?.rawValue,
             let eventType = eventType,
             let eventName = eventName
         {
@@ -237,7 +237,7 @@ class EventSetupViewModel {
             let title = [titlePrefix, titleSuffix].joined(separator: " ")
             
             let bodyPrefix = eventType.rawValue
-            let bodySuffix = EventReminderDaysBefore(rawValue: daysBefore)?.reminderText ?? Constant.String.eventIsComingUp
+            let bodySuffix = ReminderDaysBefore(rawValue: daysBefore)?.reminderText ?? Constant.String.eventIsComingUp
             let body = [bodyPrefix, bodySuffix].joined(separator: " ")
             
             let dateComponents = generateFireDateComponents(triggerDate.dateComponents, daysBefore: daysBefore)

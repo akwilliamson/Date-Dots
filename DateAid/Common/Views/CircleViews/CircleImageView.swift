@@ -10,12 +10,6 @@ import UIKit
 
 class CircleImageView: UIImageView {
 
-    // MARK: Constant
-
-    private enum Constant {
-        static let borderWidth: CGFloat = 5
-    }
-
     // MARK: Initialization
     
     required init?(coder: NSCoder) {
@@ -32,22 +26,13 @@ class CircleImageView: UIImageView {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = frame.size.height/2
-        clipsToBounds = true
     }
 
     // MARK: Configuration
     
     func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
-        layer.borderWidth = Constant.borderWidth
-    }
-    
-    // MARK: Public Methods
-    
-    public func style(for eventType: EventType) {
-        backgroundColor = eventType.color
-        layer.borderColor = eventType.color.cgColor
+        contentMode = .scaleAspectFit
+        clipsToBounds = true
     }
 }
-
-extension CircleImageView: ImageDownsizable {}

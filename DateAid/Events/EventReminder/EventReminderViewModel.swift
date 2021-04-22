@@ -39,7 +39,7 @@ class EventReminderViewModel {
     }
     
     private var selectedDaysBeforeString: String {
-        return EventReminderDaysBefore(rawValue: selectedDaysBefore)?.pickerText ?? "?"
+        return ReminderDaysBefore(rawValue: selectedDaysBefore)?.pickerText ?? "?"
     }
     
     private var selectedTimeOfDayString: String {
@@ -130,7 +130,7 @@ class EventReminderViewModel {
         let bodyPrefix = eventReminderDetails.eventType.rawValue
         
         let titleSuffix = eventReminderDetails.eventName
-        let bodySuffix = EventReminderDaysBefore(rawValue: selectedDaysBefore)?.reminderText ?? Constant.String.eventIsComingUp
+        let bodySuffix = ReminderDaysBefore(rawValue: selectedDaysBefore)?.reminderText ?? Constant.String.eventIsComingUp
 
         let title = [titlePrefix, titleSuffix].joined(separator: " ")
         let body = [bodyPrefix, bodySuffix].joined(separator: " ")

@@ -84,7 +84,7 @@ class EventCell: UITableViewCell {
     private func populate(_ note: Note?) {
         guard let note = note else { return }
 
-        iconImageView.image = note.noteType.selectedImage
+        iconImageView.image = note.noteType.image
         iconImageView.layer.cornerRadius = 12
         
         titleLabel.textColor = .compatibleLabel

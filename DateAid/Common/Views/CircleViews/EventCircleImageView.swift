@@ -9,12 +9,16 @@
 import UIKit
 
 class EventCircleImageView: CircleImageView {
+    
+    // MARK: Constants
+    
+    private enum Constant {
+        static let borderWidth: CGFloat = 5
+    }
 
     // MARK: Properties
     
     var eventType: EventType
-    
-    private var scaledSize: CGSize = .zero
     
     // MARK: Initialization
     
@@ -34,6 +38,7 @@ class EventCircleImageView: CircleImageView {
         super.configureView()
         isUserInteractionEnabled = true
         contentMode = .scaleAspectFit
+        layer.borderWidth = Constant.borderWidth
         layer.borderColor = eventType.color.cgColor
     }
 

@@ -11,6 +11,7 @@ import UIKit
 protocol EventDetailsViewDelegate: class {
     
     func didSelectInfoType(_ infoType: InfoType)
+    func didSelectNoteType(_ noteType: NoteType)
 }
 
 class EventDetailsView: BaseView {
@@ -23,8 +24,14 @@ class EventDetailsView: BaseView {
             static let year = "year"
             static let `in` = "in"
             static let on = "on"
-            static let addAddress = "Add\nAddress"
+            static let addAddress = "Add Address"
             static let addReminder = "Add\nReminder"
+            static let addNote = "Add"
+            static let noDescription = "No Description"
+        }
+        enum Image {
+            static let reminderSet = UIImage(named: "reminder-set")
+            static let addReminder = UIImage(named: "reminder-add")
         }
     }
     
@@ -69,7 +76,6 @@ class EventDetailsView: BaseView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.text = Constant.String.in
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.avenirNextMedium(16).font
@@ -105,7 +111,6 @@ class EventDetailsView: BaseView {
     private let isLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constant.String.turns
         label.textAlignment = .center
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
@@ -142,7 +147,6 @@ class EventDetailsView: BaseView {
     private let onLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constant.String.on
         label.textAlignment = .center
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
@@ -166,9 +170,9 @@ class EventDetailsView: BaseView {
         return label
     }()
     
-    // Address
+    // Info - Address
     
-    private let addressImageView: UIImageView = {
+    private let addressContainerView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "envelope")
@@ -220,7 +224,7 @@ class EventDetailsView: BaseView {
         return label
     }()
     
-    // Reminder
+    // Info - Reminder
     
     private let reminderContainerView: UIView = {
         let view = UIView()
@@ -259,9 +263,9 @@ class EventDetailsView: BaseView {
         return label
     }()
     
-    // Info Dots
+    // Info - Dots
     
-    private let infoContainerView: UIView = {
+    private let infoButtonContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -275,17 +279,91 @@ class EventDetailsView: BaseView {
     }()
     
     private lazy var addressInfoDotView: InfoCircleImageView = {
-        let eventType = event?.eventType ?? .birthday
-        let dotView = InfoCircleImageView(infoType: .address, eventType: eventType)
+        let dotView = InfoCircleImageView(infoType: .address)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addressDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
     
     private lazy var reminderInfoDotView: InfoCircleImageView = {
-        let eventType = event?.eventType ?? .birthday
-        let dotView = InfoCircleImageView(infoType: .reminder, eventType: eventType)
+        let dotView = InfoCircleImageView(infoType: .reminder)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(reminderDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+    
+    // Notes
+    
+    private let notesContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 8
+        return view
+    }()
+    
+    private let noteTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.textColor = .white
+        label.textAlignment = .center
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextBold(20).font
+        default:
+            label.font = FontType.avenirNextBold(24).font
+        }
+        return label
+    }()
+    
+    private let noteDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textColor = .white
+        label.textAlignment = .left
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextMedium(18).font
+        default:
+            label.font = FontType.avenirNextMedium(22).font
+        }
+        return label
+    }()
+    
+    // Note - Dots
+    
+    private let noteButtonContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let noteButtonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 16
+        return stackView
+    }()
+    
+    private lazy var giftsNoteDotView: NoteCircleImageView = {
+        let dotView = NoteCircleImageView(noteType: .gifts)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(giftsDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+    
+    private lazy var plansNoteDotView: NoteCircleImageView = {
+        let dotView = NoteCircleImageView(noteType: .plans)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(plansDotPressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+    
+    private lazy var otherNoteDotView: NoteCircleImageView = {
+        let dotView = NoteCircleImageView(noteType: .other)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(otherDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
@@ -295,6 +373,9 @@ class EventDetailsView: BaseView {
     weak var delegate: EventDetailsViewDelegate?
     
     private var event: Event?
+    
+    private var selectedInfoType: InfoType = .address
+    private var selectedNoteType: NoteType = .gifts
     
     // MARK: View Setup
     
@@ -318,22 +399,34 @@ class EventDetailsView: BaseView {
                     dateStackView.addArrangedSubview(onLabel)
                     dateStackView.addArrangedSubview(dateLabel)
         containerStackView.setCustomSpacing(36, after: detailsContainerView)
-        containerStackView.addArrangedSubview(addressImageView)
-            addressImageView.addSubview(addressLabelStackView)
+        containerStackView.addArrangedSubview(addressContainerView)
+            addressContainerView.addSubview(addressLabelStackView)
                 addressLabelStackView.addArrangedSubview(addressLabelOne)
                 addressLabelStackView.addArrangedSubview(addressLabelTwo)
         containerStackView.addArrangedSubview(reminderContainerView)
             reminderContainerView.addSubview(reminderIconImageView)
             reminderContainerView.addSubview(reminderLabel)
             reminderContainerView.addSubview(reminderEventImageView)
-        containerStackView.addArrangedSubview(infoContainerView)
-            infoContainerView.addSubview(infoButtonStackView)
+        containerStackView.addArrangedSubview(infoButtonContainerView)
+            infoButtonContainerView.addSubview(infoButtonStackView)
                 infoButtonStackView.addArrangedSubview(addressInfoDotView)
                 infoButtonStackView.addArrangedSubview(reminderInfoDotView)
+        containerStackView.setCustomSpacing(36, after: infoButtonContainerView)
+        containerStackView.addArrangedSubview(notesContainerView)
+            notesContainerView.addSubview(noteTitleLabel)
+            notesContainerView.addSubview(noteDescriptionLabel)
+        containerStackView.addArrangedSubview(noteButtonContainerView)
+            noteButtonContainerView.addSubview(noteButtonStackView)
+                noteButtonStackView.addArrangedSubview(giftsNoteDotView)
+                noteButtonStackView.addArrangedSubview(plansNoteDotView)
+                noteButtonStackView.addArrangedSubview(otherNoteDotView)
     }
     
     override func constructLayout() {
         super.constructLayout()
+        
+        // Details
+        
         NSLayoutConstraint.activate([
             detailsContainerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
             detailsContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -343,16 +436,20 @@ class EventDetailsView: BaseView {
         NSLayoutConstraint.activate([
             detailsStackView.topAnchor.constraint(equalTo: detailsContainerView.topAnchor),
             detailsStackView.leadingAnchor.constraint(equalTo: detailsContainerView.leadingAnchor, constant: 8),
-            detailsStackView.trailingAnchor.constraint(equalTo: detailsContainerView.trailingAnchor, constant: -8)
+            detailsStackView.trailingAnchor.constraint(equalTo: detailsContainerView.trailingAnchor, constant: -8),
+            detailsStackView.bottomAnchor.constraint(equalTo: detailsContainerView.bottomAnchor)
+        ])
+        
+        // Info
+        
+        NSLayoutConstraint.activate([
+            addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
+            addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            addressContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
         ])
         NSLayoutConstraint.activate([
-            addressImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
-            addressImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
-            addressImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
-        ])
-        NSLayoutConstraint.activate([
-            addressLabelStackView.centerXAnchor.constraint(equalTo: addressImageView.centerXAnchor),
-            addressLabelStackView.centerYAnchor.constraint(equalTo: addressImageView.centerYAnchor, constant: 8)
+            addressLabelStackView.centerXAnchor.constraint(equalTo: addressContainerView.centerXAnchor),
+            addressLabelStackView.centerYAnchor.constraint(equalTo: addressContainerView.centerYAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
             reminderContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
@@ -371,79 +468,67 @@ class EventDetailsView: BaseView {
         ])
         NSLayoutConstraint.activate([
             reminderEventImageView.centerYAnchor.constraint(equalTo: reminderContainerView.centerYAnchor),
-            reminderEventImageView.trailingAnchor.constraint(equalTo: reminderContainerView.trailingAnchor),
+            reminderEventImageView.trailingAnchor.constraint(equalTo: reminderContainerView.trailingAnchor, constant: -8),
             reminderEventImageView.widthAnchor.constraint(equalToConstant: 75),
             reminderEventImageView.heightAnchor.constraint(equalToConstant: 75)
         ])
         NSLayoutConstraint.activate([
-            infoContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            infoContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            infoContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/12)
+            infoButtonContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            infoButtonContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            infoButtonContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/12)
         ])
         NSLayoutConstraint.activate([
-            infoButtonStackView.centerXAnchor.constraint(equalTo: infoContainerView.centerXAnchor),
-            infoButtonStackView.centerYAnchor.constraint(equalTo: infoContainerView.centerYAnchor)
+            infoButtonStackView.centerXAnchor.constraint(equalTo: infoButtonContainerView.centerXAnchor),
+            infoButtonStackView.centerYAnchor.constraint(equalTo: infoButtonContainerView.centerYAnchor)
         ])
         NSLayoutConstraint.activate([
-            addressInfoDotView.heightAnchor.constraint(equalTo: infoContainerView.heightAnchor),
+            addressInfoDotView.heightAnchor.constraint(equalTo: infoButtonContainerView.heightAnchor),
             addressInfoDotView.widthAnchor.constraint(equalTo: addressInfoDotView.heightAnchor)
         ])
         NSLayoutConstraint.activate([
-            reminderInfoDotView.heightAnchor.constraint(equalTo: infoContainerView.heightAnchor),
+            reminderInfoDotView.heightAnchor.constraint(equalTo: infoButtonContainerView.heightAnchor),
             reminderInfoDotView.widthAnchor.constraint(equalTo: reminderInfoDotView.heightAnchor)
         ])
-    }
-    
-    // MARK: Interface
-    
-    func setInitialInfoType(infoType: InfoType) {
-        switch infoType {
-        case .address:
-            addressInfoDotView.setSelectedState(isSelected: true)
-            reminderInfoDotView.setSelectedState(isSelected: false)
-            reminderContainerView.isHidden = true
-            addressImageView.isHidden = false
-        case .reminder:
-            reminderInfoDotView.setSelectedState(isSelected: true)
-            addressInfoDotView.setSelectedState(isSelected: false)
-            addressImageView.isHidden = true
-            reminderContainerView.isHidden = false
-        }
-    }
-    
-    func selectDotFor(infoType: InfoType) {
-        switch infoType {
-        case .address:
-            guard addressImageView.isHidden else { return }
-            
-            addressInfoDotView.setSelectedState(isSelected: true)
-            reminderInfoDotView.setSelectedState(isSelected: false)
-            
-            UIView.animate(withDuration: 0.2) {
-                self.reminderContainerView.alpha = 0
-            } completion: { _ in
-                self.reminderContainerView.isHidden = true
-                self.addressImageView.isHidden = false
-                UIView.animate(withDuration: 0.2) {
-                    self.addressImageView.alpha = 1
-                }
-            }
-        case .reminder:
-            guard reminderContainerView.isHidden else { return }
-            
-            reminderInfoDotView.setSelectedState(isSelected: true)
-            addressInfoDotView.setSelectedState(isSelected: false)
-            
-            UIView.animate(withDuration: 0.2) {
-                self.addressImageView.alpha = 0
-            } completion: { _ in
-                self.addressImageView.isHidden = true
-                self.reminderContainerView.isHidden = false
-                UIView.animate(withDuration: 0.2) {
-                    self.reminderContainerView.alpha = 1
-                }
-            }
-        }
+        
+        // Notes
+        
+        NSLayoutConstraint.activate([
+            notesContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
+            notesContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            notesContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/5.5)
+        ])
+        NSLayoutConstraint.activate([
+            noteTitleLabel.topAnchor.constraint(equalTo: notesContainerView.topAnchor, constant: 8),
+            noteTitleLabel.leadingAnchor.constraint(equalTo: notesContainerView.leadingAnchor, constant: 8),
+            noteTitleLabel.trailingAnchor.constraint(equalTo: notesContainerView.trailingAnchor, constant: -8)
+        ])
+        NSLayoutConstraint.activate([
+            noteDescriptionLabel.topAnchor.constraint(equalTo: noteTitleLabel.bottomAnchor, constant: 8),
+            noteDescriptionLabel.bottomAnchor.constraint(equalTo: notesContainerView.bottomAnchor, constant: -8),
+            noteDescriptionLabel.leadingAnchor.constraint(equalTo: notesContainerView.leadingAnchor, constant: 8),
+            noteDescriptionLabel.trailingAnchor.constraint(equalTo: notesContainerView.trailingAnchor, constant: -8)
+        ])
+        NSLayoutConstraint.activate([
+            noteButtonContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            noteButtonContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            noteButtonContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/12)
+        ])
+        NSLayoutConstraint.activate([
+            noteButtonStackView.centerXAnchor.constraint(equalTo: noteButtonContainerView.centerXAnchor),
+            noteButtonStackView.centerYAnchor.constraint(equalTo: noteButtonContainerView.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            giftsNoteDotView.heightAnchor.constraint(equalTo: noteButtonContainerView.heightAnchor),
+            giftsNoteDotView.widthAnchor.constraint(equalTo: giftsNoteDotView.heightAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            plansNoteDotView.heightAnchor.constraint(equalTo: noteButtonContainerView.heightAnchor),
+            plansNoteDotView.widthAnchor.constraint(equalTo: plansNoteDotView.heightAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            otherNoteDotView.heightAnchor.constraint(equalTo: noteButtonContainerView.heightAnchor),
+            otherNoteDotView.widthAnchor.constraint(equalTo: otherNoteDotView.heightAnchor)
+        ])
     }
     
     // MARK: Actions
@@ -457,6 +542,92 @@ class EventDetailsView: BaseView {
     func reminderDotPressed() {
         delegate?.didSelectInfoType(.reminder)
     }
+    
+    @objc
+    func giftsDotPressed() {
+        delegate?.didSelectNoteType(.gifts)
+    }
+    
+    @objc
+    func plansDotPressed() {
+        delegate?.didSelectNoteType(.plans)
+    }
+    
+    @objc
+    func otherDotPressed() {
+        delegate?.didSelectNoteType(.other)
+    }
+    
+    // MARK: Interface
+    
+    func select(infoType: InfoType) {
+        switch infoType {
+        case .address:
+            guard selectedInfoType != .address else { return }
+            selectedInfoType = infoType
+            styleInfoDotsFor(selectedInfoType: selectedInfoType)
+            reminderContainerView.isHidden = true
+            addressContainerView.isHidden = false
+        case .reminder:
+            guard selectedInfoType != .reminder else { return }
+            selectedInfoType = infoType
+            styleInfoDotsFor(selectedInfoType: selectedInfoType)
+            addressContainerView.isHidden = true
+            reminderContainerView.isHidden = false
+        }
+    }
+    
+    func select(noteType: NoteType) {
+        switch noteType {
+        case .gifts:
+            guard selectedNoteType != .gifts else { return }
+            selectedNoteType = .gifts
+            styleNoteDotsFor(selectedNoteType: selectedNoteType)
+            populateNote(noteType: selectedNoteType)
+        case .plans:
+            guard selectedNoteType != .plans else { return }
+            selectedNoteType = .plans
+            styleNoteDotsFor(selectedNoteType: selectedNoteType)
+            populateNote(noteType: selectedNoteType)
+        case .other:
+            guard selectedNoteType != .other else { return }
+            selectedNoteType = .other
+            styleNoteDotsFor(selectedNoteType: selectedNoteType)
+            populateNote(noteType: selectedNoteType)
+        }
+    }
+    
+    // MARK: Private Helpers
+    
+    private func styleInfoDotsFor(selectedInfoType: InfoType) {
+        self.selectedInfoType = selectedInfoType
+        switch selectedInfoType {
+        case .address:
+            addressInfoDotView.setSelectedState(isSelected: true)
+            reminderInfoDotView.setSelectedState(isSelected: false)
+        case .reminder:
+            reminderInfoDotView.setSelectedState(isSelected: true)
+            addressInfoDotView.setSelectedState(isSelected: false)
+        }
+    }
+    
+    private func styleNoteDotsFor(selectedNoteType: NoteType) {
+        self.selectedNoteType = selectedNoteType
+        switch selectedNoteType {
+        case .gifts:
+            giftsNoteDotView.setSelectedState(isSelected: true)
+            plansNoteDotView.setSelectedState(isSelected: false)
+            otherNoteDotView.setSelectedState(isSelected: false)
+        case .plans:
+            giftsNoteDotView.setSelectedState(isSelected: false)
+            plansNoteDotView.setSelectedState(isSelected: true)
+            otherNoteDotView.setSelectedState(isSelected: false)
+        case .other:
+            giftsNoteDotView.setSelectedState(isSelected: false)
+            plansNoteDotView.setSelectedState(isSelected: false)
+            otherNoteDotView.setSelectedState(isSelected: true)
+        }
+    }
 }
 
 // MARK: - Populatable
@@ -465,70 +636,164 @@ extension EventDetailsView: Populatable {
     
     struct Content {
         let event: Event
-        let daysBefore: EventReminderDaysBefore?
+        let daysBefore: ReminderDaysBefore?
         let timeOfDay: Date?
+        let infoType: InfoType
+        let noteType: NoteType
     }
     
     func populate(with content: Content) {
-        self.event = content.event
+        let event = content.event
+        self.event = event
         
-        // Event Details
-
-        detailsContainerView.backgroundColor = content.event.eventType.color
-        ageLabel.text = content.event.numOfYears
-        daysLabel.text = content.event.daysAway
-        dateLabel.text = content.event.dayOfYear
+        // Details
         
-        switch content.event.eventType {
+        populateDetails(event: event)
+        styleDetails(eventType: event.eventType)
+        
+        // Info
+        
+        populateInfo(address: event.address)
+        populateInfo(reminder: content.daysBefore, timeOfDay: content.timeOfDay)
+        styleInfo(address: event.address, infoType: content.infoType, eventType: event.eventType)
+        styleInfo(reminder: content.daysBefore, timeOfDay: content.timeOfDay, eventType: event.eventType)
+        styleInfoDotsFor(selectedInfoType: content.infoType)
+ 
+        // Notes
+        
+        populateNote(noteType: content.noteType)
+        styleNote(eventType: content.event.eventType)
+        styleNoteDotsFor(selectedNoteType: content.noteType)
+    }
+    
+    // MARK: Private Helpers
+    
+    // Details
+    
+    private func populateDetails(event: Event) {
+        inLabel.text = Constant.String.in
+        daysLabel.text = event.daysAway
+        
+        switch event.eventType {
         case .birthday:
             isLabel.text = Constant.String.turns
         case .anniversary:
             isLabel.text = Constant.String.year
         default:
-            ageStackView.isHidden = true
+            return
         }
         
-        // Address Details
+        ageLabel.text = event.numOfYears
+        onLabel.text = Constant.String.on
+        dateLabel.text = event.dayOfYear
+    }
+    
+    private func styleDetails(eventType: EventType) {
+        detailsContainerView.backgroundColor = eventType.color
         
-        let address = content.event.address
-        
+        switch eventType {
+        case .holiday, .other:
+            ageStackView.isHidden = true
+        default:
+            return
+        }
+    }
+    
+    // Info
+    
+    private func populateInfo(address: Address?) {
         if address?.street == nil && address?.region == nil {
-            addressLabelTwo.isHidden = true
-            
-            addressLabelOne.isHidden = false
             addressLabelOne.text = Constant.String.addAddress
         } else {
-            if let street = address?.street {
-                addressLabelOne.text = street
-                addressLabelOne.isHidden = false
-            } else {
-                addressLabelOne.isHidden = true
-            }
-            
-            if let region = address?.region {
-                addressLabelTwo.text = region
-                addressLabelTwo.isHidden = false
-            } else {
-                addressLabelTwo.isHidden = true
-            }
+            addressLabelOne.text = address?.street
+            addressLabelTwo.text = address?.region
+        }
+    }
+    
+    private func styleInfo(address: Address?, infoType: InfoType, eventType: EventType) {
+        if address?.street == nil && address?.region == nil {
+            addressLabelOne.isHidden = false // Populate and show "Add Address"
+            addressLabelTwo.isHidden = true
+        } else {
+            addressLabelOne.isHidden = address?.street == nil ? true : false
+            addressLabelTwo.isHidden = address?.region == nil ? true : false
+        }
+
+        switch infoType {
+        case .address:
+            reminderContainerView.isHidden = true
+            addressContainerView.isHidden = false
+        case .reminder:
+            addressContainerView.isHidden = true
+            reminderContainerView.isHidden = false
         }
         
-        // Reminder Details
+        addressInfoDotView.eventType = eventType
+    }
+    
+    private func populateInfo(reminder: ReminderDaysBefore?, timeOfDay: Date?) {
+        if
+            let daysBefore = reminder,
+            let timeOfDay = timeOfDay?.formatted("h:mm a")
+        {
+            reminderLabel.text = "\(daysBefore.pickerText)\n\(timeOfDay)"
+        } else {
+            reminderLabel.text = Constant.String.addReminder
+        }
+    }
+    
+    private func styleInfo(reminder: ReminderDaysBefore?, timeOfDay: Date?, eventType: EventType) {
+        if
+            reminder != nil,
+            timeOfDay != nil
+        {
+            reminderIconImageView.image = Constant.Image.reminderSet
+        } else {
+            reminderIconImageView.image = Constant.Image.addReminder
+        }
         
         if #available(iOS 13.0, *) {
-            reminderEventImageView.image = content.event.eventType.image.withTintColor(.black)
+            reminderEventImageView.image = eventType.image.withTintColor(.black)
         } else {
             tintColor = .black
         }
         
-        if let daysBefore = content.daysBefore, let timeOfDay = content.timeOfDay {
-            reminderIconImageView.image = UIImage(named: "reminder-set")
-            let daysBeforeText = daysBefore.pickerText
-            let timeOfDayText = timeOfDay.formatted("h:mm a")
-            reminderLabel.text = "\(daysBeforeText)\n\(timeOfDayText)"
+        reminderInfoDotView.eventType = eventType
+    }
+    
+    private func populateNote(noteType: NoteType) {
+        if
+            let note = event?.note(forType: noteType),
+            let subject = note.subject
+        {
+            noteTitleLabel.text = subject.capitalized
+            noteDescriptionLabel.text = note.body ?? Constant.String.noDescription
+            noteDescriptionLabel.textAlignment = .left
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                noteDescriptionLabel.font = FontType.avenirNextMedium(18).font
+            default:
+                noteDescriptionLabel.font = FontType.avenirNextMedium(22).font
+            }
+
         } else {
-            reminderIconImageView.image = UIImage(named: "reminder-add")
-            reminderLabel.text = Constant.String.addReminder
+            noteTitleLabel.text = "No \(noteType.rawValue.capitalized) Note"
+            noteDescriptionLabel.text = "\(Constant.String.addNote) \(noteType.rawValue.capitalized)"
+            noteDescriptionLabel.textAlignment = .center
+            switch UIDevice.type {
+            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+                noteDescriptionLabel.font = FontType.noteworthyBold(20).font
+            default:
+                noteDescriptionLabel.font = FontType.noteworthyBold(26).font
+            }
         }
+    }
+    
+    private func styleNote(eventType: EventType) {
+        notesContainerView.backgroundColor = eventType.color
+        
+        giftsNoteDotView.eventType = eventType
+        plansNoteDotView.eventType = eventType
+        otherNoteDotView.eventType = eventType
     }
 }

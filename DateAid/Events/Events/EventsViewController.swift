@@ -170,6 +170,7 @@ extension EventsViewController: EventsViewOutputting {
                 noteTypes: activeNoteTypes
             )
         )
+        baseView.reloadData()
     }
     
     func removeSectionFor(event: Event) {

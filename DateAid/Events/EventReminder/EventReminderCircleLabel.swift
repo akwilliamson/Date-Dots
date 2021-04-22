@@ -12,7 +12,7 @@ class EventReminderCircleLabel: CircleLabel {
 
     // MARK: Properties
 
-    public let daysBefore: EventReminderDaysBefore
+    public let daysBefore: ReminderDaysBefore
 
     // MARK: Initialization
     
@@ -20,7 +20,7 @@ class EventReminderCircleLabel: CircleLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(daysBefore: EventReminderDaysBefore) {
+    init(daysBefore: ReminderDaysBefore) {
         self.daysBefore = daysBefore
         super.init(frame: .zero)
         backgroundColor = UIColor.randomColor()

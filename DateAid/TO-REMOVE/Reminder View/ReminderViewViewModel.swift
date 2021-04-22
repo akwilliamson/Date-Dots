@@ -34,7 +34,7 @@ class ReminderViewViewModel {
     private var reminderDayText: String? {
         guard
             let daysBeforeIndex: Int = notificationManager.valueFor(key: Constant.Key.daysBefore),
-            let daysBefore = EventReminderDaysBefore(rawValue: daysBeforeIndex)
+            let daysBefore = ReminderDaysBefore(rawValue: daysBeforeIndex)
         else {
             return nil
         }

@@ -13,8 +13,8 @@ protocol EventDetailsEventHandling: class {
     func viewDidLoad()
     func viewWillAppear()
     
-    func infoDotPressed(type: InfoType)
-    func noteDotPressed(type: NoteType)
+    func didSelect(infoType: InfoType)
+    func didSelect(noteType: NoteType)
 }
 
 protocol EventDetailsInteractorOutputting: class {
@@ -31,12 +31,25 @@ class EventDetailsPresenter {
     var interactor: EventDetailsInteractorInputting?
     weak var wireframe: EventDetailsWireframe?
     
+    // MARK: Constant
+    
+    private enum Constant {
+        static let keyPrefix = "eventdetails-"
+    }
+    
     // MARK: Properties
     
     private var event: Event
     
     private var activeInfoType: InfoType {
-        return UserDefaults.standard.bool(forKey: InfoType.reminder.key) ? .reminder : .address
+        let key = "\(Constant.keyPrefix)\(InfoType.reminder.key)"
+        return UserDefaults.standard.bool(forKey: key) ? .reminder : .address
+    }
+    
+    private var activeNoteType: NoteType {
+        return [.gifts, .plans, .other].filter {
+            UserDefaults.standard.bool(forKey: "\(Constant.keyPrefix)\($0.key)")
+        }.first ?? .gifts
     }
     
     // MARK: Initialization
@@ -49,12 +62,22 @@ class EventDetailsPresenter {
     
     private func setPreferenceFor(infoType: InfoType) {
         let userDefaults = UserDefaults.standard
+        let key = "\(Constant.keyPrefix)\(InfoType.reminder.key)"
         switch infoType {
         case .address:
-            userDefaults.set(false, forKey: InfoType.reminder.key)
+            userDefaults.set(false, forKey: key)
         case .reminder:
-            userDefaults.set(true, forKey: InfoType.reminder.key)
+            userDefaults.set(true, forKey: key)
         }
+    }
+    
+    private func setPreferenceFor(noteType: NoteType) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.gifts.key)")
+        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.plans.key)")
+        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.other.key)")
+        
+        userDefaults.set(true, forKey: "\(Constant.keyPrefix)\(noteType.key)")
     }
 }
 
@@ -69,16 +92,16 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewWillAppear() {
         interactor?.fetchNotification(id: event.objectIDString)
-        view?.setInitialSelected(infoType: activeInfoType)
     }
     
-    func infoDotPressed(type: InfoType) {
-        setPreferenceFor(infoType: type)
-        view?.selectDotFor(infoType: activeInfoType)
+    func didSelect(infoType: InfoType) {
+        setPreferenceFor(infoType: infoType)
+        view?.select(infoType: activeInfoType)
     }
     
-    func noteDotPressed(type: NoteType) {
-        print("TODO: Animate to selected note view, set note view preference")
+    func didSelect(noteType: NoteType) {
+        setPreferenceFor(noteType: noteType)
+        view?.select(noteType: activeNoteType)
     }
 }
 
@@ -87,10 +110,24 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
 extension EventDetailsPresenter: EventDetailsInteractorOutputting {
     
     func handleNotification(daysBefore: Int, timeOfDay: Date) {
-        view?.setDetailsFor(event: event, daysBefore: daysBefore, timeOfDay: timeOfDay)
+        let content = EventDetailsView.Content(
+            event: event,
+            daysBefore: ReminderDaysBefore(rawValue: daysBefore),
+            timeOfDay: timeOfDay,
+            infoType: activeInfoType,
+            noteType: activeNoteType
+        )
+        view?.setDetails(content: content)
     }
     
     func handleNotificationNotFound() {
-        view?.setDetailsFor(event: event, daysBefore: nil, timeOfDay: nil)
+        let content = EventDetailsView.Content(
+            event: event,
+            daysBefore: nil,
+            timeOfDay: nil,
+            infoType: activeInfoType,
+            noteType: activeNoteType
+        )
+        view?.setDetails(content: content)
     }
 }

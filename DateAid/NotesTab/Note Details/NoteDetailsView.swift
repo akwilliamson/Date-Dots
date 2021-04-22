@@ -92,7 +92,6 @@ class NoteDetailsView: BaseView {
         let dot = NoteCircleImageView(noteType: .gifts)
         dot.translatesAutoresizingMaskIntoConstraints = false
         dot.contentMode = .center
-        dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/16, height: UIScreen.main.bounds.width/13))
         return dot
     }()
     
@@ -100,14 +99,12 @@ class NoteDetailsView: BaseView {
         let dot = NoteCircleImageView(noteType: .plans)
         dot.translatesAutoresizingMaskIntoConstraints = false
         dot.contentMode = .center
-        dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/11, height: UIScreen.main.bounds.width/11))
         return dot
     }()
     
     private lazy var otherDot: NoteCircleImageView = {
         let dot = NoteCircleImageView(noteType: .other)
         dot.translatesAutoresizingMaskIntoConstraints = false
-        dot.downsizeImage(to: CGSize(width: UIScreen.main.bounds.width/12, height: UIScreen.main.bounds.width/12))
         return dot
     }()
     
@@ -323,14 +320,10 @@ extension NoteDetailsView: Populatable {
         
         // Event Icon
         
-        if let eventType = content.eventType {
-            eventIconImageView.style(for: eventType)
-            let imageSize = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-            eventIconImageView.downsizeImage(to: imageSize)
+        if let _ = content.eventType {
+//            eventIconImageView.style(for: eventType)
         } else {
             eventIconImageView.image = UIImage(named: "question-mark")
-            let imageSize = CGSize(width: UIScreen.main.bounds.width/5, height: UIScreen.main.bounds.width/5)
-            eventIconImageView.downsizeImage(to: imageSize)
         }
         
         // Event Info

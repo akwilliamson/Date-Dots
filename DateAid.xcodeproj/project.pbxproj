@@ -19,7 +19,6 @@
 		9707A7E91DBBFD6100C4A9C0 /* EventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7E81DBBFD6100C4A9C0 /* EventsPresenter.swift */; };
 		9707A7EB1DBC073D00C4A9C0 /* EventsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9707A7EA1DBC073D00C4A9C0 /* EventsInteractor.swift */; };
 		970C5766261ECBD000C71592 /* EventSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970C5765261ECBD000C71592 /* EventSectionHeader.swift */; };
-		970C5771261F6E0800C71592 /* ImageDownsizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970C5770261F6E0800C71592 /* ImageDownsizable.swift */; };
 		970D93621BC4765900D7F1FF /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D93611BC4765900D7F1FF /* UIColor+Colors.swift */; };
 		971029312626B536007300E3 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971029302626B536007300E3 /* EventDetailsView.swift */; };
 		9712376125F0A9F600924986 /* NoteCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712376025F0A9F600924986 /* NoteCircleImageView.swift */; };
@@ -154,7 +153,6 @@
 		9707A7E81DBBFD6100C4A9C0 /* EventsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsPresenter.swift; sourceTree = "<group>"; };
 		9707A7EA1DBC073D00C4A9C0 /* EventsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsInteractor.swift; sourceTree = "<group>"; };
 		970C5765261ECBD000C71592 /* EventSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSectionHeader.swift; sourceTree = "<group>"; };
-		970C5770261F6E0800C71592 /* ImageDownsizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownsizable.swift; sourceTree = "<group>"; };
 		970D93611BC4765900D7F1FF /* UIColor+Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		971029302626B536007300E3 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		9712376025F0A9F600924986 /* NoteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCircleImageView.swift; sourceTree = "<group>"; };
@@ -293,24 +291,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		970C576D261F6DEE00C71592 /* CircleImageViews */ = {
+		970C576D261F6DEE00C71592 /* CircleViews */ = {
 			isa = PBXGroup;
 			children = (
+				975713AC24553A9900EDD963 /* CircleLabel.swift */,
 				975713AE24553BD400EDD963 /* CircleImageView.swift */,
 				976473AB24330CE000D2F11D /* EventCircleImageView.swift */,
 				97B9A516262CA5B600C980AC /* InfoCircleImageView.swift */,
 				9712376025F0A9F600924986 /* NoteCircleImageView.swift */,
-				970C5770261F6E0800C71592 /* ImageDownsizable.swift */,
 			);
-			path = CircleImageViews;
-			sourceTree = "<group>";
-		};
-		970C577A261F6F9E00C71592 /* CircleLabels */ = {
-			isa = PBXGroup;
-			children = (
-				975713AC24553A9900EDD963 /* CircleLabel.swift */,
-			);
-			path = CircleLabels;
+			path = CircleViews;
 			sourceTree = "<group>";
 		};
 		970D93631BC47B9500D7F1FF /* Extensions */ = {
@@ -615,8 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				9774DB542467C60500211D9A /* BaseView */,
-				970C577A261F6F9E00C71592 /* CircleLabels */,
-				970C576D261F6DEE00C71592 /* CircleImageViews */,
+				970C576D261F6DEE00C71592 /* CircleViews */,
 				972BFE7926159F87003B7429 /* RoundedButton.swift */,
 			);
 			path = Views;
@@ -981,7 +970,6 @@
 				97BB28D32459DFD7003854CC /* AddressViewViewModel.swift in Sources */,
 				97E5D6A925DF816600D321B1 /* RemindersNavigationWireframe.swift in Sources */,
 				9749E6CF24837C1200DAAB49 /* CoreDataStack.swift in Sources */,
-				970C5771261F6E0800C71592 /* ImageDownsizable.swift in Sources */,
 				976473AC24330CE000D2F11D /* EventCircleImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -86,24 +86,21 @@ class EventsView: BaseView {
     }()
     
     private lazy var giftsNoteDot: NoteCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = NoteCircleImageView(noteType: .gifts, scaledSize: size)
+        let dotView = NoteCircleImageView(noteType: .gifts)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
     private lazy var plansNoteDot: NoteCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = NoteCircleImageView(noteType: .plans, scaledSize: size)
+        let dotView = NoteCircleImageView(noteType: .plans)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
     }()
 
     private lazy var otherNoteDot: NoteCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = NoteCircleImageView(noteType: .other, scaledSize: size)
+        let dotView = NoteCircleImageView(noteType: .other)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -195,6 +192,18 @@ class EventsView: BaseView {
         guard let index = activeEvents.firstIndex(where: { $0 == event }) else { return }
         let indexPath = IndexPath(index: index)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async {
+            UIView.transition(
+                with: self.tableView,
+                duration: 0.2,
+                options: .transitionCrossDissolve,
+                animations: {
+                    self.tableView.reloadData()
+                }, completion: nil)
+        }
     }
     
     // MARK: Actions
@@ -332,6 +341,5 @@ extension EventsView: Populatable {
     func populate(with content: Content) {
         self.activeEvents = content.events
         self.activeNoteTypes = content.noteTypes
-        tableView.reloadData()
     }
 }
