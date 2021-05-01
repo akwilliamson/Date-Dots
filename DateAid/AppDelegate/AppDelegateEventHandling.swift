@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AppDelegateEventHandling: class {
+protocol AppDelegateEventHandling: AnyObject {
 
     func showImport(in window: UIWindow?)
     func showEvents(in window: UIWindow?)

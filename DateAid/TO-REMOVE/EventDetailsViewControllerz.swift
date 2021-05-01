@@ -80,8 +80,8 @@ class EventDetailsViewControllerz: UIViewController {
 
     // MARK: UI - Reminder
     
-    private lazy var reminderView: ReminderView = {
-        let view = ReminderView(viewModel: ReminderViewViewModel(), delegate: self)
+    private lazy var reminderView: ReminderViewz = {
+        let view = ReminderViewz(viewModel: ReminderViewViewModel(), delegate: self)
         view.isHidden = true
         return view
     }()
@@ -360,19 +360,19 @@ class EventDetailsViewControllerz: UIViewController {
     }
 }
 
-extension EventDetailsViewControllerz: ReminderViewDelegate {
+extension EventDetailsViewControllerz: ReminderViewDelegatez {
 
     @objc
     func didTapReminderView(notificationRequest: UNNotificationRequest?) {
-        let eventReminderDetails = viewModel.generateEventReminderDetails()
+        let reminderDetails = viewModel.generateReminderDetails()
         
-        let eventReminderViewController = EventReminderViewController(
-            eventReminderDetails: eventReminderDetails,
+        let reminderViewController = ReminderViewController(
+            reminderDetails: reminderDetails,
             notificationRequest: notificationRequest,
             delegate: self
         )
 
-        navigationController?.pushViewController(eventReminderViewController, animated: true)
+        navigationController?.pushViewController(reminderViewController, animated: true)
     }
 }
 
@@ -390,7 +390,7 @@ extension EventDetailsViewControllerz: EventSetupDelegate {
     }
 }
 
-extension EventDetailsViewControllerz: EventReminderDelegate {
+extension EventDetailsViewControllerz: ReminderDelegate {
     
     func didCancelNotificationRequest() {
         reminderView.clearNotificationRequest()

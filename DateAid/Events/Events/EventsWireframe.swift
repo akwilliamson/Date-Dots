@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventsRouting: class {
+protocol EventsRouting: AnyObject {
     
     var navigation: UINavigationController? { get set }
     // Self
@@ -80,8 +80,9 @@ extension EventsWireframe: EventsRouting {
         navigation?.popViewController(animated: true)
         childEventDetails = nil
     }
-    
-    // MARK: Event Note
+}
+
+extension EventsWireframe: NoteDetailsParentRouting {
     
     func presentEventNote(state: NoteState) {
         self.childEventNote = NoteDetailsWireframe(parent: self, noteState: state)

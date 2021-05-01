@@ -16,7 +16,7 @@ protocol EventsViewDelegate: AnyObject {
     func didSelectEvent(_ event: Event)
     func didDeleteEvent(_ event: Event)
     
-    func didSelectNote(_ note: Note)
+    func didSelectNote(noteState: NoteState)
     func didDeleteNote(_ note: Note)
 }
 
@@ -282,23 +282,7 @@ extension EventsView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 0
-        }
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        guard
-//            let cell = tableView.cellForRow(at: indexPath) as? EventCell,
-//            let event = cell.note
-//        else {
-//            return
-//        }
-//
-//        if editingStyle == .delete {
-//            delegate?.didDeleteEvent(event)
-//        }
+        return indexPath.section == 0 ? 0 : UITableView.automaticDimension
     }
 }
 
@@ -307,13 +291,20 @@ extension EventsView: UITableViewDataSource {
 extension EventsView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let event = activeEvents[safe: indexPath.section - 1] else { return }
+        
         if
-            let eventNotes = activeEvents[safe: indexPath.section - 1]?.notes,
+            let eventNotes = event.notes,
             !eventNotes.isEmpty,
             let noteType = activeNoteTypes[safe: indexPath.row],
             let selectedNote = eventNotes.filter({ $0.noteType == noteType }).first
         {
-            delegate?.didSelectNote(selectedNote)
+            let noteState = NoteState.existingNote(selectedNote)
+            delegate?.didSelectNote(noteState: noteState)
+        } else {
+            let noteType = activeNoteTypes[safe: indexPath.row] ?? .gifts
+            let noteState = NoteState.newNote(noteType, event)
+            delegate?.didSelectNote(noteState: noteState)
         }
     }
 }

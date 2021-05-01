@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol EventsInteractorInputting: class {
+protocol EventsInteractorInputting: AnyObject {
     
     func fetchEvents()
     func getEvents()

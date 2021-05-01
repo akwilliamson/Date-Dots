@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventsEventHandling: class {
+protocol EventsEventHandling: AnyObject {
     
     func viewDidLoad()
     func viewWillAppear()
@@ -23,13 +23,13 @@ protocol EventsEventHandling: class {
     func selectEventPressed(event: Event)
     func deleteEventPressed(event: Event)
     
-    func selectNotePressed(note: Note)
+    func selectNotePressed(noteState: NoteState)
     func deleteNotePressed(note: Note)
 
     func searchTextChanged(text: String)
 }
 
-protocol EventsInteractorOutputting: class {
+protocol EventsInteractorOutputting: AnyObject {
     
     func eventsFetched(_ events: [Event])
     func eventsFetchedFailed(_ error: EventsInteractorError)
@@ -207,8 +207,8 @@ extension EventsPresenter: EventsEventHandling {
         interactor?.getEvents(containing: text)
     }
     
-    func selectNotePressed(note: Note) {
-        // TODO: Route to event note details
+    func selectNotePressed(noteState: NoteState) {
+        wireframe?.presentEventNote(state: noteState)
     }
     
     func deleteNotePressed(note: Note) {

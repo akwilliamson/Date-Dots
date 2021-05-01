@@ -18,7 +18,7 @@ class EventCircleImageView: CircleImageView {
 
     // MARK: Properties
     
-    var eventType: EventType
+    var eventType: EventType = .birthday
     
     // MARK: Initialization
     
@@ -39,7 +39,6 @@ class EventCircleImageView: CircleImageView {
         isUserInteractionEnabled = true
         contentMode = .scaleAspectFit
         layer.borderWidth = Constant.borderWidth
-        layer.borderColor = eventType.color.cgColor
     }
 
     // MARK: Interface
@@ -51,6 +50,8 @@ class EventCircleImageView: CircleImageView {
     // MARK: Private Methods
     
     private func updateImage(isSelected: Bool) {
+        layer.borderColor = eventType.color.cgColor
+
         if isSelected {
             backgroundColor = eventType.color
             if #available(iOS 13.0, *) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventSectionHeaderDelegate: class {
+protocol EventSectionHeaderDelegate: AnyObject {
     
     func didSelectSectionHeader(event: Event)
 }

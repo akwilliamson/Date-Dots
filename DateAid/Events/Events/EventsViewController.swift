@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-protocol EventsViewOutputting: class {
+protocol EventsViewOutputting: AnyObject {
  
     // Navigation View
     func configureNavigation(title: String)
@@ -198,8 +198,8 @@ extension EventsViewController: EventsViewDelegate {
         presenter?.deleteEventPressed(event: event)
     }
     
-    func didSelectNote(_ note: Note) {
-        print("TODO: navigate to selected note details")
+    func didSelectNote(noteState: NoteState) {
+        presenter?.selectNotePressed(noteState: noteState)
     }
     
     func didDeleteNote(_ note: Note) {

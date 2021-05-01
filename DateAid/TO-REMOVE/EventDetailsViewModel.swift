@@ -91,8 +91,8 @@ class EventDetailsViewModel {
     }
     
     /// Creates the details needed to instantiate an `EventReminderViewController`.
-    func generateEventReminderDetails() -> EventReminderDetails {
-        return EventReminderDetails(
+    func generateReminderDetails() -> ReminderDetails {
+        return ReminderDetails(
             identifier: event.objectIDString,
             eventName: event.abvName,
             eventType: event.eventType,
