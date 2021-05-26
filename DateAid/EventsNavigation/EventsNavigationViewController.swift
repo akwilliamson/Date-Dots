@@ -19,6 +19,8 @@ class EventsNavigationViewController: UINavigationController {
     // MARK: Properties
     
     var presenter: EventsNavigationEventHandling?
+    
+    // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class EventsNavigationViewController: UINavigationController {
     }
 }
 
-// MARK: DatesNavigationViewOutputting
+// MARK: - DatesNavigationViewOutputting
 
 extension EventsNavigationViewController: EventsNavigationViewOutputting {
 

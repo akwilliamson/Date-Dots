@@ -18,7 +18,7 @@ class EventsNavigationPresenter {
     
     // MARK: Properties
     
-    weak var wireframe: EventsNavigationWireframe?
+    weak var router: EventsNavigationRouter?
     var view: EventsNavigationViewController?
 
     private enum Constant {
@@ -36,7 +36,11 @@ class EventsNavigationPresenter {
 extension EventsNavigationPresenter: EventsNavigationEventHandling {
     
     func viewDidLoad() {
-        view?.configureNavigation(barTintColor: Constant.Style.barTintColor, tintColor: Constant.Style.tintColor)
+        view?.configureNavigation(
+            barTintColor: Constant.Style.barTintColor,
+            tintColor: Constant.Style.tintColor
+        )
+        
         view?.configureNavigation(titleTextAttributes: [
             NSAttributedString.Key.foregroundColor: Constant.Style.foregroundColor,
             NSAttributedString.Key.font: Constant.Style.font
@@ -44,6 +48,6 @@ extension EventsNavigationPresenter: EventsNavigationEventHandling {
     }
 
     func showEvents(in navigation: EventsNavigationViewController?) {
-        wireframe?.displayEvents()
+        router?.presentEvents()
     }
 }

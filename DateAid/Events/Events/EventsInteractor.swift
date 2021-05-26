@@ -21,7 +21,7 @@ enum EventsInteractorError: Error {
     case fetchFailed
 }
 
-class EventsInteractor: CoreDataInteractable {
+class EventsInteractor {
     
     weak var presenter: EventsInteractorOutputting?
     
@@ -45,7 +45,8 @@ extension EventsInteractor: EventsInteractorInputting {
 
     func fetchEvents() {
         do {
-            self.events = try moc.fetch()
+            self.events = try CoreDataManager.fetch()
+            presenter?.eventsFetched(self.events)
             migrateOldEvents {
                 presenter?.eventsFetched(self.events)
             }
@@ -71,10 +72,8 @@ extension EventsInteractor: EventsInteractorInputting {
     }
     
     func delete(_ event: Event) {
-        moc.delete(event)
         do {
-            try moc.save()
-            presenter?.eventDeleted(event)
+            try CoreDataManager.delete(object: event)
         } catch {
             presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
         }
@@ -102,7 +101,7 @@ extension EventsInteractor {
         }
         
         do {
-            try moc.save()
+            try CoreDataManager.save()
             completion()
         } catch {
             print("wtf \(error.localizedDescription))")

@@ -28,6 +28,8 @@ class EventSectionHeader: UIView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         label.lineBreakMode = .byTruncatingTail
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
@@ -41,6 +43,9 @@ class EventSectionHeader: UIView {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.avenirNextMedium(16).font
@@ -48,7 +53,6 @@ class EventSectionHeader: UIView {
             label.font = FontType.avenirNextMedium(22).font
         }
         label.textColor = UIColor.systemGray
-        label.minimumScaleFactor = 0.5
         return label
     }()
     

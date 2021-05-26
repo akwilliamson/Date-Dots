@@ -14,7 +14,7 @@ protocol NoteDetailsInteractorInputting: AnyObject {
     func deleteNote(type: NoteType, for event: Event)
 }
 
-class NoteDetailsInteractor: CoreDataInteractable {
+class NoteDetailsInteractor {
     
     weak var presenter: NoteDetailsInteractorOutputting?
 }
@@ -23,7 +23,7 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
     
     func saveNote(type: NoteType, title: String, description: String?, for event: Event) {
         guard
-            let entity = NSEntityDescription.entity(forEntityName: "Note", in: moc)
+            let entity = NSEntityDescription.entity(forEntityName: "Note", in: CoreDataManager.shared.viewContext)
         else {
             presenter?.noteSaveFailed()
             return
@@ -33,7 +33,7 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
             existingNote.subject = title
             existingNote.body = description
         } else {
-            let newNote = Note(entity: entity, insertInto: moc)
+            let newNote = Note(entity: entity, insertInto: CoreDataManager.shared.viewContext)
             newNote.type = type.rawValue
             newNote.subject = title
             newNote.body = description
@@ -47,7 +47,7 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
         }
         
         do {
-            try moc.save()
+            try CoreDataManager.save()
             presenter?.noteSaved()
         } catch {
             presenter?.noteSaveFailed()
@@ -55,15 +55,12 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
     }
     
     func deleteNote(type: NoteType, for event: Event) {
-        if let existingNote = event.note(forType: type) {
-            moc.delete(existingNote)
-            do {
-                try moc.save()
-                presenter?.noteDeleted()
-            } catch {
-                presenter?.noteDeleteFailed()
-            }
-        } else {
+        guard let existingNote = event.note(forType: type) else { return }
+ 
+        do {
+            try CoreDataManager.delete(object: existingNote)
+            presenter?.noteDeleted()
+        } catch {
             presenter?.noteDeleteFailed()
         }
     }

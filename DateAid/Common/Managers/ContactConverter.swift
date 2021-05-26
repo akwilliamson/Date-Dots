@@ -9,7 +9,7 @@
 import Contacts
 import CoreData
 
-class ContactConverter: CoreDataInteractable {
+class ContactConverter {
 
     private var contacts: [CNContact] = []
     
@@ -23,7 +23,7 @@ class ContactConverter: CoreDataInteractable {
         createAnniversaries()
         createHolidays()
         
-        try? moc.save()
+        try? CoreDataManager.save()
     }
     
     private func createBirthdays() {
@@ -47,7 +47,7 @@ class ContactConverter: CoreDataInteractable {
         let storedEvents: [Event]
 
         do {
-            storedEvents = try moc.fetch()
+            storedEvents = try CoreDataManager.fetch()
         } catch {
             storedEvents = []
             print(error.localizedDescription)
@@ -58,8 +58,8 @@ class ContactConverter: CoreDataInteractable {
             let exists = storedEvents.contains { $0.name == givenName && $0.type == EventType.holiday.rawValue }
             
             if !exists {
-                if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc) {
-                    let date = Event(entity: entity, insertInto: moc)
+                if let entity = NSEntityDescription.entity(forEntityName: "Date", in: CoreDataManager.shared.viewContext) {
+                    let date = Event(entity: entity, insertInto: CoreDataManager.shared.viewContext)
                     // Deprecated
                     date.name            = givenName
                     // Deprecated
@@ -79,7 +79,7 @@ class ContactConverter: CoreDataInteractable {
         let storedEvents: [Event]
         
         do {
-            try storedEvents = moc.fetch()
+            try storedEvents = CoreDataManager.fetch()
         } catch {
             storedEvents = []
         }
@@ -87,10 +87,10 @@ class ContactConverter: CoreDataInteractable {
         let exists = storedEvents.contains { $0.name == contact?.fullName && $0.type == type.rawValue }
         
         if !exists {
-            if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc),
+            if let entity = NSEntityDescription.entity(forEntityName: "Date", in: CoreDataManager.shared.viewContext),
                 let contact = contact {
                 
-                let event = Event(entity: entity, insertInto: moc)
+                let event = Event(entity: entity, insertInto: CoreDataManager.shared.viewContext)
                 
                 event.type = type.rawValue
                 // Deprecated
@@ -121,8 +121,8 @@ class ContactConverter: CoreDataInteractable {
     
     private func create(_ postalAddress: CNPostalAddress, for event: Event) -> Address? {
         
-        if let entity = NSEntityDescription.entity(forEntityName: "Date", in: moc) {
-            let address = Address(entity: entity, insertInto: moc)
+        if let entity = NSEntityDescription.entity(forEntityName: "Date", in: CoreDataManager.shared.viewContext) {
+            let address = Address(entity: entity, insertInto: CoreDataManager.shared.viewContext)
             address.event = event
             address.street = postalAddress.street
             address.region = "\(postalAddress.city) \(postalAddress.state), \(postalAddress.postalCode)"

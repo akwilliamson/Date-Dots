@@ -28,9 +28,9 @@ class EventDetailsPresenter {
     
     // MARK: VIPER
     
+    weak var router: EventDetailsRouter?
     var view: EventDetailsViewOutputting?
     var interactor: EventDetailsInteractorInputting?
-    weak var wireframe: EventDetailsWireframe?
     
     // MARK: Constant
     
@@ -108,10 +108,10 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     func didSelectNoteView(note: Note?, noteType: NoteType?) {
         if let note = note {
             let noteState = NoteState.existingNote(note)
-            wireframe?.presentEventNote(state: noteState)
+            router?.presentEventNote(noteState: noteState)
         } else {
             let noteState = NoteState.newNote(noteType ?? .gifts, event)
-            wireframe?.presentEventNote(state: noteState)
+            router?.presentEventNote(noteState: noteState)
         }
     }
 }

@@ -14,7 +14,7 @@ enum EventSetupType {
     case edit
 }
 
-class EventSetupViewController: UIViewController, CoreDataInteractable {
+class EventSetupViewController: UIViewController {
     
     // MARK: Constants
     
@@ -37,7 +37,7 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
     
     // MARK: Properties
     
-    var eventSetupDelegate: EventSetupDelegate?
+//    var eventSetupDelegate: EventSetupDelegate?
     private let viewModel = EventSetupViewModel()
 
     var event: Event?
@@ -87,13 +87,13 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
             let eventType = viewModel.eventType,
             let eventDate = viewModel.eventDate,
             let eventDateString = viewModel.eventDateString,
-            let eventEntity = NSEntityDescription.entity(forEntityName: "Event", in: moc),
-            let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: moc)
+            let eventEntity = NSEntityDescription.entity(forEntityName: "Event", in: CoreDataManager.shared.viewContext),
+            let addressEntity = NSEntityDescription.entity(forEntityName: "Address", in: CoreDataManager.shared.viewContext)
         else {
             return
         }
         
-        let event = self.event ?? Event(entity: eventEntity, insertInto: moc)
+        let event = self.event ?? Event(entity: eventEntity, insertInto: CoreDataManager.shared.viewContext)
         // Deprecated
         event.name = eventName
         event.abbreviatedName = eventNameAbbreviated
@@ -104,16 +104,16 @@ class EventSetupViewController: UIViewController, CoreDataInteractable {
         event.date = eventDate
         event.equalizedDate = eventDateString
         
-        let address = Address(entity: addressEntity, insertInto: moc)
+        let address = Address(entity: addressEntity, insertInto: CoreDataManager.shared.viewContext)
         address.street = viewModel.eventAddressOne
         address.region = viewModel.eventAddressTwo
         
         event.address = address
         
         do {
-            try moc.save()
+            try CoreDataManager.save()
             viewModel.rescheduleNotificationIfNeeded {
-                self.eventSetupDelegate?.updateEvent(event)
+                // TODO: Update event (with `Event`)
                 self.navigationController?.popViewController(animated: true)
             }
         } catch {

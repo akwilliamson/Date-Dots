@@ -41,9 +41,9 @@ class EventsPresenter {
 
     // MARK: VIPER
     
+    weak var router: EventsRouter?
     var view: EventsViewOutputting?
     var interactor: EventsInteractorInputting?
-    weak var wireframe: EventsWireframe?
 
     // MARK: Constants
 
@@ -200,7 +200,7 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func selectEventPressed(event: Event) {
-        wireframe?.presentEventDetails(event: event)
+        router?.presentEventDetails(event: event)
     }
     
     func searchTextChanged(text: String) {
@@ -208,7 +208,7 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func selectNotePressed(noteState: NoteState) {
-        wireframe?.presentEventNote(state: noteState)
+        router?.presentEventNote(noteState: noteState)
     }
     
     func deleteNotePressed(note: Note) {

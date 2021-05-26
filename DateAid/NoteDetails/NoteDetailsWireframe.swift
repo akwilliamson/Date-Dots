@@ -8,33 +8,12 @@
 
 import UIKit
 
-protocol NoteDetailsParentRouting: AnyObject {
-    
-    func presentEventNote(state: NoteState)
-    func dismissEventNote()
-}
-
-protocol NoteDetailsRouting: AnyObject {
-    
-    var navigation: UINavigationController? { get set }
-    
-    func present()
-    func dismiss()
-}
-
-class NoteDetailsWireframe {
+class NoteDetailsRouter {
     
     // MARK: Wireframes
     
-    private var parent: NoteDetailsParentRouting
-    
-    // MARK: Navigation
-    
-    var navigation: UINavigationController?
-    
-    private var view: UIViewController? {
-        presenter.view as? UIViewController
-    }
+    var parent: Routing?
+    var child: Routing?
     
     // MARK: Presenter
     
@@ -42,7 +21,7 @@ class NoteDetailsWireframe {
     
     // MARK: Initialization
     
-    init(parent: NoteDetailsParentRouting, noteState: NoteState) {
+    init(parent: Routing, noteState: NoteState) {
         self.parent = parent
         
         let presenter = NoteDetailsPresenter()
@@ -57,19 +36,14 @@ class NoteDetailsWireframe {
         interactor.presenter = presenter
         
         self.presenter = presenter
-        presenter.wireframe = self
+        presenter.router = self
     }
 }
 
-extension NoteDetailsWireframe: NoteDetailsRouting {
+extension NoteDetailsRouter: Routing {
 
     func present() {
-        guard let view = view else { return }
-
-        navigation?.pushViewController(view, animated: true)
-    }
-    
-    func dismiss() {
-        parent.dismissEventNote()
+        guard let view = presenter.view as? UIViewController else { return }
+        RouteManager.shared.navigationController?.pushViewController(view, animated: true)
     }
 }

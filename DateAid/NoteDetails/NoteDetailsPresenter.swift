@@ -37,9 +37,9 @@ class NoteDetailsPresenter {
     
     // MARK: VIPER
     
+    weak var router: NoteDetailsRouter?
     var view: NoteDetailsViewOutputting?
     var interactor: NoteDetailsInteractorInputting?
-    var wireframe: NoteDetailsRouting?
     
     // MARK: Constants
     
@@ -155,7 +155,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
 extension NoteDetailsPresenter: NoteDetailsInteractorOutputting {
     
     func noteSaved() {
-        wireframe?.dismiss()
+        // TODO: Add router dismiss notes
     }
     
     func noteSaveFailed() {
@@ -163,7 +163,7 @@ extension NoteDetailsPresenter: NoteDetailsInteractorOutputting {
     }
     
     func noteDeleted() {
-        wireframe?.dismiss()
+        // TODO: Add router dismiss notes
     }
     
     func noteDeleteFailed() {
