@@ -95,7 +95,6 @@ class EventsViewController: UIViewController {
     @objc
     func addButtonPressed() {
         presenter?.addButtonPressed()
-        print("TODO: Navigate to new event creation")
     }
     
     @objc
@@ -117,8 +116,6 @@ extension EventsViewController: UISearchBarDelegate {
 // MARK: - DatesViewOutputting
 
 extension EventsViewController: EventsViewOutputting {
-    
-    // MARK: Configuration
     
     func configureNavigation(title: String) {
         navigationItem.title = title

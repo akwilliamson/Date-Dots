@@ -12,10 +12,11 @@ import UIKit
 enum Route {
     case eventsNavigation
     case events
+    case eventCreation
     case eventDetails
     case eventEdit
-    case eventReminder
     case eventNoteDetails
+    case eventReminder
 }
 
 class RouteManager {
@@ -40,6 +41,8 @@ class RouteManager {
             return EventsNavigationRouter(parent: parent)
         case .events:
             return EventsRouter(parent: parent)
+        case .eventCreation:
+            return EventCreationRouter(parent: parent)
         default:
             return nil
         }

@@ -8,12 +8,12 @@
 
 import UIKit
 
-enum EventType: String {
+enum EventType: String, CaseIterable {
 
     case birthday
     case anniversary
     case holiday = "custom"
-    case other
+    case other = "event"
     
     var key: String {
         return "event-\(rawValue)"

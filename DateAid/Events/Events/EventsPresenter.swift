@@ -173,7 +173,7 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func addButtonPressed() {
-        // TODO: Route to edit event details
+        router?.presentEventCreation()
     }
 
     func eventDotPressed(type: EventType) {

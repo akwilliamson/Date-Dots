@@ -10,7 +10,8 @@ import UIKit
 
 protocol NoteDetailsViewOutputting: AnyObject {
     
-    func setNavigation(isNewNote: Bool, isEditableNote: Bool)
+    func setNavigation(title: String)
+    func setNavigationBarButton(isEditable: Bool)
     func setContent(_ content: NoteDetailsView.Content)
     
     func enableInputFields()
@@ -88,10 +89,12 @@ class NoteDetailsViewController: UIViewController {
 
 extension NoteDetailsViewController: NoteDetailsViewOutputting {
     
-    func setNavigation(isNewNote: Bool, isEditableNote: Bool) {
-        navigationItem.title = isNewNote ? "New Note" : "Note Details"
-        
-        if isEditableNote {
+    func setNavigation(title: String) {
+        navigationItem.title = title
+    }
+    
+    func setNavigationBarButton(isEditable: Bool) {
+        if isEditable {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveEvent))
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editEvent))

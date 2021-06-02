@@ -65,7 +65,15 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
         switch noteState {
         case .existingNote(let note):
             event = note.event
-            view?.setNavigation(isNewNote: false, isEditableNote: false)
+            switch note.noteType {
+            case .gifts:
+                view?.setNavigation(title: "Gifts")
+            case .plans:
+                view?.setNavigation(title: "Plans")
+            case .other:
+                view?.setNavigation(title: "Misc")
+            }
+            view?.setNavigationBarButton(isEditable: false)
             view?.setContent(
                 NoteDetailsView.Content(
                     name: note.event.fullName,
@@ -78,7 +86,15 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
                 )
             )
         case .newNote(let noteType, let event):
-            view?.setNavigation(isNewNote: true, isEditableNote: true)
+            switch noteType {
+            case .gifts:
+                view?.setNavigation(title: "Gifts")
+            case .plans:
+                view?.setNavigation(title: "Plans")
+            case .other:
+                view?.setNavigation(title: "Misc")
+            }
+            view?.setNavigationBarButton(isEditable: false)
             view?.setContent(
                 NoteDetailsView.Content(
                     name: event.fullName,
@@ -120,7 +136,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
     }
     
     func didTapEdit() {
-        view?.setNavigation(isNewNote: false, isEditableNote: true)
+        view?.setNavigationBarButton(isEditable: true)
         view?.enableInputFields()
         view?.startEditTextField(isPlaceholder: false)
     }

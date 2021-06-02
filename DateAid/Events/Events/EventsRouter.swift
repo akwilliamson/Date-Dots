@@ -52,6 +52,11 @@ extension EventsRouter: Routing {
     
     // MARK: Child routes
     
+    func presentEventCreation() {
+        child = RouteManager.shared.router(for: .eventCreation, parent: self)
+        child?.present()
+    }
+    
     func presentEventDetails(event: Event) {
         child = RouteManager.shared.router(for: .eventDetails, parent: self, with: event)
         child?.present()

@@ -6,8 +6,6 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
-
 protocol EventDetailsInteractorInputting: AnyObject {
     
     func fetchNotification(id: String)
@@ -29,6 +27,8 @@ class EventDetailsInteractor {
     
     weak var presenter: EventDetailsInteractorOutputting?
 }
+
+// MARK: EventDetailsInteractorInputting
 
 extension EventDetailsInteractor: EventDetailsInteractorInputting {
     
