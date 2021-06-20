@@ -10,56 +10,66 @@ import CoreData
 
 class CoreDataManager {
     
+    // MARK: Constants
+    
+    private enum Constant {
+        enum String {
+            static let database = "DateAid"
+        }
+    }
+    
     // MARK: Static Instance
     
     static let shared: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DateAid")
         
-        let flagsDescription = NSPersistentStoreDescription()
+        let container = NSPersistentContainer(name: Constant.String.database)
+        
+        let flagsDescription = NSPersistentStoreDescription(url: databaseURL)
+        let storeDescription = NSPersistentStoreDescription(url: databaseURL)
+        
         flagsDescription.shouldInferMappingModelAutomatically = true
         flagsDescription.shouldMigrateStoreAutomatically = true
-
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = urls[urls.count-1]
-        let url = documentsDirectory.appendingPathComponent("DateAid")
-        
-        let storeDescription = NSPersistentStoreDescription(url: url)
         
         container.persistentStoreDescriptions = [flagsDescription, storeDescription]
         
         return container
     }()
     
+    static private let databaseURL: URL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = urls[urls.count-1]
+        return documentsDirectory.appendingPathComponent(Constant.String.database)
+    }()
+    
     // MARK: Public Properties
     
     static func fetch<T: NSManagedObject>() throws -> [T] {
-        let context = shared.viewContext
         let request = NSFetchRequest<T>(entityName: String(describing: T.self))
-
+        
         do {
-            return try context.fetch(request) as [T]
+            return try shared.viewContext.fetch(request) as [T]
         } catch {
             throw error
         }
     }
     
     static func delete<T: NSManagedObject>(object: T) throws {
-        let context = shared.viewContext
-        context.delete(object)
+        shared.viewContext.delete(object)
+        
         do {
-            try context.save()
+            try shared.viewContext.save()
         } catch {
-            print(error.localizedDescription)
             throw error
         }
     }
     
     static func save() throws {
-        let context = shared.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            }
+        guard shared.viewContext.hasChanges else { return }
+        
+        do {
+            try shared.viewContext.save()
+        } catch {
+            throw error
         }
     }
 }

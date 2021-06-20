@@ -29,9 +29,11 @@ class InitialImportWireframe {
     }
     
     private func initialImportViewController<T: InitialImportViewController>() -> T {
-        let vc: T = Constant.StoryboardId.main.vc(id: .initialImport)
-        vc.presenter = presenter
-        return vc
+//        let vc: T = Constant.StoryboardId.main.vc(id: .initialImport)
+//        vc.presenter = presenter
+        
+        // TODO Build this
+        return InitialImportViewController() as! T
     }
     
     private func initialImportInteractor() -> InitialImportInteractor {

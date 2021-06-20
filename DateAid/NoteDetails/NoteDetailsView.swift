@@ -83,7 +83,7 @@ class NoteDetailsView: BaseView {
     }()
     
     private lazy var otherDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView(noteType: .other)
+        let dot = NoteCircleImageView(noteType: .misc)
         dot.translatesAutoresizingMaskIntoConstraints = false
         return dot
     }()
@@ -264,7 +264,7 @@ extension NoteDetailsView: Populatable {
             giftsDot.setSelectedState(isSelected: false)
             plansDot.setSelectedState(isSelected: true)
             otherDot.setSelectedState(isSelected: false)
-        case .other:
+        case .misc:
             giftsDot.setSelectedState(isSelected: false)
             plansDot.setSelectedState(isSelected: false)
             otherDot.setSelectedState(isSelected: true)

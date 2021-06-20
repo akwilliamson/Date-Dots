@@ -12,17 +12,13 @@ enum NoteType: String {
     
     case gifts
     case plans
-    case other = "misc"
+    case misc
     
     var key: String {
         return "note-\(rawValue)"
     }
     
     var image: UIImage {
-        switch self {
-        case .gifts: return UIImage(named: "gift")!
-        case .plans: return UIImage(named: "plan")!
-        case .other: return UIImage(named: "other")!
-        }
+        return UIImage(named: rawValue)!
     }
 }

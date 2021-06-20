@@ -18,9 +18,6 @@ enum InfoType: String {
     }
     
     var image: UIImage {
-        switch self {
-        case .address:  return UIImage(named: "address")!
-        case .reminder: return UIImage(named: "reminder")!
-        }
+        return UIImage(named: rawValue)!
     }
 }

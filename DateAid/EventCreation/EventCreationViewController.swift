@@ -21,6 +21,10 @@ protocol EventCreationViewOutputting: AnyObject {
     func selectMonth(index: Int)
     func selectYear(index: Int)
     func selectDay(index: Int)
+    
+    // Errors
+    func showInputError()
+    func showSaveError()
 }
 
 class EventCreationViewController: UIViewController {
@@ -130,5 +134,19 @@ extension EventCreationViewController: EventCreationViewDelegate {
     
     func didSelectPicker(row: Int, in component: Int) {
         presenter?.didSelectPickerRow(row: row, in: component)
+    }
+    
+    func showInputError() {
+        let alertController = UIAlertController(title: "Save Error", message: "Please add a name before saving", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showSaveError() {
+        let alertController = UIAlertController(title: "Save Error", message: "Something went wrong, please try again", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

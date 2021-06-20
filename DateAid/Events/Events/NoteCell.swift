@@ -107,7 +107,7 @@ extension NoteCell {
                 noteLabel.text = "Gift ideas"
             case .plans:
                 noteLabel.text = "Event plans"
-            case .other:
+            case .misc:
                 noteLabel.text = "Other notes"
             }
             if #available(iOS 13.0, *) {

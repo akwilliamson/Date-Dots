@@ -59,7 +59,7 @@ class EventDetailsViewController: UIViewController {
     
     @objc
     func editButtonPressed() {
-        print("TODO: Route to edit event")
+        presenter?.didSelectEdit()
     }
 }
 

@@ -20,10 +20,10 @@ class EventCreationRouter {
     
     // MARK: Initialization
     
-    init(parent: Routing) {
+    init(parent: Routing, event: Event? = nil) {
         self.parent = parent
         
-        let presenter = EventCreationPresenter()
+        let presenter = EventCreationPresenter(event: event)
         
         let view = EventCreationViewController()
         presenter.view = view
@@ -47,5 +47,9 @@ extension EventCreationRouter: Routing {
     func present() {
         guard let view = presenter.view as? EventCreationViewController else { return }
         RouteManager.shared.navigationController?.pushViewController(view, animated: true)
+    }
+    
+    func dismiss() {
+        RouteManager.shared.navigationController?.popViewController(animated: true)
     }
 }

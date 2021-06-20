@@ -22,7 +22,7 @@ class EventDetailsView: BaseView {
     private enum Constant {
         enum String {
             static let turns = "turns"
-            static let year = "year"
+            static let years = "years"
             static let `in` = "in"
             static let on = "on"
             static let addAddress = "Add Address"
@@ -133,6 +133,16 @@ class EventDetailsView: BaseView {
             label.font = FontType.avenirNextBold(36).font
         }
         return label
+    }()
+    
+    // Details - Age Fallback
+    
+    private let fallbackEventImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
     }()
     
     // Details - Date
@@ -371,7 +381,7 @@ class EventDetailsView: BaseView {
     }()
     
     private lazy var otherNoteDotView: NoteCircleImageView = {
-        let dotView = NoteCircleImageView(noteType: .other)
+        let dotView = NoteCircleImageView(noteType: .misc)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(otherDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         return dotView
@@ -401,6 +411,7 @@ class EventDetailsView: BaseView {
                 detailsStackView.addArrangedSubview(daysStackView)
                     daysStackView.addArrangedSubview(inLabel)
                     daysStackView.addArrangedSubview(daysLabel)
+                detailsStackView.addArrangedSubview(fallbackEventImageView)
                 detailsStackView.addArrangedSubview(ageStackView)
                     ageStackView.addArrangedSubview(isLabel)
                     ageStackView.addArrangedSubview(ageLabel)
@@ -452,8 +463,8 @@ class EventDetailsView: BaseView {
         // Info
         
         NSLayoutConstraint.activate([
-            addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
-            addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             addressContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
         ])
         NSLayoutConstraint.activate([
@@ -461,8 +472,8 @@ class EventDetailsView: BaseView {
             addressLabelStackView.centerYAnchor.constraint(equalTo: addressContainerView.centerYAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
-            reminderContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
-            reminderContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            reminderContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            reminderContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             reminderContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
         ])
         NSLayoutConstraint.activate([
@@ -502,8 +513,8 @@ class EventDetailsView: BaseView {
         // Notes
         
         NSLayoutConstraint.activate([
-            notesContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
-            notesContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            notesContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            notesContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             notesContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/5.5)
         ])
         NSLayoutConstraint.activate([
@@ -544,6 +555,7 @@ class EventDetailsView: BaseView {
     
     @objc
     func reminderPressed() {
+        // TODO: finish this
 //        let note = event?.note(forType: selectedNoteType)
 //        delegate?.didSelectNoteView(note, noteType: selectedNoteType)
     }
@@ -576,7 +588,7 @@ class EventDetailsView: BaseView {
     
     @objc
     func otherDotPressed() {
-        delegate?.didSelectNoteType(.other)
+        delegate?.didSelectNoteType(.misc)
     }
     
     // MARK: Interface
@@ -610,9 +622,9 @@ class EventDetailsView: BaseView {
             selectedNoteType = .plans
             styleNoteDotsFor(selectedNoteType: selectedNoteType)
             populateNote(noteType: selectedNoteType)
-        case .other:
-            guard selectedNoteType != .other else { return }
-            selectedNoteType = .other
+        case .misc:
+            guard selectedNoteType != .misc else { return }
+            selectedNoteType = .misc
             styleNoteDotsFor(selectedNoteType: selectedNoteType)
             populateNote(noteType: selectedNoteType)
         }
@@ -643,7 +655,7 @@ class EventDetailsView: BaseView {
             giftsNoteDotView.setSelectedState(isSelected: false)
             plansNoteDotView.setSelectedState(isSelected: true)
             otherNoteDotView.setSelectedState(isSelected: false)
-        case .other:
+        case .misc:
             giftsNoteDotView.setSelectedState(isSelected: false)
             plansNoteDotView.setSelectedState(isSelected: false)
             otherNoteDotView.setSelectedState(isSelected: true)
@@ -692,19 +704,41 @@ extension EventDetailsView: Populatable {
     // Details
     
     private func populateDetails(event: Event) {
+        
+        // In
+        
         inLabel.text = Constant.String.in
         daysLabel.text = event.daysAway
         
+        // Is
+        
         switch event.eventType {
         case .birthday:
-            isLabel.text = Constant.String.turns
+            if event.date.year == 2100 {
+                ageStackView.isHidden = true
+                fallbackEventImageView.image = event.eventType.image
+            } else {
+                fallbackEventImageView.isHidden = true
+                isLabel.text = Constant.String.turns
+                ageLabel.text = event.numOfYears
+            }
         case .anniversary:
-            isLabel.text = Constant.String.year
-        default:
-            return
+            if event.date.year == 2100 {
+                ageStackView.isHidden = true
+                fallbackEventImageView.image = event.eventType.image
+            } else {
+                fallbackEventImageView.isHidden = true
+                isLabel.text = Constant.String.years
+                ageLabel.text = event.numOfYears
+            }
+        case .custom:
+            fallbackEventImageView.image = event.eventType.image
+        case .other:
+            fallbackEventImageView.image = event.eventType.image
         }
         
-        ageLabel.text = event.numOfYears
+        // On
+        
         onLabel.text = Constant.String.on
         dateLabel.text = event.dayOfYear
     }
@@ -713,7 +747,7 @@ extension EventDetailsView: Populatable {
         detailsContainerView.backgroundColor = eventType.color
         
         switch eventType {
-        case .holiday, .other:
+        case .custom, .other:
             ageStackView.isHidden = true
         default:
             return

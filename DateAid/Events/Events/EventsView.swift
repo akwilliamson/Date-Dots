@@ -37,12 +37,18 @@ class EventsView: BaseView {
         stackView.spacing = 8
         return stackView
     }()
-
+    
     private lazy var birthdayDot: EventCircleImageView = {
         let dotView = EventCircleImageView(eventType: .birthday)
         dotView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
 
@@ -50,13 +56,25 @@ class EventsView: BaseView {
         let dotView = EventCircleImageView(eventType: .anniversary)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
 
-    private lazy var holidayDot: EventCircleImageView = {
-        let dotView = EventCircleImageView(eventType: .holiday)
+    private lazy var customDot: EventCircleImageView = {
+        let dotView = EventCircleImageView(eventType: .custom)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
 
@@ -64,6 +82,12 @@ class EventsView: BaseView {
         let dotView = EventCircleImageView(eventType: .other)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
 
@@ -89,6 +113,12 @@ class EventsView: BaseView {
         let dotView = NoteCircleImageView(noteType: .gifts)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
 
@@ -96,13 +126,28 @@ class EventsView: BaseView {
         let dotView = NoteCircleImageView(noteType: .plans)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
         return dotView
     }()
 
     private lazy var otherNoteDot: NoteCircleImageView = {
-        let dotView = NoteCircleImageView(noteType: .other)
+        let dotView = NoteCircleImageView(noteType: .misc)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
+        
+        dotView.layer.shadowColor = UIColor.black.cgColor
+        dotView.layer.shadowRadius = 10.0
+        dotView.layer.shadowOpacity = 1.0
+        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return dotView
     }()
     
@@ -126,7 +171,7 @@ class EventsView: BaseView {
         addSubview(eventDotStackView)
         eventDotStackView.addArrangedSubview(birthdayDot)
         eventDotStackView.addArrangedSubview(anniversaryDot)
-        eventDotStackView.addArrangedSubview(holidayDot)
+        eventDotStackView.addArrangedSubview(customDot)
         eventDotStackView.addArrangedSubview(otherDot)
         addSubview(noteDotStackView)
         noteDotStackView.addArrangedSubview(giftsNoteDot)
@@ -167,7 +212,7 @@ class EventsView: BaseView {
         switch eventType {
         case .birthday:       birthdayDot.setSelectedState(isSelected: isSelected)
         case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
-        case .holiday:         holidayDot.setSelectedState(isSelected: isSelected)
+        case .custom:           customDot.setSelectedState(isSelected: isSelected)
         case .other:             otherDot.setSelectedState(isSelected: isSelected)
         }
     }
@@ -176,7 +221,7 @@ class EventsView: BaseView {
         switch noteType {
         case .gifts: giftsNoteDot.setSelectedState(isSelected: isSelected)
         case .plans: plansNoteDot.setSelectedState(isSelected: isSelected)
-        case .other: otherNoteDot.setSelectedState(isSelected: isSelected)
+        case .misc: otherNoteDot.setSelectedState(isSelected: isSelected)
         }
     }
     

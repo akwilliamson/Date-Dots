@@ -55,7 +55,7 @@ class ContactConverter {
         
         for (givenName, givenDate) in dict {
         
-            let exists = storedEvents.contains { $0.name == givenName && $0.type == EventType.holiday.rawValue }
+            let exists = storedEvents.contains { $0.name == givenName && $0.type == EventType.custom.rawValue }
             
             if !exists {
                 if let entity = NSEntityDescription.entity(forEntityName: "Date", in: CoreDataManager.shared.viewContext) {
@@ -67,8 +67,7 @@ class ContactConverter {
                     date.givenName       = givenName
                     date.familyName      = String()
                     date.date            = givenDate
-                    date.equalizedDate   = givenDate.formatted("MM/dd")
-                    date.type            = EventType.holiday.rawValue
+                    date.type            = EventType.custom.rawValue
                 }
             }
         }
@@ -100,12 +99,10 @@ class ContactConverter {
                 case .birthday:
                     let birthdate = contact.birthdate ?? Date() // TODO: default to something smarter
                     event.date = birthdate
-                    event.equalizedDate = birthdate.formatted("MM/dd")
                 case .anniversary:
                     let anniversaryDate = contact.anniversary ?? Date() // TODO: default to something smarter
                     event.date = anniversaryDate
-                    event.equalizedDate = anniversaryDate.formatted("MM/dd")
-                case .holiday:
+                case .custom:
                     return // TODO: Fix later
                 case .other:
                     return // TODO: Fix later

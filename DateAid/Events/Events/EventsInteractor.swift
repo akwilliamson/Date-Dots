@@ -46,10 +46,10 @@ extension EventsInteractor: EventsInteractorInputting {
     func fetchEvents() {
         do {
             self.events = try CoreDataManager.fetch()
-            presenter?.eventsFetched(self.events)
             migrateOldEvents {
                 presenter?.eventsFetched(self.events)
             }
+            presenter?.eventsFetched(self.events)
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }
@@ -104,7 +104,6 @@ extension EventsInteractor {
             try CoreDataManager.save()
             completion()
         } catch {
-            print("wtf \(error.localizedDescription))")
             completion()
         }
     }

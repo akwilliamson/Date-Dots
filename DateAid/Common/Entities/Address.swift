@@ -11,7 +11,7 @@ import CoreData
 
 class Address: NSManagedObject {
 
+    @NSManaged var event: Event?
     @NSManaged var street: String?
     @NSManaged var region: String?
-    @NSManaged var event: Event?
 }

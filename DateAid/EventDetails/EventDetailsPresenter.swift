@@ -13,6 +13,7 @@ protocol EventDetailsEventHandling: AnyObject {
     func viewDidLoad()
     func viewWillAppear()
     
+    func didSelectEdit()
     func didSelect(infoType: InfoType)
     func didSelect(noteType: NoteType)
     func didSelectNoteView(note: Note?, noteType: NoteType?)
@@ -48,7 +49,7 @@ class EventDetailsPresenter {
     }
     
     private var activeNoteType: NoteType {
-        return [.gifts, .plans, .other].filter {
+        return [.gifts, .plans, .misc].filter {
             UserDefaults.standard.bool(forKey: "\(Constant.keyPrefix)\($0.key)")
         }.first ?? .gifts
     }
@@ -76,7 +77,7 @@ class EventDetailsPresenter {
         let userDefaults = UserDefaults.standard
         userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.gifts.key)")
         userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.plans.key)")
-        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.other.key)")
+        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.misc.key)")
         
         userDefaults.set(true, forKey: "\(Constant.keyPrefix)\(noteType.key)")
     }
@@ -93,6 +94,10 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewWillAppear() {
         interactor?.fetchNotification(id: event.objectIDString)
+    }
+    
+    func didSelectEdit() {
+        router?.presentEventEdit(event: event)
     }
     
     func didSelect(infoType: InfoType) {

@@ -25,6 +25,8 @@ protocol EventCreationEventHandling: AnyObject {
 
 protocol EventCreationInteractorOutputting: AnyObject {
     
+    func saveSucceeded()
+    func saveFailed(error: Error)
 }
 
 class EventCreationPresenter {
@@ -37,30 +39,27 @@ class EventCreationPresenter {
     
     // MARK: Properties
     
-    private var eventType: EventType = .birthday
-    private var eventFirstName = ""
-    private var eventLastName = ""
-    private var eventAddress = ""
-    private var eventRegion = ""
-    private var eventMonth = 0
-    private var eventYear = 0
-    private var eventDay = 0
+    private var eventManager: EventCreationManager
+    private let datePickerManager: DatePickerManager
+    
+    private var yearIsActive = true
     
     private var displayName: String {
-        if eventFirstName.isEmpty {
-            return "\(eventType.emoji) \(eventType.rawValue.capitalized)"
-        } else if eventLastName.isEmpty {
-            return "\(eventType.emoji) \(eventFirstName)"
+        if eventManager.firstName.isEmpty {
+            return "\(eventManager.eventType.emoji) \(eventManager.eventType.rawValue.capitalized)"
+        } else if eventManager.lastName.isEmpty {
+            return "\(eventManager.eventType.emoji) \(eventManager.firstName)"
         } else {
-            return "\(eventType.emoji) \(eventFirstName) \(String(eventLastName.prefix(1)))"
+            return "\(eventManager.eventType.emoji) \(eventManager.firstName) \(String(eventManager.lastName.prefix(1)))"
         }
     }
     
-    private let calendarManager = CalendarManager(initialYear: 1920)
-    
     // MARK: Initialization
     
-    // MARK: Private Helpers
+    init(event: Event?) {
+        self.eventManager = EventCreationManager(event: event)
+        self.datePickerManager = DatePickerManager(date: event?.date)
+    }
 }
 
 // MARK: EventCreationEventHandling
@@ -70,75 +69,98 @@ extension EventCreationPresenter: EventCreationEventHandling {
     func viewDidLoad() {
         view?.configureNavigationButton()
         view?.configureNavigation(title: displayName)
-        view?.selectEventType(eventType)
         
         view?.populateView(
             content: EventCreationView.Content(
-                months: calendarManager.formattedMonths(),
-                years: calendarManager.formattedYears(),
-                days: calendarManager.formattedDaysFor(month: 6, year: 1970)
+                eventType: eventManager.eventType,
+                firstName: eventManager.firstName,
+                lastName: eventManager.lastName,
+                street: eventManager.street,
+                region: eventManager.region,
+                selectedDay: datePickerManager.selectedDay,
+                selectedMonth: datePickerManager.selectedMonth,
+                selectedYear: datePickerManager.selectedYearIndex,
+                days: datePickerManager.days,
+                months: datePickerManager.months,
+                years: datePickerManager.years
             )
         )
-        
-        view?.selectMonth(index: 5)
-        view?.selectYear(index: 50)
-        view?.selectDay(index: 14)
     }
     
     func didSelectEventType(eventType: EventType) {
-        guard self.eventType != eventType else { return }
-        self.eventType = eventType
-        view?.selectEventType(self.eventType)
+        guard eventManager.eventType != eventType else { return }
+        eventManager.setEventType(eventType)
+        
+        view?.selectEventType(eventType)
         view?.configureNavigation(title: displayName)
     }
     
     func didChangeFirstName(text: String) {
-        eventFirstName = text
+        eventManager.setFirstName(text)
+        
         view?.configureNavigation(title: displayName)
     }
     
     func didChangeLastName(text: String) {
-        eventLastName = text
+        eventManager.setLastName(text)
+        
         view?.configureNavigation(title: displayName)
     }
     
     func didChangeAddress(text: String) {
-        eventAddress = text
+        eventManager.setStreet(text)
     }
     
     func didChangeRegion(text: String) {
-        eventRegion = text
+        eventManager.setRegion(text)
     }
     
     func didToggleYearPicker(isOn: Bool) {
-        if isOn {
-            view?.selectYear(index: eventYear)
+        yearIsActive = isOn
+        
+        if yearIsActive {
+            view?.selectYear(index: datePickerManager.selectedYearIndex)
         }
     }
     
     func didSelectPickerRow(row: Int, in component: Int) {
         switch component {
         case 0:
-            eventMonth = row
-            let days = calendarManager.formattedDaysFor(month: row, year: eventYear)
-            view?.populateDays(days)
+            datePickerManager.setMonth(row)
+            view?.populateDays(datePickerManager.days)
         case 1:
-            eventDay = row
+            datePickerManager.setDay(row)
         case 2:
-            eventYear = row
-            let days = calendarManager.formattedDaysFor(month: eventMonth, year: row)
-            view?.populateDays(days)
+            datePickerManager.setYear(row)
+            view?.populateDays(datePickerManager.days)
         default:
             return
         }
     }
     
     func didPressSave() {
-        print("first name: \(eventFirstName)")
-        print("last name: \(eventLastName)")
-        print("address: \(eventAddress)")
-        print("region: \(eventRegion)")
-        print("date: \(calendarManager.getDate(monthIndex: eventMonth, dayIndex: eventDay, yearIndex: eventYear))")
+        guard !eventManager.firstName.isEmpty else {
+            view?.showInputError()
+            return
+        }
+        
+        eventManager.setEventDate(
+            createDate(
+                month: datePickerManager.selectedMonth,
+                day: datePickerManager.selectedDay,
+                year: yearIsActive ? datePickerManager.selectedYear : 2100
+            )
+        )
+        
+        interactor?.saveEvent(eventManager.event)
+    }
+    
+    // MARK: Private Methods
+    
+    private func createDate(month: Int, day: Int, year: Int = 2100) -> Date {
+        let dateComponents = DateComponents(year: year, month: month+1, day: day+1)
+        
+        return Calendar.current.date(from: dateComponents) ?? Date()
     }
 }
 
@@ -146,4 +168,12 @@ extension EventCreationPresenter: EventCreationEventHandling {
 
 extension EventCreationPresenter: EventCreationInteractorOutputting {
     
+    func saveSucceeded() {
+        router?.dismiss()
+    }
+    
+    func saveFailed(error: Error) {
+        print(error)
+        view?.showSaveError()
+    }
 }

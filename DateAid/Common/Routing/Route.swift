@@ -53,13 +53,12 @@ class RouteManager {
         case .eventDetails:
             guard let event = data as? Event else { return nil }
             return EventDetailsRouter(parent: parent, event: event)
+        case .eventEdit:
+            guard let event = data as? Event else { return nil }
+            return EventCreationRouter(parent: parent, event: event)
         case .eventNoteDetails:
             guard let noteState = data as? NoteState else { return nil }
             return NoteDetailsRouter(parent: parent, noteState: noteState)
-        case .eventEdit:
-            guard let _ = data as? Event else { return nil }
-            // TODO: Return event edit router
-            return nil
         case .eventReminder:
             guard let _ = data as? ReminderDetails else { return nil }
             // TODO: Return event reminder router

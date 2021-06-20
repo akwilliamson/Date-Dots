@@ -75,8 +75,8 @@ class EventCreationView: BaseView {
         return dotView
     }()
 
-    private lazy var holidayDot: EventCircleImageView = {
-        let dotView = EventCircleImageView(eventType: .holiday)
+    private lazy var customDot: EventCircleImageView = {
+        let dotView = EventCircleImageView(eventType: .custom)
         dotView.setSelectedState(isSelected: false)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventTypePressed))
         dotView.addGestureRecognizer(tapGesture)
@@ -284,7 +284,7 @@ class EventCreationView: BaseView {
             containerView.addArrangedSubview(eventDotStackView)
                 eventDotStackView.addArrangedSubview(birthdayDot)
                 eventDotStackView.addArrangedSubview(anniversaryDot)
-                eventDotStackView.addArrangedSubview(holidayDot)
+                eventDotStackView.addArrangedSubview(customDot)
                 eventDotStackView.addArrangedSubview(otherDot)
             containerView.addArrangedSubview(inputBackgroundView)
                 inputBackgroundView.addSubview(inputStackView)
@@ -353,8 +353,8 @@ class EventCreationView: BaseView {
             birthdayDot.setSelectedState(isSelected: false)
         case .anniversary:
             anniversaryDot.setSelectedState(isSelected: false)
-        case .holiday:
-            holidayDot.setSelectedState(isSelected: false)
+        case .custom:
+            customDot.setSelectedState(isSelected: false)
         case .other:
             otherDot.setSelectedState(isSelected: false)
         }
@@ -367,8 +367,8 @@ class EventCreationView: BaseView {
             birthdayDot.setSelectedState(isSelected: true)
         case .anniversary:
             anniversaryDot.setSelectedState(isSelected: true)
-        case .holiday:
-            holidayDot.setSelectedState(isSelected: true)
+        case .custom:
+            customDot.setSelectedState(isSelected: true)
         case .other:
             otherDot.setSelectedState(isSelected: true)
         }
@@ -440,7 +440,23 @@ class EventCreationView: BaseView {
 
 extension EventCreationView: UITextFieldDelegate {
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        switch textField {
+        case nameInputField:
+            lastNameInputField.becomeFirstResponder()
+        case lastNameInputField:
+            textField.resignFirstResponder()
+        case addressInputField:
+            regionInputField.becomeFirstResponder()
+        case regionInputField:
+            textField.resignFirstResponder()
+        default:
+            break
+        }
+        return true
+    }
 }
 
 // MARK: - UIPickerViewDataSource
@@ -484,14 +500,43 @@ extension EventCreationView: UIPickerViewDelegate {
 extension EventCreationView: Populatable {
     
     struct Content {
+        let eventType: EventType
+        let firstName: String
+        let lastName: String
+        let street: String
+        let region: String
+        let selectedDay: Int
+        let selectedMonth: Int
+        let selectedYear: Int
+        let days: [String]
         let months: [String]
         let years: [String]
-        let days: [String]
     }
     
     func populate(with content: Content) {
+        selectEventType(content.eventType)
+        
+        if !content.firstName.isEmpty {
+            nameInputField.text = content.firstName
+        }
+        if !content.lastName.isEmpty {
+            lastNameInputField.text = content.lastName
+        }
+        if !content.street.isEmpty {
+            addressInputField.text = content.street
+        }
+        if !content.region.isEmpty {
+            regionInputField.text = content.region
+        }
+        
+        self.days = content.days
         self.months = content.months
         self.years = content.years
-        self.days = content.days
+        
+        reloadAllComponents()
+        
+        selectDay(row: content.selectedDay-1)
+        selectMonth(row: content.selectedMonth-1)
+        selectYear(row: content.selectedYear)
     }
 }

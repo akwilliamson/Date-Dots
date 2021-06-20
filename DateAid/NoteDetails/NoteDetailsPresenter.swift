@@ -70,7 +70,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
                 view?.setNavigation(title: "Gifts")
             case .plans:
                 view?.setNavigation(title: "Plans")
-            case .other:
+            case .misc:
                 view?.setNavigation(title: "Misc")
             }
             view?.setNavigationBarButton(isEditable: false)
@@ -91,7 +91,7 @@ extension NoteDetailsPresenter: NoteDetailsEventHandling {
                 view?.setNavigation(title: "Gifts")
             case .plans:
                 view?.setNavigation(title: "Plans")
-            case .other:
+            case .misc:
                 view?.setNavigation(title: "Misc")
             }
             view?.setNavigationBarButton(isEditable: false)

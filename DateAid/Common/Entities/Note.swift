@@ -20,9 +20,9 @@ class Note: NSManagedObject {
         switch type {
         case "gifts", "Gifts": return .gifts
         case "plans", "Plans": return .plans
-        case "other", "Other": return .other
+        case "other", "Other": return .misc
         default:
-            return .other
+            return .misc
         }
     }
 }

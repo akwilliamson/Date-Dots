@@ -15,12 +15,13 @@ class Event: NSManagedObject {
     @NSManaged var abbreviatedName: String
     // Deprecated
     @NSManaged var name: String
+    // Deprecated
+    @NSManaged var equalizedDate: String
     
+    @NSManaged var type: String
+    @NSManaged var date: Date
     @NSManaged var givenName: String
     @NSManaged var familyName: String
-    @NSManaged var date: Date
-    @NSManaged var equalizedDate: String
-    @NSManaged var type: String
     @NSManaged var address: Address?
     @NSManaged var notes: Set<Note>?
     
@@ -28,13 +29,18 @@ class Event: NSManagedObject {
         return objectID.uriRepresentation().absoluteString
     }
     
+    var formattedDate: String {
+        date.formatted("MM/dd")
+    }
+    
     public var eventType: EventType {
         switch type {
         case "birthday":    return .birthday
         case "anniversary": return .anniversary
-        case "custom":      return .holiday
+        case "custom":      return .custom
+        case "holiday":     return .custom
         case "other":       return .other
-        default:            return .other
+        default:            return .birthday
         }
     }
 

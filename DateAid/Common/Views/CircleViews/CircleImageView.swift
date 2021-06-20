@@ -33,6 +33,5 @@ class CircleImageView: UIImageView {
     func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFit
-        clipsToBounds = true
     }
 }

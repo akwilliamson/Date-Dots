@@ -64,25 +64,25 @@ class EventsPresenter {
     private var events: [Event] = []
     
     private var activeEventTypes: [EventType] {
-        return [.birthday, .anniversary, .holiday, .other].filter {
+        return [.birthday, .anniversary, .custom, .other].filter {
             UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
     private var inactiveEventTypes: [EventType] {
-        return [.birthday, .anniversary, .holiday, .other].filter {
+        return [.birthday, .anniversary, .custom, .other].filter {
             !UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
     private var activeNoteTypes: [NoteType] {
-        return [.gifts, .plans, .other].filter {
+        return [.gifts, .plans, .misc].filter {
             UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
     private var inactiveNoteTypes: [NoteType] {
-        return [.gifts, .plans, .other].filter {
+        return [.gifts, .plans, .misc].filter {
             !UserDefaults.standard.bool(forKey: $0.key)
         }
     }
@@ -90,12 +90,13 @@ class EventsPresenter {
     private var activeEvents: [Event] {
         let activeEvents = events.filter { activeEventTypes.contains($0.eventType) }
         let today = Date().formatted("MM/dd")
-        let sortedEvents = activeEvents.sorted { $0.equalizedDate < $1.equalizedDate }
+        let sortedEvents = activeEvents.sorted { $0.formattedDate < $1.formattedDate }
+        
         let currentEvents = sortedEvents.sorted { (event1, event2) in
-            if event1.equalizedDate >= today && event2.equalizedDate < today {
-                return event1.equalizedDate > event2.equalizedDate
+            if event1.formattedDate >= today && event2.formattedDate < today {
+                return event1.formattedDate > event2.formattedDate
             } else {
-                return event1.equalizedDate < event2.equalizedDate
+                return event1.formattedDate < event2.formattedDate
             }
         }
         return currentEvents
@@ -159,6 +160,7 @@ extension EventsPresenter: EventsEventHandling {
     
     func viewWillAppear() {
         interactor?.fetchEvents()
+        view?.configureNavigation(state: .normal)
     }
     
     func searchButtonPressed() {
