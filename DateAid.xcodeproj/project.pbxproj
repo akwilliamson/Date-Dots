@@ -35,7 +35,6 @@
 		975975EF25EE1134006C5285 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975975EE25EE1134006C5285 /* Array+Subscript.swift */; };
 		9763D5292535749000EB10BC /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763D5282535749000EB10BC /* DeviceModel.swift */; };
 		976473AC24330CE000D2F11D /* EventCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976473AB24330CE000D2F11D /* EventCircleImageView.swift */; };
-		9764937525F73C910094BE9E /* UIView+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9764937425F73C910094BE9E /* UIView+Pulse.swift */; };
 		9765045524909F9F00C916C2 /* ReminderPriorDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* ReminderPriorDay.swift */; };
 		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
 		97690A6E2526EAD200E396EB /* ReminderCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */; };
@@ -144,7 +143,6 @@
 		975975EE25EE1134006C5285 /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
 		9763D5282535749000EB10BC /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		976473AB24330CE000D2F11D /* EventCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCircleImageView.swift; sourceTree = "<group>"; };
-		9764937425F73C910094BE9E /* UIView+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Pulse.swift"; sourceTree = "<group>"; };
 		9765045424909F9F00C916C2 /* ReminderPriorDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPriorDay.swift; sourceTree = "<group>"; };
 		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
 		97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCircleLabel.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 				97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Fetch.swift */,
 				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 				975975EE25EE1134006C5285 /* Array+Subscript.swift */,
-				9764937425F73C910094BE9E /* UIView+Pulse.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -723,7 +720,6 @@
 				97007BAE267FE78A007BA2F1 /* ReminderPresenter.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift in Sources */,
 				9796AEE425F09177003933C5 /* NoteDetailType.swift in Sources */,
-				9764937525F73C910094BE9E /* UIView+Pulse.swift in Sources */,
 				97E8E5F5268AE431004D355D /* Calendar+Utilities.swift in Sources */,
 				9796AEC825EFF660003933C5 /* NoteDetailsViewController.swift in Sources */,
 				97BDFCFA265E13A00061E0CB /* EventCreationInteractor.swift in Sources */,

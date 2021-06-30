@@ -13,12 +13,9 @@ protocol EventsInteractorInputting: AnyObject {
     func fetchEvents()
     func getEvents()
     func getEvents(containing searchText: String) -> Void
-    func delete(_ event: Event)
-    func cancelReminder(for id: String)
 }
 
 enum EventsInteractorError: Error {
-    case deleteFailed
     case fetchFailed
 }
 
@@ -74,18 +71,6 @@ extension EventsInteractor: EventsInteractorInputting {
 
             presenter?.eventsFetched(filteredEvents)
         }
-    }
-    
-    func delete(_ event: Event) {
-        do {
-            try CoreDataManager.delete(object: event)
-        } catch {
-            presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
-        }
-    }
-    
-    func cancelReminder(for id: String) {
-        notificationManager.removeNotification(with: id)
     }
 }
 

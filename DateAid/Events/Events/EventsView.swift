@@ -14,10 +14,7 @@ protocol EventsViewDelegate: AnyObject {
     func didPressDot(noteType: NoteType)
     
     func didSelectEvent(_ event: Event)
-    func didDeleteEvent(_ event: Event)
-    
     func didSelectNote(noteState: NoteState)
-    func didDeleteNote(_ note: Note)
 }
 
 class EventsView: BaseView {
@@ -96,6 +93,7 @@ class EventsView: BaseView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
         tableView.tableFooterView = UIView()
+        tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -191,8 +189,8 @@ class EventsView: BaseView {
         ])
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([

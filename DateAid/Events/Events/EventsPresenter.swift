@@ -17,24 +17,19 @@ protocol EventsEventHandling: AnyObject {
     func cancelButtonPressed()
     func addButtonPressed()
     
+    func searchTextChanged(text: String)
+    
     func eventDotPressed(type: EventType)
     func noteDotPressed(type: NoteType)
     
     func selectEventPressed(event: Event)
-    func deleteEventPressed(event: Event)
-    
     func selectNotePressed(noteState: NoteState)
-    func deleteNotePressed(note: Note)
-
-    func searchTextChanged(text: String)
 }
 
 protocol EventsInteractorOutputting: AnyObject {
     
     func eventsFetched(_ events: [Event])
     func eventsFetchedFailed(_ error: EventsInteractorError)
-    func eventDeleted(_ event: Event)
-    func eventDeleteFailed(_ error: EventsInteractorError)
 }
 
 class EventsPresenter {
@@ -46,13 +41,6 @@ class EventsPresenter {
     var interactor: EventsInteractorInputting?
 
     // MARK: Constants
-
-    private enum Constant {
-        enum Image {
-            static let iconSelected = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
-            static let iconUnselected =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
-        }
-    }
     
     enum NavigationState {
         case normal
@@ -88,12 +76,15 @@ class EventsPresenter {
     }
     
     private var activeEvents: [Event] {
-        let activeEvents = events.filter { activeEventTypes.contains($0.eventType) }
-        let today = Date().formatted("MM/dd")
+        events.filter { activeEventTypes.contains($0.eventType) }
+    }
+    
+    private var sortedActiveEvents: [Event] {
         let sortedEvents = activeEvents.sorted { $0.formattedDate < $1.formattedDate }
+        let now = Date().formatted("MM/dd")
         
         let currentEvents = sortedEvents.sorted { (event1, event2) in
-            if event1.formattedDate >= today && event2.formattedDate < today {
+            if event1.formattedDate >= now && event2.formattedDate < now {
                 return event1.formattedDate > event2.formattedDate
             } else {
                 return event1.formattedDate < event2.formattedDate
@@ -103,7 +94,6 @@ class EventsPresenter {
     }
     
     private var isSearching = false
-    private var deleteEventType: EventType?
     
     private let notificationManager = NotificationManager()
     
@@ -153,7 +143,7 @@ class EventsPresenter {
 // MARK: - EventsEventHandling
 
 extension EventsPresenter: EventsEventHandling {
-    
+
     func viewDidLoad() {
         let dateText = Date().formatted("MMM dd")
         view?.configureNavigation(title: dateText)
@@ -178,11 +168,16 @@ extension EventsPresenter: EventsEventHandling {
     func addButtonPressed() {
         router?.presentEventCreation()
     }
+    
+    func searchTextChanged(text: String) {
+        interactor?.getEvents(containing: text)
+    }
 
     func eventDotPressed(type: EventType) {
         let isSelected = togglePreferenceFor(eventType: type)
         view?.toggleDotFor(eventType: type, isSelected: isSelected)
-        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.reloadView()
         
         if activeEvents.isEmpty {
             view?.hideNoteDots()
@@ -194,28 +189,16 @@ extension EventsPresenter: EventsEventHandling {
     func noteDotPressed(type: NoteType) {
         let isSelected = togglePreferenceFor(noteType: type)
         view?.toggleDotFor(noteType: type, isSelected: isSelected)
-        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
-    }
-    
-    func deleteEventPressed(event: Event) {
-        deleteEventType = event.eventType
-        interactor?.delete(event)
+        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.reloadView()
     }
     
     func selectEventPressed(event: Event) {
         router?.presentEventDetails(event: event)
     }
     
-    func searchTextChanged(text: String) {
-        interactor?.getEvents(containing: text)
-    }
-    
     func selectNotePressed(noteState: NoteState) {
         router?.presentEventNote(noteState: noteState)
-    }
-    
-    func deleteNotePressed(note: Note) {
-        // TODO: Delete event note
     }
 }
 
@@ -226,21 +209,11 @@ extension EventsPresenter: EventsInteractorOutputting {
     func eventsFetched(_ events: [Event]) {
         self.events = events
         setupDots()
-        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.reloadView()
     }
     
     func eventsFetchedFailed(_ error: EventsInteractorError) {
-        print(error.localizedDescription)
-    }
-    
-    func eventDeleted(_ event: Event) {
-        interactor?.cancelReminder(for: event.id)
-
-        events.removeAll(where: { $0.objectID == event.objectID })
-        view?.removeSectionFor(event: event)
-    }
-    
-    func eventDeleteFailed(_ error: EventsInteractorError) {
         print(error.localizedDescription)
     }
 }

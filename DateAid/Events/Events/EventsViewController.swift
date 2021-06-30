@@ -22,8 +22,8 @@ protocol EventsViewOutputting: AnyObject {
     func hideNoteDots()
     func showNoteDots()
 
-    func reload(activeEvents: [Event], activeNoteTypes: [NoteType])
-    func removeSectionFor(event: Event)
+    func populateView(activeEvents: [Event], activeNoteTypes: [NoteType])
+    func reloadView()
 }
 
 class EventsViewController: UIViewController {
@@ -160,18 +160,17 @@ extension EventsViewController: EventsViewOutputting {
         baseView.showNoteDots()
     }
     
-    func reload(activeEvents: [Event], activeNoteTypes: [NoteType]) {
+    func populateView(activeEvents: [Event], activeNoteTypes: [NoteType]) {
         baseView.populate(
             with: EventsView.Content(
                 events: activeEvents,
                 noteTypes: activeNoteTypes
             )
         )
-        baseView.reloadData()
     }
     
-    func removeSectionFor(event: Event) {
-        baseView.deleteTableViewSectionFor(event: event)
+    func reloadView() {
+        baseView.reloadData()
     }
 }
 
@@ -191,15 +190,7 @@ extension EventsViewController: EventsViewDelegate {
         presenter?.selectEventPressed(event: event)
     }
     
-    func didDeleteEvent(_ event: Event) {
-        presenter?.deleteEventPressed(event: event)
-    }
-    
     func didSelectNote(noteState: NoteState) {
         presenter?.selectNotePressed(noteState: noteState)
-    }
-    
-    func didDeleteNote(_ note: Note) {
-        print("TODO: delete note and animate table view cell row deletion")
     }
 }
