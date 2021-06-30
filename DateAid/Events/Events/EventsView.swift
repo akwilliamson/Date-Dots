@@ -93,6 +93,9 @@ class EventsView: BaseView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
         tableView.tableFooterView = UIView()
+        tableView.estimatedRowHeight = 0
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
         tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
         tableView.dataSource = self
