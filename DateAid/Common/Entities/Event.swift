@@ -25,7 +25,7 @@ class Event: NSManagedObject {
     @NSManaged var address: Address?
     @NSManaged var notes: Set<Note>?
     
-    var objectIDString: String {
+    var id: String {
         return objectID.uriRepresentation().absoluteString
     }
     

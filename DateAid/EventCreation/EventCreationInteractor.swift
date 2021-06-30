@@ -21,7 +21,7 @@ class EventCreationInteractor {
     weak var presenter: EventCreationInteractorOutputting?
 }
 
-// MARK: EventCreationInteractorInputting
+// MARK: - EventCreationInteractorInputting
 
 extension EventCreationInteractor: EventCreationInteractorInputting {
     

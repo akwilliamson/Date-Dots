@@ -110,6 +110,7 @@ class EventsPresenter {
     // MARK: Private Helpers
     
     private func setupDots() {
+
         activeEventTypes.forEach {
             view?.toggleDotFor(eventType: $0, isSelected: true)
         }
@@ -233,7 +234,7 @@ extension EventsPresenter: EventsInteractorOutputting {
     }
     
     func eventDeleted(_ event: Event) {
-        notificationManager.cancelNotificationWith(identifier: event.objectIDString)
+        interactor?.cancelReminder(for: event.id)
 
         events.removeAll(where: { $0.objectID == event.objectID })
         view?.removeSectionFor(event: event)

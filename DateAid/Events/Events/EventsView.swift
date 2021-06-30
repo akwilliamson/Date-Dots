@@ -187,7 +187,6 @@ class EventsView: BaseView {
             eventDotStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
-            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
         ])
         NSLayoutConstraint.activate([
@@ -302,7 +301,6 @@ extension EventsView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-   
         guard
             indexPath.section != 0,
             indexPath.section != activeEvents.count + 1,

@@ -24,13 +24,13 @@ class CoreDataManager {
         
         let container = NSPersistentContainer(name: Constant.String.database)
         
-        let flagsDescription = NSPersistentStoreDescription(url: databaseURL)
+//        let flagsDescription = NSPersistentStoreDescription(url: databaseURL)
         let storeDescription = NSPersistentStoreDescription(url: databaseURL)
         
-        flagsDescription.shouldInferMappingModelAutomatically = true
-        flagsDescription.shouldMigrateStoreAutomatically = true
-        
-        container.persistentStoreDescriptions = [flagsDescription, storeDescription]
+        storeDescription.shouldInferMappingModelAutomatically = true
+        storeDescription.shouldMigrateStoreAutomatically = true
+//
+        container.persistentStoreDescriptions = [storeDescription]
         
         return container
     }()

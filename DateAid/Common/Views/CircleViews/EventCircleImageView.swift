@@ -54,18 +54,10 @@ class EventCircleImageView: CircleImageView {
 
         if isSelected {
             backgroundColor = eventType.color
-            if #available(iOS 13.0, *) {
-                image = eventType.image
-            } else {
-                tintColor = .white
-            }
+            image = eventType.image
         } else {
             backgroundColor = .compatibleSystemBackground
-            if #available(iOS 13.0, *) {
-                image = eventType.image.withTintColor(eventType.color)
-            } else {
-                tintColor = eventType.color
-            }
+            image = eventType.image.withTintColor(eventType.color)
         }
     }
 }

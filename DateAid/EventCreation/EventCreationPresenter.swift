@@ -173,7 +173,6 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
     }
     
     func saveFailed(error: Error) {
-        print(error)
         view?.showSaveError()
     }
 }

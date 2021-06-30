@@ -55,8 +55,8 @@ extension EventDetailsRouter: Routing {
     
     // TODO: Add dismiss edit event
     
-    func presentEventReminder(details: ReminderDetails) {
-        child = RouteManager.shared.router(for: .eventReminder, parent: self, with: details)
+    func presentEventReminder(event: Event) {
+        child = RouteManager.shared.router(for: .eventReminder, parent: self, with: event)
         child?.present()
     }
     

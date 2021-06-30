@@ -72,7 +72,12 @@ extension EventCreationViewController: EventCreationViewOutputting {
     }
     
     func configureNavigationButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didPressSave))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Save",
+            style: .done,
+            target: self,
+            action: #selector(didPressSave)
+        )
     }
     
     func populateView(content: EventCreationView.Content) {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97007BAC267FE35D007BA2F1 /* ReminderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97007BAB267FE35D007BA2F1 /* ReminderRouter.swift */; };
+		97007BAE267FE78A007BA2F1 /* ReminderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97007BAD267FE78A007BA2F1 /* ReminderPresenter.swift */; };
+		97007BB0267FE799007BA2F1 /* ReminderInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97007BAF267FE799007BA2F1 /* ReminderInteractor.swift */; };
 		970622421E2C32100020743C /* EventsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970622411E2C32100020743C /* EventsNavigationViewController.swift */; };
 		97069CD42627BC4200102F89 /* EventDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97069CD32627BC4200102F89 /* EventDetailsPresenter.swift */; };
 		97069CDA2627BC5D00102F89 /* EventDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97069CD92627BC5D00102F89 /* EventDetailsRouter.swift */; };
@@ -33,14 +36,12 @@
 		9763D5292535749000EB10BC /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763D5282535749000EB10BC /* DeviceModel.swift */; };
 		976473AC24330CE000D2F11D /* EventCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976473AB24330CE000D2F11D /* EventCircleImageView.swift */; };
 		9764937525F73C910094BE9E /* UIView+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9764937425F73C910094BE9E /* UIView+Pulse.swift */; };
-		9765045524909F9F00C916C2 /* ReminderDaysBefore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* ReminderDaysBefore.swift */; };
-		976504572490A2D000C916C2 /* ReminderDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976504562490A2D000C916C2 /* ReminderDetails.swift */; };
+		9765045524909F9F00C916C2 /* ReminderPriorDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9765045424909F9F00C916C2 /* ReminderPriorDay.swift */; };
 		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
 		97690A6E2526EAD200E396EB /* ReminderCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */; };
 		976BD4F71B2D079200415D65 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* EventCell.swift */; };
 		976BE68124888E0C00D48682 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BE68024888E0C00D48682 /* ReminderViewController.swift */; };
 		976BE68324888E1400D48682 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BE68224888E1400D48682 /* ReminderView.swift */; };
-		976BE68524888E1F00D48682 /* ReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BE68424888E1F00D48682 /* ReminderViewModel.swift */; };
 		976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976ED7781DA0D5E300AC5D29 /* ContactManager.swift */; };
 		9774AC87263BDDF90066CFB5 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9774AC86263BDDF90066CFB5 /* NoteCell.swift */; };
 		9774DB532467C5E800211D9A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9774DB522467C5E800211D9A /* BaseView.swift */; };
@@ -92,6 +93,8 @@
 		97D7E20E24D760E300A28F60 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D7E20D24D760E300A28F60 /* Font.swift */; };
 		97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */; };
 		97E5F36C263DC5AB00395D87 /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E5F36B263DC5AB00395D87 /* Routing.swift */; };
+		97E8E5F5268AE431004D355D /* Calendar+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8E5F4268AE431004D355D /* Calendar+Utilities.swift */; };
+		97E8E5F7268B7EBA004D355D /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8E5F6268B7EBA004D355D /* Reminder.swift */; };
 		97F7AE5525E779BF0023BFA5 /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7AE5425E779BF0023BFA5 /* NoteType.swift */; };
 		97F7B1D3263DDC1F001D1313 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7B1D2263DDC1F001D1313 /* Route.swift */; };
 		97F8FFC725F9E618003F05D2 /* EventNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F8FFC625F9E618003F05D2 /* EventNaming.swift */; };
@@ -108,6 +111,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		97007BAB267FE35D007BA2F1 /* ReminderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderRouter.swift; sourceTree = "<group>"; };
+		97007BAD267FE78A007BA2F1 /* ReminderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPresenter.swift; sourceTree = "<group>"; };
+		97007BAF267FE799007BA2F1 /* ReminderInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderInteractor.swift; sourceTree = "<group>"; };
 		970622411E2C32100020743C /* EventsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsNavigationViewController.swift; sourceTree = "<group>"; };
 		97069CD32627BC4200102F89 /* EventDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsPresenter.swift; sourceTree = "<group>"; };
 		97069CD92627BC5D00102F89 /* EventDetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsRouter.swift; sourceTree = "<group>"; };
@@ -139,14 +145,12 @@
 		9763D5282535749000EB10BC /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		976473AB24330CE000D2F11D /* EventCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCircleImageView.swift; sourceTree = "<group>"; };
 		9764937425F73C910094BE9E /* UIView+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Pulse.swift"; sourceTree = "<group>"; };
-		9765045424909F9F00C916C2 /* ReminderDaysBefore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDaysBefore.swift; sourceTree = "<group>"; };
-		976504562490A2D000C916C2 /* ReminderDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDetails.swift; sourceTree = "<group>"; };
+		9765045424909F9F00C916C2 /* ReminderPriorDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPriorDay.swift; sourceTree = "<group>"; };
 		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
 		97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCircleLabel.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		976BE68024888E0C00D48682 /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		976BE68224888E1400D48682 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
-		976BE68424888E1F00D48682 /* ReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewModel.swift; sourceTree = "<group>"; };
 		976ED7781DA0D5E300AC5D29 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		9774AC86263BDDF90066CFB5 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		9774DB522467C5E800211D9A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 		97D7E20D24D760E300A28F60 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		97E5F36B263DC5AB00395D87 /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
+		97E8E5F4268AE431004D355D /* Calendar+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Utilities.swift"; sourceTree = "<group>"; };
+		97E8E5F6268B7EBA004D355D /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		97F7AE5425E779BF0023BFA5 /* NoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteType.swift; sourceTree = "<group>"; };
 		97F7B1D2263DDC1F001D1313 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		97F8FFC625F9E618003F05D2 /* EventNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNaming.swift; sourceTree = "<group>"; };
@@ -225,6 +231,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97007BAA267FE2C5007BA2F1 /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				97007BAB267FE35D007BA2F1 /* ReminderRouter.swift */,
+				976BE68224888E1400D48682 /* ReminderView.swift */,
+				976BE68024888E0C00D48682 /* ReminderViewController.swift */,
+				97007BAD267FE78A007BA2F1 /* ReminderPresenter.swift */,
+				97007BAF267FE799007BA2F1 /* ReminderInteractor.swift */,
+				9765045424909F9F00C916C2 /* ReminderPriorDay.swift */,
+				97E8E5F6268B7EBA004D355D /* Reminder.swift */,
+			);
+			path = Reminders;
+			sourceTree = "<group>";
+		};
 		970C576D261F6DEE00C71592 /* CircleViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,9 +261,10 @@
 		970D93631BC47B9500D7F1FF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */,
 				970D93611BC4765900D7F1FF /* UIColor+Colors.swift */,
 				97AEAC0D1B2EA58000ADF181 /* Date+Utilities.swift */,
-				97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */,
+				97E8E5F4268AE431004D355D /* Calendar+Utilities.swift */,
 				97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Fetch.swift */,
 				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 				975975EE25EE1134006C5285 /* Array+Subscript.swift */,
@@ -306,7 +327,7 @@
 				97C901F1245A893D005AF301 /* Events */,
 				97C901F4245A897A005AF301 /* EventDetails */,
 				972D6659245FCEE200F5D5DB /* EventCreation */,
-				976BE67F24888DF000D48682 /* EventReminder */,
+				97007BAA267FE2C5007BA2F1 /* Reminders */,
 				9796AEC625EFF636003933C5 /* NoteDetails */,
 			);
 			path = DateAid;
@@ -337,18 +358,6 @@
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 			);
 			path = DataModels;
-			sourceTree = "<group>";
-		};
-		976BE67F24888DF000D48682 /* EventReminder */ = {
-			isa = PBXGroup;
-			children = (
-				976BE68024888E0C00D48682 /* ReminderViewController.swift */,
-				976BE68424888E1F00D48682 /* ReminderViewModel.swift */,
-				976BE68224888E1400D48682 /* ReminderView.swift */,
-				9765045424909F9F00C916C2 /* ReminderDaysBefore.swift */,
-				976504562490A2D000C916C2 /* ReminderDetails.swift */,
-			);
-			path = EventReminder;
 			sourceTree = "<group>";
 		};
 		9774DB542467C60500211D9A /* BaseView */ = {
@@ -652,9 +661,9 @@
 				97811EF3247236D2009787DA /* PaddedTextField.swift in Sources */,
 				97F8FFC725F9E618003F05D2 /* EventNaming.swift in Sources */,
 				970C5766261ECBD000C71592 /* EventSectionHeader.swift in Sources */,
-				976504572490A2D000C916C2 /* ReminderDetails.swift in Sources */,
 				97A00A91248C84D900AB7F85 /* NotificationManager.swift in Sources */,
 				976BD4F71B2D079200415D65 /* EventCell.swift in Sources */,
+				97E8E5F7268B7EBA004D355D /* Reminder.swift in Sources */,
 				97069CE22627C3B200102F89 /* EventDetailsViewController.swift in Sources */,
 				9774AC87263BDDF90066CFB5 /* NoteCell.swift in Sources */,
 				97BDFCF2265E13520061E0CB /* EventCreationView.swift in Sources */,
@@ -673,7 +682,7 @@
 				9774DB562467C61300211D9A /* ConstructableView.swift in Sources */,
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */,
-				9765045524909F9F00C916C2 /* ReminderDaysBefore.swift in Sources */,
+				9765045524909F9F00C916C2 /* ReminderPriorDay.swift in Sources */,
 				97E5F36C263DC5AB00395D87 /* Routing.swift in Sources */,
 				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97069CD42627BC4200102F89 /* EventDetailsPresenter.swift in Sources */,
@@ -688,12 +697,12 @@
 				9781F9881E3E8A4500E2C434 /* EventsNavigationRouter.swift in Sources */,
 				9707A7E91DBBFD6100C4A9C0 /* EventsPresenter.swift in Sources */,
 				979F3DC9262AAB38000FD1EB /* EventAging.swift in Sources */,
-				976BE68524888E1F00D48682 /* ReminderViewModel.swift in Sources */,
 				97B40DAB1DA17900000DA0E0 /* ContactConverter.swift in Sources */,
 				977E3B021DA197FF005D131F /* CNContact+Tasks.swift in Sources */,
 				97BDFCF4265E136B0061E0CB /* EventCreationViewController.swift in Sources */,
 				97BDFCF8265E138E0061E0CB /* EventCreationPresenter.swift in Sources */,
 				9712376125F0A9F600924986 /* NoteCircleImageView.swift in Sources */,
+				97007BB0267FE799007BA2F1 /* ReminderInteractor.swift in Sources */,
 				979C36A51E0E12770098345E /* EventsRouter.swift in Sources */,
 				97B67D881E512F95006C3216 /* InitialImportInteractorInputting.swift in Sources */,
 				976BE68124888E0C00D48682 /* ReminderViewController.swift in Sources */,
@@ -703,6 +712,7 @@
 				97069CDA2627BC5D00102F89 /* EventDetailsRouter.swift in Sources */,
 				970D93621BC4765900D7F1FF /* UIColor+Colors.swift in Sources */,
 				970622421E2C32100020743C /* EventsNavigationViewController.swift in Sources */,
+				97007BAC267FE35D007BA2F1 /* ReminderRouter.swift in Sources */,
 				97D0C114260C2ED300700C09 /* NoteDetailsView.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Event.swift in Sources */,
@@ -710,9 +720,11 @@
 				97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */,
 				975713AF24553BD400EDD963 /* CircleImageView.swift in Sources */,
 				97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */,
+				97007BAE267FE78A007BA2F1 /* ReminderPresenter.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift in Sources */,
 				9796AEE425F09177003933C5 /* NoteDetailType.swift in Sources */,
 				9764937525F73C910094BE9E /* UIView+Pulse.swift in Sources */,
+				97E8E5F5268AE431004D355D /* Calendar+Utilities.swift in Sources */,
 				9796AEC825EFF660003933C5 /* NoteDetailsViewController.swift in Sources */,
 				97BDFCFA265E13A00061E0CB /* EventCreationInteractor.swift in Sources */,
 				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
@@ -882,7 +894,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
@@ -907,7 +919,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DateAid/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";

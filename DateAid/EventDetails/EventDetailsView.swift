@@ -10,6 +10,8 @@ import UIKit
 
 protocol EventDetailsViewDelegate: AnyObject {
     
+    func didSelectAddress()
+    func didSelectReminder()
     func didSelectInfoType(_ infoType: InfoType)
     func didSelectNoteType(_ noteType: NoteType)
     func didSelectNoteView(_ note: Note?, noteType: NoteType?)
@@ -25,7 +27,8 @@ class EventDetailsView: BaseView {
             static let years = "years"
             static let `in` = "in"
             static let on = "on"
-            static let addAddress = "Add Address"
+            static let addStreet = "Add Street"
+            static let addRegion = "Add City/State/Zip"
             static let addReminder = "Add\nReminder"
             static let addNote = "Add"
             static let noDescription = "No Description"
@@ -183,22 +186,25 @@ class EventDetailsView: BaseView {
     
     // Info - Address
     
-    private let addressContainerView: UIImageView = {
+    private lazy var addressContainerView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(named: "envelope")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addressPressed))
+        imageView.addGestureRecognizer(tapGesture)
         return imageView
     }()
     
     private let addressLabelStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isUserInteractionEnabled = false
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         return stackView
     }()
     
-    private let addressLabelOne: UILabel = {
+    private let streetLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -216,7 +222,7 @@ class EventDetailsView: BaseView {
         return label
     }()
     
-    private let addressLabelTwo: UILabel = {
+    private let regionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -421,8 +427,8 @@ class EventDetailsView: BaseView {
         containerStackView.setCustomSpacing(36, after: detailsContainerView)
         containerStackView.addArrangedSubview(addressContainerView)
             addressContainerView.addSubview(addressLabelStackView)
-                addressLabelStackView.addArrangedSubview(addressLabelOne)
-                addressLabelStackView.addArrangedSubview(addressLabelTwo)
+                addressLabelStackView.addArrangedSubview(streetLabel)
+                addressLabelStackView.addArrangedSubview(regionLabel)
         containerStackView.addArrangedSubview(reminderContainerView)
             reminderContainerView.addSubview(reminderIconImageView)
             reminderContainerView.addSubview(reminderLabel)
@@ -554,10 +560,13 @@ class EventDetailsView: BaseView {
     // MARK: Actions
     
     @objc
+    func addressPressed() {
+        delegate?.didSelectAddress()
+    }
+    
+    @objc
     func reminderPressed() {
-        // TODO: finish this
-//        let note = event?.note(forType: selectedNoteType)
-//        delegate?.didSelectNoteView(note, noteType: selectedNoteType)
+        delegate?.didSelectReminder()
     }
     
     @objc
@@ -594,58 +603,40 @@ class EventDetailsView: BaseView {
     // MARK: Interface
     
     func select(infoType: InfoType) {
-        switch infoType {
+        guard selectedInfoType != infoType else { return }
+        
+        selectInfoType(infoType)
+    }
+    
+    func select(noteType: NoteType) {
+        guard selectedNoteType != noteType else { return }
+        
+        selectNoteType(noteType)
+        populateNote(noteType: noteType)
+    }
+    
+    // MARK: Private Helpers
+    
+    private func selectInfoType(_ infoType: InfoType) {
+        self.selectedInfoType = infoType
+        
+        switch selectedInfoType {
         case .address:
-            guard selectedInfoType != .address else { return }
-            selectedInfoType = infoType
-            styleInfoDotsFor(selectedInfoType: selectedInfoType)
-            reminderContainerView.isHidden = true
+            addressInfoDotView.setSelectedState(isSelected: true)
+            reminderInfoDotView.setSelectedState(isSelected: false)
             addressContainerView.isHidden = false
+            reminderContainerView.isHidden = true
         case .reminder:
-            guard selectedInfoType != .reminder else { return }
-            selectedInfoType = infoType
-            styleInfoDotsFor(selectedInfoType: selectedInfoType)
+            addressInfoDotView.setSelectedState(isSelected: false)
+            reminderInfoDotView.setSelectedState(isSelected: true)
             addressContainerView.isHidden = true
             reminderContainerView.isHidden = false
         }
     }
     
-    func select(noteType: NoteType) {
-        switch noteType {
-        case .gifts:
-            guard selectedNoteType != .gifts else { return }
-            selectedNoteType = .gifts
-            styleNoteDotsFor(selectedNoteType: selectedNoteType)
-            populateNote(noteType: selectedNoteType)
-        case .plans:
-            guard selectedNoteType != .plans else { return }
-            selectedNoteType = .plans
-            styleNoteDotsFor(selectedNoteType: selectedNoteType)
-            populateNote(noteType: selectedNoteType)
-        case .misc:
-            guard selectedNoteType != .misc else { return }
-            selectedNoteType = .misc
-            styleNoteDotsFor(selectedNoteType: selectedNoteType)
-            populateNote(noteType: selectedNoteType)
-        }
-    }
-    
-    // MARK: Private Helpers
-    
-    private func styleInfoDotsFor(selectedInfoType: InfoType) {
-        self.selectedInfoType = selectedInfoType
-        switch selectedInfoType {
-        case .address:
-            addressInfoDotView.setSelectedState(isSelected: true)
-            reminderInfoDotView.setSelectedState(isSelected: false)
-        case .reminder:
-            reminderInfoDotView.setSelectedState(isSelected: true)
-            addressInfoDotView.setSelectedState(isSelected: false)
-        }
-    }
-    
-    private func styleNoteDotsFor(selectedNoteType: NoteType) {
-        self.selectedNoteType = selectedNoteType
+    private func selectNoteType(_ noteType: NoteType) {
+        self.selectedNoteType = noteType
+        
         switch selectedNoteType {
         case .gifts:
             giftsNoteDotView.setSelectedState(isSelected: true)
@@ -669,8 +660,7 @@ extension EventDetailsView: Populatable {
     
     struct Content {
         let event: Event
-        let daysBefore: ReminderDaysBefore?
-        let timeOfDay: Date?
+        let reminderText: String?
         let infoType: InfoType
         let noteType: NoteType
     }
@@ -679,24 +669,18 @@ extension EventDetailsView: Populatable {
         let event = content.event
         self.event = event
         
-        // Details
-        
         populateDetails(event: event)
-        styleDetails(eventType: event.eventType)
         
-        // Info
+        populateAddress(event.address?.street, region: event.address?.region)
+        populateReminder(event.eventType, text: content.reminderText)
         
-        populateInfo(address: event.address)
-        populateInfo(reminder: content.daysBefore, timeOfDay: content.timeOfDay)
-        styleInfo(address: event.address, infoType: content.infoType, eventType: event.eventType)
-        styleInfo(reminder: content.daysBefore, timeOfDay: content.timeOfDay, eventType: event.eventType)
-        styleInfoDotsFor(selectedInfoType: content.infoType)
- 
-        // Notes
+        styleInfoButtons(eventType: event.eventType)
+        selectInfoType(content.infoType)
         
         populateNote(noteType: content.noteType)
-        styleNote(eventType: content.event.eventType)
-        styleNoteDotsFor(selectedNoteType: content.noteType)
+        styleNote(eventType: event.eventType)
+        
+        selectNoteType(content.noteType)
     }
     
     // MARK: Private Helpers
@@ -741,77 +725,43 @@ extension EventDetailsView: Populatable {
         
         onLabel.text = Constant.String.on
         dateLabel.text = event.dayOfYear
-    }
-    
-    private func styleDetails(eventType: EventType) {
-        detailsContainerView.backgroundColor = eventType.color
         
-        switch eventType {
-        case .custom, .other:
-            ageStackView.isHidden = true
-        default:
-            return
-        }
+        detailsContainerView.backgroundColor = event.eventType.color
     }
     
-    // Info
+    // Address
     
-    private func populateInfo(address: Address?) {
-        if address?.street == nil && address?.region == nil {
-            addressLabelOne.text = Constant.String.addAddress
-        } else {
-            addressLabelOne.text = address?.street
-            addressLabelTwo.text = address?.region
-        }
+    private func populateAddress(_ street: String?, region: String?) {
+        streetLabel.text = street ?? Constant.String.addStreet
+        regionLabel.text = region ?? Constant.String.addRegion
     }
     
-    private func styleInfo(address: Address?, infoType: InfoType, eventType: EventType) {
-        if address?.street == nil && address?.region == nil {
-            addressLabelOne.isHidden = false // Populate and show "Add Address"
-            addressLabelTwo.isHidden = true
-        } else {
-            addressLabelOne.isHidden = address?.street == nil ? true : false
-            addressLabelTwo.isHidden = address?.region == nil ? true : false
-        }
-
-        switch infoType {
-        case .address:
-            reminderContainerView.isHidden = true
-            addressContainerView.isHidden = false
-        case .reminder:
-            addressContainerView.isHidden = true
-            reminderContainerView.isHidden = false
-        }
+    // Reminder
+    
+    private func populateReminder(_ eventType: EventType, text: String?) {
+        reminderEventImageView.image = eventType.image.withTintColor(.black)
         
-        addressInfoDotView.eventType = eventType
-    }
-    
-    private func populateInfo(reminder: ReminderDaysBefore?, timeOfDay: Date?) {
-        if let daysBefore = reminder, let timeOfDay = timeOfDay?.formatted("h:mm a") {
-            reminderLabel.text = "\(daysBefore.pickerText)\n\(timeOfDay)"
-        } else {
-            reminderLabel.text = Constant.String.addReminder
-        }
-    }
-    
-    private func styleInfo(reminder: ReminderDaysBefore?, timeOfDay: Date?, eventType: EventType) {
-        if reminder != nil, timeOfDay != nil {
+        if let text = text {
+            reminderLabel.text = text
             reminderIconImageView.image = Constant.Image.reminderSet
         } else {
+            reminderLabel.text = Constant.String.addReminder
             reminderIconImageView.image = Constant.Image.addReminder
         }
-        
-        if #available(iOS 13.0, *) {
-            reminderEventImageView.image = eventType.image.withTintColor(.black)
-        } else {
-            tintColor = .black
-        }
-        
+    }
+    
+    private func styleInfoButtons(eventType: EventType) {
+        addressInfoDotView.eventType = eventType
         reminderInfoDotView.eventType = eventType
     }
     
+    // Notes
+    
     private func populateNote(noteType: NoteType) {
-        if let note = event?.note(forType: noteType), let subject = note.subject {
+        if
+            let note = event?.note(forType: noteType),
+            let subject = note.subject
+        {
             noteTitleLabel.text = subject.capitalized
             noteDescriptionLabel.text = note.body ?? Constant.String.noDescription
             noteDescriptionLabel.textAlignment = .left

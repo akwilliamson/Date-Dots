@@ -6,43 +6,42 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
+import UserNotifications
+
 protocol EventDetailsInteractorInputting: AnyObject {
     
-    func fetchNotification(id: String)
+    func getReminder(for id: String)
 }
 
 class EventDetailsInteractor {
+
+    // MARK: VIPER
     
-    // MARK: Constants
-    
-    private enum Constant {
-        enum Key {
-            static let daysBefore = "DaysBefore"
-        }
-    }
+    weak var presenter: EventDetailsInteractorOutputting?
     
     // MARK: Properties
     
     private let notificationManager = NotificationManager()
-    
-    weak var presenter: EventDetailsInteractorOutputting?
 }
 
 // MARK: EventDetailsInteractorInputting
 
 extension EventDetailsInteractor: EventDetailsInteractorInputting {
     
-    func fetchNotification(id: String) {
-        notificationManager.notification(with: id) { foundNotification in
-            guard
-                let daysBefore: Int = self.notificationManager.valueFor(key: Constant.Key.daysBefore),
-                let timeOfDay = self.notificationManager.triggerTime()
-            else {
-                self.presenter?.handleNotificationNotFound()
-                return
+    func getReminder(for id: String) {
+        notificationManager.retrieveNotification(for: id) { result in
+            switch result {
+            case .success(let notification):
+                if
+                    let dayPrior = notification.content.userInfo["DaysPrior"] as? Int,
+                    let trigger = notification.trigger as? UNCalendarNotificationTrigger,
+                    let triggerDate = trigger.nextTriggerDate()
+                {
+                    self.presenter?.handleNotification(dayPrior: dayPrior, timeOfDay: triggerDate)
+                }
+            case .failure:
+                self.presenter?.handleNotification(dayPrior: nil, timeOfDay: nil)
             }
-
-            self.presenter?.handleNotification(daysBefore: daysBefore, timeOfDay: timeOfDay)
         }
     }
 }

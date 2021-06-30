@@ -60,27 +60,17 @@ class NoteCircleImageView: CircleImageView {
         if isSelected {
             if let eventType = eventType {
                 backgroundColor = eventType.color
+                image = noteType.image.withTintColor(.white)
             } else {
                 backgroundColor = UIColor.compatibleLabel
-            }
-            if #available(iOS 13.0, *) {
-                if eventType != nil {
-                    image = noteType.image.withTintColor(.white)
-                } else {
-                    image = noteType.image.withTintColor(.black)
-                }
-            } else {
-                tintColor = .black
+                image = noteType.image.withTintColor(.black)
             }
         } else {
-            backgroundColor = .compatibleSystemBackground
-            if #available(iOS 13.0, *) {
-                if let eventType = eventType {
-                    image = noteType.image.withTintColor(eventType.color)
-                } else {
-                    image = noteType.image
-                }
+            if let eventType = eventType {
+                backgroundColor = .compatibleSystemBackground
+                image = noteType.image.withTintColor(eventType.color)
             } else {
+                backgroundColor = .compatibleSystemBackground
                 image = noteType.image
             }
         }

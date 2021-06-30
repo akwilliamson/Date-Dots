@@ -14,7 +14,7 @@ protocol EventDetailsViewOutputting: AnyObject {
     func configureNavigation(title: String)
     
     // Base View
-    func setDetails(content: EventDetailsView.Content)
+    func populateView(content: EventDetailsView.Content)
 
     // Actions
     func select(infoType: InfoType)
@@ -75,10 +75,8 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
     
     // Base View
     
-    func setDetails(content: EventDetailsView.Content) {
-        DispatchQueue.main.async {
-            self.baseView.populate(with: content)
-        }
+    func populateView(content: EventDetailsView.Content) {
+        baseView.populate(with: content)
     }
     
     // Actions
@@ -95,6 +93,14 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
 // MARK: - EventDetailsViewDelegate
 
 extension EventDetailsViewController: EventDetailsViewDelegate {
+    
+    func didSelectAddress() {
+        presenter?.didSelectAddress()
+    }
+    
+    func didSelectReminder() {
+        presenter?.didSelectReminder()
+    }
     
     func didSelectInfoType(_ infoType: InfoType) {
         presenter?.didSelect(infoType: infoType)

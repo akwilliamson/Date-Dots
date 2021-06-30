@@ -141,13 +141,11 @@ class EventSectionHeader: UIView {
 
     private func populate(_ event: Event?) {
         guard let event = event else { return }
-
         iconImageView.backgroundColor = event.eventType.color
         iconImageView.image = event.eventType.image
         
         nameLabel.textColor = event.eventType.color
         nameLabel.text = event.fullName
-        
         dateLabel.text = event.date.formatted("MMM dd")
     }
 }

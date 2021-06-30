@@ -60,9 +60,8 @@ class RouteManager {
             guard let noteState = data as? NoteState else { return nil }
             return NoteDetailsRouter(parent: parent, noteState: noteState)
         case .eventReminder:
-            guard let _ = data as? ReminderDetails else { return nil }
-            // TODO: Return event reminder router
-            return nil
+            guard let event = data as? Event else { return nil }
+            return ReminderRouter(parent: parent, event: event)
         default:
             return nil
         }

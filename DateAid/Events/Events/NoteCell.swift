@@ -110,11 +110,7 @@ extension NoteCell {
             case .misc:
                 noteLabel.text = "Other notes"
             }
-            if #available(iOS 13.0, *) {
-                noteLabel.textColor = .systemGray3
-            } else {
-                noteLabel.textColor = .systemGray
-            }
+            noteLabel.textColor = .systemGray3
         }
     }
 }

@@ -9,105 +9,136 @@
 import Foundation
 import UserNotifications
 
-struct NotificationDetails {
-    var id: String
-    var title: String
-    var body: String
-    var daysBefore: Int
-    var dateComponents: DateComponents
+/// Encapsulates all relevant errors related to notifications.
+enum NotificationError: Error {
+    /// Invitation to enable notifications has been declined
+    case accessDenied
+    /// Notifications are disabled
+    case denied
+    /// Unknown error has occured
+    case unknown
+    /// No notification was found
+    case notificationNotFound
+    /// Failed to schedule notification
+    case schedulingFailed
 }
 
 class NotificationManager {
     
-    private enum Constant {
-        enum Key {
-            static let daysBefore = "DaysBefore"
-        }
-    }
+    // MARK: TypeAliases
+    
+    typealias AuthorizationStatusResult = Result<Bool, NotificationError>
+    typealias AuthorizationRequestResult = Result<Bool, NotificationError>
+    typealias RetrieveNotificationResult = Result<UNNotificationRequest, NotificationError>
+    typealias ScheduleNotificationResult = Result<Bool, NotificationError>
+    typealias RemoveNotificationResult = Result<Bool, NotificationError>
     
     // MARK: Properties
     
-    private let notificationCenter = UNUserNotificationCenter.current()
-    private var notificationRequest: UNNotificationRequest?
+    /// All scheduled `Event` notifications.
+    private var notifications: [UNNotificationRequest] = []
     
-    // MARK: Private Interface
+    // MARK: Initialization
     
-    private func storedNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
-        notificationCenter.getPendingNotificationRequests { notifications in
-            completion(notifications)
-        }
-    }
-    
-    // MARK: Initialiation
-    
-    init() {}
-    
-    init(notificationRequest: UNNotificationRequest?) {
-        self.notificationRequest = notificationRequest
+    init() {
+        getNotifications()
     }
     
     // MARK: Public Interface
     
-    var notificationExists: Bool {
-        return notificationRequest != nil
+    /// Retrieves an on-device scheduled notification for a given ID.
+    func retrieveNotification(for id: String, completion: @escaping (RetrieveNotificationResult) -> ()) {
+        if let match = notifications.first(where: { $0.identifier == id }) {
+            completion(.success(match))
+        } else {
+            completion(.failure(NotificationError.notificationNotFound))
+        }
     }
     
-    func getNotificationRequest() -> UNNotificationRequest? {
-        return notificationRequest
-    }
-    
-    func setNotificationRequest(_ notificationRequest: UNNotificationRequest) {
-        self.notificationRequest = notificationRequest
-    }
-    
-    func clearNotificationRequest() {
-        self.notificationRequest = nil
-    }
-    
-    func notification(with notificationId: String, completion: @escaping (UNNotificationRequest?) -> Void) {
-        DispatchQueue.main.async {
-            self.storedNotifications { existingNotifications in
-                self.notificationRequest = existingNotifications.first(where: { $0.identifier == notificationId })
-                completion(self.notificationRequest)
+    /// Schedules an on-device notification for a set of reminder details.
+    func scheduleNotification(reminder: Reminder, completion: @escaping (ScheduleNotificationResult) -> ()) {
+        getAuthorizationStatus { result in
+            switch result {
+            case .success:
+                self.addNotification(reminder: reminder) { result in
+                    completion(result)
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
-
-    func scheduleNotification(with details: NotificationDetails, completion: @escaping (UNNotificationRequest) -> Void) {
-        let content = UNMutableNotificationContent()
-        content.title = details.title
-        content.body = details.body
-        content.userInfo = [Constant.Key.daysBefore: details.daysBefore]
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: details.dateComponents, repeats: false)
-
-        let notificationRequest = UNNotificationRequest(identifier: details.id, content: content, trigger: trigger)
-        notificationCenter.add(notificationRequest)
-        completion(notificationRequest)
+    
+    /// Removes an on-device scheduled notification for a given ID.
+    func removeNotification(with id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
     }
     
-    func requestPermission(completion: @escaping (Bool, Error?) -> Void) {
-        notificationCenter.requestAuthorization(options: [.alert]) { (success, error) in
-            completion(success, error)
+    // MARK: Private Helpers
+    
+    /// Retrieves and stores all scheduled on-device notifications.
+    private func getNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+            self.notifications = notifications
         }
     }
     
-    func cancelNotificationWith(identifier: String) {
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+    /// Retrieves the permission status to send on-device notifications, and requests permission if necessary.
+    private func getAuthorizationStatus(completion: @escaping (AuthorizationStatusResult) -> ()) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized:
+                completion(.success(true))
+            case .denied:
+                completion(.failure(NotificationError.denied))
+            case .ephemeral:
+                completion(.failure(NotificationError.denied))
+            case .notDetermined:
+                self.requestAuthorization { result in
+                    completion(result)
+                }
+            case .provisional:
+                completion(.success(true))
+            @unknown default:
+                completion(.failure(NotificationError.unknown))
+            }
+        }
     }
     
-    func valueFor<T>(key: String) -> T? {
-        return notificationRequest?.content.userInfo[key] as? T
+    /// Requests permission to send on-device notifications.
+    private func requestAuthorization(completion: @escaping (AuthorizationRequestResult) -> ()) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (success, error) in
+            if success {
+                completion(.success(true))
+            } else {
+                completion(.failure(NotificationError.accessDenied))
+            }
+        }
     }
     
-    func triggerTime() -> Date? {
-        let trigger = notificationRequest?.trigger as? UNCalendarNotificationTrigger
-        return trigger?.nextTriggerDate()
-    }
-    
-    func permissionStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
-        notificationCenter.getNotificationSettings { settings in
-            completion(settings.authorizationStatus)
+    /// Adds a new on-device scheduled notification to the user notification center.
+    private func addNotification(reminder: Reminder, completion: @escaping (ScheduleNotificationResult) -> ()) {
+        
+        let content = UNMutableNotificationContent()
+        content.title = reminder.title
+        content.body = reminder.body
+        content.userInfo = ["DaysBefore": reminder.dayPrior]
+
+        let notificationRequest = UNNotificationRequest(
+            identifier: reminder.id,
+            content: content,
+            trigger: UNCalendarNotificationTrigger(
+                dateMatching: reminder.fireDate,
+                repeats: false
+            )
+        )
+        
+        UNUserNotificationCenter.current().add(notificationRequest) { error in
+            if error != nil {
+                completion(.failure(NotificationError.schedulingFailed))
+            } else {
+                completion(.success(true))
+            }
         }
     }
 }

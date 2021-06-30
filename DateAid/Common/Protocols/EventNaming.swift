@@ -7,32 +7,25 @@
 //
 
 protocol EventNaming {
-    // Deprecated
-    var name: String { get }
     
-    var givenName: String { get }
+    var givenName: String  { get }
     var familyName: String { get }
     
-    var fullName: String { get }
-    var abvName: String { get }
+    var fullName: String   { get }
+    var abvName: String    { get }
 }
 
 extension EventNaming {
-    
-    // CNContact does not have a `name` property, but conforms to `EventNaming` for the free values below
-    var name: String {
-        return String()
-    }
     
     var fullName: String {
         return "\(givenName) \(familyName)"
     }
     
     var abvName: String {
-        if let familyAbbreviation = familyName.first {
-            return "\(givenName) \(String(familyAbbreviation))"
-        } else {
-            return "\(givenName) "
+        guard let familyNameFirstLetter = familyName.first else {
+            return givenName
         }
+        
+        return "\(givenName) \(String(familyNameFirstLetter))"
     }
 }

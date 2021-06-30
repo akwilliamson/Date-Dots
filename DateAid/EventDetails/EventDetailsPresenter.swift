@@ -14,6 +14,8 @@ protocol EventDetailsEventHandling: AnyObject {
     func viewWillAppear()
     
     func didSelectEdit()
+    func didSelectAddress()
+    func didSelectReminder()
     func didSelect(infoType: InfoType)
     func didSelect(noteType: NoteType)
     func didSelectNoteView(note: Note?, noteType: NoteType?)
@@ -21,8 +23,7 @@ protocol EventDetailsEventHandling: AnyObject {
 
 protocol EventDetailsInteractorOutputting: AnyObject {
     
-    func handleNotificationNotFound()
-    func handleNotification(daysBefore: Int, timeOfDay: Date)
+    func handleNotification(dayPrior: Int?, timeOfDay: Date?)
 }
 
 class EventDetailsPresenter {
@@ -93,11 +94,19 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     }
     
     func viewWillAppear() {
-        interactor?.fetchNotification(id: event.objectIDString)
+        interactor?.getReminder(for: event.id)
     }
     
     func didSelectEdit() {
         router?.presentEventEdit(event: event)
+    }
+    
+    func didSelectAddress() {
+        router?.presentEventEdit(event: event)
+    }
+    
+    func didSelectReminder() {
+        router?.presentEventReminder(event: event)
     }
     
     func didSelect(infoType: InfoType) {
@@ -125,25 +134,29 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
 
 extension EventDetailsPresenter: EventDetailsInteractorOutputting {
     
-    func handleNotification(daysBefore: Int, timeOfDay: Date) {
-        let content = EventDetailsView.Content(
-            event: event,
-            daysBefore: ReminderDaysBefore(rawValue: daysBefore),
-            timeOfDay: timeOfDay,
-            infoType: activeInfoType,
-            noteType: activeNoteType
-        )
-        view?.setDetails(content: content)
-    }
-    
-    func handleNotificationNotFound() {
-        let content = EventDetailsView.Content(
-            event: event,
-            daysBefore: nil,
-            timeOfDay: nil,
-            infoType: activeInfoType,
-            noteType: activeNoteType
-        )
-        view?.setDetails(content: content)
+    func handleNotification(dayPrior: Int?, timeOfDay: Date?) {
+        let content: EventDetailsView.Content
+        
+        if
+            let dayPrior = dayPrior,
+            let dayToCome = ReminderDayPrior(rawValue: dayPrior),
+            let timeOfDay = timeOfDay
+        {
+            content = EventDetailsView.Content(
+                event: event,
+                reminderText: "\(dayToCome.infoText)\n\(timeOfDay.formatted("h:mm a"))",
+                infoType: activeInfoType,
+                noteType: activeNoteType
+            )
+        }
+        else {
+            content = EventDetailsView.Content(
+                event: event,
+                reminderText: nil,
+                infoType: activeInfoType,
+                noteType: activeNoteType
+            )
+        }
+        view?.populateView(content: content)
     }
 }

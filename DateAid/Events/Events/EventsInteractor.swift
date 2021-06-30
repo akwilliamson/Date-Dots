@@ -14,6 +14,7 @@ protocol EventsInteractorInputting: AnyObject {
     func getEvents()
     func getEvents(containing searchText: String) -> Void
     func delete(_ event: Event)
+    func cancelReminder(for id: String)
 }
 
 enum EventsInteractorError: Error {
@@ -23,12 +24,17 @@ enum EventsInteractorError: Error {
 
 class EventsInteractor {
     
+    // MARK: VIPER
+    
     weak var presenter: EventsInteractorOutputting?
     
-    // A flag indicating if dates should be sorted by how far away they are from today.
+    // MARK: Properties
+    
     private var sortByToday = true
     
     private var events: [Event] = []
+    
+    private var notificationManager = NotificationManager()
 }
 
 extension EventsInteractor: EventsInteractorInputting {
@@ -45,11 +51,10 @@ extension EventsInteractor: EventsInteractorInputting {
 
     func fetchEvents() {
         do {
-            self.events = try CoreDataManager.fetch()
+            events = try CoreDataManager.fetch()
             migrateOldEvents {
-                presenter?.eventsFetched(self.events)
+                self.presenter?.eventsFetched(self.events)
             }
-            presenter?.eventsFetched(self.events)
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }
@@ -64,7 +69,7 @@ extension EventsInteractor: EventsInteractorInputting {
             presenter?.eventsFetched(events)
         } else {
             let filteredEvents = events.filter { (event) -> Bool in
-                return event.name.contains(searchText)
+                return event.givenName.contains(searchText) || event.familyName.contains(searchText)
             }
 
             presenter?.eventsFetched(filteredEvents)
@@ -78,6 +83,10 @@ extension EventsInteractor: EventsInteractorInputting {
             presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
         }
     }
+    
+    func cancelReminder(for id: String) {
+        notificationManager.removeNotification(with: id)
+    }
 }
 
 // MARK: Pseudo-migration to reset event names for old app events
@@ -85,8 +94,19 @@ extension EventsInteractor: EventsInteractorInputting {
 extension EventsInteractor {
     
     // Old events don't have a given/family name, so set those values to eventually delete the old properties.
-    func migrateOldEvents(completion: () -> Void) {
+    func migrateOldEvents(completion: @escaping () -> Void) {
+        events.forEach { event in
+            if event.abbreviatedName.isEmpty {
+                do {
+                    try CoreDataManager.delete(object: event)
+                } catch {
+                    print("error: \(error.localizedDescription)")
+                }
+            }
+        }
+        
         events = events.map { event -> Event in
+            
             if event.givenName.isEmpty {
                 let nameComponents = event.name.components(separatedBy: " ")
                 if nameComponents.count == 2 {
