@@ -8,12 +8,13 @@
 
 import CoreData
 
-protocol EventsInteractorInputting: class {
+protocol EventsInteractorInputting: AnyObject {
     
     func fetchEvents()
     func getEvents()
     func getEvents(containing searchText: String) -> Void
     func delete(_ event: Event)
+    func cancelReminder(for id: String)
 }
 
 enum EventsInteractorError: Error {
@@ -21,14 +22,19 @@ enum EventsInteractorError: Error {
     case fetchFailed
 }
 
-class EventsInteractor: CoreDataInteractable {
+class EventsInteractor {
+    
+    // MARK: VIPER
     
     weak var presenter: EventsInteractorOutputting?
     
-    // A flag indicating if dates should be sorted by how far away they are from today.
+    // MARK: Properties
+    
     private var sortByToday = true
     
     private var events: [Event] = []
+    
+    private var notificationManager = NotificationManager()
 }
 
 extension EventsInteractor: EventsInteractorInputting {
@@ -44,16 +50,10 @@ extension EventsInteractor: EventsInteractorInputting {
     }
 
     func fetchEvents() {
-        // Sort events by date
-        let sortDescriptorDate = NSSortDescriptor(key: Constant.SortDescriptor.date, ascending: true)
-        // Then sort events by name
-        let sortDescriptorName = NSSortDescriptor(key: Constant.SortDescriptor.name, ascending: true)
-        
         do {
-            let events: [Event] = try moc.fetch([sortDescriptorDate, sortDescriptorName])
-            self.events = customSorted(events)
+            events = try CoreDataManager.fetch()
             migrateOldEvents {
-                presenter?.eventsFetched(self.events)
+                self.presenter?.eventsFetched(self.events)
             }
         } catch {
             presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
@@ -69,7 +69,7 @@ extension EventsInteractor: EventsInteractorInputting {
             presenter?.eventsFetched(events)
         } else {
             let filteredEvents = events.filter { (event) -> Bool in
-                return event.name.contains(searchText)
+                return event.givenName.contains(searchText) || event.familyName.contains(searchText)
             }
 
             presenter?.eventsFetched(filteredEvents)
@@ -77,35 +77,15 @@ extension EventsInteractor: EventsInteractorInputting {
     }
     
     func delete(_ event: Event) {
-        moc.delete(event)
         do {
-            try moc.save()
-            presenter?.eventDeleted(event)
+            try CoreDataManager.delete(object: event)
         } catch {
             presenter?.eventDeleteFailed(EventsInteractorError.deleteFailed)
         }
     }
     
-    // MARK: Private Helpers
-    
-    private func customSorted(_ events: [Event]) -> [Event] {
-        if sortByToday {
-            let today = Date().formatted("MM/dd")
-            
-            let sortedEvents = events.sorted { event1, event2 -> Bool in
-                let event1 = event1.equalizedDate
-                let event2 = event2.equalizedDate
-                
-                if (event1 >= today && event2 < today) {
-                    return (event1 > event2)
-                } else {
-                    return (event1 < event2)
-                }
-            }
-            return sortedEvents
-        } else {
-            return events
-        }
+    func cancelReminder(for id: String) {
+        notificationManager.removeNotification(with: id)
     }
 }
 
@@ -113,9 +93,20 @@ extension EventsInteractor: EventsInteractorInputting {
 
 extension EventsInteractor {
     
-    // Old events don't have a given/family name, so create them to eventually delete the old properties.
-    func migrateOldEvents(completion: () -> Void) {
+    // Old events don't have a given/family name, so set those values to eventually delete the old properties.
+    func migrateOldEvents(completion: @escaping () -> Void) {
+        events.forEach { event in
+            if event.abbreviatedName.isEmpty {
+                do {
+                    try CoreDataManager.delete(object: event)
+                } catch {
+                    print("error: \(error.localizedDescription)")
+                }
+            }
+        }
+        
         events = events.map { event -> Event in
+            
             if event.givenName.isEmpty {
                 let nameComponents = event.name.components(separatedBy: " ")
                 if nameComponents.count == 2 {
@@ -130,10 +121,9 @@ extension EventsInteractor {
         }
         
         do {
-            try moc.save()
+            try CoreDataManager.save()
             completion()
         } catch {
-            print("wtf \(error.localizedDescription))")
             completion()
         }
     }

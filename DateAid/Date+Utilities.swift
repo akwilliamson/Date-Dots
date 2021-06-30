@@ -64,7 +64,7 @@ extension Date {
         return rounded(seconds: minutes * 60, rounding: rounding)
     }
     
-    // MARK: Private Methodss
+    // MARK: Private Methods
 
     private func rounded(seconds: TimeInterval, rounding: DateRoundingType = .round) -> Date {
         var roundedInterval: TimeInterval = 0

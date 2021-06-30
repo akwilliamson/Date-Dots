@@ -8,20 +8,28 @@
 
 import UIKit
 
-protocol EventsEventHandling: class {
+protocol EventsEventHandling: AnyObject {
     
     func viewDidLoad()
     func viewWillAppear()
-    func eventsToShow() -> [Event]
+    
     func searchButtonPressed()
-    func textChanged(to searchText: String)
     func cancelButtonPressed()
+    func addButtonPressed()
+    
+    func eventDotPressed(type: EventType)
+    func noteDotPressed(type: NoteType)
+    
+    func selectEventPressed(event: Event)
+    func deleteEventPressed(event: Event)
+    
+    func selectNotePressed(noteState: NoteState)
+    func deleteNotePressed(note: Note)
 
-    func dotPressed(for eventType: EventType)
-    func deleteEventPressed(for event: Event, at indexPath: IndexPath)
+    func searchTextChanged(text: String)
 }
 
-protocol EventsInteractorOutputting: class {
+protocol EventsInteractorOutputting: AnyObject {
     
     func eventsFetched(_ events: [Event])
     func eventsFetchedFailed(_ error: EventsInteractorError)
@@ -33,96 +41,181 @@ class EventsPresenter {
 
     // MARK: VIPER
     
-    public var view: EventsViewOutputting?
-    public var interactor: EventsInteractorInputting?
-    public weak var wireframe: EventsWireframe?
+    weak var router: EventsRouter?
+    var view: EventsViewOutputting?
+    var interactor: EventsInteractorInputting?
 
     // MARK: Constants
 
     private enum Constant {
-        enum String {
-            static let title = "Dates"
-        }
         enum Image {
             static let iconSelected = UIImage(named: "selected-calendar")!.withRenderingMode(.alwaysTemplate)
             static let iconUnselected =  UIImage(named: "unselected-calendar")!.withRenderingMode(.alwaysTemplate)
         }
-        enum Layout {
-            static let searchBarFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)
-        }
-        enum Animation {
-            static let searchBarDisplay = 0.25
-        }
+    }
+    
+    enum NavigationState {
+        case normal
+        case search
     }
 
     // MARK: Properties
     
-    private let eventTypes: [EventType] = [.birthday, .anniversary, .holiday, .other]
+    private var events: [Event] = []
     
-    private var categorizedEvents: [EventType: [Event]] = [:]
+    private var activeEventTypes: [EventType] {
+        return [.birthday, .anniversary, .custom, .other].filter {
+            UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var inactiveEventTypes: [EventType] {
+        return [.birthday, .anniversary, .custom, .other].filter {
+            !UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var activeNoteTypes: [NoteType] {
+        return [.gifts, .plans, .misc].filter {
+            UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var inactiveNoteTypes: [NoteType] {
+        return [.gifts, .plans, .misc].filter {
+            !UserDefaults.standard.bool(forKey: $0.key)
+        }
+    }
+    
+    private var activeEvents: [Event] {
+        let activeEvents = events.filter { activeEventTypes.contains($0.eventType) }
+        let today = Date().formatted("MM/dd")
+        let sortedEvents = activeEvents.sorted { $0.formattedDate < $1.formattedDate }
+        
+        let currentEvents = sortedEvents.sorted { (event1, event2) in
+            if event1.formattedDate >= today && event2.formattedDate < today {
+                return event1.formattedDate > event2.formattedDate
+            } else {
+                return event1.formattedDate < event2.formattedDate
+            }
+        }
+        return currentEvents
+    }
     
     private var isSearching = false
-    private var deleteIndex: IndexPath?
     private var deleteEventType: EventType?
     
     private let notificationManager = NotificationManager()
+    
+    // MARK: Private Helpers
+    
+    private func setupDots() {
+
+        activeEventTypes.forEach {
+            view?.toggleDotFor(eventType: $0, isSelected: true)
+        }
+        inactiveEventTypes.forEach {
+            view?.toggleDotFor(eventType: $0, isSelected: false)
+        }
+        activeNoteTypes.forEach {
+            view?.toggleDotFor(noteType: $0, isSelected: true)
+        }
+        inactiveNoteTypes.forEach {
+            view?.toggleDotFor(noteType: $0, isSelected: false)
+        }
+        
+        if activeEvents.isEmpty {
+            view?.hideNoteDots()
+        } else {
+            view?.showNoteDots()
+        }
+    }
+    
+    private func togglePreferenceFor(eventType: EventType) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let oldPreference = userDefaults.bool(forKey: eventType.key)
+        let newPreference = !oldPreference
+        userDefaults.set(newPreference, forKey: eventType.key)
+        
+        return newPreference
+    }
+    
+    private func togglePreferenceFor(noteType: NoteType) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let oldPreference = userDefaults.bool(forKey: noteType.key)
+        let newPreference = !oldPreference
+        userDefaults.set(newPreference, forKey: noteType.key)
+        
+        return newPreference
+    }
 }
 
 // MARK: - EventsEventHandling
 
 extension EventsPresenter: EventsEventHandling {
-
-    // MARK: Properties
     
     func viewDidLoad() {
-        view?.configureNavigationBar(title: Constant.String.title)
-        view?.configureTableView(footerView: UIView())
+        let dateText = Date().formatted("MMM dd")
+        view?.configureNavigation(title: dateText)
     }
     
     func viewWillAppear() {
         interactor?.fetchEvents()
-        view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
-    }
-    
-    func eventsToShow() -> [Event] {
-        var eventsToShow = [Event]()
-
-        eventTypes.forEach { eventType in
-            let eventsShouldShow = UserDefaults.standard.bool(forKey: eventType.rawValue)
-            view?.updateDot(for: eventType, isSelected: eventsShouldShow)
-            let events = eventsShouldShow ? categorizedEvents[eventType] ?? [] : []
-            eventsToShow.append(contentsOf: events)
-        }
-        
-        return eventsToShow
+        view?.configureNavigation(state: .normal)
     }
     
     func searchButtonPressed() {
         isSearching = true
-        view?.showSearchBar(frame: Constant.Layout.searchBarFrame, duration: Constant.Animation.searchBarDisplay)
-    }
-
-    func textChanged(to searchText: String) {
-        interactor?.getEvents(containing: searchText)
+        view?.configureNavigation(state: .search)
     }
     
     func cancelButtonPressed() {
         isSearching = false
         interactor?.getEvents()
-        view?.hideSearchBar(duration: Constant.Animation.searchBarDisplay)
-    }
-
-    func dotPressed(for eventType: EventType) {
-        let currentState = UserDefaults.standard.bool(forKey: eventType.rawValue)
-        UserDefaults.standard.set(!currentState, forKey: eventType.rawValue)
-        view?.updateDot(for: eventType, isSelected: !currentState)
-        view?.reloadTableView(sections: [0], animation: .fade)
+        view?.configureNavigation(state: .normal)
     }
     
-    func deleteEventPressed(for event: Event, at indexPath: IndexPath) {
-        deleteIndex = indexPath
+    func addButtonPressed() {
+        router?.presentEventCreation()
+    }
+
+    func eventDotPressed(type: EventType) {
+        let isSelected = togglePreferenceFor(eventType: type)
+        view?.toggleDotFor(eventType: type, isSelected: isSelected)
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        
+        if activeEvents.isEmpty {
+            view?.hideNoteDots()
+        } else {
+            view?.showNoteDots()
+        }
+    }
+    
+    func noteDotPressed(type: NoteType) {
+        let isSelected = togglePreferenceFor(noteType: type)
+        view?.toggleDotFor(noteType: type, isSelected: isSelected)
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+    }
+    
+    func deleteEventPressed(event: Event) {
         deleteEventType = event.eventType
         interactor?.delete(event)
+    }
+    
+    func selectEventPressed(event: Event) {
+        router?.presentEventDetails(event: event)
+    }
+    
+    func searchTextChanged(text: String) {
+        interactor?.getEvents(containing: text)
+    }
+    
+    func selectNotePressed(noteState: NoteState) {
+        router?.presentEventNote(noteState: noteState)
+    }
+    
+    func deleteNotePressed(note: Note) {
+        // TODO: Delete event note
     }
 }
 
@@ -131,12 +224,9 @@ extension EventsPresenter: EventsEventHandling {
 extension EventsPresenter: EventsInteractorOutputting {
     
     func eventsFetched(_ events: [Event]) {
-        categorizedEvents[.birthday]    = events.filter { $0.eventType == .birthday }
-        categorizedEvents[.anniversary] = events.filter { $0.eventType == .anniversary }
-        categorizedEvents[.holiday]     = events.filter { $0.eventType == .holiday }
-        categorizedEvents[.other]       = events.filter { $0.eventType == .other }
-
-        view?.reloadTableView(sections: [0], animation: .fade)
+        self.events = events
+        setupDots()
+        view?.reload(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
     }
     
     func eventsFetchedFailed(_ error: EventsInteractorError) {
@@ -144,18 +234,10 @@ extension EventsPresenter: EventsInteractorOutputting {
     }
     
     func eventDeleted(_ event: Event) {
-        guard
-            let indexPath = deleteIndex,
-            let deleteEventType = deleteEventType
-        else {
-            return
-        }
-        
-        notificationManager.cancelNotificationWith(identifier: event.objectIDString)
+        interactor?.cancelReminder(for: event.id)
 
-        categorizedEvents[deleteEventType]?.removeAll(where: { $0.objectID == event.objectID })
-        view?.deleteTableView(rows: [indexPath], animation: .automatic)
-        deleteIndex = nil
+        events.removeAll(where: { $0.objectID == event.objectID })
+        view?.removeSectionFor(event: event)
     }
     
     func eventDeleteFailed(_ error: EventsInteractorError) {

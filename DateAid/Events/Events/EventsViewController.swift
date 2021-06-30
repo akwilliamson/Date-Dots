@@ -9,18 +9,21 @@
 import UIKit
 import CoreData
 
-protocol EventsViewOutputting: class {
+protocol EventsViewOutputting: AnyObject {
  
-    func configureNavigationBar(title: String)
-    func configureTableView(footerView: UIView)
+    // Navigation View
+    func configureNavigation(title: String)
+    func configureNavigation(state: EventsPresenter.NavigationState)
 
-    func showSearchBar(frame: CGRect, duration: TimeInterval)
-    func hideSearchBar(duration: TimeInterval)
-
-    func updateDot(for eventType: EventType, isSelected: Bool)
+    // Base View
+    func toggleDotFor(eventType: EventType, isSelected: Bool)
+    func toggleDotFor(noteType: NoteType, isSelected: Bool)
     
-    func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation)
-    func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation)
+    func hideNoteDots()
+    func showNoteDots()
+
+    func reload(activeEvents: [Event], activeNoteTypes: [NoteType])
+    func removeSectionFor(event: Event)
 }
 
 class EventsViewController: UIViewController {
@@ -32,63 +35,6 @@ class EventsViewController: UIViewController {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.delegate = self
         return searchBar
-    }()
-
-    private var dotStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
-        return stackView
-    }()
-
-    private lazy var birthdayDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .birthday, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var anniversaryDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .anniversary, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var holidayDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .holiday, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var otherDot: EventCircleImageView = {
-        let size = CGSize(width: UIScreen.main.bounds.width/9, height: UIScreen.main.bounds.width/9)
-        let dotView = EventCircleImageView(eventType: .other, scaledSize: size)
-        dotView.isUserInteractionEnabled = true
-        dotView.contentMode = .center
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dotPressed(_:)))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
-    }()
-
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
     }()
     
     private var searchButton: UIBarButtonItem {
@@ -102,6 +48,8 @@ class EventsViewController: UIViewController {
     private lazy var addButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
     }()
+    
+    private let baseView = EventsView()
 
     // MARK: Properties
 
@@ -109,56 +57,27 @@ class EventsViewController: UIViewController {
 
     // MARK: Lifecycle
     
+    override func loadView() {
+        super.loadView()
+        view = baseView
+        baseView.delegate = self
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        configureView()
-        constructSubviews()
-        constrainSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.viewWillAppear()
+        /// In case search bar was previously active, reset to initial bar buttons on appear
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
-    }
-
-    // MARK: View Setup
-
-    private func configureView() {
-        view.backgroundColor = .compatibleSystemBackground
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-    }
-
-    private func constructSubviews() {
-        view.addSubview(dotStackView)
-        dotStackView.addArrangedSubview(birthdayDot)
-        dotStackView.addArrangedSubview(anniversaryDot)
-        dotStackView.addArrangedSubview(holidayDot)
-        dotStackView.addArrangedSubview(otherDot)
-        view.addSubview(tableView)
-    }
-
-    private func constrainSubviews() {
-        NSLayoutConstraint.activate([
-            dotStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            dotStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            dotStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ])
-        NSLayoutConstraint.activate([
-            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
-            birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: dotStackView.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
     }
 
     // MARK: Actions
@@ -175,68 +94,13 @@ class EventsViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        let eventSetupViewController = EventSetupViewController()
-        navigationController?.pushViewController(eventSetupViewController, animated: true)
+        presenter?.addButtonPressed()
     }
     
     @objc
-    func dotPressed(_ sender: UITapGestureRecognizer) {
+    func eventDotPressed(_ sender: UITapGestureRecognizer) {
         guard let dotView = sender.view as? EventCircleImageView else { return }
-        presenter?.dotPressed(for: dotView.eventType)
-    }
-}
-
-// MARK: - UITableViewDataSource
-
-extension EventsViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let presenter = presenter else { return 0 }
-        let eventsToShow = presenter.eventsToShow()
-        return eventsToShow.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let presenter = presenter,
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as? EventCell
-        else {
-            return UITableViewCell()
-        }
-
-        let eventsToShow = presenter.eventsToShow()
-        cell.event = eventsToShow[indexPath.row]
-
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? EventCell, let event = cell.event else { return }
-
-        if editingStyle == .delete {
-            presenter?.deleteEventPressed(for: event, at: indexPath)
-        }
-    }
-}
-
-// MARK: - UITableViewDelegate
-
-extension EventsViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let presenter = presenter else { return }
-        let dotDates = presenter.eventsToShow()
-        let event = dotDates[indexPath.row]
-        let viewController = EventDetailsViewController(event: event)
-        navigationController?.pushViewController(viewController, animated: true)
+        presenter?.eventDotPressed(type: dotView.eventType)
     }
 }
 
@@ -245,7 +109,7 @@ extension EventsViewController: UITableViewDelegate {
 extension EventsViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        presenter?.textChanged(to: searchText)
+        presenter?.searchTextChanged(text: searchText)
     }
 }
 
@@ -253,56 +117,89 @@ extension EventsViewController: UISearchBarDelegate {
 
 extension EventsViewController: EventsViewOutputting {
     
-    // MARK: Configuration
-    
-    func configureNavigationBar(title: String) {
+    func configureNavigation(title: String) {
         navigationItem.title = title
     }
     
-    func configureTableView(footerView: UIView) {
-        tableView.tableFooterView = footerView
+    func configureNavigation(state: EventsPresenter.NavigationState) {
+        switch state {
+        case .normal:
+            navigationItem.titleView = nil
+            navigationItem.rightBarButtonItems = [addButton, searchButton]
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                self.searchBar.frame = .zero
+            }) { _ in
+                self.searchBar.text = nil
+            }
+        case .search:
+            navigationItem.titleView = searchBar
+            navigationItem.rightBarButtonItems = [cancelButton]
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                self.searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44)
+            }) { _ in
+                self.searchBar.becomeFirstResponder()
+            }
+        }
     }
+    
+    func toggleDotFor(eventType: EventType, isSelected: Bool) {
+        baseView.toggleDotFor(eventType: eventType, isSelected: isSelected)
+    }
+    
+    func toggleDotFor(noteType: NoteType, isSelected: Bool) {
+        baseView.toggleDotFor(noteType: noteType, isSelected: isSelected)
+    }
+    
+    func hideNoteDots() {
+        baseView.hideNoteDots()
+    }
+    
+    func showNoteDots() {
+        baseView.showNoteDots()
+    }
+    
+    func reload(activeEvents: [Event], activeNoteTypes: [NoteType]) {
+        baseView.populate(
+            with: EventsView.Content(
+                events: activeEvents,
+                noteTypes: activeNoteTypes
+            )
+        )
+        baseView.reloadData()
+    }
+    
+    func removeSectionFor(event: Event) {
+        baseView.deleteTableViewSectionFor(event: event)
+    }
+}
 
-    // MARK: Actions
+// MARK: - EventsViewDelegate
+
+extension EventsViewController: EventsViewDelegate {
     
-    
-    func showSearchBar(frame: CGRect, duration: TimeInterval) {
-        navigationItem.titleView = searchBar
-        navigationItem.rightBarButtonItems = [cancelButton]
-        
-        UIView.animate(withDuration: duration, animations: { 
-            self.searchBar.frame = frame
-        }) { completed in
-            self.searchBar.becomeFirstResponder()
-        }
+    func didPressDot(eventType: EventType) {
+        presenter?.eventDotPressed(type: eventType)
     }
     
-    func hideSearchBar(duration: TimeInterval) {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItems = [addButton, searchButton]
-        
-        UIView.animate(withDuration: duration, animations: { 
-            self.searchBar.frame = .zero
-        }) { completed in
-            self.searchBar.text = nil
-        }
+    func didPressDot(noteType: NoteType) {
+        presenter?.noteDotPressed(type: noteType)
     }
     
-    func updateDot(for eventType: EventType, isSelected: Bool) {
-        switch eventType {
-        case .birthday:    birthdayDot.setSelectedState(isSelected: isSelected)
-        case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
-        case .holiday:     holidayDot.setSelectedState(isSelected: isSelected)
-        case .other:       otherDot.setSelectedState(isSelected: isSelected)
-        }
+    func didSelectEvent(_ event: Event) {
+        presenter?.selectEventPressed(event: event)
     }
     
-    func reloadTableView(sections: IndexSet, animation: UITableView.RowAnimation) {
-        tableView.reloadSections(sections, with: animation)
-        tableView.setContentOffset(.zero, animated: true)
+    func didDeleteEvent(_ event: Event) {
+        presenter?.deleteEventPressed(event: event)
     }
     
-    func deleteTableView(rows: [IndexPath], animation: UITableView.RowAnimation) {
-        tableView.deleteRows(at: rows, with: animation)
+    func didSelectNote(noteState: NoteState) {
+        presenter?.selectNotePressed(noteState: noteState)
+    }
+    
+    func didDeleteNote(_ note: Note) {
+        print("TODO: delete note and animate table view cell row deletion")
     }
 }
