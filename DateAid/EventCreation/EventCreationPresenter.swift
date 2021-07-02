@@ -144,13 +144,13 @@ extension EventCreationPresenter: EventCreationEventHandling {
             return
         }
         
-        eventManager.setEventDate(
-            createDate(
-                month: datePickerManager.selectedMonth,
-                day: datePickerManager.selectedDay,
-                year: yearIsActive ? datePickerManager.selectedYear : 2100
-            )
+        let eventDate = createDate(
+            month: datePickerManager.selectedMonth,
+            day: datePickerManager.selectedDay,
+            year: yearIsActive ? datePickerManager.selectedYear : 2100
         )
+        
+        eventManager.setEventDate(eventDate)
         
         interactor?.saveEvent(eventManager.event)
     }

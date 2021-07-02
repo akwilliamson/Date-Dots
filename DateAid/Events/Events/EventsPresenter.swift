@@ -176,10 +176,10 @@ extension EventsPresenter: EventsEventHandling {
     func eventDotPressed(type: EventType) {
         let isSelected = togglePreferenceFor(eventType: type)
         view?.toggleDotFor(eventType: type, isSelected: isSelected)
-        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
         view?.reloadView()
         
-        if activeEvents.isEmpty {
+        if sortedActiveEvents.isEmpty {
             view?.hideNoteDots()
         } else {
             view?.showNoteDots()
@@ -189,7 +189,7 @@ extension EventsPresenter: EventsEventHandling {
     func noteDotPressed(type: NoteType) {
         let isSelected = togglePreferenceFor(noteType: type)
         view?.toggleDotFor(noteType: type, isSelected: isSelected)
-        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
         view?.reloadView()
     }
     
@@ -209,7 +209,7 @@ extension EventsPresenter: EventsInteractorOutputting {
     func eventsFetched(_ events: [Event]) {
         self.events = events
         setupDots()
-        view?.populateView(activeEvents: activeEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
         view?.reloadView()
     }
     

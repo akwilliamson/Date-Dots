@@ -48,8 +48,7 @@ struct EventCreationManager {
         if let event = event {
             self.event = event
         } else {
-            let entity = NSEntityDescription.entity(forEntityName: "Event", in: context)!
-            self.event = Event(entity: entity, insertInto: context)
+            self.event = Event(context: CoreDataManager.shared.viewContext)
         }
     }
     
@@ -88,7 +87,6 @@ struct EventCreationManager {
     // MARK: Private Helpers
     
     private func addAddress() {
-        let entity = NSEntityDescription.entity(forEntityName: "Address", in: context)!
-        event.address = Address(entity: entity, insertInto: context)
+        event.address = Address(context: CoreDataManager.shared.viewContext)
     }
 }
