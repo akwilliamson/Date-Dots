@@ -18,12 +18,12 @@ protocol EventDetailsEventHandling: AnyObject {
     func didSelectReminder()
     func didSelect(infoType: InfoType)
     func didSelect(noteType: NoteType)
-    func didSelectNoteView(note: Note?, noteType: NoteType?)
+    func didSelect(note: Note?, noteType: NoteType?)
 }
 
 protocol EventDetailsInteractorOutputting: AnyObject {
     
-    func handleNotification(dayPrior: Int?, timeOfDay: Date?)
+    func handleReminderFound(_ notification: UNNotificationRequest)
 }
 
 class EventDetailsPresenter {
@@ -34,7 +34,7 @@ class EventDetailsPresenter {
     var view: EventDetailsViewOutputting?
     var interactor: EventDetailsInteractorInputting?
     
-    // MARK: Constant
+    // MARK: Constants
     
     private enum Constant {
         static let keyPrefix = "eventdetails-"
@@ -43,6 +43,9 @@ class EventDetailsPresenter {
     // MARK: Properties
     
     private var event: Event
+    private var notification: UNNotificationRequest?
+    
+    // MARK: Computed Properties
     
     private var activeInfoType: InfoType {
         let key = "\(Constant.keyPrefix)\(InfoType.reminder.key)"
@@ -59,28 +62,36 @@ class EventDetailsPresenter {
     
     init(event: Event) {
         self.event = event
+        NotificationCenter.default.addObserver(self, selector: #selector(reminderSet(_:)), name: .NotificationScheduled, object: nil)
+    }
+    
+    // MARK: Notifications
+    
+    @objc
+    func reminderSet(_ notification: Notification) {
+        guard let notificationRequest = notification.userInfo?["request"] as? UNNotificationRequest else { return }
+        
+        DispatchQueue.main.async {
+            self.handleReminderFound(notificationRequest)
+        }
     }
     
     // MARK: Private Helpers
     
     private func setPreferenceFor(infoType: InfoType) {
-        let userDefaults = UserDefaults.standard
-        let key = "\(Constant.keyPrefix)\(InfoType.reminder.key)"
         switch infoType {
         case .address:
-            userDefaults.set(false, forKey: key)
+            UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(InfoType.reminder.key)")
         case .reminder:
-            userDefaults.set(true, forKey: key)
+            UserDefaults.standard.set(true, forKey: "\(Constant.keyPrefix)\(InfoType.reminder.key)")
         }
     }
     
     private func setPreferenceFor(noteType: NoteType) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.gifts.key)")
-        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.plans.key)")
-        userDefaults.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.misc.key)")
-        
-        userDefaults.set(true, forKey: "\(Constant.keyPrefix)\(noteType.key)")
+        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.gifts.key)")
+        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.plans.key)")
+        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.misc.key)")
+        UserDefaults.standard.set(true,  forKey: "\(Constant.keyPrefix)\(noteType.key)")
     }
 }
 
@@ -89,13 +100,19 @@ class EventDetailsPresenter {
 extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewDidLoad() {
-        let title = "\(event.eventType.emoji) \(event.givenName)"
-        view?.configureNavigation(title: title)
-    }
-    
-    func viewWillAppear() {
+        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+        view?.populateView(
+            content: EventDetailsView.Content(
+                event: event,
+                scheduleText: nil,
+                infoType: activeInfoType,
+                noteType: activeNoteType
+            )
+        )
         interactor?.getReminder(for: event.id)
     }
+    
+    func viewWillAppear() {}
     
     func didSelectEdit() {
         router?.presentEventEdit(event: event)
@@ -106,7 +123,8 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     }
     
     func didSelectReminder() {
-        router?.presentEventReminder(event: event)
+        let details = ReminderDetails(event: event, notification: notification)
+        router?.presentEventReminder(details: details)
     }
     
     func didSelect(infoType: InfoType) {
@@ -119,7 +137,7 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
         view?.select(noteType: activeNoteType)
     }
     
-    func didSelectNoteView(note: Note?, noteType: NoteType?) {
+    func didSelect(note: Note?, noteType: NoteType?) {
         if let note = note {
             let noteState = NoteState.existingNote(note)
             router?.presentEventNote(noteState: noteState)
@@ -134,29 +152,39 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
 
 extension EventDetailsPresenter: EventDetailsInteractorOutputting {
     
-    func handleNotification(dayPrior: Int?, timeOfDay: Date?) {
-        let content: EventDetailsView.Content
-        
-        if
-            let dayPrior = dayPrior,
-            let dayToCome = ReminderDayPrior(rawValue: dayPrior),
-            let timeOfDay = timeOfDay
-        {
-            content = EventDetailsView.Content(
-                event: event,
-                reminderText: "\(dayToCome.infoText)\n\(timeOfDay.formatted("h:mm a"))",
-                infoType: activeInfoType,
-                noteType: activeNoteType
-            )
-        }
+    func handleReminderFound(_ notification: UNNotificationRequest) {
+        guard
+            let trigger = notification.trigger as? UNCalendarNotificationTrigger,
+            let triggerDate = trigger.nextTriggerDate()
         else {
-            content = EventDetailsView.Content(
-                event: event,
-                reminderText: nil,
-                infoType: activeInfoType,
-                noteType: activeNoteType
-            )
+            return
         }
-        view?.populateView(content: content)
+        
+        self.notification = notification
+        
+        let reminderText = generateReminderText(for: triggerDate)
+        view?.updateReminder(text: reminderText)
+    }
+    
+    private func generateReminderText(for date: Date) -> String {
+
+        let dateComponents = DateComponents(
+            calendar: .current,
+            timeZone: .current,
+            year: Date().year,
+            month: event.date.month,
+            day: date.day,
+            hour: date.hour,
+            minute: date.minute
+        )
+        
+        let day = event.date.day! - date.day!
+        let time = dateComponents.date!.formatted("h:mm a")
+        
+        switch day {
+        case 0:  return "Day of\nat \(time)"
+        case 1:  return "\(day) day before\nat \(time)"
+        default: return "\(day) days before\nat \(time)"
+        }
     }
 }

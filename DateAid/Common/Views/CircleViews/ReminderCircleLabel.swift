@@ -12,7 +12,7 @@ class ReminderCircleLabel: CircleLabel {
 
     // MARK: Properties
 
-    let dayPrior: ReminderDayPrior
+    let dayPrior: Int
 
     // MARK: Initialization
     
@@ -20,12 +20,12 @@ class ReminderCircleLabel: CircleLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(dayPrior: ReminderDayPrior) {
+    init(dayPrior: Int) {
         self.dayPrior = dayPrior
         super.init(frame: .zero)
         lineBreakMode = .byWordWrapping
         textColor = .white
         font = FontType.avenirNextDemiBold(25).font
-        text = "\(dayPrior.rawValue)"
+        text = "\(dayPrior)"
     }
 }

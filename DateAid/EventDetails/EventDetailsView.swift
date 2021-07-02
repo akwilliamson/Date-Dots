@@ -465,17 +465,13 @@ class EventDetailsView: BaseView {
             detailsStackView.trailingAnchor.constraint(equalTo: detailsContainerView.trailingAnchor, constant: -8),
             detailsStackView.bottomAnchor.constraint(equalTo: detailsContainerView.bottomAnchor)
         ])
-        
+
         // Info
-        
+
         NSLayoutConstraint.activate([
             addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             addressContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
-        ])
-        NSLayoutConstraint.activate([
-            addressLabelStackView.centerXAnchor.constraint(equalTo: addressContainerView.centerXAnchor),
-            addressLabelStackView.centerYAnchor.constraint(equalTo: addressContainerView.centerYAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
             reminderContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -515,9 +511,9 @@ class EventDetailsView: BaseView {
             reminderInfoDotView.heightAnchor.constraint(equalTo: infoButtonContainerView.heightAnchor),
             reminderInfoDotView.widthAnchor.constraint(equalTo: reminderInfoDotView.heightAnchor)
         ])
-        
+
         // Notes
-        
+
         NSLayoutConstraint.activate([
             notesContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             notesContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -615,6 +611,10 @@ class EventDetailsView: BaseView {
         populateNote(noteType: noteType)
     }
     
+    func updateReminder(text: String) {
+        reminderLabel.text = text
+    }
+    
     // MARK: Private Helpers
     
     private func selectInfoType(_ infoType: InfoType) {
@@ -660,7 +660,7 @@ extension EventDetailsView: Populatable {
     
     struct Content {
         let event: Event
-        let reminderText: String?
+        let scheduleText: String?
         let infoType: InfoType
         let noteType: NoteType
     }
@@ -672,7 +672,7 @@ extension EventDetailsView: Populatable {
         populateDetails(event: event)
         
         populateAddress(event.address?.street, region: event.address?.region)
-        populateReminder(event.eventType, text: content.reminderText)
+        populateReminder(event.eventType, text: content.scheduleText)
         
         styleInfoButtons(eventType: event.eventType)
         selectInfoType(content.infoType)

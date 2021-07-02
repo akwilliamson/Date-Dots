@@ -13,7 +13,7 @@ protocol ReminderViewOutputting: AnyObject {
     func configureNavigation(title: String)
     func populateView(content: ReminderView.Content)
     func configureNavigationButton(title: String)
-    func didUpdateScheduled(text: String)
+    func didUpdateSchedule(text: String)
     func presentAlertWillDelete(title: String, body: String, confirm: String, dismiss: String)
     func presentAlertErrorSave(title: String, body: String, dismiss: String)
     func presentAlertErrorAuth(title: String, body: String, confirm: String, dismiss: String)
@@ -70,8 +70,8 @@ extension ReminderViewController: ReminderViewOutputting {
         )
     }
     
-    func didUpdateScheduled(text: String) {
-        baseView.updateScheduledLabel(text: text)
+    func didUpdateSchedule(text: String) {
+        baseView.updateScheduleLabel(text: text)
     }
     
     func presentAlertErrorAuth(title: String, body: String, confirm: String, dismiss: String) {

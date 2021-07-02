@@ -53,7 +53,6 @@ class EventCreationView: BaseView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.spacing = 8
-        
         return stackView
     }()
     
@@ -107,7 +106,7 @@ class EventCreationView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = 5
         stackView.distribution = .fillEqually
         
         return stackView
@@ -303,25 +302,12 @@ class EventCreationView: BaseView {
     override func constructLayout() {
         super.constructLayout()
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            containerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
-            eventDotStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            eventDotStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            eventDotStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
-        ])
-        NSLayoutConstraint.activate([
-            birthdayDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            inputStackView.topAnchor.constraint(equalTo: inputBackgroundView.topAnchor),
-            inputStackView.bottomAnchor.constraint(equalTo: inputBackgroundView.bottomAnchor),
-            inputStackView.leadingAnchor.constraint(equalTo: inputBackgroundView.leadingAnchor),
-            inputStackView.trailingAnchor.constraint(equalTo: inputBackgroundView.trailingAnchor)
         ])
         NSLayoutConstraint.activate([
             nameInputField.topAnchor.constraint(equalTo: inputBackgroundView.topAnchor, constant: 15),
@@ -337,10 +323,6 @@ class EventCreationView: BaseView {
         ])
         NSLayoutConstraint.activate([
             yearToggle.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            pickerView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            pickerView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
         ])
     }
     

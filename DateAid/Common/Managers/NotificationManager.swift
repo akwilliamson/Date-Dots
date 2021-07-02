@@ -118,11 +118,12 @@ class NotificationManager {
     
     /// Adds a new on-device scheduled notification to the user notification center.
     private func addNotification(reminder: Reminder, completion: @escaping (ScheduleNotificationResult) -> ()) {
+        // Delete any pre-existing local notification if it exists
+        removeNotification(with: reminder.id)
         
         let content = UNMutableNotificationContent()
         content.title = reminder.title
         content.body = reminder.body
-        content.userInfo = ["DaysBefore": reminder.dayPrior]
 
         let notificationRequest = UNNotificationRequest(
             identifier: reminder.id,
@@ -134,10 +135,12 @@ class NotificationManager {
         )
         
         UNUserNotificationCenter.current().add(notificationRequest) { error in
-            if error != nil {
-                completion(.failure(NotificationError.schedulingFailed))
-            } else {
+            if error == nil {
+                let userInfo = ["request": notificationRequest]
+                NotificationCenter.default.post(name: .NotificationScheduled, object: nil, userInfo: userInfo as [AnyHashable : Any])
                 completion(.success(true))
+            } else {
+                completion(.failure(NotificationError.schedulingFailed))
             }
         }
     }

@@ -29,18 +29,16 @@ class EventDetailsInteractor {
 extension EventDetailsInteractor: EventDetailsInteractorInputting {
     
     func getReminder(for id: String) {
-        notificationManager.retrieveNotification(for: id) { result in
+        notificationManager.retrieveNotification(for: id) { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             switch result {
             case .success(let notification):
-                if
-                    let dayPrior = notification.content.userInfo["DaysPrior"] as? Int,
-                    let trigger = notification.trigger as? UNCalendarNotificationTrigger,
-                    let triggerDate = trigger.nextTriggerDate()
-                {
-                    self.presenter?.handleNotification(dayPrior: dayPrior, timeOfDay: triggerDate)
+                DispatchQueue.main.async {
+                    strongSelf.presenter?.handleReminderFound(notification)
                 }
             case .failure:
-                self.presenter?.handleNotification(dayPrior: nil, timeOfDay: nil)
+                return
             }
         }
     }

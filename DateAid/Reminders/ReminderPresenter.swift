@@ -20,8 +20,6 @@ protocol ReminderEventHandling: AnyObject {
 
 protocol ReminderInteractorOutputting: AnyObject {
     
-    func handleReminderNotFound()
-    func handleReminderFound(_ notification: UNNotificationRequest)
     func handleReminderSaved()
     func handleReminderNotSaved(error: NotificationError)
     func handleReminderDeleted()
@@ -38,43 +36,83 @@ class ReminderPresenter {
     // MARK: Constants
     
     private enum Constant {
-        enum String {
-            static let navigationTitle = "Reminder"
-            static let barButtonTitle = "Save"
-        }
+        static let barButtonTitle = "Save"
     }
     
     // MARK: Properties
     
     private let event: Event
+    private let notification: UNNotificationRequest?
     
-    // Event Values
-    private var daysUntilEvent = 365
-    private var title = ""
-    private var body = ""
-    // Notification Values
-    private var dayPrior: ReminderDayPrior = .zero
-    private var timeOfDay = Date()
+    private var fireDateComponents: DateComponents
     
-    private var scheduledText: String {
-        let timeText = timeOfDay.rounded(minutes: 15, rounding: .ceiling).formatted("h:mm a")
+    // MARK: Computed Properties
+    
+    private var eventDaysFromNow: Int {
+        return Calendar.current.days(from: Date(), to: event.date)
+    }
+    
+    private var eventDaysFromFireDate: Int {
+        return Calendar.current.days(from: fireDateComponents.date!, to: event.date)
+    }
+    
+    private var reminderTitle: String {
+        "\(event.eventType.emoji) \(event.abvName)"
+    }
+    
+    private var reminderBody: String {
+        guard let fireDate = fireDateComponents.date else { return "is soon" }
         
-        switch dayPrior {
-        case .zero: return "Day of at \(timeText)"
-        case .one:  return "\(dayPrior.rawValue) day before at \(timeText)"
-        default:    return "\(dayPrior.rawValue) days before at \(timeText)"
+        let daysAway = Calendar.current.days(from: fireDate, to: event.date)
+        switch daysAway {
+        case 0:  return "\(event.eventType.rawValue) is today"
+        case 1:  return "\(event.eventType.rawValue) is tomorrow"
+        default: return "\(event.eventType.rawValue) is \(daysAway) days away"
         }
     }
     
-    private var timeOfDayComponents: DateComponents {
-        Calendar.current.dateComponents(in: .current, from: timeOfDay)
+    private var scheduleText: String {
+        let day = event.date.day! - fireDateComponents.day!
+        
+        let time = fireDateComponents.date!.formatted("h:mm a")
+        
+        switch day {
+        case 0:  return "Day of at \(time)"
+        case 1:  return "\(day) day before at \(time)"
+        default: return "\(day) days before at \(time)"
+        }
     }
     
     // MARK: Initialization
 
-    init(event: Event) {
-        self.event = event
-        setEventValues(from: event)
+    init(details: ReminderDetails) {
+        self.event = details.event
+        self.notification = details.notification
+        
+        if
+            let trigger = notification?.trigger as? UNCalendarNotificationTrigger,
+            let triggerDate = trigger.nextTriggerDate()
+        {
+            self.fireDateComponents = DateComponents(
+                calendar: .current,
+                timeZone: .current,
+                year: triggerDate.year,
+                month: triggerDate.month,
+                day: triggerDate.day,
+                hour: triggerDate.hour,
+                minute: triggerDate.minute
+            )
+        } else {
+            self.fireDateComponents = DateComponents(
+                calendar: .current,
+                timeZone: .current,
+                year: Date().year,
+                month: event.date.month,
+                day: event.date.day,
+                hour: Date().hour,
+                minute: Date().rounded(minutes: 15, rounding: .floor).minute
+            )
+        }
     }
 }
 
@@ -83,29 +121,50 @@ class ReminderPresenter {
 extension ReminderPresenter: ReminderEventHandling {
     
     func viewDidLoad() {
-        view?.configureNavigation(title: Constant.String.navigationTitle)
-        view?.configureNavigationButton(title: Constant.String.barButtonTitle)
-        interactor?.getReminder(for: event.id)
+        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+        view?.configureNavigationButton(title: Constant.barButtonTitle)
+        if notification != nil {
+            view?.populateView(
+                content: ReminderView.Content(
+                    scheduleText: scheduleText,
+                    eventColor: event.eventType.color,
+                    eventDaysFromNow: eventDaysFromNow,
+                    eventDaysFromFireDate: eventDaysFromFireDate,
+                    fireDate: fireDateComponents.date!,
+                    isScheduled: true
+                )
+            )
+        } else {
+            view?.populateView(
+                content: ReminderView.Content(
+                    scheduleText: scheduleText,
+                    eventColor: event.eventType.color,
+                    eventDaysFromNow: eventDaysFromNow,
+                    eventDaysFromFireDate: eventDaysFromFireDate,
+                    fireDate: fireDateComponents.date!,
+                    isScheduled: false
+                )
+            )
+        }
     }
     
     func didSelectDayPrior(_ dayPrior: Int) {
-        setDayPrior(dayPrior)
-        view?.didUpdateScheduled(text: scheduledText)
+        setDateComponentDays(dayPrior: dayPrior)
+        view?.didUpdateSchedule(text: scheduleText)
     }
     
     func didChangeTimeOfDay(_ date: Date) {
-        setTimeOfDay(date)
-        view?.didUpdateScheduled(text: scheduledText)
+        setDateComponentTime(from: date)
+        view?.didUpdateSchedule(text: scheduleText)
     }
     
     func didPressSaveReminder() {
         interactor?.saveReminder(
             Reminder(
                 id: event.id,
-                title: title,
-                body: body,
-                dayPrior: dayPrior.rawValue,
-                fireDate: timeOfDayComponents
+                title: reminderTitle,
+                body: reminderBody,
+                fireDate: fireDateComponents
             )
         )
     }
@@ -125,75 +184,30 @@ extension ReminderPresenter: ReminderEventHandling {
     
     // MARK: Private Methods
     
-    private func setEventValues(from event: Event) {
-        
-        self.daysUntilEvent = Calendar.current.daysUntil(event: event.date)
-        
-        self.title = "\(event.eventType.emoji) \(event.abvName)"
-        
-        switch daysUntilEvent {
-        case 0:
-            self.body = "\(event.eventType.rawValue) is today"
-        case 1:
-            self.body = "\(event.eventType.rawValue) is tomorrow"
-        default:
-            self.body = "\(event.eventType.rawValue) is \(daysUntilEvent) days away"
-        }
+    private func setDateComponents(from date: Date) {
+        fireDateComponents.day = date.day
+        fireDateComponents.hour = date.hour
+        fireDateComponents.minute = date.minute
     }
     
-    private func setNotificationValues(from notification: UNNotificationRequest) {
-        if let dayPrior = notification.content.userInfo["DaysPrior"] as? Int {
-           setDayPrior(dayPrior)
-        }
-        
-        if
-            let trigger = notification.trigger as? UNCalendarNotificationTrigger,
-            let triggerDate = trigger.nextTriggerDate()
-        {
-            setTimeOfDay(triggerDate)
-        }
+    private func setDateComponentDays(dayPrior: Int) {
+        guard let eventDay = event.date.day else { return }
+        fireDateComponents.day = eventDay - dayPrior
     }
     
-    private func setDayPrior(_ dayPrior: Int) {
-        self.dayPrior = ReminderDayPrior(rawValue: dayPrior) ?? self.dayPrior
+    private func setDateComponentDays(from date: Date) {
+        fireDateComponents.day = date.day
     }
     
-    private func setTimeOfDay(_ date: Date) {
-        self.timeOfDay = date
+    private func setDateComponentTime(from date: Date) {
+        fireDateComponents.hour = date.hour
+        fireDateComponents.minute = date.minute
     }
 }
 
 // MARK: - ReminderInteractorOutputting
 
 extension ReminderPresenter: ReminderInteractorOutputting {
-    
-    func handleReminderNotFound() {
-        view?.populateView(
-            content: ReminderView.Content(
-                eventColor: event.eventType.color,
-                daysUntilEvent: daysUntilEvent,
-                dayPrior: dayPrior,
-                timeOfDay: timeOfDay,
-                isScheduled: false,
-                scheduledText: scheduledText
-            )
-        )
-    }
-    
-    func handleReminderFound(_ notification: UNNotificationRequest) {
-        setNotificationValues(from: notification)
-        
-        view?.populateView(
-            content: ReminderView.Content(
-                eventColor: event.eventType.color,
-                daysUntilEvent: daysUntilEvent,
-                dayPrior: dayPrior,
-                timeOfDay: timeOfDay,
-                isScheduled: true,
-                scheduledText: scheduledText
-            )
-        )
-    }
     
     func handleReminderNotSaved(error: NotificationError) {
         switch error {
@@ -217,10 +231,14 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     }
     
     func handleReminderSaved() {
-        router?.dismiss()
+        DispatchQueue.main.async {
+            self.router?.dismiss()
+        }
     }
     
     func handleReminderDeleted() {
-        router?.dismiss()
+        DispatchQueue.main.async {
+            self.router?.dismiss()
+        }
     }
 }

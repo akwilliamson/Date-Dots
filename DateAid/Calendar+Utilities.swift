@@ -10,12 +10,12 @@ import Foundation
 
 extension Calendar {
     
-    func daysUntil(event: Date) -> Int {
-        let today = startOfDay(for: Date())
-        let eventDate = startOfDay(for: event)
-        let components = dateComponents([.day, .month], from: eventDate)
-        let nextDate = nextDate(after: today, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)
+    func days(from date1: Date, to date2: Date) -> Int {
+        let start = startOfDay(for: date1)
+        let end = startOfDay(for: date2)
+        let components = dateComponents([.day, .month], from: end)
+        let nextDate = nextDate(after: start, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)
         
-        return dateComponents([.day], from: today, to: nextDate ?? today).day ?? 0
+        return dateComponents([.day], from: start, to: nextDate ?? end).day ?? 0
     }
 }

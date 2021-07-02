@@ -20,10 +20,10 @@ class ReminderRouter {
     
     // MARK: Initialization
     
-    init(parent: Routing, event: Event) {
+    init(parent: Routing, details: ReminderDetails) {
         self.parent = parent
         
-        let presenter = ReminderPresenter(event: event)
+        let presenter = ReminderPresenter(details: details)
         
         let view = ReminderViewController()
         presenter.view = view

@@ -10,7 +10,6 @@ import UserNotifications
 
 protocol ReminderInteractorInputting: AnyObject {
     
-    func getReminder(for id: String)
     func saveReminder(_ reminder: Reminder)
     func deleteReminder(for id: String)
 }
@@ -30,19 +29,6 @@ class ReminderInteractor {
 
 extension ReminderInteractor: ReminderInteractorInputting {
  
-    func getReminder(for id: String) {
-        notificationManager.retrieveNotification(for: id) { [weak self] result in
-            guard let strongSelf = self else { return }
-            
-            switch result {
-            case .success(let notification):
-                strongSelf.presenter?.handleReminderFound(notification)
-            case .failure:
-                strongSelf.presenter?.handleReminderNotFound()
-            }
-        }
-    }
-    
     func saveReminder(_ reminder: Reminder) {
         notificationManager.scheduleNotification(reminder: reminder) { [weak self] result in
             guard let strongSelf = self else { return }

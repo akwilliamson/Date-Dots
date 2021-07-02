@@ -21,9 +21,8 @@ class ReminderView: BaseView {
     
     private enum Constant {
         enum String {
-            static let daysBefore = "Days Before"
-            static let timeOfDay = "Time of Day"
-            static let cancelReminder = "Cancel Reminder"
+            static let daysBefore = "Days Before Event"
+            static let timeOfDay = "At Time"
         }
     }
     
@@ -33,13 +32,14 @@ class ReminderView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 20
         return stackView
     }()
     
-    private let scheduledLabel: UILabel = {
+    private let scheduleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FontType.avenirNextBold(25).font
+        label.font = FontType.noteworthyBold(30).font
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
@@ -49,7 +49,7 @@ class ReminderView: BaseView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = FontType.noteworthyBold(20).font
+        label.font = FontType.avenirNextBold(20).font
         label.text = Constant.String.daysBefore
         return label
     }()
@@ -65,13 +65,13 @@ class ReminderView: BaseView {
     private let daysPriorFirstRowStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
         return stackView
     }()
     
     private let zeroDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .zero)
+        let label = ReminderCircleLabel(dayPrior: 0)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 0
@@ -79,7 +79,7 @@ class ReminderView: BaseView {
     }()
     
     private let oneDayPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .one)
+        let label = ReminderCircleLabel(dayPrior: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 1
@@ -87,7 +87,7 @@ class ReminderView: BaseView {
     }()
     
     private let twoDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .two)
+        let label = ReminderCircleLabel(dayPrior: 2)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 2
@@ -95,7 +95,7 @@ class ReminderView: BaseView {
     }()
     
     private let threeDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .three)
+        let label = ReminderCircleLabel(dayPrior: 3)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 3
@@ -105,13 +105,13 @@ class ReminderView: BaseView {
     private let daysPriorSecondRowStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
         return stackView
     }()
     
     private let fourDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .four)
+        let label = ReminderCircleLabel(dayPrior: 4)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 4
@@ -119,7 +119,7 @@ class ReminderView: BaseView {
     }()
     
     private let fiveDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .five)
+        let label = ReminderCircleLabel(dayPrior: 5)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 5
@@ -127,7 +127,7 @@ class ReminderView: BaseView {
     }()
     
     private let sixDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .six)
+        let label = ReminderCircleLabel(dayPrior: 6)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 6
@@ -135,7 +135,7 @@ class ReminderView: BaseView {
     }()
     
     private let sevenDaysPriorLabel: ReminderCircleLabel = {
-        let label = ReminderCircleLabel(dayPrior: .seven)
+        let label = ReminderCircleLabel(dayPrior: 7)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 7
@@ -146,12 +146,12 @@ class ReminderView: BaseView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = FontType.noteworthyBold(20).font
+        label.font = FontType.avenirNextBold(20).font
         label.text = Constant.String.timeOfDay
         return label
     }()
     
-    private let timeOfDayPickerView: UIDatePicker = {
+    private let fireTimePickerView: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.datePickerMode = .time
@@ -166,13 +166,7 @@ class ReminderView: BaseView {
     private let deleteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .red
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        button.setTitle(Constant.String.cancelReminder, for: .normal)
-        button.titleLabel?.font = FontType.avenirNextDemiBold(20).font
-        button.setTitleColor(UIColor.compatibleLabel, for: .normal)
-        button.isHidden = true
+        button.setImage(UIImage(systemName: "trash.circle"), for: .normal)
         
         return button
     }()
@@ -200,7 +194,7 @@ class ReminderView: BaseView {
         super.configureView()
         backgroundColor = .compatibleSystemBackground
 
-        timeOfDayPickerView.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)
+        fireTimePickerView.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)
         deleteButton.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
 
         zeroDaysPriorLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectDayPrior)))
@@ -216,22 +210,10 @@ class ReminderView: BaseView {
     override func constructSubviewHierarchy() {
         super.constructSubviewHierarchy()
         
-        let customSpacing: CGFloat
-        
-        switch UIDevice.type {
-        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            customSpacing = 20
-        default:
-            customSpacing = 30
-        }
-        
         addSubview(containerStackView)
-        containerStackView.addArrangedSubview(scheduledLabel)
-        containerStackView.setCustomSpacing(customSpacing, after: scheduledLabel)
-        containerStackView.addArrangedSubview(deleteButton)
-        containerStackView.setCustomSpacing(customSpacing, after: deleteButton)
+        containerStackView.addArrangedSubview(scheduleLabel)
+        containerStackView.setCustomSpacing(30, after: scheduleLabel)
         containerStackView.addArrangedSubview(dayPriorLabel)
-        containerStackView.setCustomSpacing(20, after: dayPriorLabel)
         containerStackView.addArrangedSubview(daysPriorContainerStackView)
         daysPriorContainerStackView.addArrangedSubview(daysPriorFirstRowStackView)
         daysPriorFirstRowStackView.addArrangedSubview(zeroDaysPriorLabel)
@@ -243,57 +225,38 @@ class ReminderView: BaseView {
         daysPriorSecondRowStackView.addArrangedSubview(fiveDaysPriorLabel)
         daysPriorSecondRowStackView.addArrangedSubview(sixDaysPriorLabel)
         daysPriorSecondRowStackView.addArrangedSubview(sevenDaysPriorLabel)
-        containerStackView.setCustomSpacing(customSpacing, after: daysPriorContainerStackView)
         containerStackView.addArrangedSubview(timeOfDayLabel)
-        containerStackView.addArrangedSubview(timeOfDayPickerView)
+        containerStackView.setCustomSpacing(0, after: timeOfDayLabel)
+        containerStackView.addArrangedSubview(fireTimePickerView)
+        containerStackView.addArrangedSubview(deleteButton)
     }
     
     override func constructLayout() {
         super.constructLayout()
         
         NSLayoutConstraint.activate([
-            containerStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            containerStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         
-        switch UIDevice.type {
-        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            NSLayoutConstraint.activate([
-                scheduledLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-                scheduledLabel.heightAnchor.constraint(equalToConstant: 30)
-            ])
-        default:
-            NSLayoutConstraint.activate([
-                scheduledLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
-                scheduledLabel.heightAnchor.constraint(equalToConstant: 30)
-            ])
-        }
-        
         NSLayoutConstraint.activate([
-            deleteButton.heightAnchor.constraint(equalToConstant: 50),
-            deleteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            deleteButton.trailingAnchor.constraint(equalTo: leadingAnchor, constant: -20)
-        ])
-        
-        NSLayoutConstraint.activate([
-            dayPriorLabel.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        NSLayoutConstraint.activate([
-            daysPriorContainerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            daysPriorContainerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            scheduleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20)
         ])
         
         NSLayoutConstraint.activate([
             zeroDaysPriorLabel.heightAnchor.constraint(equalTo: zeroDaysPriorLabel.widthAnchor),
-            fourDaysPriorLabel.heightAnchor.constraint(equalTo: zeroDaysPriorLabel.widthAnchor)
+            fourDaysPriorLabel.heightAnchor.constraint(equalTo: fourDaysPriorLabel.widthAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            timeOfDayLabel.heightAnchor.constraint(equalToConstant: 30)
+            deleteButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    // MARK: Public Methods
+    
+    func updateScheduleLabel(text: String) {
+        scheduleLabel.text = text
     }
     
     // MARK: Actions
@@ -311,7 +274,7 @@ class ReminderView: BaseView {
     @objc
     func didSelectDayPrior(_ sender: UITapGestureRecognizer) {
         guard let dayPriorLabel = sender.view as? ReminderCircleLabel else { return }
-        delegate?.didSelectDayPrior(dayPriorLabel.dayPrior.rawValue)
+        delegate?.didSelectDayPrior(dayPriorLabel.dayPrior)
 
         selectedDayPriorLabel = dayPriorLabel
         selectedDayPriorLabel?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
@@ -335,17 +298,16 @@ extension ReminderView: Populatable {
     // MARK: Content
     
     struct Content {
+        let scheduleText: String
         let eventColor: UIColor
-        let daysUntilEvent: Int
-        let dayPrior: ReminderDayPrior
-        let timeOfDay: Date
+        let eventDaysFromNow: Int
+        let eventDaysFromFireDate: Int
+        let fireDate: Date
         let isScheduled: Bool
-        let scheduledText: String
     }
 
     func populate(with content: Content) {
-        self.scheduledLabel.text = content.scheduledText
-        self.timeOfDayPickerView.date = content.timeOfDay
+        scheduleLabel.text = content.scheduleText
         
         let daysPriorLabels = [
             zeroDaysPriorLabel,
@@ -360,19 +322,22 @@ extension ReminderView: Populatable {
         
         daysPriorLabels.forEach { label in
             label.backgroundColor = content.eventColor
-            if label.tag >= content.daysUntilEvent {
-                label.alpha = 0.3
+            
+            if label.tag >= content.eventDaysFromNow {
                 label.isUserInteractionEnabled = false
+                label.alpha = 0.3
             }
         }
+
+        selectedDayPriorLabel = daysPriorLabels[safe: content.eventDaysFromFireDate]
+        
+        fireTimePickerView.date = content.fireDate
         
         if content.isScheduled {
-            selectedDayPriorLabel = daysPriorLabels[content.dayPrior.rawValue]
             deleteButton.isHidden = false
+        } else {
+            selectedDayPriorLabel = zeroDaysPriorLabel
+            deleteButton.isHidden = true
         }
-    }
-
-    func updateScheduledLabel(text: String) {
-        scheduledLabel.text = text
     }
 }

@@ -16,8 +16,6 @@ struct Reminder {
     let title: String
     /// The body text of the reminder
     let body: String
-    /// The prior day of the event to be reminded
-    let dayPrior: Int
     /// The date to be reminded
     let fireDate: DateComponents
 }

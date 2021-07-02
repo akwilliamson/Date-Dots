@@ -19,6 +19,8 @@ protocol EventDetailsViewOutputting: AnyObject {
     // Actions
     func select(infoType: InfoType)
     func select(noteType: NoteType)
+    
+    func updateReminder(text: String)
 }
 
 class EventDetailsViewController: UIViewController {
@@ -88,6 +90,10 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
     func select(noteType: NoteType) {
         baseView.select(noteType: noteType)
     }
+    
+    func updateReminder(text: String) {
+        baseView.updateReminder(text: text)
+    }
 }
 
 // MARK: - EventDetailsViewDelegate
@@ -111,6 +117,6 @@ extension EventDetailsViewController: EventDetailsViewDelegate {
     }
     
     func didSelectNoteView(_ note: Note?, noteType: NoteType?) {
-        presenter?.didSelectNoteView(note: note, noteType: noteType)
+        presenter?.didSelect(note: note, noteType: noteType)
     }
 }
