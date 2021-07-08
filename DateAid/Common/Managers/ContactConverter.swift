@@ -58,17 +58,15 @@ class ContactConverter {
             let exists = storedEvents.contains { $0.name == givenName && $0.type == EventType.custom.rawValue }
             
             if !exists {
-                if let entity = NSEntityDescription.entity(forEntityName: "Date", in: CoreDataManager.shared.viewContext) {
-                    let date = Event(entity: entity, insertInto: CoreDataManager.shared.viewContext)
-                    // Deprecated
-                    date.name            = givenName
-                    // Deprecated
-                    date.abbreviatedName = givenName
-                    date.givenName       = givenName
-                    date.familyName      = String()
-                    date.date            = givenDate
-                    date.type            = EventType.custom.rawValue
-                }
+                let event = Event(context: CoreDataManager.shared.viewContext)
+                // Deprecated
+                event.name            = "DEPRECATED"
+                event.abbreviatedName = "DEPRECATED"
+                event.equalizedDate   = "DEPRECATED"
+                event.givenName       = givenName
+                event.familyName      = String()
+                event.date            = givenDate
+                event.type            = EventType.custom.rawValue
             }
         }
     }

@@ -30,7 +30,7 @@ class NotificationManager {
     typealias AuthorizationStatusResult = Result<Bool, NotificationError>
     typealias AuthorizationRequestResult = Result<Bool, NotificationError>
     typealias RetrieveNotificationResult = Result<UNNotificationRequest, NotificationError>
-    typealias ScheduleNotificationResult = Result<Bool, NotificationError>
+    typealias ScheduleNotificationResult = Result<UNNotificationRequest, NotificationError>
     typealias RemoveNotificationResult = Result<Bool, NotificationError>
     
     // MARK: Properties
@@ -136,9 +136,7 @@ class NotificationManager {
         
         UNUserNotificationCenter.current().add(notificationRequest) { error in
             if error == nil {
-                let userInfo = ["request": notificationRequest]
-                NotificationCenter.default.post(name: .NotificationScheduled, object: nil, userInfo: userInfo as [AnyHashable : Any])
-                completion(.success(true))
+                completion(.success(notificationRequest))
             } else {
                 completion(.failure(NotificationError.schedulingFailed))
             }

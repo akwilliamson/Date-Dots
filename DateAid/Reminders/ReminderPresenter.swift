@@ -20,9 +20,9 @@ protocol ReminderEventHandling: AnyObject {
 
 protocol ReminderInteractorOutputting: AnyObject {
     
-    func handleReminderSaved()
-    func handleReminderNotSaved(error: NotificationError)
-    func handleReminderDeleted()
+    func reminderSaveFailed(error: NotificationError)
+    func reminderSaveSucceeded(notification: UNNotificationRequest)
+    func reminderDeleted()
 }
 
 class ReminderPresenter {
@@ -36,6 +36,7 @@ class ReminderPresenter {
     // MARK: Constants
     
     private enum Constant {
+        static let navigationTitle = "Reminder"
         static let barButtonTitle = "Save"
     }
     
@@ -121,7 +122,7 @@ class ReminderPresenter {
 extension ReminderPresenter: ReminderEventHandling {
     
     func viewDidLoad() {
-        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+        view?.configureNavigation(title: Constant.navigationTitle)
         view?.configureNavigationButton(title: Constant.barButtonTitle)
         if notification != nil {
             view?.populateView(
@@ -208,8 +209,8 @@ extension ReminderPresenter: ReminderEventHandling {
 // MARK: - ReminderInteractorOutputting
 
 extension ReminderPresenter: ReminderInteractorOutputting {
-    
-    func handleReminderNotSaved(error: NotificationError) {
+
+    func reminderSaveFailed(error: NotificationError) {
         switch error {
         case .accessDenied, .denied:
             view?.presentAlertErrorAuth(
@@ -230,15 +231,11 @@ extension ReminderPresenter: ReminderInteractorOutputting {
         }
     }
     
-    func handleReminderSaved() {
-        DispatchQueue.main.async {
-            self.router?.dismiss()
-        }
+    func reminderSaveSucceeded(notification: UNNotificationRequest) {
+        self.router?.dismiss(data: notification)
     }
     
-    func handleReminderDeleted() {
-        DispatchQueue.main.async {
-            self.router?.dismiss()
-        }
+    func reminderDeleted() {
+        self.router?.dismiss()
     }
 }

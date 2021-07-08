@@ -256,12 +256,14 @@ class EventsView: BaseView {
     @objc
     func eventDotPressed(_ sender: UITapGestureRecognizer) {
         guard let dot = sender.view as? EventCircleImageView else { return }
+        dot.spring()
         delegate?.didPressDot(eventType: dot.eventType)
     }
     
     @objc
     func noteDotPressed(_ sender: UITapGestureRecognizer) {
         guard let dot = sender.view as? NoteCircleImageView else { return }
+        dot.spring()
         delegate?.didPressDot(noteType: dot.noteType)
     }
 }

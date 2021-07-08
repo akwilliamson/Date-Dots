@@ -36,8 +36,10 @@ class DatePickerManager {
         }
     }
     
+    var yearIsEnabled = true
+    
     var selectedYearIndex: Int {
-        activeYears.firstIndex(of: selectedYear) ?? 50
+        activeYears.firstIndex(of: selectedYear) ?? activeYears.middleIndex
     }
     
     var days: [String] {
@@ -50,6 +52,15 @@ class DatePickerManager {
     
     var years: [String] {
         return activeYears.map { String($0) }
+    }
+    
+    var eventDate: Date {
+        let year = yearIsEnabled ? selectedYear : 2100
+        let month = selectedMonth + 1
+        let day = selectedDay + 1
+        let dateComponents = DateComponents(year: year, month: month, day: day)
+        
+        return Calendar.current.date(from: dateComponents) ?? Date()
     }
     
     // MARK: Initialization
@@ -81,6 +92,10 @@ class DatePickerManager {
     
     func setYear(_ yearIndex: Int) {
         selectedYear = activeYears[yearIndex]
+    }
+    
+    func setYearToggle(isOn: Bool) {
+        yearIsEnabled = isOn
     }
     
     // MARK: Private Methods

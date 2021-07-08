@@ -10,6 +10,29 @@ import Foundation
 
 extension Date {
     
+    /// A date ignoring the year.
+    struct CalendarDate: Comparable {
+        
+        let month: Int
+        let day: Int
+        
+        init(date: Date) {
+            let comps = Calendar.current.dateComponents([.month,.day], from: date)
+            self.month = comps.month ?? 0
+            self.day = comps.day ?? 0
+        }
+        
+        static func <(lhs: CalendarDate, rhs: CalendarDate) -> Bool {
+            if lhs.month < rhs.month {
+                return true
+            } else if lhs.month == rhs.month {
+                return lhs.day < rhs.day
+            } else {
+                return false
+            }
+        }
+    }
+    
     /// The direction of which to round a specific time.
     enum DateRoundingType {
         /// Round up

@@ -53,7 +53,7 @@ class RouteManager {
         case .eventDetails:
             guard let event = data as? Event else { return nil }
             return EventDetailsRouter(parent: parent, event: event)
-        case .eventEdit:
+        case .eventCreation:
             guard let event = data as? Event else { return nil }
             return EventCreationRouter(parent: parent, event: event)
         case .eventNoteDetails:

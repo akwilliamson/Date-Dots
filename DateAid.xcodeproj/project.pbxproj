@@ -89,6 +89,7 @@
 		97BDFCF4265E136B0061E0CB /* EventCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF3265E136B0061E0CB /* EventCreationViewController.swift */; };
 		97BDFCF8265E138E0061E0CB /* EventCreationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF7265E138E0061E0CB /* EventCreationPresenter.swift */; };
 		97BDFCFA265E13A00061E0CB /* EventCreationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF9265E13A00061E0CB /* EventCreationInteractor.swift */; };
+		97C05179269686AE00709C0F /* UIView+Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C05178269686AE00709C0F /* UIView+Spring.swift */; };
 		97D0C114260C2ED300700C09 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0C113260C2ED300700C09 /* NoteDetailsView.swift */; };
 		97D7E20E24D760E300A28F60 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D7E20D24D760E300A28F60 /* Font.swift */; };
 		97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */; };
@@ -200,6 +201,7 @@
 		97BDFCF3265E136B0061E0CB /* EventCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationViewController.swift; sourceTree = "<group>"; };
 		97BDFCF7265E138E0061E0CB /* EventCreationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationPresenter.swift; sourceTree = "<group>"; };
 		97BDFCF9265E13A00061E0CB /* EventCreationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationInteractor.swift; sourceTree = "<group>"; };
+		97C05178269686AE00709C0F /* UIView+Spring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spring.swift"; sourceTree = "<group>"; };
 		97D0C113260C2ED300700C09 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
 		97D7E20D24D760E300A28F60 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 				975975EE25EE1134006C5285 /* Array+Subscript.swift */,
 				97663715268EE1640050F208 /* Notification+Names.swift */,
+				97C05178269686AE00709C0F /* UIView+Spring.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				970D93621BC4765900D7F1FF /* UIColor+Colors.swift in Sources */,
 				970622421E2C32100020743C /* EventsNavigationViewController.swift in Sources */,
 				97007BAC267FE35D007BA2F1 /* ReminderRouter.swift in Sources */,
+				97C05179269686AE00709C0F /* UIView+Spring.swift in Sources */,
 				97D0C114260C2ED300700C09 /* NoteDetailsView.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Event.swift in Sources */,

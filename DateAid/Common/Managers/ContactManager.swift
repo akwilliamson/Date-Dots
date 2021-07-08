@@ -17,7 +17,6 @@ class ContactManager {
         
         authorized(complete: { success in
             let fetchedContacts: [CNContact] = success ? self.fetchContacts() : []
-            fetchedContacts.forEach({ print($0.givenName) })
             ContactConverter(contacts: fetchedContacts).syncEvents()
             
             complete()

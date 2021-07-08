@@ -80,17 +80,7 @@ class EventsPresenter {
     }
     
     private var sortedActiveEvents: [Event] {
-        let sortedEvents = activeEvents.sorted { $0.formattedDate < $1.formattedDate }
-        let now = Date().formatted("MM/dd")
-        
-        let currentEvents = sortedEvents.sorted { (event1, event2) in
-            if event1.formattedDate >= now && event2.formattedDate < now {
-                return event1.formattedDate > event2.formattedDate
-            } else {
-                return event1.formattedDate < event2.formattedDate
-            }
-        }
-        return currentEvents
+        activeEvents.shiftSorted()
     }
     
     private var isSearching = false

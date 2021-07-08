@@ -34,16 +34,16 @@ extension ReminderInteractor: ReminderInteractorInputting {
             guard let strongSelf = self else { return }
             
             switch result {
-            case .success:
-                strongSelf.presenter?.handleReminderSaved()
+            case .success(let notification):
+                strongSelf.presenter?.reminderSaveSucceeded(notification: notification)
             case .failure(let error):
-                strongSelf.presenter?.handleReminderNotSaved(error: error)
+                strongSelf.presenter?.reminderSaveFailed(error: error)
             }
         }
     }
     
     func deleteReminder(for id: String) {
         notificationManager.removeNotification(with: id)
-        presenter?.handleReminderDeleted()
+        presenter?.reminderDeleted()
     }
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 extension NSNotification.Name {
-
-    /// A notification has been scheduled.
-    static var NotificationScheduled: NSNotification.Name {
-        return .init("ReminderSet")
+    
+    /// An event has been created or updated and successfully saved.
+    static var EventSaved: NSNotification.Name {
+        return .init("EventSaved")
     }
 }

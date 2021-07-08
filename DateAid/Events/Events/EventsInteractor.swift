@@ -94,11 +94,12 @@ extension EventsInteractor {
             
             if event.givenName.isEmpty {
                 let nameComponents = event.name.components(separatedBy: " ")
+                
+                event.givenName = nameComponents.first ?? "No Name"
+                
                 if nameComponents.count == 2 {
-                    event.givenName = nameComponents.first ?? "No Name"
                     event.familyName = nameComponents.last ?? String()
                 } else {
-                    event.givenName = nameComponents.first ?? "No Name"
                     event.familyName = String()
                 }
             }

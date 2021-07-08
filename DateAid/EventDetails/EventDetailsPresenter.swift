@@ -26,6 +26,12 @@ protocol EventDetailsInteractorOutputting: AnyObject {
     func handleReminderFound(_ notification: UNNotificationRequest)
 }
 
+protocol EventDetailsUpdating: AnyObject {
+    
+    func handleUpdated(event: Event)
+    func handleUpdated(notification: UNNotificationRequest)
+}
+
 class EventDetailsPresenter {
     
     // MARK: VIPER
@@ -62,18 +68,6 @@ class EventDetailsPresenter {
     
     init(event: Event) {
         self.event = event
-        NotificationCenter.default.addObserver(self, selector: #selector(reminderSet(_:)), name: .NotificationScheduled, object: nil)
-    }
-    
-    // MARK: Notifications
-    
-    @objc
-    func reminderSet(_ notification: Notification) {
-        guard let notificationRequest = notification.userInfo?["request"] as? UNNotificationRequest else { return }
-        
-        DispatchQueue.main.async {
-            self.handleReminderFound(notificationRequest)
-        }
     }
     
     // MARK: Private Helpers
@@ -115,11 +109,11 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     func viewWillAppear() {}
     
     func didSelectEdit() {
-        router?.presentEventEdit(event: event)
+        router?.presentEventCreation(event: event)
     }
     
     func didSelectAddress() {
-        router?.presentEventEdit(event: event)
+        router?.presentEventCreation(event: event)
     }
     
     func didSelectReminder() {
@@ -186,5 +180,25 @@ extension EventDetailsPresenter: EventDetailsInteractorOutputting {
         case 1:  return "\(day) day before\nat \(time)"
         default: return "\(day) days before\nat \(time)"
         }
+    }
+}
+
+extension EventDetailsPresenter: EventDetailsUpdating {
+    
+    func handleUpdated(event: Event) {
+        self.event = event
+        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+        view?.populateView(
+            content: EventDetailsView.Content(
+                event: event,
+                scheduleText: nil,
+                infoType: activeInfoType,
+                noteType: activeNoteType
+            )
+        )
+    }
+    
+    func handleUpdated(notification: UNNotificationRequest) {
+        handleReminderFound(notification)
     }
 }

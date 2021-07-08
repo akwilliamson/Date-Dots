@@ -46,6 +46,10 @@ extension ReminderRouter: Routing {
     }
     
     func dismiss() {
-        RouteManager.shared.navigationController?.popViewController(animated: true)
+        parent?.dismiss()
+    }
+    
+    func dismiss<T>(data: T) {
+        parent?.dismiss(route: .eventReminder, data: data)
     }
 }

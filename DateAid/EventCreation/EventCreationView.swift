@@ -329,16 +329,10 @@ class EventCreationView: BaseView {
     // MARK: Interface
     
     func selectEventType(_ eventType: EventType) {
-        // Deselect the currently selected event type
-        switch self.selectedEventType {
-        case .birthday:
-            birthdayDot.setSelectedState(isSelected: false)
-        case .anniversary:
-            anniversaryDot.setSelectedState(isSelected: false)
-        case .custom:
-            customDot.setSelectedState(isSelected: false)
-        case .other:
-            otherDot.setSelectedState(isSelected: false)
+        
+        // Deselect the event dots
+        [birthdayDot, anniversaryDot, customDot, otherDot].forEach { dot in
+            dot.setSelectedState(isSelected: false)
         }
         
         self.selectedEventType = eventType
@@ -387,6 +381,7 @@ class EventCreationView: BaseView {
     @objc
     func eventTypePressed(_ sender: UITapGestureRecognizer) {
         guard let view = sender.view as? EventCircleImageView else { return }
+        view.spring()
         delegate?.didSelectEventType(eventType: view.eventType)
     }
     
@@ -476,6 +471,26 @@ extension EventCreationView: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         delegate?.didSelectPicker(row: row, in: component)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var label = UILabel()
+        if let v = view as? UILabel { label = v }
+        label.font = FontType.avenirNextMedium(18).font
+        label.textAlignment = .center
+        
+        switch component {
+        case 0:
+            label.text = months[row]
+        case 1:
+            label.text = days[row]
+        case 2:
+            label.text = years[row]
+        default:
+            return label
+        }
+        
+        return label
     }
 }
 

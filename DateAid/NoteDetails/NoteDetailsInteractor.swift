@@ -22,18 +22,12 @@ class NoteDetailsInteractor {
 extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
     
     func saveNote(type: NoteType, title: String, description: String?, for event: Event) {
-        guard
-            let entity = NSEntityDescription.entity(forEntityName: "Note", in: CoreDataManager.shared.viewContext)
-        else {
-            presenter?.noteSaveFailed()
-            return
-        }
-        
+
         if let existingNote = event.note(forType: type) {
             existingNote.subject = title
             existingNote.body = description
         } else {
-            let newNote = Note(entity: entity, insertInto: CoreDataManager.shared.viewContext)
+            let newNote = Note(context: CoreDataManager.shared.viewContext)
             newNote.type = type.rawValue
             newNote.subject = title
             newNote.body = description

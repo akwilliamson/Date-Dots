@@ -198,6 +198,7 @@ class EventDetailsView: BaseView {
     
     private let addressLabelStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.isUserInteractionEnabled = false
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -211,13 +212,13 @@ class EventDetailsView: BaseView {
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.textColor = .compatibleSystemGray
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.noteworthyBold(20).font
         default:
-            label.font = FontType.noteworthyBold(26).font
+            label.font = FontType.noteworthyBold(25).font
         }
         return label
     }()
@@ -231,12 +232,11 @@ class EventDetailsView: BaseView {
         label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
         label.textColor = .compatibleSystemGray
-        label.isHidden = true
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.noteworthyBold(20).font
         default:
-            label.font = FontType.noteworthyBold(26).font
+            label.font = FontType.noteworthyBold(25).font
         }
         return label
     }()
@@ -343,6 +343,7 @@ class EventDetailsView: BaseView {
     private let noteDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
         label.isUserInteractionEnabled = false
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -469,13 +470,13 @@ class EventDetailsView: BaseView {
         // Info
 
         NSLayoutConstraint.activate([
-            addressContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            addressContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             addressContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
         ])
         NSLayoutConstraint.activate([
-            reminderContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            reminderContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            addressLabelStackView.centerXAnchor.constraint(equalTo: addressContainerView.centerXAnchor),
+            addressLabelStackView.centerYAnchor.constraint(equalTo: addressContainerView.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
             reminderContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/6)
         ])
         NSLayoutConstraint.activate([
@@ -515,8 +516,6 @@ class EventDetailsView: BaseView {
         // Notes
 
         NSLayoutConstraint.activate([
-            notesContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            notesContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             notesContainerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/5.5)
         ])
         NSLayoutConstraint.activate([
@@ -567,11 +566,13 @@ class EventDetailsView: BaseView {
     
     @objc
     func addressDotPressed() {
+        addressInfoDotView.spring()
         delegate?.didSelectInfoType(.address)
     }
     
     @objc
     func reminderDotPressed() {
+        reminderInfoDotView.spring()
         delegate?.didSelectInfoType(.reminder)
     }
     
@@ -583,16 +584,19 @@ class EventDetailsView: BaseView {
     
     @objc
     func giftsDotPressed() {
+        giftsNoteDotView.spring()
         delegate?.didSelectNoteType(.gifts)
     }
     
     @objc
     func plansDotPressed() {
+        plansNoteDotView.spring()
         delegate?.didSelectNoteType(.plans)
     }
     
     @objc
     func otherDotPressed() {
+        otherNoteDotView.spring()
         delegate?.didSelectNoteType(.misc)
     }
     
@@ -612,7 +616,9 @@ class EventDetailsView: BaseView {
     }
     
     func updateReminder(text: String) {
-        reminderLabel.text = text
+        DispatchQueue.main.async {
+            self.reminderLabel.text = text
+        }
     }
     
     // MARK: Private Helpers
@@ -624,8 +630,8 @@ class EventDetailsView: BaseView {
         case .address:
             addressInfoDotView.setSelectedState(isSelected: true)
             reminderInfoDotView.setSelectedState(isSelected: false)
-            addressContainerView.isHidden = false
             reminderContainerView.isHidden = true
+            addressContainerView.isHidden = false
         case .reminder:
             addressInfoDotView.setSelectedState(isSelected: false)
             reminderInfoDotView.setSelectedState(isSelected: true)

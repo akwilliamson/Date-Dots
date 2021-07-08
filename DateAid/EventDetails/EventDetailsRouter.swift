@@ -48,8 +48,8 @@ extension EventDetailsRouter: Routing {
         RouteManager.shared.navigationController?.pushViewController(view, animated: true)
     }
     
-    func presentEventEdit(event: Event) {
-        child = RouteManager.shared.router(for: .eventEdit, parent: self, with: event)
+    func presentEventCreation(event: Event) {
+        child = RouteManager.shared.router(for: .eventCreation, parent: self, with: event)
         child?.present()
     }
     
@@ -65,5 +65,23 @@ extension EventDetailsRouter: Routing {
     func presentEventNote(noteState: NoteState) {
         child = RouteManager.shared.router(for: .eventNoteDetails, parent: self, with: noteState)
         child?.present()
+    }
+    
+    func dismiss<T>(route: Route, data: T) {
+        switch route {
+        case .eventCreation:
+            guard let event = data as? Event else { return }
+            presenter.handleUpdated(event: event)
+        case .eventReminder:
+            guard let notification = data as? UNNotificationRequest else { return }
+            presenter.handleUpdated(notification: notification)
+        default:
+            break
+        }
+        
+        DispatchQueue.main.async {
+            RouteManager.shared.navigationController?.popViewController(animated: true)
+        }
+        child = nil
     }
 }

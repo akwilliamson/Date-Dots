@@ -274,20 +274,11 @@ class ReminderView: BaseView {
     @objc
     func didSelectDayPrior(_ sender: UITapGestureRecognizer) {
         guard let dayPriorLabel = sender.view as? ReminderCircleLabel else { return }
-        delegate?.didSelectDayPrior(dayPriorLabel.dayPrior)
 
         selectedDayPriorLabel = dayPriorLabel
-        selectedDayPriorLabel?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-
-        UIView.animate(
-            withDuration: 2,
-            delay: 0,
-            usingSpringWithDamping: 0.2,
-            initialSpringVelocity: 6,
-            options: .allowUserInteraction)
-        {
-            self.selectedDayPriorLabel?.transform = .identity
-        } completion: { _ in }
+        selectedDayPriorLabel?.spring()
+        
+        delegate?.didSelectDayPrior(dayPriorLabel.dayPrior)
     }
 }
 

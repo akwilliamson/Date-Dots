@@ -25,8 +25,8 @@ protocol EventCreationEventHandling: AnyObject {
 
 protocol EventCreationInteractorOutputting: AnyObject {
     
-    func saveSucceeded()
-    func saveFailed(error: Error)
+    func eventSaveFailed(error: Error)
+    func eventSaveSucceeded(event: Event)
 }
 
 class EventCreationPresenter {
@@ -39,25 +39,48 @@ class EventCreationPresenter {
     
     // MARK: Properties
     
-    private var eventManager: EventCreationManager
+    private var event: Event?
+    
+    private var eventType = EventType.birthday
+    private var eventGivenName = String()
+    private var eventFamilyName = String()
+    private var eventStreet = String()
+    private var eventRegion = String()
+    private var eventDate = Date()
+    
     private let datePickerManager: DatePickerManager
     
-    private var yearIsActive = true
-    
-    private var displayName: String {
-        if eventManager.firstName.isEmpty {
-            return "\(eventManager.eventType.emoji) \(eventManager.eventType.rawValue.capitalized)"
-        } else if eventManager.lastName.isEmpty {
-            return "\(eventManager.eventType.emoji) \(eventManager.firstName)"
+    private var navigationTitle: String {
+        let prefix = eventType.emoji
+        let suffix: String
+        
+        if eventGivenName.isEmpty {
+            suffix = eventType.rawValue.capitalized
+        } else if eventFamilyName.isEmpty {
+            suffix = eventGivenName
         } else {
-            return "\(eventManager.eventType.emoji) \(eventManager.firstName) \(String(eventManager.lastName.prefix(1)))"
+            suffix = "\(eventGivenName) \(String(eventGivenName.prefix(1)))"
         }
+        
+        return [prefix, suffix].joined(separator: " ")
     }
     
     // MARK: Initialization
     
     init(event: Event?) {
-        self.eventManager = EventCreationManager(event: event)
+        if let event = event {
+            self.event = event
+            self.eventType = event.eventType
+            self.eventGivenName = event.givenName
+            self.eventFamilyName = event.familyName
+            
+            if let street = event.address?.street {
+                self.eventStreet = street
+            }
+            if let region = event.address?.region {
+                self.eventRegion = region
+            }
+        }
         self.datePickerManager = DatePickerManager(date: event?.date)
     }
 }
@@ -68,15 +91,15 @@ extension EventCreationPresenter: EventCreationEventHandling {
     
     func viewDidLoad() {
         view?.configureNavigationButton()
-        view?.configureNavigation(title: displayName)
+        view?.configureNavigation(title: navigationTitle)
         
         view?.populateView(
             content: EventCreationView.Content(
-                eventType: eventManager.eventType,
-                firstName: eventManager.firstName,
-                lastName: eventManager.lastName,
-                street: eventManager.street,
-                region: eventManager.region,
+                eventType: eventType,
+                firstName: eventGivenName,
+                lastName: eventFamilyName,
+                street: eventStreet,
+                region: eventRegion,
                 selectedDay: datePickerManager.selectedDay,
                 selectedMonth: datePickerManager.selectedMonth,
                 selectedYear: datePickerManager.selectedYearIndex,
@@ -88,37 +111,35 @@ extension EventCreationPresenter: EventCreationEventHandling {
     }
     
     func didSelectEventType(eventType: EventType) {
-        guard eventManager.eventType != eventType else { return }
-        eventManager.setEventType(eventType)
+        guard self.eventType != eventType else { return }
+        self.eventType = eventType
         
         view?.selectEventType(eventType)
-        view?.configureNavigation(title: displayName)
+        view?.configureNavigation(title: navigationTitle)
     }
     
     func didChangeFirstName(text: String) {
-        eventManager.setFirstName(text)
-        
-        view?.configureNavigation(title: displayName)
+        eventGivenName = text
+        view?.configureNavigation(title: navigationTitle)
     }
     
     func didChangeLastName(text: String) {
-        eventManager.setLastName(text)
-        
-        view?.configureNavigation(title: displayName)
+        eventFamilyName = text
+        view?.configureNavigation(title: navigationTitle)
     }
     
     func didChangeAddress(text: String) {
-        eventManager.setStreet(text)
+        eventStreet = text
     }
     
     func didChangeRegion(text: String) {
-        eventManager.setRegion(text)
+        eventRegion = text
     }
     
     func didToggleYearPicker(isOn: Bool) {
-        yearIsActive = isOn
+        datePickerManager.yearIsEnabled = isOn
         
-        if yearIsActive {
+        if isOn {
             view?.selectYear(index: datePickerManager.selectedYearIndex)
         }
     }
@@ -139,28 +160,37 @@ extension EventCreationPresenter: EventCreationEventHandling {
     }
     
     func didPressSave() {
-        guard !eventManager.firstName.isEmpty else {
+        guard !eventGivenName.isEmpty else {
             view?.showInputError()
             return
         }
         
-        let eventDate = createDate(
-            month: datePickerManager.selectedMonth,
-            day: datePickerManager.selectedDay,
-            year: yearIsActive ? datePickerManager.selectedYear : 2100
-        )
+        let eventToSave: Event
         
-        eventManager.setEventDate(eventDate)
+        if let event = event {
+            eventToSave = event
+        } else {
+            eventToSave = Event(context: CoreDataManager.shared.viewContext)
+        }
         
-        interactor?.saveEvent(eventManager.event)
-    }
-    
-    // MARK: Private Methods
-    
-    private func createDate(month: Int, day: Int, year: Int = 2100) -> Date {
-        let dateComponents = DateComponents(year: year, month: month+1, day: day+1)
+        // Deprecated
+        eventToSave.name            = "DEPRECATED"
+        eventToSave.abbreviatedName = "DEPRECATED"
+        eventToSave.equalizedDate   = "DEPRECATED"
         
-        return Calendar.current.date(from: dateComponents) ?? Date()
+        eventToSave.type = eventType.rawValue
+        eventToSave.date = datePickerManager.eventDate
+        eventToSave.givenName = eventGivenName
+        eventToSave.familyName = eventFamilyName
+        
+        if !eventStreet.isEmpty || !eventRegion.isEmpty {
+            let address = Address(context: CoreDataManager.shared.viewContext)
+            address.street = eventStreet
+            address.region = eventRegion
+            eventToSave.address = address
+        }
+        
+        interactor?.saveEvent(eventToSave)
     }
 }
 
@@ -168,11 +198,11 @@ extension EventCreationPresenter: EventCreationEventHandling {
 
 extension EventCreationPresenter: EventCreationInteractorOutputting {
     
-    func saveSucceeded() {
-        router?.dismiss()
+    func eventSaveFailed(error: Error) {
+        view?.showSaveError()
     }
     
-    func saveFailed(error: Error) {
-        view?.showSaveError()
+    func eventSaveSucceeded(event: Event) {
+        router?.dismiss(data: event)
     }
 }

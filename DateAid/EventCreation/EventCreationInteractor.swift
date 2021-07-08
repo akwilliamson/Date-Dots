@@ -28,9 +28,18 @@ extension EventCreationInteractor: EventCreationInteractorInputting {
     func saveEvent(_ event: Event) {
         do {
             try CoreDataManager.save()
-            presenter?.saveSucceeded()
+            postEventSaved(event: event)
+            presenter?.eventSaveSucceeded(event: event)
         } catch {
-            presenter?.saveFailed(error: error)
+            presenter?.eventSaveFailed(error: error)
         }
+    }
+    
+    private func postEventSaved(event: Event) {
+        NotificationCenter.default.post(
+            name: .EventSaved,
+            object: nil,
+            userInfo: ["event": event] as [AnyHashable : Any]
+        )
     }
 }
