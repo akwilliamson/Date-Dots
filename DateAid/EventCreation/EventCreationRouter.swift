@@ -49,7 +49,7 @@ extension EventCreationRouter: Routing {
         RouteManager.shared.navigationController?.pushViewController(view, animated: true)
     }
     
-     func dismiss<T>(data: T) {
-        parent?.dismiss(route: .eventCreation, data: data)
-     }
+    func dismiss(event: Event?) {
+        parent?.dismiss(route: .eventCreation, data: event)
+    }
 }

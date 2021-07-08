@@ -36,7 +36,6 @@
 		975975EF25EE1134006C5285 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975975EE25EE1134006C5285 /* Array+Subscript.swift */; };
 		9763D5292535749000EB10BC /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763D5282535749000EB10BC /* DeviceModel.swift */; };
 		976473AC24330CE000D2F11D /* EventCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976473AB24330CE000D2F11D /* EventCircleImageView.swift */; };
-		97663716268EE1640050F208 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97663715268EE1640050F208 /* Notification+Names.swift */; };
 		97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */; };
 		97690A6E2526EAD200E396EB /* ReminderCircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */; };
 		976BD4F71B2D079200415D65 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BD4F61B2D079200415D65 /* EventCell.swift */; };
@@ -90,6 +89,7 @@
 		97BDFCF8265E138E0061E0CB /* EventCreationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF7265E138E0061E0CB /* EventCreationPresenter.swift */; };
 		97BDFCFA265E13A00061E0CB /* EventCreationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF9265E13A00061E0CB /* EventCreationInteractor.swift */; };
 		97C05179269686AE00709C0F /* UIView+Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C05178269686AE00709C0F /* UIView+Spring.swift */; };
+		97C0517B2696BBDC00709C0F /* DeleteCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C0517A2696BBDC00709C0F /* DeleteCircleImageView.swift */; };
 		97D0C114260C2ED300700C09 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0C113260C2ED300700C09 /* NoteDetailsView.swift */; };
 		97D7E20E24D760E300A28F60 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D7E20D24D760E300A28F60 /* Font.swift */; };
 		97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */; };
@@ -146,7 +146,6 @@
 		975975EE25EE1134006C5285 /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
 		9763D5282535749000EB10BC /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		976473AB24330CE000D2F11D /* EventCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCircleImageView.swift; sourceTree = "<group>"; };
-		97663715268EE1640050F208 /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		97682FF21DB3032600E8C5E6 /* InitialImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPresenter.swift; sourceTree = "<group>"; };
 		97690A6D2526EAD200E396EB /* ReminderCircleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCircleLabel.swift; sourceTree = "<group>"; };
 		976BD4F61B2D079200415D65 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -202,6 +201,7 @@
 		97BDFCF7265E138E0061E0CB /* EventCreationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationPresenter.swift; sourceTree = "<group>"; };
 		97BDFCF9265E13A00061E0CB /* EventCreationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationInteractor.swift; sourceTree = "<group>"; };
 		97C05178269686AE00709C0F /* UIView+Spring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spring.swift"; sourceTree = "<group>"; };
+		97C0517A2696BBDC00709C0F /* DeleteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCircleImageView.swift; sourceTree = "<group>"; };
 		97D0C113260C2ED300700C09 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
 		97D7E20D24D760E300A28F60 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +256,7 @@
 				976473AB24330CE000D2F11D /* EventCircleImageView.swift */,
 				97B9A516262CA5B600C980AC /* InfoCircleImageView.swift */,
 				9712376025F0A9F600924986 /* NoteCircleImageView.swift */,
+				97C0517A2696BBDC00709C0F /* DeleteCircleImageView.swift */,
 			);
 			path = CircleViews;
 			sourceTree = "<group>";
@@ -270,7 +271,6 @@
 				97B40DAC1DA18DA6000DA0E0 /* NSManagedObjectContext+Fetch.swift */,
 				977E3B011DA197FF005D131F /* CNContact+Tasks.swift */,
 				975975EE25EE1134006C5285 /* Array+Subscript.swift */,
-				97663715268EE1640050F208 /* Notification+Names.swift */,
 				97C05178269686AE00709C0F /* UIView+Spring.swift */,
 			);
 			name = Extensions;
@@ -725,8 +725,8 @@
 				975713AF24553BD400EDD963 /* CircleImageView.swift in Sources */,
 				97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */,
 				97007BAE267FE78A007BA2F1 /* ReminderPresenter.swift in Sources */,
-				97663716268EE1640050F208 /* Notification+Names.swift in Sources */,
 				97AEAC0C1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift in Sources */,
+				97C0517B2696BBDC00709C0F /* DeleteCircleImageView.swift in Sources */,
 				9796AEE425F09177003933C5 /* NoteDetailType.swift in Sources */,
 				97E8E5F5268AE431004D355D /* Calendar+Utilities.swift in Sources */,
 				9796AEC825EFF660003933C5 /* NoteDetailsViewController.swift in Sources */,

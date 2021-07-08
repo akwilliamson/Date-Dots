@@ -12,6 +12,7 @@ import Foundation
 protocol EventCreationInteractorInputting: AnyObject {
 
     func saveEvent(_ event: Event)
+    func deleteEvent(_ event: Event)
 }
 
 class EventCreationInteractor {
@@ -28,18 +29,18 @@ extension EventCreationInteractor: EventCreationInteractorInputting {
     func saveEvent(_ event: Event) {
         do {
             try CoreDataManager.save()
-            postEventSaved(event: event)
             presenter?.eventSaveSucceeded(event: event)
         } catch {
             presenter?.eventSaveFailed(error: error)
         }
     }
     
-    private func postEventSaved(event: Event) {
-        NotificationCenter.default.post(
-            name: .EventSaved,
-            object: nil,
-            userInfo: ["event": event] as [AnyHashable : Any]
-        )
+    func deleteEvent(_ event: Event) {
+        do {
+            try CoreDataManager.delete(object: event)
+            presenter?.eventDeleteSucceeded()
+        } catch {
+            presenter?.eventDeleteFailed(error: error)
+        }
     }
 }

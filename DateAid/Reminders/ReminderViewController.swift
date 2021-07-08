@@ -100,7 +100,7 @@ extension ReminderViewController: ReminderViewOutputting {
     func presentAlertWillDelete(title: String, body: String, confirm: String, dismiss: String) {
         let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: confirm, style: .default) { _ in
+        alert.addAction(UIAlertAction(title: confirm, style: .destructive) { _ in
             self.presenter?.didConfirmDeleteReminder()
         })
         alert.addAction(UIAlertAction(title: dismiss, style: .cancel))

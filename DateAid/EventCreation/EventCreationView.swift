@@ -17,6 +17,7 @@ protocol EventCreationViewDelegate: AnyObject {
     func didChangeRegion(text: String?)
     func didToggleYearPicker(isOn: Bool)
     func didSelectPicker(row: Int, in component: Int)
+    func didPressDelete()
 }
 
 class EventCreationView: BaseView {
@@ -42,6 +43,7 @@ class EventCreationView: BaseView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
+        stackView.alignment = .center
         
         return stackView
     }()
@@ -253,6 +255,13 @@ class EventCreationView: BaseView {
         return pickerView
     }()
     
+    private lazy var deleteDot: DeleteCircleImageView = {
+        let dotView = DeleteCircleImageView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(deletePressed))
+        dotView.addGestureRecognizer(tapGesture)
+        return dotView
+    }()
+    
     // MARK: Properties
     
     weak var delegate: EventCreationViewDelegate?
@@ -297,17 +306,22 @@ class EventCreationView: BaseView {
                 toggleStackView.addArrangedSubview(yearToggle)
                 toggleStackView.addArrangedSubview(showYearLabel)
             containerView.addArrangedSubview(pickerView)
+            containerView.addArrangedSubview(deleteDot)
     }
     
     override func constructLayout() {
         super.constructLayout()
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            birthdayDot.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor),
+            birthdayDot.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
         ])
         NSLayoutConstraint.activate([
-            birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
+            otherDot.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+        NSLayoutConstraint.activate([
+            inputBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            inputBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         NSLayoutConstraint.activate([
             nameInputField.topAnchor.constraint(equalTo: inputBackgroundView.topAnchor, constant: 15),
@@ -323,6 +337,12 @@ class EventCreationView: BaseView {
         ])
         NSLayoutConstraint.activate([
             yearToggle.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            deleteDot.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            deleteDot.widthAnchor.constraint(equalToConstant: 60),
+            deleteDot.heightAnchor.constraint(equalToConstant: 60),
+            deleteDot.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     
@@ -368,8 +388,10 @@ class EventCreationView: BaseView {
     }
     
     func selectYear(row: Int) {
-        pickerView.selectRow(row, inComponent: 2, animated: false)
-        pickerView(pickerView, didSelectRow: row, inComponent: 2)
+        if showYear {
+            pickerView.selectRow(row, inComponent: 2, animated: false)
+            pickerView(pickerView, didSelectRow: row, inComponent: 2)
+        }
     }
     
     func reloadAllComponents() {
@@ -410,6 +432,11 @@ class EventCreationView: BaseView {
     @objc
     func regionDidChange(sender: UITextField) {
         delegate?.didChangeRegion(text: sender.text)
+    }
+    
+    @objc
+    func deletePressed(sender: DeleteCircleImageView) {
+        delegate?.didPressDelete()
     }
 }
 
@@ -498,6 +525,7 @@ extension EventCreationView: Populatable {
     
     struct Content {
         let eventType: EventType
+        let showYear: Bool
         let firstName: String
         let lastName: String
         let street: String
@@ -529,7 +557,9 @@ extension EventCreationView: Populatable {
         self.days = content.days
         self.months = content.months
         self.years = content.years
+        self.showYear = content.showYear
         
+        yearToggle.isOn = content.showYear
         reloadAllComponents()
         
         selectDay(row: content.selectedDay-1)

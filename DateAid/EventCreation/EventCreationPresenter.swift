@@ -21,12 +21,17 @@ protocol EventCreationEventHandling: AnyObject {
     func didSelectPickerRow(row: Int, in component: Int)
     
     func didPressSave()
+    func didPressDelete()
+    func didConfirmDelete()
 }
 
 protocol EventCreationInteractorOutputting: AnyObject {
     
     func eventSaveFailed(error: Error)
     func eventSaveSucceeded(event: Event)
+    
+    func eventDeleteFailed(error: Error)
+    func eventDeleteSucceeded()
 }
 
 class EventCreationPresenter {
@@ -49,6 +54,8 @@ class EventCreationPresenter {
     private var eventDate = Date()
     
     private let datePickerManager: DatePickerManager
+    
+    private let notificationManager = NotificationManager()
     
     private var navigationTitle: String {
         let prefix = eventType.emoji
@@ -96,6 +103,7 @@ extension EventCreationPresenter: EventCreationEventHandling {
         view?.populateView(
             content: EventCreationView.Content(
                 eventType: eventType,
+                showYear: datePickerManager.yearIsEnabled,
                 firstName: eventGivenName,
                 lastName: eventFamilyName,
                 street: eventStreet,
@@ -168,6 +176,7 @@ extension EventCreationPresenter: EventCreationEventHandling {
         let eventToSave: Event
         
         if let event = event {
+            // TODO: Handle notification rescheduling here
             eventToSave = event
         } else {
             eventToSave = Event(context: CoreDataManager.shared.viewContext)
@@ -192,6 +201,17 @@ extension EventCreationPresenter: EventCreationEventHandling {
         
         interactor?.saveEvent(eventToSave)
     }
+    
+    func didPressDelete() {
+        view?.showConfirmDelete()
+    }
+    
+    func didConfirmDelete() {
+        if let event = event {
+            notificationManager.removeNotification(with: event.id)
+            interactor?.deleteEvent(event)
+        }
+    }
 }
 
 // MARK: EventCreationInteractorOutputting
@@ -203,6 +223,14 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
     }
     
     func eventSaveSucceeded(event: Event) {
-        router?.dismiss(data: event)
+        router?.dismiss(event: event)
+    }
+    
+    func eventDeleteFailed(error: Error) {
+        router?.dismiss(event: nil)
+    }
+    
+    func eventDeleteSucceeded() {
+        router?.dismiss(event: nil)
     }
 }

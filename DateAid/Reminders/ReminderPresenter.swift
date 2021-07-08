@@ -173,9 +173,9 @@ extension ReminderPresenter: ReminderEventHandling {
     func didPressDeleteReminder() {
         view?.presentAlertWillDelete(
             title: "Confirm Delete",
-            body: "Are you sure you want to delete this reminder?",
+            body: "This reminder will be permanently deleted.",
             confirm: "Confirm",
-            dismiss: "Dismiss"
+            dismiss: "Cancel"
         )
     }
     
@@ -232,10 +232,10 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     }
     
     func reminderSaveSucceeded(notification: UNNotificationRequest) {
-        self.router?.dismiss(data: notification)
+        router?.dismiss(notification: notification)
     }
     
     func reminderDeleted() {
-        self.router?.dismiss()
+        router?.dismiss(notification: nil)
     }
 }

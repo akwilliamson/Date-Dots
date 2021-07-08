@@ -14,16 +14,12 @@ protocol Routing {
     /// The ability to present a module.
     func present()
     /// The ability to dismiss a module.
-    func dismiss()
-    /// The ability to dismiss a module with data.
-    func dismiss<T>(route: Route, data: T)
+    func dismiss<T>(route: Route, data: T?)
 }
 
 extension Routing {
     
     func present() { /* no-op */ }
     
-    func dismiss() { /* no-op */ }
-    
-    func dismiss<T>(route: Route, data: T) { /* no-op */ }
+    func dismiss<T>(route: Route, data: T?) { /* no-op */ }
 }

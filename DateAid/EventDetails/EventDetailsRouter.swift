@@ -70,18 +70,27 @@ extension EventDetailsRouter: Routing {
     func dismiss<T>(route: Route, data: T) {
         switch route {
         case .eventCreation:
-            guard let event = data as? Event else { return }
-            presenter.handleUpdated(event: event)
+            if let event = data as? Event {
+                presenter.handleUpdated(event: event)
+                DispatchQueue.main.async {
+                    RouteManager.shared.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    RouteManager.shared.navigationController?.popToRootViewController(animated: true)
+                }
+            }
         case .eventReminder:
-            guard let notification = data as? UNNotificationRequest else { return }
-            presenter.handleUpdated(notification: notification)
+            if let notification = data as? UNNotificationRequest {
+                presenter.handleUpdated(notification: notification)
+            }
+            DispatchQueue.main.async {
+                RouteManager.shared.navigationController?.popViewController(animated: true)
+            }
         default:
             break
         }
         
-        DispatchQueue.main.async {
-            RouteManager.shared.navigationController?.popViewController(animated: true)
-        }
         child = nil
     }
 }

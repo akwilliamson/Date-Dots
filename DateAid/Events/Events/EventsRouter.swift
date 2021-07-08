@@ -66,4 +66,12 @@ extension EventsRouter: Routing {
         child = RouteManager.shared.router(for: .eventNoteDetails, parent: self, with: noteState)
         child?.present()
     }
+    
+    func dismiss<T>(route: Route, data: T?) {
+        DispatchQueue.main.async {
+            RouteManager.shared.navigationController?.popViewController(animated: true)
+        }
+        
+        child = nil
+    }
 }

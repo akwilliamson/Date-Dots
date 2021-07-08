@@ -22,9 +22,10 @@ protocol EventCreationViewOutputting: AnyObject {
     func selectYear(index: Int)
     func selectDay(index: Int)
     
-    // Errors
+    // Alerts
     func showInputError()
     func showSaveError()
+    func showConfirmDelete()
 }
 
 class EventCreationViewController: UIViewController {
@@ -104,6 +105,31 @@ extension EventCreationViewController: EventCreationViewOutputting {
     func selectDay(index: Int) {
         baseView.selectDay(row: index)
     }
+    
+    func showInputError() {
+        let alertController = UIAlertController(title: "Save Error", message: "Please add a name before saving", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showSaveError() {
+        let alertController = UIAlertController(title: "Save Error", message: "Something went wrong, please try again", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showConfirmDelete() {
+        let alertController = UIAlertController(title: "Confirm Delete", message: "This event will be permanently deleted.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            self.presenter?.didConfirmDelete()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 // MARK: EventsViewDelegate
@@ -141,17 +167,7 @@ extension EventCreationViewController: EventCreationViewDelegate {
         presenter?.didSelectPickerRow(row: row, in: component)
     }
     
-    func showInputError() {
-        let alertController = UIAlertController(title: "Save Error", message: "Please add a name before saving", preferredStyle: .alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-        alertController.addAction(dismissAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showSaveError() {
-        let alertController = UIAlertController(title: "Save Error", message: "Something went wrong, please try again", preferredStyle: .alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-        alertController.addAction(dismissAction)
-        present(alertController, animated: true, completion: nil)
+    func didPressDelete() {
+        presenter?.didPressDelete()
     }
 }

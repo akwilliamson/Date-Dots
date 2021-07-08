@@ -73,6 +73,7 @@ class DatePickerManager {
             setMonth(month)
         }
         if let year = date?.year {
+            yearIsEnabled = year != 2100
             let yearIndex = activeYears.firstIndex(of: year) ?? selectedYearIndex
             setYear(yearIndex)
         }

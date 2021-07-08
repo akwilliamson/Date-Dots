@@ -25,6 +25,7 @@ class EventDetailsView: BaseView {
         enum String {
             static let turns = "turns"
             static let years = "years"
+            static let number = "#"
             static let `in` = "in"
             static let on = "on"
             static let addStreet = "Add Street"
@@ -675,7 +676,7 @@ extension EventDetailsView: Populatable {
         let event = content.event
         self.event = event
         
-        populateDetails(event: event)
+        populateDateDetails(event: event)
         
         populateAddress(event.address?.street, region: event.address?.region)
         populateReminder(event.eventType, text: content.scheduleText)
@@ -693,7 +694,7 @@ extension EventDetailsView: Populatable {
     
     // Details
     
-    private func populateDetails(event: Event) {
+    private func populateDateDetails(event: Event) {
         
         // In
         
@@ -707,7 +708,9 @@ extension EventDetailsView: Populatable {
             if event.date.year == 2100 {
                 ageStackView.isHidden = true
                 fallbackEventImageView.image = event.eventType.image
+                fallbackEventImageView.isHidden = false
             } else {
+                ageStackView.isHidden = false
                 fallbackEventImageView.isHidden = true
                 isLabel.text = Constant.String.turns
                 ageLabel.text = event.numOfYears
@@ -716,15 +719,35 @@ extension EventDetailsView: Populatable {
             if event.date.year == 2100 {
                 ageStackView.isHidden = true
                 fallbackEventImageView.image = event.eventType.image
+                fallbackEventImageView.isHidden = false
             } else {
+                ageStackView.isHidden = false
                 fallbackEventImageView.isHidden = true
                 isLabel.text = Constant.String.years
                 ageLabel.text = event.numOfYears
             }
         case .custom:
-            fallbackEventImageView.image = event.eventType.image
+            if event.date.year == 2100 {
+                ageStackView.isHidden = true
+                fallbackEventImageView.image = event.eventType.image
+                fallbackEventImageView.isHidden = false
+            } else {
+                ageStackView.isHidden = false
+                fallbackEventImageView.isHidden = true
+                isLabel.text = Constant.String.number
+                ageLabel.text = event.numOfYears
+            }
         case .other:
-            fallbackEventImageView.image = event.eventType.image
+            if event.date.year == 2100 {
+                ageStackView.isHidden = true
+                fallbackEventImageView.image = event.eventType.image
+                fallbackEventImageView.isHidden = false
+            } else {
+                ageStackView.isHidden = false
+                fallbackEventImageView.isHidden = true
+                isLabel.text = Constant.String.number
+                ageLabel.text = event.numOfYears
+            }
         }
         
         // On
