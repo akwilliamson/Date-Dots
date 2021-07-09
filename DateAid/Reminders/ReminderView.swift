@@ -151,9 +151,10 @@ class ReminderView: BaseView {
         return label
     }()
     
-    private let fireTimePickerView: UIDatePicker = {
+    private lazy var fireTimePickerView: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)
         datePicker.datePickerMode = .time
         datePicker.timeZone = .current
         if #available(iOS 14, *) {
@@ -163,10 +164,12 @@ class ReminderView: BaseView {
         return datePicker
     }()
     
-    private let deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "trash.circle"), for: .normal)
+        button.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
+        button.setBackgroundImage(UIImage(systemName: "trash.circle"), for: .normal)
+        button.tintColor = UIColor.compatibleLabel
         
         return button
     }()
@@ -193,9 +196,6 @@ class ReminderView: BaseView {
     override func configureView() {
         super.configureView()
         backgroundColor = .compatibleSystemBackground
-
-        fireTimePickerView.addTarget(self, action: #selector(didSelectTimeOfDay), for: .valueChanged)
-        deleteButton.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
 
         zeroDaysPriorLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectDayPrior)))
         oneDayPriorLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectDayPrior)))
@@ -225,10 +225,10 @@ class ReminderView: BaseView {
         daysPriorSecondRowStackView.addArrangedSubview(fiveDaysPriorLabel)
         daysPriorSecondRowStackView.addArrangedSubview(sixDaysPriorLabel)
         daysPriorSecondRowStackView.addArrangedSubview(sevenDaysPriorLabel)
+        containerStackView.setCustomSpacing(10, after: sevenDaysPriorLabel)
         containerStackView.addArrangedSubview(timeOfDayLabel)
-        containerStackView.setCustomSpacing(0, after: timeOfDayLabel)
         containerStackView.addArrangedSubview(fireTimePickerView)
-        containerStackView.addArrangedSubview(deleteButton)
+        addSubview(deleteButton)
     }
     
     override func constructLayout() {
@@ -249,7 +249,10 @@ class ReminderView: BaseView {
         ])
         
         NSLayoutConstraint.activate([
-            deleteButton.heightAnchor.constraint(equalToConstant: 50)
+            deleteButton.topAnchor.constraint(equalTo: containerStackView.bottomAnchor),
+            deleteButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            deleteButton.heightAnchor.constraint(equalToConstant: 60),
+            deleteButton.widthAnchor.constraint(equalTo: deleteButton.heightAnchor)
         ])
     }
     

@@ -255,11 +255,14 @@ class EventCreationView: BaseView {
         return pickerView
     }()
     
-    private lazy var deleteDot: DeleteCircleImageView = {
-        let dotView = DeleteCircleImageView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(deletePressed))
-        dotView.addGestureRecognizer(tapGesture)
-        return dotView
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
+        button.setBackgroundImage(UIImage(systemName: "trash.circle"), for: .normal)
+        button.tintColor = UIColor.compatibleLabel
+        
+        return button
     }()
     
     // MARK: Properties
@@ -306,7 +309,7 @@ class EventCreationView: BaseView {
                 toggleStackView.addArrangedSubview(yearToggle)
                 toggleStackView.addArrangedSubview(showYearLabel)
             containerView.addArrangedSubview(pickerView)
-            containerView.addArrangedSubview(deleteDot)
+            containerView.addArrangedSubview(deleteButton)
     }
     
     override func constructLayout() {
@@ -339,10 +342,10 @@ class EventCreationView: BaseView {
             yearToggle.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
-            deleteDot.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            deleteDot.widthAnchor.constraint(equalToConstant: 60),
-            deleteDot.heightAnchor.constraint(equalToConstant: 60),
-            deleteDot.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            deleteButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            deleteButton.widthAnchor.constraint(equalToConstant: 60),
+            deleteButton.heightAnchor.constraint(equalToConstant: 60),
+            deleteButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     

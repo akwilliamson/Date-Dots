@@ -16,6 +16,11 @@ extension Calendar {
         let components = dateComponents([.day, .month], from: end)
         let nextDate = nextDate(after: start, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)
         
-        return dateComponents([.day], from: start, to: nextDate ?? end).day ?? 0
+        let day = dateComponents([.day], from: start, to: nextDate ?? end).day ?? 0
+        if day == 365 {
+            return 0
+        } else {
+            return day
+        }
     }
 }
