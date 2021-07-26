@@ -17,7 +17,22 @@ class EventSectionHeader: UIView {
     
     // MARK: UI
     
+    private let iconStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 12
+        return stackView
+    }()
+    
     private let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 12
+        return imageView
+    }()
+    
+    private let reminderImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -33,9 +48,9 @@ class EventSectionHeader: UIView {
         label.lineBreakMode = .byTruncatingTail
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextMedium(20).font
+            label.font = FontType.avenirNextMedium(16).font
         default:
-            label.font = FontType.avenirNextMedium(25).font
+            label.font = FontType.avenirNextMedium(22).font
         }
         return label
     }()
@@ -91,7 +106,9 @@ class EventSectionHeader: UIView {
     }
     
     private func constructViews() {
-        addSubview(iconImageView)
+        addSubview(iconStackView)
+        iconStackView.addArrangedSubview(iconImageView)
+        iconStackView.addArrangedSubview(reminderImageView)
         addSubview(nameLabel)
         addSubview(dateLabel)
         addSubview(horizontalRule)
@@ -111,8 +128,13 @@ class EventSectionHeader: UIView {
             iconImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
         NSLayoutConstraint.activate([
+            reminderImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            reminderImageView.widthAnchor.constraint(equalToConstant: 24),
+            reminderImageView.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: topAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: iconStackView.trailingAnchor, constant: 8),
             nameLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -8),
             nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
@@ -143,6 +165,13 @@ class EventSectionHeader: UIView {
         guard let event = event else { return }
         iconImageView.backgroundColor = event.eventType.color
         iconImageView.image = event.eventType.image
+        if event.hasReminder {
+            reminderImageView.isHidden = false
+            reminderImageView.image = UIImage(systemName: "bell")?.withRenderingMode(.alwaysTemplate)
+            reminderImageView.tintColor = .compatibleLabel
+        } else {
+            reminderImageView.isHidden = true
+        }
         
         nameLabel.textColor = event.eventType.color
         nameLabel.text = event.fullName

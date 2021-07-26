@@ -20,6 +20,7 @@ class Event: NSManagedObject {
     
     @NSManaged var type: String
     @NSManaged var date: Date
+    @NSManaged var hasReminder: Bool
     @NSManaged var givenName: String
     @NSManaged var familyName: String
     @NSManaged var address: Address?
