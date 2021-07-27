@@ -21,10 +21,7 @@ protocol EventDetailsEventHandling: AnyObject {
     func didSelect(note: Note?, noteType: NoteType?)
 }
 
-protocol EventDetailsInteractorOutputting: AnyObject {
-    
-    func handleReminderFound(_ notification: UNNotificationRequest)
-}
+protocol EventDetailsInteractorOutputting: AnyObject {}
 
 protocol EventDetailsUpdating: AnyObject {
     
@@ -66,8 +63,9 @@ class EventDetailsPresenter {
     
     // MARK: Initialization
     
-    init(event: Event) {
-        self.event = event
+    init(eventDetails: EventDetails) {
+        self.event = eventDetails.event
+        self.notification = eventDetails.notification
     }
     
     // MARK: Private Helpers
@@ -103,7 +101,9 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
                 noteType: activeNoteType
             )
         )
-        interactor?.getReminder(for: event.id)
+        if let notification = self.notification {
+            handleReminderFound(notification)
+        }
     }
     
     func viewWillAppear() {}
@@ -196,6 +196,7 @@ extension EventDetailsPresenter: EventDetailsUpdating {
                 noteType: activeNoteType
             )
         )
+        
     }
     
     func handleUpdated(notification: UNNotificationRequest) {

@@ -21,10 +21,10 @@ class EventDetailsRouter {
     
     // MARK: Initialization
     
-    init(parent: Routing, event: Event) {
+    init(parent: Routing, eventDetails: EventDetails) {
         self.parent = parent
         
-        let presenter = EventDetailsPresenter(event: event)
+        let presenter = EventDetailsPresenter(eventDetails: eventDetails)
         
         let view = EventDetailsViewController()
         presenter.view = view

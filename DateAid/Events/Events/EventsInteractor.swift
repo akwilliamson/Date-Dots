@@ -13,6 +13,7 @@ protocol EventsInteractorInputting: AnyObject {
     func fetchEvents()
     func getEvents()
     func getEvents(containing searchText: String) -> Void
+    func getReminder(for event: Event)
 }
 
 enum EventsInteractorError: Error {
@@ -70,6 +71,21 @@ extension EventsInteractor: EventsInteractorInputting {
             }
 
             presenter?.eventsFetched(filteredEvents)
+        }
+    }
+    
+    func getReminder(for event: Event) {
+        notificationManager.retrieveNotification(for: event.id) { [weak self] result in
+            guard let strongSelf = self else { return }
+
+            switch result {
+            case .success(let notification):
+                DispatchQueue.main.async {
+                    strongSelf.presenter?.handleNotification(for: event, notification: notification)
+                }
+            case .failure:
+                strongSelf.presenter?.handleNotification(for: event, notification: nil)
+            }
         }
     }
 }

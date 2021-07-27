@@ -30,6 +30,7 @@ protocol EventsInteractorOutputting: AnyObject {
     
     func eventsFetched(_ events: [Event])
     func eventsFetchedFailed(_ error: EventsInteractorError)
+    func handleNotification(for event: Event, notification: UNNotificationRequest?)
 }
 
 class EventsPresenter {
@@ -184,7 +185,12 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func selectEventPressed(event: Event) {
-        router?.presentEventDetails(event: event)
+        if event.hasReminder {
+            interactor?.getReminder(for: event)
+        } else {
+            let eventDetails = EventDetails(event: event, notification: nil)
+            router?.presentEventDetails(eventDetails: eventDetails)
+        }
     }
     
     func selectNotePressed(noteState: NoteState) {
@@ -205,5 +211,10 @@ extension EventsPresenter: EventsInteractorOutputting {
     
     func eventsFetchedFailed(_ error: EventsInteractorError) {
         print(error.localizedDescription)
+    }
+    
+    func handleNotification(for event: Event, notification: UNNotificationRequest?) {
+        let eventDetails = EventDetails(event: event, notification: notification)
+        router?.presentEventDetails(eventDetails: eventDetails)
     }
 }

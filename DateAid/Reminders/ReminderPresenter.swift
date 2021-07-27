@@ -45,7 +45,7 @@ class ReminderPresenter {
     // MARK: Properties
     
     private let event: Event
-    private let notification: UNNotificationRequest?
+    private var notification: UNNotificationRequest?
     
     private var fireDateComponents: DateComponents
     
@@ -234,10 +234,12 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     }
     
     func reminderSaveSucceeded(notification: UNNotificationRequest) {
+        self.notification = notification
         interactor?.setReminderStatus(hasReminder: true, on: event)
     }
     
     func reminderDeleted() {
+        self.notification = nil
         interactor?.setReminderStatus(hasReminder: false, on: event)
     }
     

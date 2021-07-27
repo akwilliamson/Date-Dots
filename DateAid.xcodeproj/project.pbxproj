@@ -22,6 +22,7 @@
 		971029312626B536007300E3 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971029302626B536007300E3 /* EventDetailsView.swift */; };
 		9712376125F0A9F600924986 /* NoteCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712376025F0A9F600924986 /* NoteCircleImageView.swift */; };
 		9715A27F26671F8C00719111 /* DatePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A27E26671F8C00719111 /* DatePickerManager.swift */; };
+		9727AA4726AF88C600E21313 /* EventDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9727AA4626AF88C600E21313 /* EventDetails.swift */; };
 		972BFE7A26159F87003B7429 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972BFE7926159F87003B7429 /* RoundedButton.swift */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
 		97364CEB1AFBF44A0095BC57 /* InitialImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */; };
@@ -127,6 +128,7 @@
 		971029302626B536007300E3 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		9712376025F0A9F600924986 /* NoteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCircleImageView.swift; sourceTree = "<group>"; };
 		9715A27E26671F8C00719111 /* DatePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerManager.swift; sourceTree = "<group>"; };
+		9727AA4626AF88C600E21313 /* EventDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetails.swift; sourceTree = "<group>"; };
 		972BFE7926159F87003B7429 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
 		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -493,6 +495,7 @@
 				97069CE12627C3B200102F89 /* EventDetailsViewController.swift */,
 				97069CD32627BC4200102F89 /* EventDetailsPresenter.swift */,
 				9794A92A262E533700C2385C /* EventDetailsInteractor.swift */,
+				9727AA4626AF88C600E21313 /* EventDetails.swift */,
 			);
 			path = EventDetails;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				97D7E20E24D760E300A28F60 /* Font.swift in Sources */,
 				97B9A51F262CA5ED00C980AC /* InfoType.swift in Sources */,
 				97811EF3247236D2009787DA /* PaddedTextField.swift in Sources */,
+				9727AA4726AF88C600E21313 /* EventDetails.swift in Sources */,
 				97F8FFC725F9E618003F05D2 /* EventNaming.swift in Sources */,
 				970C5766261ECBD000C71592 /* EventSectionHeader.swift in Sources */,
 				97A00A91248C84D900AB7F85 /* NotificationManager.swift in Sources */,

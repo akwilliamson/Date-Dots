@@ -618,6 +618,7 @@ class EventDetailsView: BaseView {
     
     func updateReminder(text: String) {
         DispatchQueue.main.async {
+            print("setting the FUCKING TEXT: \(text)")
             self.reminderLabel.text = text
         }
     }

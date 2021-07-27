@@ -51,8 +51,8 @@ class RouteManager {
     func router<T>(for route: Route, parent: Routing, with data: T) -> Routing? {
         switch route {
         case .eventDetails:
-            guard let event = data as? Event else { return nil }
-            return EventDetailsRouter(parent: parent, event: event)
+            guard let eventDetails = data as? EventDetails else { return nil }
+            return EventDetailsRouter(parent: parent, eventDetails: eventDetails)
         case .eventCreation:
             guard let event = data as? Event else { return nil }
             return EventCreationRouter(parent: parent, event: event)
