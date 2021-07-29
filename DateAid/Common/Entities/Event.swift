@@ -39,8 +39,6 @@ class Event: NSManagedObject {
         case "birthday":    return .birthday
         case "anniversary": return .anniversary
         case "custom":      return .custom
-        case "holiday":     return .custom
-        case "other":       return .other
         default:            return .birthday
         }
     }

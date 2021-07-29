@@ -102,8 +102,6 @@ class ContactConverter {
                     event.date = anniversaryDate
                 case .custom:
                     return // TODO: Fix later
-                case .other:
-                    return // TODO: Fix later
                 }
                 
                 if let address = contact.postalAddress {

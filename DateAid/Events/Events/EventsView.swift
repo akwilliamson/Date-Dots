@@ -75,19 +75,6 @@ class EventsView: BaseView {
         return dotView
     }()
 
-    private lazy var otherDot: EventCircleImageView = {
-        let dotView = EventCircleImageView(eventType: .other)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
-        dotView.addGestureRecognizer(tapGesture)
-        
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        return dotView
-    }()
-
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -173,7 +160,6 @@ class EventsView: BaseView {
         eventDotStackView.addArrangedSubview(birthdayDot)
         eventDotStackView.addArrangedSubview(anniversaryDot)
         eventDotStackView.addArrangedSubview(customDot)
-        eventDotStackView.addArrangedSubview(otherDot)
         addSubview(noteDotStackView)
         noteDotStackView.addArrangedSubview(giftsNoteDot)
         noteDotStackView.addArrangedSubview(plansNoteDot)
@@ -184,8 +170,8 @@ class EventsView: BaseView {
         super.constructLayout()
         NSLayoutConstraint.activate([
             eventDotStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            eventDotStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            eventDotStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            eventDotStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 60),
+            eventDotStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -60)
         ])
         NSLayoutConstraint.activate([
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor)
@@ -213,7 +199,6 @@ class EventsView: BaseView {
         case .birthday:       birthdayDot.setSelectedState(isSelected: isSelected)
         case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
         case .custom:           customDot.setSelectedState(isSelected: isSelected)
-        case .other:             otherDot.setSelectedState(isSelected: isSelected)
         }
     }
     

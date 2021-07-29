@@ -84,15 +84,6 @@ class EventCreationView: BaseView {
         
         return dotView
     }()
-
-    private lazy var otherDot: EventCircleImageView = {
-        let dotView = EventCircleImageView(eventType: .other)
-        dotView.setSelectedState(isSelected: false)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventTypePressed))
-        dotView.addGestureRecognizer(tapGesture)
-        
-        return dotView
-    }()
     
     // Input Fields
     
@@ -296,7 +287,6 @@ class EventCreationView: BaseView {
                 eventDotStackView.addArrangedSubview(birthdayDot)
                 eventDotStackView.addArrangedSubview(anniversaryDot)
                 eventDotStackView.addArrangedSubview(customDot)
-                eventDotStackView.addArrangedSubview(otherDot)
             containerView.addArrangedSubview(inputBackgroundView)
                 inputBackgroundView.addSubview(inputStackView)
                     inputStackView.addArrangedSubview(nameInputField)
@@ -317,10 +307,10 @@ class EventCreationView: BaseView {
         NSLayoutConstraint.activate([
             birthdayDot.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             birthdayDot.heightAnchor.constraint(equalTo: birthdayDot.widthAnchor),
-            birthdayDot.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+            birthdayDot.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60)
         ])
         NSLayoutConstraint.activate([
-            otherDot.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            customDot.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60)
         ])
         NSLayoutConstraint.activate([
             inputBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -354,7 +344,7 @@ class EventCreationView: BaseView {
     func selectEventType(_ eventType: EventType) {
         
         // Deselect the event dots
-        [birthdayDot, anniversaryDot, customDot, otherDot].forEach { dot in
+        [birthdayDot, anniversaryDot, customDot].forEach { dot in
             dot.setSelectedState(isSelected: false)
         }
         
@@ -368,8 +358,6 @@ class EventCreationView: BaseView {
             anniversaryDot.setSelectedState(isSelected: true)
         case .custom:
             customDot.setSelectedState(isSelected: true)
-        case .other:
-            otherDot.setSelectedState(isSelected: true)
         }
         
         inputBackgroundView.backgroundColor = selectedEventType.color

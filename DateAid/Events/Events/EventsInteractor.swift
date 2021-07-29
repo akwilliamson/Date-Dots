@@ -121,9 +121,16 @@ extension EventsInteractor {
                 }
             }
             
+            if event.type == "other" {
+                event.type = "custom"
+            }
+            
+            if event.type == "holiday" {
+                event.type = "custom"
+            }
+            
             return event
         }
-        
         
         do {
             try CoreDataManager.save()

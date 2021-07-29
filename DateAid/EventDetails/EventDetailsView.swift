@@ -755,12 +755,6 @@ extension EventDetailsView: Populatable {
                 } else {
                     detailsCelebrateLabel.text = "EVENT #\(Int(event.numOfYears)!-1) IS TODAY"
                 }
-            case .other:
-                if event.date.year == 2100 {
-                    detailsCelebrateLabel.text = "EVENT IS TODAY"
-                } else {
-                    detailsCelebrateLabel.text = "EVENT #\(Int(event.numOfYears)!-1) IS TODAY"
-                }
             }
             
             detailsContainerView.isHidden = true
@@ -798,17 +792,6 @@ extension EventDetailsView: Populatable {
                     ageLabel.text = event.numOfYears
                 }
             case .custom:
-                if event.date.year == 2100 {
-                    ageStackView.isHidden = true
-                    fallbackEventImageView.image = event.eventType.image
-                    fallbackEventImageView.isHidden = false
-                } else {
-                    ageStackView.isHidden = false
-                    fallbackEventImageView.isHidden = true
-                    isLabel.text = Constant.String.number
-                    ageLabel.text = event.numOfYears
-                }
-            case .other:
                 if event.date.year == 2100 {
                     ageStackView.isHidden = true
                     fallbackEventImageView.image = event.eventType.image

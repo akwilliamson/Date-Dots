@@ -13,7 +13,6 @@ enum EventType: String, CaseIterable {
     case birthday
     case anniversary
     case custom
-    case other
     
     var key: String {
         return "event-\(rawValue)"
@@ -28,7 +27,6 @@ enum EventType: String, CaseIterable {
         case .birthday:    return UIColor.birthday
         case .anniversary: return UIColor.anniversary
         case .custom:      return UIColor.custom
-        case .other:       return UIColor.other
         }
     }
 
@@ -36,8 +34,7 @@ enum EventType: String, CaseIterable {
         switch self {
         case .birthday:    return "🎈"
         case .anniversary: return "💞"
-        case .custom:      return "🎉"
-        case .other:       return "💡"
+        case .custom:      return "💡"
         }
     }
 }

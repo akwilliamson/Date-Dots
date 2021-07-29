@@ -53,13 +53,13 @@ class EventsPresenter {
     private var events: [Event] = []
     
     private var activeEventTypes: [EventType] {
-        return [.birthday, .anniversary, .custom, .other].filter {
+        return [.birthday, .anniversary, .custom].filter {
             UserDefaults.standard.bool(forKey: $0.key)
         }
     }
     
     private var inactiveEventTypes: [EventType] {
-        return [.birthday, .anniversary, .custom, .other].filter {
+        return [.birthday, .anniversary, .custom].filter {
             !UserDefaults.standard.bool(forKey: $0.key)
         }
     }

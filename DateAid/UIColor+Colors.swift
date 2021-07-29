@@ -47,10 +47,6 @@ extension UIColor {
     }
     
     class var custom: UIColor {
-        return UIColor(red:  87/255.0, green: 153/255.0, blue: 22/255.0, alpha: 1)
-    }
-    
-    class var other: UIColor {
         return UIColor(red:  229/255.0, green: 183/255.0, blue: 15/255.0, alpha: 1)
     }
 }
