@@ -185,6 +185,30 @@ class EventDetailsView: BaseView {
         return label
     }()
     
+    // Details - Celenrate
+    
+    private let detailsCelebrateImageView: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "celebrate")
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private let detailsCelebrateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        switch UIDevice.type {
+        case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
+            label.font = FontType.avenirNextMedium(26).font
+        default:
+            label.font = FontType.avenirNextBold(32).font
+        }
+        return label
+    }()
+    
     // Info - Address
     
     private lazy var addressContainerView: UIImageView = {
@@ -426,7 +450,10 @@ class EventDetailsView: BaseView {
                 detailsStackView.addArrangedSubview(dateStackView)
                     dateStackView.addArrangedSubview(onLabel)
                     dateStackView.addArrangedSubview(dateLabel)
+        containerStackView.addArrangedSubview(detailsCelebrateImageView)
+            detailsCelebrateImageView.addSubview(detailsCelebrateLabel)
         containerStackView.setCustomSpacing(36, after: detailsContainerView)
+        containerStackView.setCustomSpacing(36, after: detailsCelebrateImageView)
         containerStackView.addArrangedSubview(addressContainerView)
             addressContainerView.addSubview(addressLabelStackView)
                 addressLabelStackView.addArrangedSubview(streetLabel)
@@ -466,6 +493,17 @@ class EventDetailsView: BaseView {
             detailsStackView.leadingAnchor.constraint(equalTo: detailsContainerView.leadingAnchor, constant: 8),
             detailsStackView.trailingAnchor.constraint(equalTo: detailsContainerView.trailingAnchor, constant: -8),
             detailsStackView.bottomAnchor.constraint(equalTo: detailsContainerView.bottomAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            detailsCelebrateImageView.topAnchor.constraint(equalTo: detailsContainerView.topAnchor),
+            detailsCelebrateImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            detailsCelebrateImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            detailsCelebrateImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/9),
+            detailsCelebrateImageView.bottomAnchor.constraint(equalTo: detailsContainerView.bottomAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            detailsCelebrateLabel.centerXAnchor.constraint(equalTo: detailsCelebrateImageView.centerXAnchor),
+            detailsCelebrateLabel.centerYAnchor.constraint(equalTo: detailsCelebrateImageView.centerYAnchor)
         ])
 
         // Info
@@ -618,7 +656,6 @@ class EventDetailsView: BaseView {
     
     func updateReminder(text: String) {
         DispatchQueue.main.async {
-            print("setting the FUCKING TEXT: \(text)")
             self.reminderLabel.text = text
         }
     }
@@ -697,66 +734,103 @@ extension EventDetailsView: Populatable {
     
     private func populateDateDetails(event: Event) {
         
-        // In
-        
-        inLabel.text = Constant.String.in
-        daysLabel.text = event.daysAway
-        
-        // Is
-        
-        switch event.eventType {
-        case .birthday:
-            if event.date.year == 2100 {
-                ageStackView.isHidden = true
-                fallbackEventImageView.image = event.eventType.image
-                fallbackEventImageView.isHidden = false
-            } else {
-                ageStackView.isHidden = false
-                fallbackEventImageView.isHidden = true
-                isLabel.text = Constant.String.turns
-                ageLabel.text = event.numOfYears
+        if event.daysAway == "365 days" {
+            
+            switch event.eventType {
+            case .birthday:
+                if event.date.year == 2100 {
+                    detailsCelebrateLabel.text = "BIRTHDAY IS TODAY"
+                } else {
+                    detailsCelebrateLabel.text = "TURNS \(Int(event.numOfYears)!-1) TODAY"
+                }
+            case .anniversary:
+                if event.date.year == 2100 {
+                    detailsCelebrateLabel.text = "ANNIVERSARY IS TODAY"
+                } else {
+                    detailsCelebrateLabel.text = "\(Int(event.numOfYears)!-1) YEARS TODAY"
+                }
+            case .custom:
+                if event.date.year == 2100 {
+                    detailsCelebrateLabel.text = "EVENT IS TODAY"
+                } else {
+                    detailsCelebrateLabel.text = "EVENT #\(Int(event.numOfYears)!-1) IS TODAY"
+                }
+            case .other:
+                if event.date.year == 2100 {
+                    detailsCelebrateLabel.text = "EVENT IS TODAY"
+                } else {
+                    detailsCelebrateLabel.text = "EVENT #\(Int(event.numOfYears)!-1) IS TODAY"
+                }
             }
-        case .anniversary:
-            if event.date.year == 2100 {
-                ageStackView.isHidden = true
-                fallbackEventImageView.image = event.eventType.image
-                fallbackEventImageView.isHidden = false
-            } else {
-                ageStackView.isHidden = false
-                fallbackEventImageView.isHidden = true
-                isLabel.text = Constant.String.years
-                ageLabel.text = event.numOfYears
+            
+            detailsContainerView.isHidden = true
+            detailsCelebrateImageView.isHidden = false
+        } else {
+            
+            // In
+            
+            inLabel.text = Constant.String.in
+            daysLabel.text = event.daysAway
+            
+            // Is
+            
+            switch event.eventType {
+            case .birthday:
+                if event.date.year == 2100 {
+                    ageStackView.isHidden = true
+                    fallbackEventImageView.image = event.eventType.image
+                    fallbackEventImageView.isHidden = false
+                } else {
+                    ageStackView.isHidden = false
+                    fallbackEventImageView.isHidden = true
+                    isLabel.text = Constant.String.turns
+                    ageLabel.text = event.numOfYears
+                }
+            case .anniversary:
+                if event.date.year == 2100 {
+                    ageStackView.isHidden = true
+                    fallbackEventImageView.image = event.eventType.image
+                    fallbackEventImageView.isHidden = false
+                } else {
+                    ageStackView.isHidden = false
+                    fallbackEventImageView.isHidden = true
+                    isLabel.text = Constant.String.years
+                    ageLabel.text = event.numOfYears
+                }
+            case .custom:
+                if event.date.year == 2100 {
+                    ageStackView.isHidden = true
+                    fallbackEventImageView.image = event.eventType.image
+                    fallbackEventImageView.isHidden = false
+                } else {
+                    ageStackView.isHidden = false
+                    fallbackEventImageView.isHidden = true
+                    isLabel.text = Constant.String.number
+                    ageLabel.text = event.numOfYears
+                }
+            case .other:
+                if event.date.year == 2100 {
+                    ageStackView.isHidden = true
+                    fallbackEventImageView.image = event.eventType.image
+                    fallbackEventImageView.isHidden = false
+                } else {
+                    ageStackView.isHidden = false
+                    fallbackEventImageView.isHidden = true
+                    isLabel.text = Constant.String.number
+                    ageLabel.text = event.numOfYears
+                }
             }
-        case .custom:
-            if event.date.year == 2100 {
-                ageStackView.isHidden = true
-                fallbackEventImageView.image = event.eventType.image
-                fallbackEventImageView.isHidden = false
-            } else {
-                ageStackView.isHidden = false
-                fallbackEventImageView.isHidden = true
-                isLabel.text = Constant.String.number
-                ageLabel.text = event.numOfYears
-            }
-        case .other:
-            if event.date.year == 2100 {
-                ageStackView.isHidden = true
-                fallbackEventImageView.image = event.eventType.image
-                fallbackEventImageView.isHidden = false
-            } else {
-                ageStackView.isHidden = false
-                fallbackEventImageView.isHidden = true
-                isLabel.text = Constant.String.number
-                ageLabel.text = event.numOfYears
-            }
+            
+            // On
+            
+            onLabel.text = Constant.String.on
+            dateLabel.text = event.dayOfYear
+            
+            detailsContainerView.backgroundColor = event.eventType.color
+            
+            detailsContainerView.isHidden = false
+            detailsCelebrateImageView.isHidden = true
         }
-        
-        // On
-        
-        onLabel.text = Constant.String.on
-        dateLabel.text = event.dayOfYear
-        
-        detailsContainerView.backgroundColor = event.eventType.color
     }
     
     // Address

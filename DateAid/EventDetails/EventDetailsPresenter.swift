@@ -26,7 +26,7 @@ protocol EventDetailsInteractorOutputting: AnyObject {}
 protocol EventDetailsUpdating: AnyObject {
     
     func handleUpdated(event: Event)
-    func handleUpdated(notification: UNNotificationRequest)
+    func handleUpdated(notification: UNNotificationRequest?)
 }
 
 class EventDetailsPresenter {
@@ -153,10 +153,16 @@ extension EventDetailsPresenter: EventDetailsInteractorOutputting {
         else {
             return
         }
-        
         self.notification = notification
         
         let reminderText = generateReminderText(for: triggerDate)
+        view?.updateReminder(text: reminderText)
+    }
+    
+    func handleReminderNotFound() {
+        self.notification = nil
+        
+        let reminderText = "Add\nReminder"
         view?.updateReminder(text: reminderText)
     }
     
@@ -196,10 +202,13 @@ extension EventDetailsPresenter: EventDetailsUpdating {
                 noteType: activeNoteType
             )
         )
-        
     }
     
-    func handleUpdated(notification: UNNotificationRequest) {
-        handleReminderFound(notification)
+    func handleUpdated(notification: UNNotificationRequest?) {
+        if let notification = notification {
+            handleReminderFound(notification)
+        } else {
+            handleReminderNotFound()
+        }
     }
 }

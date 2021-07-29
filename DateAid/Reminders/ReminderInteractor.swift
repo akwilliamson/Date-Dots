@@ -12,7 +12,7 @@ protocol ReminderInteractorInputting: AnyObject {
     
     func saveReminder(_ reminder: Reminder)
     func deleteReminder(for id: String)
-    func setReminderStatus(hasReminder: Bool, on event: Event)
+    func saveEvent()
 }
 
 class ReminderInteractor {
@@ -48,21 +48,12 @@ extension ReminderInteractor: ReminderInteractorInputting {
         presenter?.reminderDeleted()
     }
     
-    func setReminderStatus(hasReminder: Bool, on event: Event) {
-        event.hasReminder = hasReminder
+    func saveEvent() {
         do {
             try CoreDataManager.save()
-            if hasReminder {
-                presenter?.reminderStatusUpdated()
-            } else {
-                presenter?.reminderDeleted()
-            }
+            presenter?.eventSaved()
         } catch {
-            if hasReminder {
-                presenter?.reminderStatusUpdated()
-            } else {
-                presenter?.reminderDeleted()
-            }
+            print(error.localizedDescription)
         }
     }
 }

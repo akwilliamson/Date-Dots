@@ -23,8 +23,7 @@ protocol ReminderInteractorOutputting: AnyObject {
     func reminderSaveFailed(error: NotificationError)
     func reminderSaveSucceeded(notification: UNNotificationRequest)
     func reminderDeleted()
-    func reminderStatusUpdated()
-    func reminderStatusRemoved()
+    func eventSaved()
 }
 
 class ReminderPresenter {
@@ -44,7 +43,7 @@ class ReminderPresenter {
     
     // MARK: Properties
     
-    private let event: Event
+    private var event: Event
     private var notification: UNNotificationRequest?
     
     private var fireDateComponents: DateComponents
@@ -235,19 +234,17 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     
     func reminderSaveSucceeded(notification: UNNotificationRequest) {
         self.notification = notification
-        interactor?.setReminderStatus(hasReminder: true, on: event)
+        event.hasReminder = true
+        interactor?.saveEvent()
     }
     
     func reminderDeleted() {
         self.notification = nil
-        interactor?.setReminderStatus(hasReminder: false, on: event)
+        event.hasReminder = false
+        interactor?.saveEvent()
     }
     
-    func reminderStatusUpdated() {
+    func eventSaved() {
         router?.dismiss(notification: notification)
-    }
-    
-    func reminderStatusRemoved() {
-        router?.dismiss(notification: nil)
     }
 }

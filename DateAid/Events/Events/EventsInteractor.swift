@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import UserNotifications
 
 protocol EventsInteractorInputting: AnyObject {
     
@@ -101,7 +102,7 @@ extension EventsInteractor {
                 do {
                     try CoreDataManager.delete(object: event)
                 } catch {
-                    print("error: \(error.localizedDescription)")
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -119,8 +120,10 @@ extension EventsInteractor {
                     event.familyName = String()
                 }
             }
+            
             return event
         }
+        
         
         do {
             try CoreDataManager.save()

@@ -40,18 +40,16 @@ class NotificationManager {
     
     // MARK: Initialization
     
-    init() {
-        getNotifications()
-    }
-    
     // MARK: Public Interface
     
     /// Retrieves an on-device scheduled notification for a given ID.
     func retrieveNotification(for id: String, completion: @escaping (RetrieveNotificationResult) -> ()) {
-        if let match = notifications.first(where: { $0.identifier == id }) {
-            completion(.success(match))
-        } else {
-            completion(.failure(NotificationError.notificationNotFound))
+        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+            if let match = notifications.first(where: { $0.identifier == id }) {
+                completion(.success(match))
+            } else {
+                completion(.failure(NotificationError.notificationNotFound))
+            }
         }
     }
     
@@ -75,13 +73,6 @@ class NotificationManager {
     }
     
     // MARK: Private Helpers
-    
-    /// Retrieves and stores all scheduled on-device notifications.
-    private func getNotifications() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
-            self.notifications = notifications
-        }
-    }
     
     /// Retrieves the permission status to send on-device notifications, and requests permission if necessary.
     private func getAuthorizationStatus(completion: @escaping (AuthorizationStatusResult) -> ()) {

@@ -206,6 +206,7 @@
 		97C0517A2696BBDC00709C0F /* DeleteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCircleImageView.swift; sourceTree = "<group>"; };
 		97D0C113260C2ED300700C09 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
 		97D7E20D24D760E300A28F60 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V4.xcdatamodel; sourceTree = "<group>"; };
 		97E0818A1DAA1F5B00B0ED5F /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		97E5F36B263DC5AB00395D87 /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
 		97E8E5F4268AE431004D355D /* Calendar+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Utilities.swift"; sourceTree = "<group>"; };
@@ -1018,11 +1019,12 @@
 		97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */,
 				979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */,
 				9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */,
 				97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */,
 			);
-			currentVersion = 979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */;
+			currentVersion = 97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */;
 			path = DateAid.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

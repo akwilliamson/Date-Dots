@@ -83,6 +83,8 @@ extension EventDetailsRouter: Routing {
         case .eventReminder:
             if let notification = data as? UNNotificationRequest {
                 presenter.handleUpdated(notification: notification)
+            } else {
+                presenter.handleUpdated(notification: nil)
             }
             DispatchQueue.main.async {
                 RouteManager.shared.navigationController?.popViewController(animated: true)
