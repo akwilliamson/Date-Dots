@@ -21,7 +21,7 @@ protocol ReminderEventHandling: AnyObject {
 protocol ReminderInteractorOutputting: AnyObject {
     
     func reminderSaveFailed(error: NotificationError)
-    func reminderSaveSucceeded(notification: UNNotificationRequest)
+    func reminderSaveSucceeded(reminder: UNNotificationRequest)
     func reminderDeleted()
     func eventSaved()
 }
@@ -44,7 +44,7 @@ class ReminderPresenter {
     // MARK: Properties
     
     private var event: Event
-    private var notification: UNNotificationRequest?
+    private var reminder: UNNotificationRequest?
     
     private var fireDateComponents: DateComponents
     
@@ -89,10 +89,10 @@ class ReminderPresenter {
 
     init(details: ReminderDetails) {
         self.event = details.event
-        self.notification = details.notification
+        self.reminder = details.reminder
         
         if
-            let trigger = notification?.trigger as? UNCalendarNotificationTrigger,
+            let trigger = reminder?.trigger as? UNCalendarNotificationTrigger,
             let triggerDate = trigger.nextTriggerDate()
         {
             self.fireDateComponents = DateComponents(
@@ -125,7 +125,7 @@ extension ReminderPresenter: ReminderEventHandling {
     func viewDidLoad() {
         view?.configureNavigation(title: Constant.navigationTitle)
         view?.configureNavigationButton(title: Constant.barButtonTitle)
-        if notification != nil {
+        if reminder != nil {
             view?.populateView(
                 content: ReminderView.Content(
                     scheduleText: scheduleText,
@@ -232,19 +232,19 @@ extension ReminderPresenter: ReminderInteractorOutputting {
         }
     }
     
-    func reminderSaveSucceeded(notification: UNNotificationRequest) {
-        self.notification = notification
+    func reminderSaveSucceeded(reminder: UNNotificationRequest) {
+        self.reminder = reminder
         event.hasReminder = true
         interactor?.saveEvent()
     }
     
     func reminderDeleted() {
-        self.notification = nil
+        self.reminder = nil
         event.hasReminder = false
         interactor?.saveEvent()
     }
     
     func eventSaved() {
-        router?.dismiss(notification: notification)
+        router?.dismiss(reminder: reminder)
     }
 }

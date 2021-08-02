@@ -11,5 +11,5 @@ import UserNotifications
 struct ReminderDetails {
     
     let event: Event
-    let notification: UNNotificationRequest?
+    let reminder: UNNotificationRequest?
 }

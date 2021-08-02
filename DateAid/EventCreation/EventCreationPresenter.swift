@@ -6,7 +6,7 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
-import Foundation
+import UserNotifications
 
 protocol EventCreationEventHandling: AnyObject {
     
@@ -32,6 +32,8 @@ protocol EventCreationInteractorOutputting: AnyObject {
     
     func eventDeleteFailed(error: Error)
     func eventDeleteSucceeded()
+    
+    func handleEventReminder(reminder: UNNotificationRequest?)
 }
 
 class EventCreationPresenter {
@@ -173,33 +175,11 @@ extension EventCreationPresenter: EventCreationEventHandling {
             return
         }
         
-        let eventToSave: Event
-        
         if let event = event {
-            // TODO: Handle notification rescheduling here
-            eventToSave = event
+            interactor?.findReminder(for: event)
         } else {
-            eventToSave = Event(context: CoreDataManager.shared.viewContext)
+            createNewEvent()
         }
-        
-        // Deprecated
-        eventToSave.name            = "DEPRECATED"
-        eventToSave.abbreviatedName = "DEPRECATED"
-        eventToSave.equalizedDate   = "DEPRECATED"
-        
-        eventToSave.type = eventType.rawValue
-        eventToSave.date = datePickerManager.eventDate
-        eventToSave.givenName = eventGivenName
-        eventToSave.familyName = eventFamilyName
-        
-        if !eventStreet.isEmpty || !eventRegion.isEmpty {
-            let address = Address(context: CoreDataManager.shared.viewContext)
-            address.street = eventStreet
-            address.region = eventRegion
-            eventToSave.address = address
-        }
-        
-        interactor?.saveEvent(eventToSave)
     }
     
     func didPressDelete() {
@@ -211,6 +191,29 @@ extension EventCreationPresenter: EventCreationEventHandling {
             notificationManager.removeNotification(with: event.id)
             interactor?.deleteEvent(event)
         }
+    }
+    
+    private func createNewEvent() {
+        let newEvent = Event(context: CoreDataManager.shared.viewContext)
+        
+        // Deprecated
+        newEvent.name            = "DEPRECATED"
+        newEvent.abbreviatedName = "DEPRECATED"
+        newEvent.equalizedDate   = "DEPRECATED"
+        
+        newEvent.type = eventType.rawValue
+        newEvent.date = datePickerManager.eventDate
+        newEvent.givenName = eventGivenName
+        newEvent.familyName = eventFamilyName
+        
+        if !eventStreet.isEmpty || !eventRegion.isEmpty {
+            let address = Address(context: CoreDataManager.shared.viewContext)
+            address.street = eventStreet
+            address.region = eventRegion
+            newEvent.address = address
+        }
+        
+        interactor?.saveEvent(newEvent)
     }
 }
 
@@ -232,5 +235,59 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
     
     func eventDeleteSucceeded() {
         router?.dismiss(event: nil)
+    }
+    
+    func handleEventReminder(reminder: UNNotificationRequest?) {
+        guard let editedEvent = event else { return }
+        
+        if let reminder = reminder {
+            rescheduleReminder(reminder, for: editedEvent)
+        }
+        
+        // Deprecated
+        editedEvent.name            = "DEPRECATED"
+        editedEvent.abbreviatedName = "DEPRECATED"
+        editedEvent.equalizedDate   = "DEPRECATED"
+        
+        editedEvent.type = eventType.rawValue
+        editedEvent.date = datePickerManager.eventDate
+        editedEvent.givenName = eventGivenName
+        editedEvent.familyName = eventFamilyName
+        
+        if !eventStreet.isEmpty || !eventRegion.isEmpty {
+            let address = Address(context: CoreDataManager.shared.viewContext)
+            address.street = eventStreet
+            address.region = eventRegion
+            editedEvent.address = address
+        }
+        
+        interactor?.saveEvent(editedEvent)
+    }
+    
+    private func rescheduleReminder(_ reminder: UNNotificationRequest, for event: Event) {
+        guard
+            let trigger = reminder.trigger as? UNCalendarNotificationTrigger
+        else {
+            print("qwerty no reminder found")
+            return
+        }
+        
+        // Find the trigger date's days preceding the existing date
+        let diffInDays = Calendar.current.days(from: trigger.nextTriggerDate()!, to: event.date)
+        
+        // Set same days preceding the new date for the new trigger date
+        let newTriggerDateComponents = DateComponents(
+            day: datePickerManager.eventDate.day! - diffInDays,
+            hour: trigger.dateComponents.hour,
+            minute: trigger.dateComponents.minute)
+        
+        let reminder = Reminder(
+            id: event.id,
+            title: reminder.content.title,
+            body: reminder.content.body,
+            fireDate: newTriggerDateComponents
+        )
+        
+        interactor?.saveReminder(reminder)
     }
 }

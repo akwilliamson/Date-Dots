@@ -30,7 +30,9 @@ protocol EventsInteractorOutputting: AnyObject {
     
     func eventsFetched(_ events: [Event])
     func eventsFetchedFailed(_ error: EventsInteractorError)
-    func handleNotification(for event: Event, notification: UNNotificationRequest?)
+    func remindersFetched()
+    func reminderFound(for event: Event, reminder: UNNotificationRequest)
+    func reminderNotFound(for event: Event)
 }
 
 class EventsPresenter {
@@ -49,6 +51,8 @@ class EventsPresenter {
     }
 
     // MARK: Properties
+    
+    private var reminders: [UNNotificationRequest] = []
     
     private var events: [Event] = []
     
@@ -85,8 +89,6 @@ class EventsPresenter {
     }
     
     private var isSearching = false
-    
-    private let notificationManager = NotificationManager()
     
     // MARK: Private Helpers
     
@@ -141,7 +143,7 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func viewWillAppear() {
-        interactor?.fetchEvents()
+        interactor?.fetchReminders()
         view?.configureNavigation(state: .normal)
     }
     
@@ -186,9 +188,11 @@ extension EventsPresenter: EventsEventHandling {
     
     func selectEventPressed(event: Event) {
         if event.hasReminder {
-            interactor?.getReminder(for: event)
+            Dispatch.background {
+                self.interactor?.findReminder(for: event)
+            }
         } else {
-            let eventDetails = EventDetails(event: event, notification: nil)
+            let eventDetails = EventDetails(event: event, reminder: nil)
             router?.presentEventDetails(eventDetails: eventDetails)
         }
     }
@@ -205,7 +209,10 @@ extension EventsPresenter: EventsInteractorOutputting {
     func eventsFetched(_ events: [Event]) {
         self.events = events
         setupDots()
-        view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
+        view?.populateView(
+            activeEvents: sortedActiveEvents,
+            activeNoteTypes: activeNoteTypes
+        )
         view?.reloadView()
     }
     
@@ -213,8 +220,17 @@ extension EventsPresenter: EventsInteractorOutputting {
         print(error.localizedDescription)
     }
     
-    func handleNotification(for event: Event, notification: UNNotificationRequest?) {
-        let eventDetails = EventDetails(event: event, notification: notification)
+    func remindersFetched() {
+        interactor?.fetchEvents()
+    }
+    
+    func reminderFound(for event: Event, reminder: UNNotificationRequest) {
+        let eventDetails = EventDetails(event: event, reminder: reminder)
+        router?.presentEventDetails(eventDetails: eventDetails)
+    }
+    
+    func reminderNotFound(for event: Event) {
+        let eventDetails = EventDetails(event: event, reminder: nil)
         router?.presentEventDetails(eventDetails: eventDetails)
     }
 }

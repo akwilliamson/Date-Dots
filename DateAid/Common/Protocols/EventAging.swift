@@ -19,7 +19,7 @@ protocol EventAging {
 
 extension EventAging {
     
-    /// The age
+    /// The Nth year of the event
     var numOfYears: String {
         let calendar = Calendar.current
         let dateToday  = calendar.startOfDay(for: Date())
@@ -30,6 +30,7 @@ extension EventAging {
         return String(numOfYears)
     }
     
+    /// Number of days until event
     var daysAway: String {
         let calendar = Calendar.current
         let dateToday  = calendar.startOfDay(for: Date())
@@ -37,7 +38,11 @@ extension EventAging {
         let nextEvent  = calendar.nextDate(after: dateToday, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents)!
         let numOfDays  = calendar.dateComponents([.day], from: dateToday, to: nextEvent).day ?? 0
 
-        return String(numOfDays) + " days"
+        if numOfDays == 1 {
+            return String(numOfDays) + " day"
+        } else {
+            return String(numOfDays) + " days"
+        }
     }
     
     var dayOfYear: String {

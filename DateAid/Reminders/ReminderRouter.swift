@@ -45,8 +45,8 @@ extension ReminderRouter: Routing {
         RouteManager.shared.navigationController?.pushViewController(view, animated: true)
     }
     
-    func dismiss(notification: UNNotificationRequest?) {
-        parent?.dismiss(route: .eventReminder, data: notification)
+    func dismiss(reminder: UNNotificationRequest?) {
+        parent?.dismiss(route: .eventReminder, data: reminder)
     }
 }
  

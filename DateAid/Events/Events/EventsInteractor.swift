@@ -14,7 +14,8 @@ protocol EventsInteractorInputting: AnyObject {
     func fetchEvents()
     func getEvents()
     func getEvents(containing searchText: String) -> Void
-    func getReminder(for event: Event)
+    func fetchReminders()
+    func findReminder(for event: Event)
 }
 
 enum EventsInteractorError: Error {
@@ -29,29 +30,18 @@ class EventsInteractor {
     
     // MARK: Properties
     
-    private var sortByToday = true
+    private let notificationManager = NotificationManager()
     
     private var events: [Event] = []
-    
-    private var notificationManager = NotificationManager()
+    private var reminders: [UNNotificationRequest] = []
 }
 
 extension EventsInteractor: EventsInteractorInputting {
-    
-    private struct Constant {
-        struct SortDescriptor {
-            static let date = "equalizedDate"
-            static let name = "name"
-        }
-        struct Formatter {
-            private static let date = "MM/dd"
-        }
-    }
 
     func fetchEvents() {
         do {
             events = try CoreDataManager.fetch()
-            migrateOldEvents {
+            migrateEvents {
                 self.presenter?.eventsFetched(self.events)
             }
         } catch {
@@ -75,17 +65,23 @@ extension EventsInteractor: EventsInteractorInputting {
         }
     }
     
-    func getReminder(for event: Event) {
-        notificationManager.retrieveNotification(for: event.id) { [weak self] result in
+    func fetchReminders() {
+        notificationManager.retrieveNotifications { [weak self] reminders in
             guard let strongSelf = self else { return }
-
-            switch result {
-            case .success(let notification):
-                DispatchQueue.main.async {
-                    strongSelf.presenter?.handleNotification(for: event, notification: notification)
-                }
-            case .failure:
-                strongSelf.presenter?.handleNotification(for: event, notification: nil)
+            
+            strongSelf.reminders = reminders
+            strongSelf.presenter?.remindersFetched()
+        }
+    }
+    
+    func findReminder(for event: Event) {
+        if let foundReminder = reminders.filter({ $0.identifier == event.id }).first {
+            Dispatch.main {
+                self.presenter?.reminderFound(for: event, reminder: foundReminder)
+            }
+        } else {
+            Dispatch.main {
+                self.presenter?.reminderNotFound(for: event)
             }
         }
     }
@@ -96,7 +92,7 @@ extension EventsInteractor: EventsInteractorInputting {
 extension EventsInteractor {
     
     // Old events don't have a given/family name, so set those values to eventually delete the old properties.
-    func migrateOldEvents(completion: @escaping () -> Void) {
+    func migrateEvents(completion: @escaping () -> Void) {
         events.forEach { event in
             if event.abbreviatedName.isEmpty {
                 do {
@@ -106,6 +102,8 @@ extension EventsInteractor {
                 }
             }
         }
+        
+        let reminderIDs = reminders.map { $0.identifier }
         
         events = events.map { event -> Event in
             
@@ -128,6 +126,8 @@ extension EventsInteractor {
             if event.type == "holiday" {
                 event.type = "custom"
             }
+
+            event.hasReminder = reminderIDs.contains(event.id)
             
             return event
         }

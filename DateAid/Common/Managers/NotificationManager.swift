@@ -33,18 +33,18 @@ class NotificationManager {
     typealias ScheduleNotificationResult = Result<UNNotificationRequest, NotificationError>
     typealias RemoveNotificationResult = Result<Bool, NotificationError>
     
-    // MARK: Properties
-    
-    /// All scheduled `Event` notifications.
-    private var notifications: [UNNotificationRequest] = []
-    
-    // MARK: Initialization
-    
     // MARK: Public Interface
+    
+    /// Retrieves all local notifications.
+    func retrieveNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+            completion(notifications)
+        }
+    }
     
     /// Retrieves an on-device scheduled notification for a given ID.
     func retrieveNotification(for id: String, completion: @escaping (RetrieveNotificationResult) -> ()) {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+        retrieveNotifications { notifications in
             if let match = notifications.first(where: { $0.identifier == id }) {
                 completion(.success(match))
             } else {

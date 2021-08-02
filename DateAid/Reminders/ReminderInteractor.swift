@@ -35,8 +35,8 @@ extension ReminderInteractor: ReminderInteractorInputting {
             guard let strongSelf = self else { return }
             
             switch result {
-            case .success(let notification):
-                strongSelf.presenter?.reminderSaveSucceeded(notification: notification)
+            case .success(let reminder):
+                strongSelf.presenter?.reminderSaveSucceeded(reminder: reminder)
             case .failure(let error):
                 strongSelf.presenter?.reminderSaveFailed(error: error)
             }
