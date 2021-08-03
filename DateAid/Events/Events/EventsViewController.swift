@@ -145,32 +145,44 @@ extension EventsViewController: EventsViewOutputting {
     }
     
     func toggleDotFor(eventType: EventType, isSelected: Bool) {
-        baseView.toggleDotFor(eventType: eventType, isSelected: isSelected)
+        Dispatch.main {
+            self.baseView.toggleDotFor(eventType: eventType, isSelected: isSelected)
+        }
     }
     
     func toggleDotFor(noteType: NoteType, isSelected: Bool) {
-        baseView.toggleDotFor(noteType: noteType, isSelected: isSelected)
+        Dispatch.main {
+            self.baseView.toggleDotFor(noteType: noteType, isSelected: isSelected)
+        }
     }
     
     func hideNoteDots() {
-        baseView.hideNoteDots()
+        Dispatch.main {
+            self.baseView.hideNoteDots()
+        }
     }
     
     func showNoteDots() {
-        baseView.showNoteDots()
+        Dispatch.main {
+            self.baseView.showNoteDots()
+        }
     }
     
     func populateView(activeEvents: [Event], activeNoteTypes: [NoteType]) {
-        baseView.populate(
-            with: EventsView.Content(
-                events: activeEvents,
-                noteTypes: activeNoteTypes
+        Dispatch.main {
+            self.baseView.populate(
+                with: EventsView.Content(
+                    events: activeEvents,
+                    noteTypes: activeNoteTypes
+                )
             )
-        )
+        }
     }
     
     func reloadView() {
-        baseView.reloadData()
+        Dispatch.main {
+            self.baseView.reloadData()
+        }
     }
 }
 
