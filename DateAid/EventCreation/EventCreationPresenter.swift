@@ -104,6 +104,7 @@ extension EventCreationPresenter: EventCreationEventHandling {
         
         view?.populateView(
             content: EventCreationView.Content(
+                isNewEvent: event == nil,
                 eventType: eventType,
                 showYear: datePickerManager.yearIsEnabled,
                 firstName: eventGivenName,

@@ -264,8 +264,8 @@ class EventCreationView: BaseView {
     
     private var showYear = true {
         didSet {
-            showYearLabel.alpha =  showYear ? 0 : 1
-            hideYearLabel.alpha = !showYear ? 0 : 1
+            showYearLabel.alpha = !showYear ? 0 : 1
+            hideYearLabel.alpha = showYear  ? 0 : 1
         }
     }
     
@@ -515,6 +515,7 @@ extension EventCreationView: UIPickerViewDelegate {
 extension EventCreationView: Populatable {
     
     struct Content {
+        let isNewEvent: Bool
         let eventType: EventType
         let showYear: Bool
         let firstName: String
@@ -556,5 +557,7 @@ extension EventCreationView: Populatable {
         selectDay(row: content.selectedDay-1)
         selectMonth(row: content.selectedMonth-1)
         selectYear(row: content.selectedYear)
+        
+        deleteButton.isHidden = content.isNewEvent
     }
 }
