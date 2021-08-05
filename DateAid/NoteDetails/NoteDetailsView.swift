@@ -43,6 +43,15 @@ class NoteDetailsView: BaseView {
         return stackView
     }()
     
+    private var iconStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 20
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
     private lazy var eventIconImageView: EventCircleImageView = {
         // Default to birthday for initializer, set for real in populatable
         let imageView = EventCircleImageView(eventType: .birthday)
@@ -68,44 +77,36 @@ class NoteDetailsView: BaseView {
         return stackView
     }()
     
-    private lazy var giftsDot: NoteCircleImageView = {
+    private lazy var noteIconImageView: NoteCircleImageView = {
         let dot = NoteCircleImageView(noteType: .gifts)
         dot.translatesAutoresizingMaskIntoConstraints = false
         dot.contentMode = .center
         return dot
     }()
     
-    private lazy var plansDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView(noteType: .plans)
-        dot.translatesAutoresizingMaskIntoConstraints = false
-        dot.contentMode = .center
-        return dot
-    }()
-    
-    private lazy var otherDot: NoteCircleImageView = {
-        let dot = NoteCircleImageView(noteType: .misc)
-        dot.translatesAutoresizingMaskIntoConstraints = false
-        return dot
-    }()
-    
     private var backgroundView: UIImageView = {
         let view = UIImageView()
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var inputStackView: UIStackView = {
+    private var noteDetailsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.isUserInteractionEnabled = true
+        stackView.alignment = .center
         stackView.spacing = 20
         return stackView
     }()
     
     private lazy var inputSubjectTextField: PaddedTextField = {
         let textField = PaddedTextField()
+        textField.isUserInteractionEnabled = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
+        textField.autocorrectionType = .no
         textField.backgroundColor = .compatibleSystemBackground
         textField.font = FontType.avenirNextDemiBold(24).font
         textField.adjustsFontSizeToFitWidth = true
@@ -120,34 +121,22 @@ class NoteDetailsView: BaseView {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
+        textView.autocorrectionType = .no
         textView.backgroundColor = .compatibleSystemBackground
         textView.font = FontType.avenirNextDemiBold(20).font
         textView.layer.masksToBounds = true
         textView.layer.cornerRadius = 5
+        textView.isEditable = true
+        textView.isScrollEnabled = true
+        textView.showsVerticalScrollIndicator = true
         return textView
-    }()
-    
-    private var buttonContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var deleteNoteButton: RoundedButton = {
-        let button = RoundedButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapDeleteNoteButton), for: .touchUpInside)
-        button.setImage(UIImage(named: "trash"), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.layer.borderColor = UIColor.white.cgColor
-        button.backgroundColor = .white
-        button.layer.borderWidth = 5
-        return button
     }()
     
     // MARK: Properties
     
     weak var delegate: NoteDetailsViewDelegate?
+    
+    private var noteType: NoteType = .gifts
     
     // MARK: View Setup
     
@@ -156,70 +145,50 @@ class NoteDetailsView: BaseView {
         
         addSubview(containerView)
             containerView.addArrangedSubview(headerStackView)
-                headerStackView.addArrangedSubview(eventIconImageView)
+                headerStackView.addArrangedSubview(iconStackView)
+                    iconStackView.addArrangedSubview(eventIconImageView)
+                    iconStackView.addArrangedSubview(noteIconImageView)
                 headerStackView.addArrangedSubview(eventNameLabel)
-                headerStackView.addArrangedSubview(noteTypeStackView)
-                    noteTypeStackView.addArrangedSubview(giftsDot)
-                    noteTypeStackView.addArrangedSubview(plansDot)
-                    noteTypeStackView.addArrangedSubview(otherDot)
             containerView.addArrangedSubview(backgroundView)
-                backgroundView.addSubview(inputStackView)
-                    inputStackView.addArrangedSubview(inputSubjectTextField)
-                    inputStackView.addArrangedSubview(inputDescriptionTextView)
-                backgroundView.addSubview(buttonContainerView)
-                    buttonContainerView.addSubview(deleteNoteButton)
+                backgroundView.addSubview(noteDetailsStackView)
+                    noteDetailsStackView.addArrangedSubview(inputSubjectTextField)
+                    noteDetailsStackView.addArrangedSubview(inputDescriptionTextView)
     }
     
     override func constructLayout() {
         super.constructLayout()
         
         NSLayoutConstraint.activate([
-            eventIconImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
-            eventIconImageView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            eventIconImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 35),
             eventIconImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
             eventIconImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
         ])
         NSLayoutConstraint.activate([
             eventNameLabel.heightAnchor.constraint(equalToConstant: 60),
-            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
+            eventNameLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            eventNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            eventNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30)
         ])
         NSLayoutConstraint.activate([
-            giftsDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
-            giftsDot.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6)
+            noteIconImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
+            noteIconImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
+        ])
+        NSLayoutConstraint.activate([
+            backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         NSLayoutConstraint.activate([
             inputSubjectTextField.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 30),
             inputSubjectTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
             inputSubjectTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            inputSubjectTextField.heightAnchor.constraint(equalToConstant: 40)
+            inputSubjectTextField.heightAnchor.constraint(equalToConstant: 45)
         ])
         NSLayoutConstraint.activate([
-            backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            backgroundView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+            inputDescriptionTextView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            inputDescriptionTextView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            inputDescriptionTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
-        NSLayoutConstraint.activate([
-            inputDescriptionTextView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/5)
-        ])
-        NSLayoutConstraint.activate([
-            buttonContainerView.topAnchor.constraint(equalTo: inputDescriptionTextView.bottomAnchor, constant: 30),
-            buttonContainerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            buttonContainerView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            buttonContainerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            deleteNoteButton.centerXAnchor.constraint(equalTo: buttonContainerView.centerXAnchor),
-            deleteNoteButton.centerYAnchor.constraint(equalTo: buttonContainerView.centerYAnchor),
-            deleteNoteButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5),
-            deleteNoteButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5)
-        ])
-    }
-    
-    // MARK: Actions
-    
-    @objc
-    func didTapDeleteNoteButton() {
-        delegate?.didTapDeleteNote()
     }
 }
 
@@ -228,16 +197,18 @@ extension NoteDetailsView: Populatable {
     // MARK: Content
     
     struct Content {
-        let name: String
+        let eventName: String
         let eventType: EventType
         let noteType: NoteType
-        let isNewNote: Bool
-        let isEditable: Bool
+        let subjectIsEmpty: Bool
+        let descriptionIsEmpty: Bool
         let subject: String
         let description: String
     }
     
     func populate(with content: Content) {
+        
+        self.noteType = content.noteType
         
         // Background
         
@@ -251,54 +222,37 @@ extension NoteDetailsView: Populatable {
         
         // Name
         
-        eventNameLabel.text = content.name
+        eventNameLabel.text = content.eventName
         
         // Note Type
         
         switch content.noteType {
-        case .gifts:
-            giftsDot.setSelectedState(isSelected: true)
-            plansDot.setSelectedState(isSelected: false)
-            otherDot.setSelectedState(isSelected: false)
-        case .plans:
-            giftsDot.setSelectedState(isSelected: false)
-            plansDot.setSelectedState(isSelected: true)
-            otherDot.setSelectedState(isSelected: false)
-        case .misc:
-            giftsDot.setSelectedState(isSelected: false)
-            plansDot.setSelectedState(isSelected: false)
-            otherDot.setSelectedState(isSelected: true)
+        case .gifts: noteIconImageView.noteType = .gifts
+        case .plans: noteIconImageView.noteType = .plans
+        case .misc:  noteIconImageView.noteType = .misc
         }
+        
+        noteIconImageView.setSelectedState(isSelected: true)
         
         // Input Fields
         
         inputSubjectTextField.text = content.subject
         inputDescriptionTextView.text = content.description
         
-        if content.isNewNote {
+        if content.subjectIsEmpty {
             inputSubjectTextField.textColor = .compatiblePlaceholderText
-            inputDescriptionTextView.textColor = .compatiblePlaceholderText
         } else {
             inputSubjectTextField.textColor = .compatibleLabel
-            inputDescriptionTextView.textColor = .compatibleLabel
         }
         
-        if content.isEditable {
-            inputSubjectTextField.isUserInteractionEnabled = true
-            inputDescriptionTextView.isEditable = true
+        if content.descriptionIsEmpty {
+            inputDescriptionTextView.textColor = .compatiblePlaceholderText
         } else {
-            inputSubjectTextField.isUserInteractionEnabled = false
-            inputDescriptionTextView.isEditable = false
+            inputDescriptionTextView.textColor = .compatibleLabel
         }
     }
     
     // MARK: Public Interface
-    
-    func beginEdit() {
-        inputSubjectTextField.isUserInteractionEnabled = true
-        inputDescriptionTextView.isEditable = true
-        inputSubjectTextField.becomeFirstResponder()
-    }
     
     func startEditTextField(isPlaceholder: Bool) {
         let cursorPosition: UITextPosition
@@ -317,7 +271,11 @@ extension NoteDetailsView: Populatable {
     func endEditTextField(isPlaceholder: Bool) {
         if isPlaceholder {
             inputSubjectTextField.textColor = UIColor.compatiblePlaceholderText
-            inputSubjectTextField.text = "Note Title"
+            switch noteType {
+            case .gifts: inputSubjectTextField.text = "Gift Ideas Title"
+            case .plans: inputSubjectTextField.text = "Event Plans Title"
+            case .misc:  inputSubjectTextField.text = "Misc Notes Title"
+            }
         }
     }
     
@@ -338,7 +296,11 @@ extension NoteDetailsView: Populatable {
     func endEditTextView(isPlaceholder: Bool) {
         if isPlaceholder {
             inputDescriptionTextView.textColor = UIColor.compatiblePlaceholderText
-            inputDescriptionTextView.text = "Note Details"
+            switch noteType {
+            case .gifts: inputDescriptionTextView.text = "Gifts Ideas Description"
+            case .plans: inputDescriptionTextView.text = "Event Plans Description"
+            case .misc:  inputDescriptionTextView.text = "Misc Notes Description"
+            }
         }
     }
 }
@@ -360,7 +322,6 @@ extension NoteDetailsView: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputSubjectTextField.resignFirstResponder()
         inputDescriptionTextView.becomeFirstResponder()
         return true
     }

@@ -18,7 +18,7 @@ class NoteCircleImageView: CircleImageView {
 
     // MARK: Properties
     
-    let noteType: NoteType
+    var noteType: NoteType
     var eventType: EventType? = nil
     
     // MARK: Initialization

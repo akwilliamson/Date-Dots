@@ -24,8 +24,7 @@ class NoteDetailsRouter {
     init(parent: Routing, noteState: NoteState) {
         self.parent = parent
         
-        let presenter = NoteDetailsPresenter()
-        presenter.noteState = noteState
+        let presenter = NoteDetailsPresenter(noteState: noteState)
         
         let view = NoteDetailsViewController()
         presenter.view = view
@@ -45,5 +44,9 @@ extension NoteDetailsRouter: Routing {
     func present() {
         guard let view = presenter.view as? UIViewController else { return }
         RouteManager.shared.navigationController?.pushViewController(view, animated: true)
+    }
+    
+    func dismiss(event: Event) {
+        parent?.dismiss(route: .eventNoteDetails, data: event)
     }
 }

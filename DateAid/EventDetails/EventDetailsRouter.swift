@@ -89,6 +89,13 @@ extension EventDetailsRouter: Routing {
             DispatchQueue.main.async {
                 RouteManager.shared.navigationController?.popViewController(animated: true)
             }
+        case .eventNoteDetails:
+            if let event = data as? Event {
+                presenter.handleUpdated(event: event)
+            }
+            DispatchQueue.main.async {
+                RouteManager.shared.navigationController?.popViewController(animated: true)
+            }
         default:
             break
         }

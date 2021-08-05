@@ -11,10 +11,9 @@ import UIKit
 protocol NoteDetailsViewOutputting: AnyObject {
     
     func setNavigation(title: String)
-    func setNavigationBarButton(isEditable: Bool)
+    func setNavigationBarDeleteButton()
     func setContent(_ content: NoteDetailsView.Content)
     
-    func enableInputFields()
     func startEditTextField(isPlaceholder: Bool)
     func endEditTextField(isPlaceholder: Bool)
     func startEditTextView(isPlaceholder: Bool)
@@ -62,19 +61,14 @@ class NoteDetailsViewController: UIViewController {
     // MARK: Navigation Bar
     
     @objc
-    func saveEvent() {
-        presenter?.didTapSave()
-    }
-    
-    @objc
-    func editEvent() {
-        presenter?.didTapEdit()
+    func deleteEvent() {
+        presenter?.didTapDelete()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         if view.frame.origin.y == 0 {
-            view.frame.origin.y -= keyboardSize.height/2
+            view.frame.origin.y -= keyboardSize.height/1.35
         }
     }
 
@@ -93,20 +87,12 @@ extension NoteDetailsViewController: NoteDetailsViewOutputting {
         navigationItem.title = title
     }
     
-    func setNavigationBarButton(isEditable: Bool) {
-        if isEditable {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveEvent))
-        } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editEvent))
-        }
+    func setNavigationBarDeleteButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteEvent))
     }
     
     func setContent(_ content: NoteDetailsView.Content) {
         baseView.populate(with: content)
-    }
-    
-    func enableInputFields() {
-        baseView.beginEdit()
     }
     
     func startEditTextField(isPlaceholder: Bool) {

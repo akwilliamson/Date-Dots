@@ -93,6 +93,9 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewDidLoad() {
         view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+    }
+    
+    func viewWillAppear() {
         view?.populateView(
             content: EventDetailsView.Content(
                 event: event,
@@ -105,8 +108,6 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
             handleReminderFound(reminder)
         }
     }
-    
-    func viewWillAppear() {}
     
     func didSelectEdit() {
         router?.presentEventCreation(event: event)

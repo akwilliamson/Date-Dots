@@ -14,7 +14,7 @@ enum NoteState {
     /// A new note is being created
     case newNote(NoteType, Event)
     
-    var noteType: NoteType? {
+    var noteType: NoteType {
         switch self {
         case let .newNote(noteType, _):
             return noteType

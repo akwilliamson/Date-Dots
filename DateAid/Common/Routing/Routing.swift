@@ -13,7 +13,7 @@ import UIKit
 protocol Routing {
     /// The ability to present a module.
     func present()
-    /// The ability to dismiss a module.
+    /// The ability to dismiss a module with data.
     func dismiss<T>(route: Route, data: T?)
 }
 

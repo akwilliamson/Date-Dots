@@ -42,9 +42,8 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
         
         do {
             try CoreDataManager.save()
-            presenter?.noteSaved()
         } catch {
-            presenter?.noteSaveFailed()
+            print(error.localizedDescription)
         }
     }
     
@@ -53,7 +52,7 @@ extension NoteDetailsInteractor: NoteDetailsInteractorInputting {
  
         do {
             try CoreDataManager.delete(object: existingNote)
-            presenter?.noteDeleted()
+            presenter?.noteDeleted(for: event)
         } catch {
             presenter?.noteDeleteFailed()
         }

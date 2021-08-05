@@ -31,8 +31,6 @@ class EventDetailsView: BaseView {
             static let addStreet = "Add Street"
             static let addRegion = "Add City/State/Zip"
             static let addReminder = "Add\nReminder"
-            static let addNote = "Add"
-            static let noDescription = "No Description"
         }
         enum Image {
             static let reminderSet = UIImage(named: "reminder-set")
@@ -301,9 +299,9 @@ class EventDetailsView: BaseView {
         label.textColor = .compatibleSystemGray
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.noteworthyBold(20).font
+            label.font = FontType.noteworthyBold(22).font
         default:
-            label.font = FontType.noteworthyBold(26).font
+            label.font = FontType.noteworthyBold(28).font
         }
         return label
     }()
@@ -373,12 +371,12 @@ class EventDetailsView: BaseView {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        label.textAlignment = .left
+        label.textAlignment = .center
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextMedium(18).font
+            label.font = FontType.noteworthyBold(22).font
         default:
-            label.font = FontType.avenirNextMedium(22).font
+            label.font = FontType.noteworthyBold(28).font
         }
         return label
     }()
@@ -656,6 +654,11 @@ class EventDetailsView: BaseView {
     
     func updateReminder(text: String) {
         DispatchQueue.main.async {
+            if text == "Add\nReminder" {
+                self.reminderIconImageView.image = Constant.Image.addReminder
+            } else {
+                self.reminderIconImageView.image = Constant.Image.reminderSet
+            }
             self.reminderLabel.text = text
         }
     }
@@ -850,23 +853,20 @@ extension EventDetailsView: Populatable {
             let subject = note.subject
         {
             noteTitleLabel.text = subject.capitalized
-            noteDescriptionLabel.text = note.body ?? Constant.String.noDescription
-            noteDescriptionLabel.textAlignment = .left
-            switch UIDevice.type {
-            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-                noteDescriptionLabel.font = FontType.avenirNextMedium(18).font
-            default:
-                noteDescriptionLabel.font = FontType.avenirNextMedium(22).font
+            switch noteType {
+            case .gifts: noteDescriptionLabel.text = "View Gift Ideas"
+            case .plans: noteDescriptionLabel.text = "View Event Plans"
+            case .misc:  noteDescriptionLabel.text = "View Misc Notes"
             }
         } else {
-            noteTitleLabel.text = "No \(noteType.rawValue.capitalized) Note"
-            noteDescriptionLabel.text = "\(Constant.String.addNote) \(noteType.rawValue.capitalized)"
-            noteDescriptionLabel.textAlignment = .center
-            switch UIDevice.type {
-            case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-                noteDescriptionLabel.font = FontType.noteworthyBold(20).font
-            default:
-                noteDescriptionLabel.font = FontType.noteworthyBold(26).font
+            noteTitleLabel.text = "No \(noteType.rawValue.capitalized)"
+            switch noteType {
+            case .gifts:
+                noteDescriptionLabel.text = "Add Gift Ideas"
+            case .plans:
+                noteDescriptionLabel.text = "Add Event Plans"
+            case .misc:
+                noteDescriptionLabel.text = "Add Misc Notes"
             }
         }
     }
