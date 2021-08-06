@@ -31,7 +31,7 @@ class EventsView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.spacing = 12
         return stackView
     }()
     
@@ -41,11 +41,6 @@ class EventsView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
         return dotView
     }()
 
@@ -54,11 +49,6 @@ class EventsView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
         return dotView
     }()
 
@@ -66,11 +56,6 @@ class EventsView: BaseView {
         let dotView = EventCircleImageView(eventType: .custom)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(eventDotPressed))
         dotView.addGestureRecognizer(tapGesture)
-        
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         return dotView
     }()
@@ -93,7 +78,7 @@ class EventsView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.spacing = 12
         return stackView
     }()
     
@@ -102,11 +87,6 @@ class EventsView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
         return dotView
     }()
 
@@ -114,15 +94,7 @@ class EventsView: BaseView {
         let dotView = NoteCircleImageView(noteType: .plans)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
-        
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
+
         return dotView
     }()
 
@@ -131,12 +103,38 @@ class EventsView: BaseView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(noteDotPressed))
         dotView.addGestureRecognizer(tapGesture)
         
-        dotView.layer.shadowColor = UIColor.black.cgColor
-        dotView.layer.shadowRadius = 10.0
-        dotView.layer.shadowOpacity = 1.0
-        dotView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
         return dotView
+    }()
+    
+    private var noEventsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.isHidden = true
+        return stackView
+    }()
+    
+    private var noEventsTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = UIColor.systemGray
+        label.text = "No Events"
+        label.font = FontType.avenirNextDemiBold(30).font
+        return label
+    }()
+    
+    private var noEventsDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = UIColor.systemGray
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.text = "Add or toggle events to display them here"
+        label.font = FontType.avenirNextMedium(20).font
+        return label
     }()
     
     // MARK: Properties
@@ -156,14 +154,17 @@ class EventsView: BaseView {
     override func constructSubviewHierarchy() {
         super.constructSubviewHierarchy()
         addSubview(tableView)
+        addSubview(noEventsStackView)
+            noEventsStackView.addArrangedSubview(noEventsTitleLabel)
+            noEventsStackView.addArrangedSubview(noEventsDescriptionLabel)
         addSubview(eventDotStackView)
-        eventDotStackView.addArrangedSubview(birthdayDot)
-        eventDotStackView.addArrangedSubview(anniversaryDot)
-        eventDotStackView.addArrangedSubview(customDot)
+            eventDotStackView.addArrangedSubview(birthdayDot)
+            eventDotStackView.addArrangedSubview(anniversaryDot)
+            eventDotStackView.addArrangedSubview(customDot)
         addSubview(noteDotStackView)
-        noteDotStackView.addArrangedSubview(giftsNoteDot)
-        noteDotStackView.addArrangedSubview(plansNoteDot)
-        noteDotStackView.addArrangedSubview(otherNoteDot)
+            noteDotStackView.addArrangedSubview(giftsNoteDot)
+            noteDotStackView.addArrangedSubview(plansNoteDot)
+            noteDotStackView.addArrangedSubview(otherNoteDot)
     }
     
     override func constructLayout() {
@@ -189,6 +190,14 @@ class EventsView: BaseView {
         NSLayoutConstraint.activate([
             giftsNoteDot.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/6),
             giftsNoteDot.heightAnchor.constraint(equalTo: giftsNoteDot.widthAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            noEventsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noEventsStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            noEventsDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            noEventsDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
     
@@ -229,10 +238,23 @@ class EventsView: BaseView {
             UIView.transition(
                 with: self.tableView,
                 duration: 0.2,
-                options: .transitionCrossDissolve,
-                animations: {
-                    self.tableView.reloadData()
-                }, completion: nil)
+                options: .transitionCrossDissolve
+            ) {
+                self.tableView.reloadData()
+                if self.activeEvents.isEmpty {
+                    self.noEventsTitleLabel.alpha = 1
+                    self.noEventsDescriptionLabel.alpha = 1
+                } else {
+                    self.noEventsTitleLabel.alpha = 0
+                    self.noEventsDescriptionLabel.alpha = 0
+                }
+            } completion: { bool in
+                if self.activeEvents.isEmpty {
+                    self.noEventsStackView.isHidden = false
+                } else {
+                    self.noEventsStackView.isHidden = true
+                }
+            }
         }
     }
     

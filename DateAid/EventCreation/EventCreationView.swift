@@ -54,7 +54,7 @@ class EventCreationView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.spacing = 12
         return stackView
     }()
     

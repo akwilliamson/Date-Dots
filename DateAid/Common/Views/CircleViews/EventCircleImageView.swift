@@ -39,6 +39,20 @@ class EventCircleImageView: CircleImageView {
         isUserInteractionEnabled = true
         contentMode = .scaleAspectFit
         layer.borderWidth = Constant.borderWidth
+        
+        layer.shadowColor = UIColor.black.cgColor
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            layer.shadowRadius = 5.0
+            layer.shadowOpacity = 0.8
+            layer.shadowOffset = CGSize(width: 2, height: 2)
+        case .dark:
+            layer.shadowRadius = 10.0
+            layer.shadowOpacity = 1.0
+            layer.shadowOffset = CGSize(width: 0, height: 0)
+        default:
+            break
+        }
     }
 
     // MARK: Interface

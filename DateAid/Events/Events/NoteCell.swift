@@ -89,7 +89,7 @@ extension NoteCell {
     
     func populate(_ content: Content) {
         if let note = content.note {
-            noteTypeIcon.image = note.noteType.image
+            noteTypeIcon.image = note.noteType.image.withTintColor(UIColor.label)
             noteTypeIcon.layer.cornerRadius = 12
             
             if let subject = note.subject {
@@ -99,7 +99,7 @@ extension NoteCell {
             }
             noteLabel.textColor = UIColor.compatibleLabel
         } else if let noteType = content.noteType {
-            noteTypeIcon.image = noteType.image
+            noteTypeIcon.image = noteType.image.withTintColor(UIColor.systemGray)
             noteTypeIcon.layer.cornerRadius = 12
             
             switch noteType {
@@ -110,7 +110,7 @@ extension NoteCell {
             case .misc:
                 noteLabel.text = "Other notes"
             }
-            noteLabel.textColor = .systemGray3
+            noteLabel.textColor = .systemGray
         }
     }
 }
