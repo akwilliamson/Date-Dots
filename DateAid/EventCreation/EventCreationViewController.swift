@@ -12,7 +12,8 @@ protocol EventCreationViewOutputting: AnyObject {
     
     // Navigation Title
     func configureNavigation(title: String)
-    func configureNavigationButton()
+    func configureNavigationDeleteButton()
+    func configureNavigationSaveButton()
     
     // Base View
     func populateView(content: EventCreationView.Content)
@@ -59,8 +60,13 @@ class EventCreationViewController: UIViewController {
     // MARK: Actions
     
     @objc
-    func didPressSave() {
-        presenter?.didPressSave()
+    func saveNewEvent() {
+        presenter?.didTapSave()
+    }
+    
+    @objc
+    func deleteEvent() {
+        presenter?.didTapDelete()
     }
 }
 
@@ -72,13 +78,12 @@ extension EventCreationViewController: EventCreationViewOutputting {
         navigationItem.title = title
     }
     
-    func configureNavigationButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Save",
-            style: .done,
-            target: self,
-            action: #selector(didPressSave)
-        )
+    func configureNavigationDeleteButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteEvent))
+    }
+    
+    func configureNavigationSaveButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveNewEvent))
     }
     
     func populateView(content: EventCreationView.Content) {
@@ -135,6 +140,7 @@ extension EventCreationViewController: EventCreationViewOutputting {
 // MARK: EventsViewDelegate
 
 extension EventCreationViewController: EventCreationViewDelegate {
+    
     func didToggleYearPicker(isOn: Bool) {
         presenter?.didToggleYearPicker(isOn: isOn)
     }
@@ -167,7 +173,7 @@ extension EventCreationViewController: EventCreationViewDelegate {
         presenter?.didSelectPickerRow(row: row, in: component)
     }
     
-    func didPressDelete() {
-        presenter?.didPressDelete()
+    func textFieldDidReturn() {
+        presenter?.textFieldDidReturn()
     }
 }

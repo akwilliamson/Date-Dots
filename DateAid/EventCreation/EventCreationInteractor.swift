@@ -49,9 +49,8 @@ extension EventCreationInteractor: EventCreationInteractorInputting {
     func saveEvent(_ event: Event) {
         do {
             try CoreDataManager.save()
-            presenter?.eventSaveSucceeded(event: event)
         } catch {
-            presenter?.eventSaveFailed(error: error)
+            print(error.localizedDescription)
         }
     }
     

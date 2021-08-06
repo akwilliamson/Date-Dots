@@ -61,7 +61,7 @@ class NoteDetailsViewController: UIViewController {
     // MARK: Navigation Bar
     
     @objc
-    func deleteEvent() {
+    func deleteNote() {
         presenter?.didTapDelete()
     }
     
@@ -88,7 +88,7 @@ extension NoteDetailsViewController: NoteDetailsViewOutputting {
     }
     
     func setNavigationBarDeleteButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteEvent))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteNote))
     }
     
     func setContent(_ content: NoteDetailsView.Content) {

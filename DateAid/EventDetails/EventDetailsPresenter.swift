@@ -92,10 +92,11 @@ class EventDetailsPresenter {
 extension EventDetailsPresenter: EventDetailsEventHandling {
     
     func viewDidLoad() {
-        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+//        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
     }
     
     func viewWillAppear() {
+        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
         view?.populateView(
             content: EventDetailsView.Content(
                 event: event,

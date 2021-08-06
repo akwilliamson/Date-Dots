@@ -17,7 +17,7 @@ protocol EventCreationViewDelegate: AnyObject {
     func didChangeRegion(text: String?)
     func didToggleYearPicker(isOn: Bool)
     func didSelectPicker(row: Int, in component: Int)
-    func didPressDelete()
+    func textFieldDidReturn()
 }
 
 class EventCreationView: BaseView {
@@ -246,16 +246,6 @@ class EventCreationView: BaseView {
         return pickerView
     }()
     
-    private lazy var deleteButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
-        button.setBackgroundImage(UIImage(systemName: "trash.circle"), for: .normal)
-        button.tintColor = UIColor.compatibleLabel
-        
-        return button
-    }()
-    
     // MARK: Properties
     
     weak var delegate: EventCreationViewDelegate?
@@ -299,7 +289,6 @@ class EventCreationView: BaseView {
                 toggleStackView.addArrangedSubview(yearToggle)
                 toggleStackView.addArrangedSubview(showYearLabel)
             containerView.addArrangedSubview(pickerView)
-            containerView.addArrangedSubview(deleteButton)
     }
     
     override func constructLayout() {
@@ -332,10 +321,8 @@ class EventCreationView: BaseView {
             yearToggle.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
-            deleteButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            deleteButton.widthAnchor.constraint(equalToConstant: 60),
-            deleteButton.heightAnchor.constraint(equalToConstant: 60),
-            deleteButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
+//            pickerView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            pickerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     
@@ -424,11 +411,6 @@ class EventCreationView: BaseView {
     func regionDidChange(sender: UITextField) {
         delegate?.didChangeRegion(text: sender.text)
     }
-    
-    @objc
-    func deletePressed(sender: DeleteCircleImageView) {
-        delegate?.didPressDelete()
-    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -437,20 +419,20 @@ extension EventCreationView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
+
         switch textField {
         case nameInputField:
             lastNameInputField.becomeFirstResponder()
-        case lastNameInputField:
-            textField.resignFirstResponder()
         case addressInputField:
             regionInputField.becomeFirstResponder()
-        case regionInputField:
-            textField.resignFirstResponder()
         default:
             break
         }
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textFieldDidReturn()
     }
 }
 
@@ -515,7 +497,6 @@ extension EventCreationView: UIPickerViewDelegate {
 extension EventCreationView: Populatable {
     
     struct Content {
-        let isNewEvent: Bool
         let eventType: EventType
         let showYear: Bool
         let firstName: String
@@ -557,7 +538,5 @@ extension EventCreationView: Populatable {
         selectDay(row: content.selectedDay-1)
         selectMonth(row: content.selectedMonth-1)
         selectYear(row: content.selectedYear)
-        
-        deleteButton.isHidden = content.isNewEvent
     }
 }

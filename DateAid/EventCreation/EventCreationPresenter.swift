@@ -11,7 +11,6 @@ import UserNotifications
 protocol EventCreationEventHandling: AnyObject {
     
     func viewDidLoad()
-    
     func didSelectEventType(eventType: EventType)
     func didToggleYearPicker(isOn: Bool)
     func didChangeFirstName(text: String)
@@ -19,20 +18,16 @@ protocol EventCreationEventHandling: AnyObject {
     func didChangeAddress(text: String)
     func didChangeRegion(text: String)
     func didSelectPickerRow(row: Int, in component: Int)
-    
-    func didPressSave()
-    func didPressDelete()
+    func didTapSave()
+    func didTapDelete()
     func didConfirmDelete()
+    func textFieldDidReturn()
 }
 
 protocol EventCreationInteractorOutputting: AnyObject {
     
-    func eventSaveFailed(error: Error)
-    func eventSaveSucceeded(event: Event)
-    
     func eventDeleteFailed(error: Error)
     func eventDeleteSucceeded()
-    
     func handleEventReminder(reminder: UNNotificationRequest?)
 }
 
@@ -59,6 +54,8 @@ class EventCreationPresenter {
     
     private let notificationManager = NotificationManager()
     
+    private var shouldSaveDynamically = false
+    
     private var navigationTitle: String {
         let prefix = eventType.emoji
         let suffix: String
@@ -68,7 +65,7 @@ class EventCreationPresenter {
         } else if eventFamilyName.isEmpty {
             suffix = eventGivenName
         } else {
-            suffix = "\(eventGivenName) \(String(eventGivenName.prefix(1)))"
+            suffix = "\(eventGivenName) \(String(eventFamilyName.prefix(1)))"
         }
         
         return [prefix, suffix].joined(separator: " ")
@@ -82,6 +79,7 @@ class EventCreationPresenter {
             self.eventType = event.eventType
             self.eventGivenName = event.givenName
             self.eventFamilyName = event.familyName
+            self.shouldSaveDynamically = true
             
             if let street = event.address?.street {
                 self.eventStreet = street
@@ -99,12 +97,15 @@ class EventCreationPresenter {
 extension EventCreationPresenter: EventCreationEventHandling {
     
     func viewDidLoad() {
-        view?.configureNavigationButton()
         view?.configureNavigation(title: navigationTitle)
+        if event != nil {
+            view?.configureNavigationDeleteButton()
+        } else {
+            view?.configureNavigationSaveButton()
+        }
         
         view?.populateView(
             content: EventCreationView.Content(
-                isNewEvent: event == nil,
                 eventType: eventType,
                 showYear: datePickerManager.yearIsEnabled,
                 firstName: eventGivenName,
@@ -124,6 +125,11 @@ extension EventCreationPresenter: EventCreationEventHandling {
     func didSelectEventType(eventType: EventType) {
         guard self.eventType != eventType else { return }
         self.eventType = eventType
+        
+        if shouldSaveDynamically, let event = self.event {
+            event.type = eventType.rawValue
+            interactor?.saveEvent(event)
+        }
         
         view?.selectEventType(eventType)
         view?.configureNavigation(title: navigationTitle)
@@ -149,6 +155,11 @@ extension EventCreationPresenter: EventCreationEventHandling {
     
     func didToggleYearPicker(isOn: Bool) {
         datePickerManager.yearIsEnabled = isOn
+     
+        if shouldSaveDynamically, let event = self.event {
+            event.date = datePickerManager.eventDate
+            interactor?.saveEvent(event)
+        }
         
         if isOn {
             view?.selectYear(index: datePickerManager.selectedYearIndex)
@@ -168,14 +179,19 @@ extension EventCreationPresenter: EventCreationEventHandling {
         default:
             return
         }
+        
+        if shouldSaveDynamically, let event = self.event {
+            event.date = datePickerManager.eventDate
+            interactor?.saveEvent(event)
+        }
     }
     
-    func didPressSave() {
+    func didTapSave() {
         guard !eventGivenName.isEmpty else {
             view?.showInputError()
             return
         }
-        
+
         if let event = event {
             interactor?.findReminder(for: event)
         } else {
@@ -183,7 +199,7 @@ extension EventCreationPresenter: EventCreationEventHandling {
         }
     }
     
-    func didPressDelete() {
+    func didTapDelete() {
         view?.showConfirmDelete()
     }
     
@@ -191,6 +207,28 @@ extension EventCreationPresenter: EventCreationEventHandling {
         if let event = event {
             notificationManager.removeNotification(with: event.id)
             interactor?.deleteEvent(event)
+        }
+    }
+    
+    func textFieldDidReturn() {
+        if shouldSaveDynamically, let event = self.event {
+            if !eventGivenName.isEmpty {
+                event.givenName = eventGivenName
+            }
+            event.familyName = eventFamilyName
+            
+            if !eventStreet.isEmpty || !eventRegion.isEmpty {
+                if let address = event.address {
+                    address.street = eventStreet
+                    address.region = eventRegion
+                } else {
+                    let address = Address(context: CoreDataManager.shared.viewContext)
+                    address.street = eventStreet
+                    address.region = eventRegion
+                    event.address = address
+                }
+            }
+            interactor?.saveEvent(event)
         }
     }
     
@@ -222,14 +260,6 @@ extension EventCreationPresenter: EventCreationEventHandling {
 
 extension EventCreationPresenter: EventCreationInteractorOutputting {
     
-    func eventSaveFailed(error: Error) {
-        view?.showSaveError()
-    }
-    
-    func eventSaveSucceeded(event: Event) {
-        router?.dismiss(event: event)
-    }
-    
     func eventDeleteFailed(error: Error) {
         router?.dismiss(event: nil)
     }
@@ -256,10 +286,15 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
         editedEvent.familyName = eventFamilyName
         
         if !eventStreet.isEmpty || !eventRegion.isEmpty {
-            let address = Address(context: CoreDataManager.shared.viewContext)
-            address.street = eventStreet
-            address.region = eventRegion
-            editedEvent.address = address
+            if let address = event?.address {
+                address.street = eventStreet
+                address.region = eventRegion
+            } else {
+                let address = Address(context: CoreDataManager.shared.viewContext)
+                address.street = eventStreet
+                address.region = eventRegion
+                event?.address = address
+            }
         }
         
         interactor?.saveEvent(editedEvent)
