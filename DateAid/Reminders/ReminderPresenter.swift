@@ -38,7 +38,6 @@ class ReminderPresenter {
     
     private enum Constant {
         static let navigationTitle = "Reminder"
-        static let barButtonTitle = "Save"
     }
     
     // MARK: Properties
@@ -124,8 +123,8 @@ extension ReminderPresenter: ReminderEventHandling {
     
     func viewDidLoad() {
         view?.configureNavigation(title: Constant.navigationTitle)
-        view?.configureNavigationButton(title: Constant.barButtonTitle)
         if reminder != nil {
+            view?.configureNavigationDeleteButton()
             view?.populateView(
                 content: ReminderView.Content(
                     scheduleText: scheduleText,
@@ -137,6 +136,7 @@ extension ReminderPresenter: ReminderEventHandling {
                 )
             )
         } else {
+            view?.configureNavigationSaveButton()
             view?.populateView(
                 content: ReminderView.Content(
                     scheduleText: scheduleText,
@@ -152,11 +152,27 @@ extension ReminderPresenter: ReminderEventHandling {
     
     func didSelectDayPrior(_ dayPrior: Int) {
         setDateComponentDays(dayPrior: dayPrior)
+        interactor?.updateReminder(
+            Reminder(
+                id: event.id,
+                title: reminderTitle,
+                body: reminderBody,
+                fireDate: fireDateComponents
+            )
+        )
         view?.didUpdateSchedule(text: scheduleText)
     }
     
     func didChangeTimeOfDay(_ date: Date) {
         setDateComponentTime(from: date)
+        interactor?.updateReminder(
+            Reminder(
+                id: event.id,
+                title: reminderTitle,
+                body: reminderBody,
+                fireDate: fireDateComponents
+            )
+        )
         view?.didUpdateSchedule(text: scheduleText)
     }
     
@@ -245,6 +261,6 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     }
     
     func eventSaved() {
-        router?.dismiss(reminder: reminder)
+        router?.dismiss()
     }
 }

@@ -13,6 +13,7 @@ protocol EventsEventHandling: AnyObject {
     func viewDidLoad()
     func viewWillAppear()
     
+    func composeButtonPressed()
     func searchButtonPressed()
     func cancelButtonPressed()
     func addButtonPressed()
@@ -145,6 +146,13 @@ extension EventsPresenter: EventsEventHandling {
     func viewWillAppear() {
         interactor?.fetchReminders()
         view?.configureNavigation(state: .normal)
+    }
+    
+    func composeButtonPressed() {
+        let recipient = "datedots@gmail.com"
+        let subject = "Feedback"
+        let body = "Feedback or feature requests? Leave them here!"
+        view?.presentMailComposer(recipient: recipient, subject: subject, body: body)
     }
     
     func searchButtonPressed() {

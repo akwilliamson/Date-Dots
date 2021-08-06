@@ -11,6 +11,7 @@ import UserNotifications
 protocol ReminderInteractorInputting: AnyObject {
     
     func saveReminder(_ reminder: Reminder)
+    func updateReminder(_ reminder: Reminder)
     func deleteReminder(for id: String)
     func saveEvent()
 }
@@ -41,6 +42,11 @@ extension ReminderInteractor: ReminderInteractorInputting {
                 strongSelf.presenter?.reminderSaveFailed(error: error)
             }
         }
+    }
+    
+    func updateReminder(_ reminder: Reminder) {
+        notificationManager.removeNotification(with: reminder.id)
+        notificationManager.scheduleNotification(reminder: reminder) { _ in }
     }
     
     func deleteReminder(for id: String) {

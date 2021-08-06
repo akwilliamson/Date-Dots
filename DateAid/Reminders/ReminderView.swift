@@ -12,7 +12,6 @@ protocol ReminderViewDelegate {
     
     func didSelectDayPrior(_ dayPrior: Int)
     func didChangeTimeOfDay(date: Date)
-    func didPressDelete()
 }
 
 class ReminderView: BaseView {
@@ -75,6 +74,7 @@ class ReminderView: BaseView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.tag = 0
+        
         return label
     }()
     
@@ -164,16 +164,6 @@ class ReminderView: BaseView {
         return datePicker
     }()
     
-    private lazy var deleteButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
-        button.setBackgroundImage(UIImage(systemName: "trash.circle"), for: .normal)
-        button.tintColor = UIColor.compatibleLabel
-        
-        return button
-    }()
-    
     // MARK: Public Properties
     
     var delegate: ReminderViewDelegate?
@@ -228,7 +218,6 @@ class ReminderView: BaseView {
         containerStackView.setCustomSpacing(10, after: sevenDaysPriorLabel)
         containerStackView.addArrangedSubview(timeOfDayLabel)
         containerStackView.addArrangedSubview(fireTimePickerView)
-        addSubview(deleteButton)
     }
     
     override func constructLayout() {
@@ -247,13 +236,6 @@ class ReminderView: BaseView {
             zeroDaysPriorLabel.heightAnchor.constraint(equalTo: zeroDaysPriorLabel.widthAnchor),
             fourDaysPriorLabel.heightAnchor.constraint(equalTo: fourDaysPriorLabel.widthAnchor)
         ])
-        
-        NSLayoutConstraint.activate([
-            deleteButton.topAnchor.constraint(equalTo: containerStackView.bottomAnchor),
-            deleteButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            deleteButton.heightAnchor.constraint(equalToConstant: 60),
-            deleteButton.widthAnchor.constraint(equalTo: deleteButton.heightAnchor)
-        ])
     }
     
     // MARK: Public Methods
@@ -267,11 +249,6 @@ class ReminderView: BaseView {
     @objc
     func didSelectTimeOfDay(_ sender: UIDatePicker) {
         delegate?.didChangeTimeOfDay(date: sender.date)
-    }
-    
-    @objc
-    func didPressDelete(_ sender: UIButton) {
-        delegate?.didPressDelete()
     }
     
     @objc
@@ -327,11 +304,8 @@ extension ReminderView: Populatable {
         
         fireTimePickerView.date = content.fireDate
         
-        if content.isScheduled {
-            deleteButton.isHidden = false
-        } else {
+        if !content.isScheduled {
             selectedDayPriorLabel = zeroDaysPriorLabel
-            deleteButton.isHidden = true
         }
     }
 }

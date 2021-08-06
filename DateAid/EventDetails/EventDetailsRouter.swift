@@ -53,14 +53,10 @@ extension EventDetailsRouter: Routing {
         child?.present()
     }
     
-    // TODO: Add dismiss edit event
-    
     func presentEventReminder(details: ReminderDetails) {
         child = RouteManager.shared.router(for: .eventReminder, parent: self, with: details)
         child?.present()
     }
-    
-    // TODO: Add dismiss event reminder (with UNNotificationRequest)
     
     func presentEventNote(noteState: NoteState) {
         child = RouteManager.shared.router(for: .eventNoteDetails, parent: self, with: noteState)
@@ -72,34 +68,37 @@ extension EventDetailsRouter: Routing {
         case .eventCreation:
             if let event = data as? Event {
                 presenter.handleUpdated(event: event)
-                DispatchQueue.main.async {
+                Dispatch.main {
                     RouteManager.shared.navigationController?.popViewController(animated: true)
                 }
             } else {
-                DispatchQueue.main.async {
+                Dispatch.main {
                     RouteManager.shared.navigationController?.popToRootViewController(animated: true)
                 }
-            }
-        case .eventReminder:
-            if let reminder = data as? UNNotificationRequest {
-                presenter.handleUpdated(reminder: reminder)
-            } else {
-                presenter.handleUpdated(reminder: nil)
-            }
-            DispatchQueue.main.async {
-                RouteManager.shared.navigationController?.popViewController(animated: true)
             }
         case .eventNoteDetails:
             if let event = data as? Event {
                 presenter.handleUpdated(event: event)
             }
-            DispatchQueue.main.async {
+            Dispatch.main {
                 RouteManager.shared.navigationController?.popViewController(animated: true)
             }
         default:
             break
         }
         
+        child = nil
+    }
+    
+    func dismiss(route: Route) {
+        switch route {
+        case .eventReminder:
+            Dispatch.main {
+                RouteManager.shared.navigationController?.popViewController(animated: true)
+            }
+        default:
+            break
+        }
         child = nil
     }
 }

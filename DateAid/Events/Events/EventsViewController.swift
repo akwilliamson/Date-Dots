@@ -6,8 +6,9 @@
 //  Copyright © 2016 Aaron Williamson. All rights reserved.
 //
 
-import UIKit
 import CoreData
+import MessageUI
+import UIKit
 
 protocol EventsViewOutputting: AnyObject {
  
@@ -24,6 +25,8 @@ protocol EventsViewOutputting: AnyObject {
 
     func populateView(activeEvents: [Event], activeNoteTypes: [NoteType])
     func reloadView()
+    
+    func presentMailComposer(recipient: String, subject: String, body: String)
 }
 
 class EventsViewController: UIViewController {
@@ -36,6 +39,10 @@ class EventsViewController: UIViewController {
         searchBar.delegate = self
         return searchBar
     }()
+    
+    private var composeButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(composeButtonPressed))
+    }
     
     private var searchButton: UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonPressed))
@@ -73,6 +80,7 @@ class EventsViewController: UIViewController {
         presenter?.viewWillAppear()
         /// In case search bar was previously active, reset to initial bar buttons on appear
         navigationItem.rightBarButtonItems = [addButton, searchButton]
+        navigationItem.leftBarButtonItem = composeButton
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,6 +89,11 @@ class EventsViewController: UIViewController {
     }
 
     // MARK: Actions
+    
+    @objc
+    func composeButtonPressed() {
+        presenter?.composeButtonPressed()
+    }
     
     @objc
     func searchButtonPressed() {
@@ -184,6 +197,16 @@ extension EventsViewController: EventsViewOutputting {
             self.baseView.reloadData()
         }
     }
+    
+    func presentMailComposer(recipient: String, subject: String, body: String) {
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setToRecipients([recipient])
+        mailComposer.setSubject(subject)
+        mailComposer.setMessageBody(body, isHTML: false)
+        
+        present(mailComposer, animated: true, completion: nil)
+    }
 }
 
 // MARK: - EventsViewDelegate
@@ -204,5 +227,15 @@ extension EventsViewController: EventsViewDelegate {
     
     func didSelectNote(noteState: NoteState) {
         presenter?.selectNotePressed(noteState: noteState)
+    }
+}
+
+// MARK: -
+
+extension EventsViewController: MFMailComposeViewControllerDelegate {
+ 
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+
+        controller.dismiss(animated: true, completion: nil)
     }
 }

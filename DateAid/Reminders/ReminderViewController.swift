@@ -12,7 +12,8 @@ protocol ReminderViewOutputting: AnyObject {
     
     func configureNavigation(title: String)
     func populateView(content: ReminderView.Content)
-    func configureNavigationButton(title: String)
+    func configureNavigationSaveButton()
+    func configureNavigationDeleteButton()
     func didUpdateSchedule(text: String)
     func presentAlertWillDelete(title: String, body: String, confirm: String, dismiss: String)
     func presentAlertErrorSave(title: String, body: String, dismiss: String)
@@ -47,6 +48,11 @@ class ReminderViewController: UIViewController {
     func didPressSave() {
         presenter?.didPressSaveReminder()
     }
+    
+    @objc
+    func didPressDelete() {
+        presenter?.didPressDeleteReminder()
+    }
 }
 
 // MARK: - ReminderViewOutputting
@@ -61,13 +67,12 @@ extension ReminderViewController: ReminderViewOutputting {
         baseView.populate(with: content)
     }
     
-    func configureNavigationButton(title: String) {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: title,
-            style: .done,
-            target: self,
-            action: #selector(didPressSave)
-        )
+    func configureNavigationSaveButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didPressSave))
+    }
+    
+    func configureNavigationDeleteButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didPressDelete))
     }
     
     func didUpdateSchedule(text: String) {
@@ -119,9 +124,5 @@ extension ReminderViewController: ReminderViewDelegate {
     
     func didChangeTimeOfDay(date: Date) {
         presenter?.didChangeTimeOfDay(date)
-    }
-    
-    func didPressDelete() {
-        presenter?.didPressDeleteReminder()
     }
 }

@@ -21,12 +21,15 @@ protocol EventDetailsEventHandling: AnyObject {
     func didSelect(note: Note?, noteType: NoteType?)
 }
 
-protocol EventDetailsInteractorOutputting: AnyObject {}
+protocol EventDetailsInteractorOutputting: AnyObject {
+    
+    func reminderFound(_ reminder: UNNotificationRequest)
+    func reminderNotFound()
+}
 
 protocol EventDetailsUpdating: AnyObject {
     
     func handleUpdated(event: Event)
-    func handleUpdated(reminder: UNNotificationRequest?)
 }
 
 class EventDetailsPresenter {
@@ -91,12 +94,11 @@ class EventDetailsPresenter {
 
 extension EventDetailsPresenter: EventDetailsEventHandling {
     
-    func viewDidLoad() {
-//        view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
-    }
+    func viewDidLoad() {}
     
     func viewWillAppear() {
         view?.configureNavigation(title: "\(event.eventType.emoji) \(event.abvName)")
+        interactor?.getReminder(with: event.id)
         view?.populateView(
             content: EventDetailsView.Content(
                 event: event,
@@ -105,9 +107,6 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
                 noteType: activeNoteType
             )
         )
-        if let reminder = self.reminder {
-            handleReminderFound(reminder)
-        }
     }
     
     func didSelectEdit() {
@@ -148,7 +147,7 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
 
 extension EventDetailsPresenter: EventDetailsInteractorOutputting {
     
-    func handleReminderFound(_ reminder: UNNotificationRequest) {
+    func reminderFound(_ reminder: UNNotificationRequest) {
         guard
             let trigger = reminder.trigger as? UNCalendarNotificationTrigger,
             let triggerDate = trigger.nextTriggerDate()
@@ -161,7 +160,7 @@ extension EventDetailsPresenter: EventDetailsInteractorOutputting {
         view?.updateReminder(text: reminderText)
     }
     
-    func handleReminderNotFound() {
+    func reminderNotFound() {
         self.reminder = nil
         
         let reminderText = "Add\nReminder"
@@ -204,13 +203,5 @@ extension EventDetailsPresenter: EventDetailsUpdating {
                 noteType: activeNoteType
             )
         )
-    }
-    
-    func handleUpdated(reminder: UNNotificationRequest?) {
-        if let reminder = reminder {
-            handleReminderFound(reminder)
-        } else {
-            handleReminderNotFound()
-        }
     }
 }
