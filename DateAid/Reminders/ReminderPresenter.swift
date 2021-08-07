@@ -152,27 +152,31 @@ extension ReminderPresenter: ReminderEventHandling {
     
     func didSelectDayPrior(_ dayPrior: Int) {
         setDateComponentDays(dayPrior: dayPrior)
-        interactor?.updateReminder(
-            Reminder(
-                id: event.id,
-                title: reminderTitle,
-                body: reminderBody,
-                fireDate: fireDateComponents
+        if reminder != nil {
+            interactor?.updateReminder(
+                Reminder(
+                    id: event.id,
+                    title: reminderTitle,
+                    body: reminderBody,
+                    fireDate: fireDateComponents
+                )
             )
-        )
+        }
         view?.didUpdateSchedule(text: scheduleText)
     }
     
     func didChangeTimeOfDay(_ date: Date) {
         setDateComponentTime(from: date)
-        interactor?.updateReminder(
-            Reminder(
-                id: event.id,
-                title: reminderTitle,
-                body: reminderBody,
-                fireDate: fireDateComponents
+        if reminder != nil {
+            interactor?.updateReminder(
+                Reminder(
+                    id: event.id,
+                    title: reminderTitle,
+                    body: reminderBody,
+                    fireDate: fireDateComponents
+                )
             )
-        )
+        }
         view?.didUpdateSchedule(text: scheduleText)
     }
     
