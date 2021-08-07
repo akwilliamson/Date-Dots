@@ -65,6 +65,7 @@ class EventsView: BaseView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(NoteCell.self, forCellReuseIdentifier: "NoteCell")
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 0
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
@@ -181,7 +182,7 @@ class EventsView: BaseView {
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         NSLayoutConstraint.activate([
             noteDotStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -220,11 +221,23 @@ class EventsView: BaseView {
     }
     
     func hideNoteDots() {
-        noteDotStackView.isHidden = true
+        UIView.animate(withDuration: 0.2) {
+            self.giftsNoteDot.alpha = 0
+            self.plansNoteDot.alpha = 0
+            self.otherNoteDot.alpha = 0
+        } completion: { _ in
+            self.noteDotStackView.isHidden = true
+        }
     }
     
     func showNoteDots() {
-        noteDotStackView.isHidden = false
+        UIView.animate(withDuration: 0.2) {
+            self.giftsNoteDot.alpha = 1
+            self.plansNoteDot.alpha = 1
+            self.otherNoteDot.alpha = 1
+        } completion: { _ in
+            self.noteDotStackView.isHidden = false
+        }
     }
     
     func deleteTableViewSectionFor(event: Event) {

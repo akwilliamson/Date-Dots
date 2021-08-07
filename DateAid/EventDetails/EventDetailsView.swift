@@ -134,7 +134,7 @@ class EventDetailsView: BaseView {
         label.textColor = .white
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
-            label.font = FontType.avenirNextMedium(30).font
+            label.font = FontType.avenirNextBold(30).font
         default:
             label.font = FontType.avenirNextBold(36).font
         }

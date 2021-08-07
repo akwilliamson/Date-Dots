@@ -108,7 +108,7 @@ extension NoteCell {
             case .plans:
                 noteLabel.text = "Event plans"
             case .misc:
-                noteLabel.text = "Other notes"
+                noteLabel.text = "Misc notes"
             }
             noteLabel.textColor = .systemGray
         }
