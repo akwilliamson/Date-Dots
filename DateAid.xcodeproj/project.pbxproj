@@ -23,6 +23,7 @@
 		9712376125F0A9F600924986 /* NoteCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712376025F0A9F600924986 /* NoteCircleImageView.swift */; };
 		9715A27F26671F8C00719111 /* DatePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A27E26671F8C00719111 /* DatePickerManager.swift */; };
 		971E488926BDFF5800DE5691 /* DispatchQueue+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971E488826BDFF5800DE5691 /* DispatchQueue+Helpers.swift */; };
+		971E488B26BE125C00DE5691 /* InitialImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971E488A26BE125C00DE5691 /* InitialImportView.swift */; };
 		9727AA4726AF88C600E21313 /* EventDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9727AA4626AF88C600E21313 /* EventDetails.swift */; };
 		972BFE7A26159F87003B7429 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972BFE7926159F87003B7429 /* RoundedButton.swift */; };
 		97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364CE51AFBF44A0095BC57 /* AppDelegate.swift */; };
@@ -129,6 +130,7 @@
 		9712376025F0A9F600924986 /* NoteCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCircleImageView.swift; sourceTree = "<group>"; };
 		9715A27E26671F8C00719111 /* DatePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerManager.swift; sourceTree = "<group>"; };
 		971E488826BDFF5800DE5691 /* DispatchQueue+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Helpers.swift"; sourceTree = "<group>"; };
+		971E488A26BE125C00DE5691 /* InitialImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportView.swift; sourceTree = "<group>"; };
 		9727AA4626AF88C600E21313 /* EventDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetails.swift; sourceTree = "<group>"; };
 		972BFE7926159F87003B7429 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				97B67D871E512F95006C3216 /* InitialImportInteractorInputting.swift */,
 				97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */,
 				979C36A81E0E14B20098345E /* InitialImportViewOutputting.swift */,
+				971E488A26BE125C00DE5691 /* InitialImportView.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				97D0C114260C2ED300700C09 /* NoteDetailsView.swift in Sources */,
 				97682FF31DB3032600E8C5E6 /* InitialImportPresenter.swift in Sources */,
 				97B5F1A91BD02F3C00CEFFAF /* Event.swift in Sources */,
+				971E488B26BE125C00DE5691 /* InitialImportView.swift in Sources */,
 				978E710525D25E060052AD24 /* UIDevice+Type.swift in Sources */,
 				97E0818B1DAA1F5B00B0ED5F /* EventsViewController.swift in Sources */,
 				975713AF24553BD400EDD963 /* CircleImageView.swift in Sources */,

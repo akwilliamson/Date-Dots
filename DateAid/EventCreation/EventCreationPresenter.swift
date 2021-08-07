@@ -29,6 +29,7 @@ protocol EventCreationInteractorOutputting: AnyObject {
     func eventDeleteFailed(error: Error)
     func eventDeleteSucceeded()
     func handleEventReminder(reminder: UNNotificationRequest?)
+    func newEventSaved()
 }
 
 class EventCreationPresenter {
@@ -293,11 +294,17 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
                 let address = Address(context: CoreDataManager.shared.viewContext)
                 address.street = eventStreet
                 address.region = eventRegion
-                event?.address = address
+                editedEvent.address = address
             }
         }
         
-        interactor?.saveEvent(editedEvent)
+        self.event = editedEvent
+        
+        interactor?.saveNewEvent(editedEvent)
+    }
+    
+    func newEventSaved() {
+        router?.dismiss(event: event)
     }
     
     private func rescheduleReminder(_ reminder: UNNotificationRequest, for event: Event) {

@@ -14,6 +14,7 @@ protocol EventCreationInteractorInputting: AnyObject {
     func findReminder(for event: Event)
     func saveReminder(_ reminder: Reminder)
     func saveEvent(_ event: Event)
+    func saveNewEvent(_ event: Event)
     func deleteEvent(_ event: Event)
 }
 
@@ -49,6 +50,15 @@ extension EventCreationInteractor: EventCreationInteractorInputting {
     func saveEvent(_ event: Event) {
         do {
             try CoreDataManager.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func saveNewEvent(_ event: Event) {
+        do {
+            try CoreDataManager.save()
+            presenter?.newEventSaved()
         } catch {
             print(error.localizedDescription)
         }
