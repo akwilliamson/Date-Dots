@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ReminderViewDelegate {
+protocol ReminderViewDelegate: AnyObject {
     
     func didSelectDayPrior(_ dayPrior: Int)
     func didChangeTimeOfDay(date: Date)
@@ -166,7 +166,7 @@ class ReminderView: BaseView {
     
     // MARK: Public Properties
     
-    var delegate: ReminderViewDelegate?
+    weak var delegate: ReminderViewDelegate?
     
     // MARK: Private Properties
     
