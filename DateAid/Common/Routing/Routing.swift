@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: Routing
 
-protocol Routing {
+protocol Routing: AnyObject {
     /// The ability to present a module.
     func present()
     /// The ability to dismiss a module.

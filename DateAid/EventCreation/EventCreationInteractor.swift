@@ -77,17 +77,6 @@ extension EventCreationInteractor: EventCreationInteractorInputting {
     func saveReminder(_ reminder: Reminder) {
         notificationManager.removeNotification(with: reminder.id)
         
-        notificationManager.scheduleNotification(reminder: reminder) { [weak self] result in
-            guard let strongSelf = self else { return }
-            
-            switch result {
-            case .success:
-                print("foo")
-//                strongSelf.presenter?.reminderSaveSucceeded(reminder: reminder)
-            case .failure:
-                print("bar")
-//                strongSelf.presenter?.reminderSaveFailed(error: error)
-            }
-        }
+        notificationManager.scheduleNotification(reminder: reminder) { _ in }
     }
 }

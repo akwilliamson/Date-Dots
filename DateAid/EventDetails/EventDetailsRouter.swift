@@ -12,7 +12,7 @@ class EventDetailsRouter {
     
     // MARK: Routers
     
-    var parent: Routing?
+    weak var parent: Routing?
     var child: Routing?
     
     // MARK: Presenter

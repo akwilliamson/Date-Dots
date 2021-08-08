@@ -12,11 +12,11 @@ class EventCreationRouter {
     
     // MARK: Routing
     
-    var parent: Routing?
+    weak var parent: Routing?
     
     // MARK: Presenter
     
-    private var presenter: EventCreationPresenter
+    private let presenter: EventCreationPresenter
     
     // MARK: Initialization
     

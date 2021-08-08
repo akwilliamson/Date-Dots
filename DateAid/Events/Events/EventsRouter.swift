@@ -12,12 +12,12 @@ class EventsRouter {
     
     // MARK: Routing
     
-    var parent: Routing?
+    weak var parent: Routing?
     var child: Routing?
     
     // MARK: Presenter
     
-    private var presenter: EventsPresenter
+    private let presenter: EventsPresenter
     
     // MARK: Initialization
     
@@ -68,7 +68,7 @@ extension EventsRouter: Routing {
     }
     
     func dismiss<T>(route: Route, data: T?) {
-        DispatchQueue.main.async {
+        Dispatch.main {
             RouteManager.shared.navigationController?.popViewController(animated: true)
         }
         

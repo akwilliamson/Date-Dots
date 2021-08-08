@@ -12,12 +12,12 @@ class NoteDetailsRouter {
     
     // MARK: Wireframes
     
-    var parent: Routing?
+    weak var parent: Routing?
     var child: Routing?
     
     // MARK: Presenter
     
-    private var presenter: NoteDetailsPresenter
+    private let presenter: NoteDetailsPresenter
     
     // MARK: Initialization
     

@@ -12,11 +12,11 @@ class ReminderRouter {
     
     // MARK: Wireframes
     
-    var parent: Routing?
+    weak var parent: Routing?
     
     // MARK: Presenter
     
-    private var presenter: ReminderPresenter
+    private let presenter: ReminderPresenter
     
     // MARK: Initialization
     
