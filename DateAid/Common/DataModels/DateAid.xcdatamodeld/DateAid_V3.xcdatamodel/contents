@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Address" representedClassName="DateAid.Address" syncable="YES">
+        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="address" inverseEntity="Event" elementID="date" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="DateAid.Event" elementID="Date" syncable="YES">
+        <attribute name="abbreviatedName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="equalizedDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="familyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="givenName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasReminder" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="event" inverseEntity="Address" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="event" inverseEntity="Note" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="DateAid.Note" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" elementID="title" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="notes" inverseEntity="Event" elementID="date" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Address" positionX="-27" positionY="54" width="128" height="74"/>
+        <element name="Event" positionX="-279" positionY="-15" width="128" height="179"/>
+        <element name="Note" positionX="-101" positionY="207" width="128" height="89"/>
+    </elements>
+</model>

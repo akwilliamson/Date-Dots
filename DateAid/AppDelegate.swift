@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 5/7/15.
 //  Copyright (c) 2015 Aaron Williamson. All rights reserved.
@@ -10,52 +10,48 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
     
     var window: UIWindow?
-    var appWireframe: AppDelegateWireframe?
     
-    lazy var coreDataStack = CoreDataStack()
+    var child: Routing?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        appWireframe = AppDelegateWireframe(appDelegateOutputting: self)
-        
-        appWireframe?.presenter.setupApp()
+        CoreDataManager.shared.loadPersistentStores { storeDescription, error in
+            if let error = error {
+                // TODO: Show an error screen
+                print(error.localizedDescription)
+            } else {
+                self.showInitialView()
+            }
+        }
 
-        showInitialView()
-        
         return true
     }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        // Persist data to disk when app enters background
+        do { try CoreDataManager.save() } catch {}
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        // Persist data to disk when app terminates
+        do { try CoreDataManager.save() } catch {}
+    }
+    
+    // MARK: Private Methods
     
     private func showInitialView() {
-        let key = Constant.UserDefaults.hasLaunchedOnce.value
-        let userHasLaunchedAppOnce = UserDefaults.standard.value(forKey: key)
+        let hasLaunchedOnce = UserDefaults.standard.bool(forKey: "hasLaunchedOnce")
         
-        if userHasLaunchedAppOnce == nil {
-            UserDefaults.standard.setValue(true, forKey: key)
-            appWireframe?.presenter.showInitialImport(in: window)
+        if hasLaunchedOnce {
+            child = RouteManager.shared.router(for: .eventsNavigation, parent: self)
+            child?.present()
         } else {
-            appWireframe?.presenter.showDatesTabBar(in: window)
+            // TODO: On first launch, navigation to initial import screen
+            UserDefaults.standard.set(true, forKey: "hasLaunchedOnce")
+            // presentChild(route: .import)
         }
     }
-
-    // Persist data to disk when app enters background
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave { _ in }
-    }
-
-    // Persist data to disk when app terminates
-    func applicationWillTerminate(_ application: UIApplication) {
-        coreDataStack.managedObjectContext.trySave { _ in }
-    }
 }
-
-extension AppDelegate: AppDelegateOutputting {
-    
-    func initializeFlurry() {
-        Flurry.startSession(Constant.Flurry.APIKey.value)
-    }
-}
-
-

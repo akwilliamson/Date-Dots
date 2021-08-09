@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Initial Import View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController storyboardIdentifier="InitialImport" id="vXZ-lx-hvc" customClass="InitialImportViewController" customModule="DateAid" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-U9-Mg1">
+                                <rect key="frame" x="102.5" y="65" width="170" height="170"/>
+                                <color key="backgroundColor" red="0.070588235294117646" green="0.59215686274509804" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="9NO-TM-pSo"/>
+                                    <constraint firstAttribute="height" constant="170" id="Hjq-ci-qBy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
+                                <state key="normal" title="Import Contacts">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="syncContacts:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TbS-Yj-o5H"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I52-SK-dt9">
+                                <rect key="frame" x="127.5" y="268.5" width="120" height="120"/>
+                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="nBz-jj-chl"/>
+                                    <constraint firstAttribute="height" constant="120" id="tRd-6E-Vci"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
+                                <state key="normal" title="Skip">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipImportPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gBd-2Q-GM7"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-ps-xUI">
+                                <rect key="frame" x="172.5" y="235" width="30" height="33.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Ss0-6t-lyN"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ss0-6t-lyN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Ss0-6t-lyN"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ssd-U9-Mg1" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Fb0-Am-4Vp"/>
+                            <constraint firstItem="Ssd-U9-Mg1" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="65" id="Fu8-9K-BO5"/>
+                            <constraint firstItem="2i3-ps-xUI" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="NuX-AD-GWu"/>
+                            <constraint firstItem="I52-SK-dt9" firstAttribute="top" secondItem="Ssd-U9-Mg1" secondAttribute="bottom" constant="50" id="UXT-Pj-HpY"/>
+                            <constraint firstItem="2i3-ps-xUI" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.05" id="aVY-ru-y1Q"/>
+                            <constraint firstItem="2i3-ps-xUI" firstAttribute="top" secondItem="Ssd-U9-Mg1" secondAttribute="bottom" id="iNI-hw-vdP"/>
+                            <constraint firstItem="I52-SK-dt9" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="knG-Fg-whu"/>
+                            <constraint firstItem="I52-SK-dt9" firstAttribute="top" secondItem="2i3-ps-xUI" secondAttribute="bottom" constant="-1" id="nnX-d4-jVu">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="2i3-ps-xUI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="NuX-AD-GWu"/>
+                                <exclude reference="aVY-ru-y1Q"/>
+                                <exclude reference="iNI-hw-vdP"/>
+                                <exclude reference="nnX-d4-jVu"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="2i3-ps-xUI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="NuX-AD-GWu"/>
+                                <include reference="aVY-ru-y1Q"/>
+                                <include reference="iNI-hw-vdP"/>
+                                <exclude reference="UXT-Pj-HpY"/>
+                                <include reference="nnX-d4-jVu"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-460" y="9"/>
+        </scene>
+    </scenes>
+</document>

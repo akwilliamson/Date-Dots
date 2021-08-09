@@ -1,6 +1,6 @@
 //
 //  CNContact+Name.swift
-//  DateAid
+//  Date Dots
 //
 //  Created by Aaron Williamson on 10/2/16.
 //  Copyright © 2016 Aaron Williamson. All rights reserved.
@@ -9,38 +9,48 @@
 import Foundation
 import Contacts
 
-extension CNContact {
-
-    var fullName: String {
-        return givenName + " " + familyName
-    }
+extension CNContact: EventNaming {
     
-    var abbreviatedName: String {
-        guard let character = familyName.characters.first else { return givenName }
-        return givenName + " " + String(character)
+    private enum Constant {
+        enum String {
+            static let home = "Home"
+            static let anniversary = "Anniversary"
+        }
     }
     
     var postalAddress: CNPostalAddress? {
-        return postalAddresses.filter({ address -> Bool in
-            guard let label = address.label else { return false }
-            return label.contains("Home")
-        }).first?.value
+        let possibleHomeAddress = postalAddresses.filter { address in
+            guard let label = address.label else {
+                return false
+            }
+            
+            return label.contains(Constant.String.home)
+        }
+        
+        return possibleHomeAddress.first?.value
     }
     
-    var birthdate: Foundation.Date? {
-        var comps = birthday
+    var birthdate: Date? {
+        var birthdayDateComponents = birthday
+        birthdayDateComponents?.timeZone = .current
         
-        comps?.timeZone = TimeZone.current
-        return comps?.date ?? nil
+        return birthdayDateComponents?.date
     }
     
-    var anniversary: Foundation.Date? {
-        var comps = dates.filter { date -> Bool in
-            guard let label = date.label else { return false }
-            return label.contains("Anniversary")
-        }.first?.value as? DateComponents
+    var anniversary: Date? {
+        let possibleAnniversary = dates.filter { date in
+            guard let label = date.label else {
+                return false
+            }
+
+            return label.contains(Constant.String.anniversary)
+        }
         
-        comps?.timeZone = TimeZone.current
-        return comps?.date
+        guard let anniversaryComponents = possibleAnniversary.first?.value else { return nil }
+        
+        var anniversary = anniversaryComponents as DateComponents
+        anniversary.timeZone = .current
+        
+        return anniversary.date
     }
 }
