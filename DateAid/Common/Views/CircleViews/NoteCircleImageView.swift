@@ -45,7 +45,7 @@ class NoteCircleImageView: CircleImageView {
         switch traitCollection.userInterfaceStyle {
         case .light, .unspecified:
             layer.shadowRadius = 3.0
-            layer.shadowOpacity = 0.8
+            layer.shadowOpacity = 0.5
             layer.shadowOffset = CGSize(width: 2, height: 2)
         case .dark:
             layer.shadowRadius = 10.0

@@ -266,7 +266,6 @@ extension ReminderPresenter: ReminderEventHandling {
                 }
             }
         }
-        print(fireDateComponents)
     }
     
     private func setDateComponentDays(from date: Date) {
