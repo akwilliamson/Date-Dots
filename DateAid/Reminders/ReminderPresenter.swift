@@ -73,7 +73,9 @@ class ReminderPresenter {
     }
     
     private var scheduleText: String {
-        let day = event.date.day! - fireDateComponents.day!
+        let fireDate = Calendar.current.date(from: fireDateComponents)
+        
+        let day = CalendarManager().daysBetween(triggerDate: fireDate!, eventDate: event.date)
         
         let time = fireDateComponents.date!.formatted("h:mm a")
         
@@ -103,11 +105,31 @@ class ReminderPresenter {
                 hour: triggerDate.hour,
                 minute: triggerDate.minute
             )
+            
         } else {
+            var triggerYear: Int?
+            
+            if
+                let eventMonth = event.date.month,
+                let eventDay = event.date.day,
+                let thisMonth = Date().month,
+                let today = Date().day
+            {
+                if eventMonth < thisMonth {
+                    triggerYear = Date().year! + 1
+                } else if eventMonth == thisMonth && eventDay < today {
+                    triggerYear = Date().year! + 1
+                } else {
+                    triggerYear = Date().year
+                }
+            } else {
+                triggerYear = Date().year
+            }
+            
             self.fireDateComponents = DateComponents(
                 calendar: .current,
                 timeZone: .current,
-                year: Date().year,
+                year: triggerYear,
                 month: event.date.month,
                 day: event.date.day,
                 hour: Date().hour,
@@ -214,7 +236,37 @@ extension ReminderPresenter: ReminderEventHandling {
     
     private func setDateComponentDays(dayPrior: Int) {
         guard let eventDay = event.date.day else { return }
-        fireDateComponents.day = eventDay - dayPrior
+        if eventDay > 7 {
+            fireDateComponents.day = eventDay - dayPrior
+        } else {
+            let notificationDay = eventDay - dayPrior
+            
+            if notificationDay > 0 {
+                fireDateComponents.day = notificationDay
+                fireDateComponents.month = event.date.month
+            } else {
+                if fireDateComponents.month != event.date.month! - 1 {
+                    fireDateComponents.month = event.date.month! - 1
+                }
+                let daysToSubtractFromPreviousMonth = abs(notificationDay)
+                
+                switch fireDateComponents.month {
+                case 1, 3, 5, 7, 8, 10, 12:
+                    fireDateComponents.day = 31 - daysToSubtractFromPreviousMonth
+                case 2:
+                    if Date().year! % 4 == 0 {
+                        fireDateComponents.day = 29 - daysToSubtractFromPreviousMonth
+                    } else {
+                        fireDateComponents.day = 28 - daysToSubtractFromPreviousMonth
+                    }
+                case 4, 6, 9, 11:
+                    fireDateComponents.day = 30 - daysToSubtractFromPreviousMonth
+                default:
+                    fireDateComponents.day = notificationDay
+                }
+            }
+        }
+        print(fireDateComponents)
     }
     
     private func setDateComponentDays(from date: Date) {

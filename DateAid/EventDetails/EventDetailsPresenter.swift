@@ -172,14 +172,15 @@ extension EventDetailsPresenter: EventDetailsInteractorOutputting {
         let dateComponents = DateComponents(
             calendar: .current,
             timeZone: .current,
-            year: Date().year,
-            month: event.date.month,
+            year: date.year,
+            month: date.month,
             day: date.day,
             hour: date.hour,
             minute: date.minute
         )
         
-        let day = event.date.day! - date.day!
+        let day = CalendarManager().daysBetween(triggerDate: date, eventDate: event.date)
+        
         let time = dateComponents.date!.formatted("h:mm a")
         
         switch day {

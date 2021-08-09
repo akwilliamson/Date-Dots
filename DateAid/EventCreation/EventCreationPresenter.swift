@@ -218,16 +218,16 @@ extension EventCreationPresenter: EventCreationEventHandling {
             }
             event.familyName = eventFamilyName
             
-            if !eventStreet.isEmpty || !eventRegion.isEmpty {
-                if let address = event.address {
-                    address.street = eventStreet
-                    address.region = eventRegion
-                } else {
-                    let address = Address(context: CoreDataManager.shared.viewContext)
-                    address.street = eventStreet
-                    address.region = eventRegion
-                    event.address = address
-                }
+            if let address = event.address {
+                address.street = eventStreet.isEmpty ? nil : eventStreet
+                address.region = eventRegion.isEmpty ? nil : eventRegion
+            } else if !eventStreet.isEmpty || !eventRegion.isEmpty {
+                let address = Address(context: CoreDataManager.shared.viewContext)
+                address.street = eventStreet
+                address.region = eventRegion
+                event.address = address
+            } else {
+                event.address = nil
             }
             interactor?.saveEvent(event)
         }
@@ -253,7 +253,7 @@ extension EventCreationPresenter: EventCreationEventHandling {
             newEvent.address = address
         }
         
-        interactor?.saveEvent(newEvent)
+        interactor?.saveNewEvent(newEvent)
     }
 }
 
@@ -300,7 +300,7 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
         
         self.event = editedEvent
         
-        interactor?.saveNewEvent(editedEvent)
+        interactor?.saveEvent(editedEvent)
     }
     
     func newEventSaved() {

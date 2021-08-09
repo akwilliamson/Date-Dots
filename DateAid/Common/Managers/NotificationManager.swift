@@ -45,6 +45,7 @@ class NotificationManager {
     /// Retrieves an on-device scheduled notification for a given ID.
     func retrieveNotification(for id: String, completion: @escaping (RetrieveNotificationResult) -> ()) {
         retrieveNotifications { notifications in
+
             if let match = notifications.first(where: { $0.identifier == id }) {
                 completion(.success(match))
             } else {
@@ -109,13 +110,11 @@ class NotificationManager {
     
     /// Adds a new on-device scheduled notification to the user notification center.
     private func addNotification(reminder: Reminder, completion: @escaping (ScheduleNotificationResult) -> ()) {
-        // Delete any pre-existing local notification if it exists
-        removeNotification(with: reminder.id)
         
         let content = UNMutableNotificationContent()
         content.title = reminder.title
         content.body = reminder.body
-
+        
         let notificationRequest = UNNotificationRequest(
             identifier: reminder.id,
             content: content,
@@ -124,12 +123,14 @@ class NotificationManager {
                 repeats: false
             )
         )
-        
-        UNUserNotificationCenter.current().add(notificationRequest) { error in
-            if error == nil {
-                completion(.success(notificationRequest))
-            } else {
-                completion(.failure(NotificationError.schedulingFailed))
+
+        self.retrieveNotifications { fooNotifications in
+            UNUserNotificationCenter.current().add(notificationRequest) { error in
+                if error == nil {
+                    completion(.success(notificationRequest))
+                } else {
+                    completion(.failure(NotificationError.schedulingFailed))
+                }
             }
         }
     }
