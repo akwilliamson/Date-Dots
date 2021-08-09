@@ -32,6 +32,7 @@ class EventsView: BaseView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.spacing = 12
+        stackView.isHidden = true
         return stackView
     }()
     
@@ -80,6 +81,7 @@ class EventsView: BaseView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.spacing = 12
+        stackView.isHidden = true
         return stackView
     }()
     
@@ -209,6 +211,14 @@ class EventsView: BaseView {
         case .birthday:       birthdayDot.setSelectedState(isSelected: isSelected)
         case .anniversary: anniversaryDot.setSelectedState(isSelected: isSelected)
         case .custom:           customDot.setSelectedState(isSelected: isSelected)
+        }
+        if eventDotStackView.isHidden {
+            eventDotStackView.alpha = 0
+            eventDotStackView.isHidden = false
+            
+            UIView.animate(withDuration: 0.2) {
+                self.eventDotStackView.alpha = 1
+            }
         }
     }
     

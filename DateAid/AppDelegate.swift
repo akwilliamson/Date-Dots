@@ -19,12 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         CoreDataManager.shared.loadPersistentStores { storeDescription, error in
-            if let error = error {
-                // TODO: Show an error screen
-                print(error.localizedDescription)
-            } else {
-                self.showInitialView()
-            }
+            self.child = RouteManager.shared.router(for: .eventsNavigation, parent: self)
+            self.child?.present()
         }
 
         return true
@@ -38,20 +34,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
     func applicationWillTerminate(_ application: UIApplication) {
         // Persist data to disk when app terminates
         do { try CoreDataManager.save() } catch {}
-    }
-    
-    // MARK: Private Methods
-    
-    private func showInitialView() {
-        let hasLaunchedOnce = UserDefaults.standard.bool(forKey: "hasLaunchedOnce")
-        
-        if hasLaunchedOnce {
-            child = RouteManager.shared.router(for: .eventsNavigation, parent: self)
-            child?.present()
-        } else {
-            // TODO: On first launch, navigation to initial import screen
-            UserDefaults.standard.set(true, forKey: "hasLaunchedOnce")
-            // presentChild(route: .import)
-        }
     }
 }

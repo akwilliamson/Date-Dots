@@ -204,6 +204,7 @@ class EventDetailsView: BaseView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.textColor = .white
         switch UIDevice.type {
         case .iPhone4, .iPhone5, .iPhoneSE, .iPhoneSE2:
             label.font = FontType.avenirNextMedium(26).font

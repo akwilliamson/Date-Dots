@@ -311,7 +311,6 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
         guard
             let trigger = reminder.trigger as? UNCalendarNotificationTrigger
         else {
-            print("qwerty no reminder found")
             return
         }
         
