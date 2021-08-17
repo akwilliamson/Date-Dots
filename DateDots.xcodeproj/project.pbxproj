@@ -73,7 +73,6 @@
 		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* Date+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* Date+Utilities.swift */; };
-		97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */; };
 		97B099BC1BF55C5600ADE476 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BB1BF55C5600ADE476 /* Security.framework */; };
 		97B099BE1BF55C5C00ADE476 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */; };
 		97B40DAB1DA17900000DA0E0 /* ContactConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B40DAA1DA17900000DA0E0 /* ContactConverter.swift */; };
@@ -183,7 +182,6 @@
 		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+IsEmptyOrNil.swift"; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* Date+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utilities.swift"; sourceTree = "<group>"; };
-		97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Holidays.plist; sourceTree = "<group>"; };
 		97B099BB1BF55C5600ADE476 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		97B099BD1BF55C5C00ADE476 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		97B40DAA1DA17900000DA0E0 /* ContactConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactConverter.swift; sourceTree = "<group>"; };
@@ -396,7 +394,6 @@
 		97C901E6245A8855005AF301 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				97AEAC0F1B2EA74A00ADF181 /* Holidays.plist */,
 				97364CF11AFBF44A0095BC57 /* LaunchScreen.xib */,
 				97364CEF1AFBF44A0095BC57 /* Images.xcassets */,
 			);
@@ -631,7 +628,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97AEAC101B2EA74A00ADF181 /* Holidays.plist in Resources */,
 				97364CEE1AFBF44A0095BC57 /* Main.storyboard in Resources */,
 				97364CF31AFBF44A0095BC57 /* LaunchScreen.xib in Resources */,
 				97364CF01AFBF44A0095BC57 /* Images.xcassets in Resources */,
