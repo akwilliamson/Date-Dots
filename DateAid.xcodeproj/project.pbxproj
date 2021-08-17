@@ -56,7 +56,6 @@
 		9781F9881E3E8A4500E2C434 /* EventsNavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781F9871E3E8A4500E2C434 /* EventsNavigationRouter.swift */; };
 		978E710525D25E060052AD24 /* UIDevice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978E710425D25E060052AD24 /* UIDevice+Type.swift */; };
 		97901FAC2467C82C00912CB0 /* Populatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97901FAB2467C82C00912CB0 /* Populatable.swift */; };
-		9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */; };
 		9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9791F78A1BD4CCDF001E82BB /* Address.swift */; };
 		97943B591B0EDEB3004FC095 /* DateAid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */; };
 		9794A92B262E533700C2385C /* EventDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794A92A262E533700C2385C /* EventDetailsInteractor.swift */; };
@@ -71,7 +70,6 @@
 		979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */; };
 		979F3DC9262AAB38000FD1EB /* EventAging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F3DC8262AAB38000FD1EB /* EventAging.swift */; };
 		97A00A91248C84D900AB7F85 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A00A90248C84D900AB7F85 /* NotificationManager.swift */; };
-		97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */; };
 		97AD26A91BD81C59004C1C7D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AD26A71BD81C59004C1C7D /* Note.swift */; };
 		97AEAC0C1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */; };
 		97AEAC0E1B2EA58000ADF181 /* Date+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AEAC0D1B2EA58000ADF181 /* Date+Utilities.swift */; };
@@ -169,11 +167,7 @@
 		9781F9871E3E8A4500E2C434 /* EventsNavigationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsNavigationRouter.swift; sourceTree = "<group>"; };
 		978E710425D25E060052AD24 /* UIDevice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Type.swift"; sourceTree = "<group>"; };
 		97901FAB2467C82C00912CB0 /* Populatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Populatable.swift; sourceTree = "<group>"; };
-		9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V2.xcdatamodel; sourceTree = "<group>"; };
-		9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V1_V2.xcmappingmodel; sourceTree = "<group>"; };
 		9791F78A1BD4CCDF001E82BB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid_V3.xcdatamodel; sourceTree = "<group>"; };
-		97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateAid.xcdatamodel; sourceTree = "<group>"; };
 		9794A92A262E533700C2385C /* EventDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsInteractor.swift; sourceTree = "<group>"; };
 		9796AEC725EFF660003933C5 /* NoteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsViewController.swift; sourceTree = "<group>"; };
 		9796AECB25EFF69C003933C5 /* NoteDetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsRouter.swift; sourceTree = "<group>"; };
@@ -186,7 +180,6 @@
 		979C36AA1E0E14C20098345E /* InitialImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportWireframe.swift; sourceTree = "<group>"; };
 		979F3DC8262AAB38000FD1EB /* EventAging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAging.swift; sourceTree = "<group>"; };
 		97A00A90248C84D900AB7F85 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DateAidMappingModel_V2_V3.xcmappingmodel; sourceTree = "<group>"; };
 		97AD26A71BD81C59004C1C7D /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		97AEAC0B1B2DFD6900ADF181 /* Optional+IsEmptyOrNil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+IsEmptyOrNil.swift"; sourceTree = "<group>"; };
 		97AEAC0D1B2EA58000ADF181 /* Date+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utilities.swift"; sourceTree = "<group>"; };
@@ -363,8 +356,6 @@
 		9749E6D124837D3900DAAB49 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				9791F7851BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel */,
-				97AD26A41BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel */,
 				97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */,
 			);
 			path = DataModels;
@@ -699,7 +690,6 @@
 				97AD26A91BD81C59004C1C7D /* Note.swift in Sources */,
 				979C36AB1E0E14C20098345E /* InitialImportWireframe.swift in Sources */,
 				97E5F36C263DC5AB00395D87 /* Routing.swift in Sources */,
-				97AD26A51BD81A14004C1C7D /* DateAidMappingModel_V2_V3.xcmappingmodel in Sources */,
 				97069CD42627BC4200102F89 /* EventDetailsPresenter.swift in Sources */,
 				971E488926BDFF5800DE5691 /* DispatchQueue+Helpers.swift in Sources */,
 				975713AD24553A9900EDD963 /* CircleLabel.swift in Sources */,
@@ -745,7 +735,6 @@
 				9796AEC825EFF660003933C5 /* NoteDetailsViewController.swift in Sources */,
 				97BDFCFA265E13A00061E0CB /* EventCreationInteractor.swift in Sources */,
 				976ED7791DA0D5E300AC5D29 /* ContactManager.swift in Sources */,
-				9791F7861BD4CA57001E82BB /* DateAidMappingModel_V1_V2.xcmappingmodel in Sources */,
 				9749E6CF24837C1200DAAB49 /* CoreDataManager.swift in Sources */,
 				976473AC24330CE000D2F11D /* EventCircleImageView.swift in Sources */,
 				97BDFCF0265E124E0061E0CB /* EventCreationRouter.swift in Sources */,
@@ -1031,10 +1020,7 @@
 		97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */,
-				979350F91BD58704008F24F2 /* DateAid_V3.xcdatamodel */,
-				9791F7821BD4C757001E82BB /* DateAid_V2.xcdatamodel */,
-				97943B581B0EDEB3004FC095 /* DateAid.xcdatamodel */,
+				97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */
 			);
 			currentVersion = 97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */;
 			path = DateAid.xcdatamodeld;
