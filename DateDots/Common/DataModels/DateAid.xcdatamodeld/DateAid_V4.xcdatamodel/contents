@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="Address" representedClassName="DateAid.Address" syncable="YES">
+    <entity name="Address" representedClassName="DateDots.Address" syncable="YES">
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="address" inverseEntity="Event" elementID="date" syncable="YES"/>
     </entity>
-    <entity name="Event" representedClassName="DateAid.Event" elementID="Date" syncable="YES">
+    <entity name="Event" representedClassName="DateDots.Event" elementID="Date" syncable="YES">
         <attribute name="abbreviatedName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="equalizedDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,7 +17,7 @@
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="event" inverseEntity="Address" syncable="YES"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="event" inverseEntity="Note" syncable="YES"/>
     </entity>
-    <entity name="Note" representedClassName="DateAid.Note" syncable="YES">
+    <entity name="Note" representedClassName="DateDots.Note" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" elementID="title" syncable="YES"/>

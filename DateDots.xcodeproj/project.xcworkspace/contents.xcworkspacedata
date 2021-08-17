@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:DateAid.xcodeproj">
+      location = "self:/Users/AaronWilliamson/Desktop/dev/date_dots/DateDots.xcodeproj">
    </FileRef>
 </Workspace>

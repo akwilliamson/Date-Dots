@@ -132,15 +132,15 @@
 		971E488A26BE125C00DE5691 /* InitialImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportView.swift; sourceTree = "<group>"; };
 		9727AA4626AF88C600E21313 /* EventDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetails.swift; sourceTree = "<group>"; };
 		972BFE7926159F87003B7429 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
-		972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateAid-Bridging-Header.h"; sourceTree = "<group>"; };
-		97364CE01AFBF44A0095BC57 /* DateAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		972E323A245A8BC300E9DAAA /* DateDots-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DateDots-Bridging-Header.h"; sourceTree = "<group>"; };
+		97364CE01AFBF44A0095BC57 /* DateDots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateDots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97364CE41AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CE51AFBF44A0095BC57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97364CEA1AFBF44A0095BC57 /* InitialImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialImportViewController.swift; sourceTree = "<group>"; };
 		97364CED1AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97364CEF1AFBF44A0095BC57 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		97364CF21AFBF44A0095BC57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		97364CF81AFBF44A0095BC57 /* DateAidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateAidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97364CF81AFBF44A0095BC57 /* DateDotsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DateDotsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97364CFD1AFBF44A0095BC57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAidTests.swift; sourceTree = "<group>"; };
 		9749E6CE24837C1200DAAB49 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 		972E323C245A8D9500E9DAAA /* Root Files */ = {
 			isa = PBXGroup;
 			children = (
-				972E323A245A8BC300E9DAAA /* DateAid-Bridging-Header.h */,
+				972E323A245A8BC300E9DAAA /* DateDots-Bridging-Header.h */,
 				97364CE41AFBF44A0095BC57 /* Info.plist */,
 			);
 			name = "Root Files";
@@ -301,8 +301,8 @@
 		97364CD71AFBF44A0095BC57 = {
 			isa = PBXGroup;
 			children = (
-				97364CE21AFBF44A0095BC57 /* DateAid */,
-				97364CFB1AFBF44A0095BC57 /* DateAidTests */,
+				97364CE21AFBF44A0095BC57 /* DateDots */,
+				97364CFB1AFBF44A0095BC57 /* DateDotsTests */,
 				97364CE11AFBF44A0095BC57 /* Products */,
 				FB0A3B81F2621109FE6C5764 /* Frameworks */,
 			);
@@ -311,13 +311,13 @@
 		97364CE11AFBF44A0095BC57 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				97364CE01AFBF44A0095BC57 /* DateAid.app */,
-				97364CF81AFBF44A0095BC57 /* DateAidTests.xctest */,
+				97364CE01AFBF44A0095BC57 /* DateDots.app */,
+				97364CF81AFBF44A0095BC57 /* DateDotsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		97364CE21AFBF44A0095BC57 /* DateAid */ = {
+		97364CE21AFBF44A0095BC57 /* DateDots */ = {
 			isa = PBXGroup;
 			children = (
 				972E323C245A8D9500E9DAAA /* Root Files */,
@@ -333,16 +333,16 @@
 				97007BAA267FE2C5007BA2F1 /* Reminders */,
 				9796AEC625EFF636003933C5 /* NoteDetails */,
 			);
-			path = DateAid;
+			path = DateDots;
 			sourceTree = "<group>";
 		};
-		97364CFB1AFBF44A0095BC57 /* DateAidTests */ = {
+		97364CFB1AFBF44A0095BC57 /* DateDotsTests */ = {
 			isa = PBXGroup;
 			children = (
 				97364CFE1AFBF44A0095BC57 /* DateAidTests.swift */,
 				97364CFC1AFBF44A0095BC57 /* Supporting Files */,
 			);
-			path = DateAidTests;
+			path = DateDotsTests;
 			sourceTree = "<group>";
 		};
 		97364CFC1AFBF44A0095BC57 /* Supporting Files */ = {
@@ -549,9 +549,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		97364CDF1AFBF44A0095BC57 /* DateAid */ = {
+		97364CDF1AFBF44A0095BC57 /* DateDots */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 97364D021AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateAid" */;
+			buildConfigurationList = 97364D021AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateDots" */;
 			buildPhases = (
 				97364CDC1AFBF44A0095BC57 /* Sources */,
 				97364CDD1AFBF44A0095BC57 /* Frameworks */,
@@ -561,14 +561,14 @@
 			);
 			dependencies = (
 			);
-			name = DateAid;
+			name = DateDots;
 			productName = DateAid;
-			productReference = 97364CE01AFBF44A0095BC57 /* DateAid.app */;
+			productReference = 97364CE01AFBF44A0095BC57 /* DateDots.app */;
 			productType = "com.apple.product-type.application";
 		};
-		97364CF71AFBF44A0095BC57 /* DateAidTests */ = {
+		97364CF71AFBF44A0095BC57 /* DateDotsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 97364D051AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateAidTests" */;
+			buildConfigurationList = 97364D051AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateDotsTests" */;
 			buildPhases = (
 				97364CF41AFBF44A0095BC57 /* Sources */,
 				97364CF51AFBF44A0095BC57 /* Frameworks */,
@@ -579,9 +579,9 @@
 			dependencies = (
 				97364CFA1AFBF44A0095BC57 /* PBXTargetDependency */,
 			);
-			name = DateAidTests;
+			name = DateDotsTests;
 			productName = DateAidTests;
-			productReference = 97364CF81AFBF44A0095BC57 /* DateAidTests.xctest */;
+			productReference = 97364CF81AFBF44A0095BC57 /* DateDotsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -607,7 +607,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 97364CDB1AFBF44A0095BC57 /* Build configuration list for PBXProject "DateAid" */;
+			buildConfigurationList = 97364CDB1AFBF44A0095BC57 /* Build configuration list for PBXProject "DateDots" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -620,8 +620,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				97364CDF1AFBF44A0095BC57 /* DateAid */,
-				97364CF71AFBF44A0095BC57 /* DateAidTests */,
+				97364CDF1AFBF44A0095BC57 /* DateDots */,
+				97364CF71AFBF44A0095BC57 /* DateDotsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -754,7 +754,7 @@
 /* Begin PBXTargetDependency section */
 		97364CFA1AFBF44A0095BC57 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 97364CDF1AFBF44A0095BC57 /* DateAid */;
+			target = 97364CDF1AFBF44A0095BC57 /* DateDots */;
 			targetProxy = 97364CF91AFBF44A0095BC57 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -900,7 +900,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DateAid/Info.plist;
+				INFOPLIST_FILE = DateDots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.0.0;
@@ -910,7 +910,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.datedots.Datedots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DateDots/DateDots-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -927,7 +927,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DateAid/Info.plist;
+				INFOPLIST_FILE = DateDots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.0.0;
@@ -937,7 +937,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.datedots.Datedots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "DateAid/DateAid-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DateDots/DateDots-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -956,13 +956,13 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = DateAidTests/Info.plist;
+				INFOPLIST_FILE = DateDotsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateAid.app/DateAid";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateDots.app/DateDots";
 			};
 			name = Debug;
 		};
@@ -974,20 +974,20 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = DateAidTests/Info.plist;
+				INFOPLIST_FILE = DateDotsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateAid.app/DateAid";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DateDots.app/DateDots";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		97364CDB1AFBF44A0095BC57 /* Build configuration list for PBXProject "DateAid" */ = {
+		97364CDB1AFBF44A0095BC57 /* Build configuration list for PBXProject "DateDots" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97364D001AFBF44A0095BC57 /* Debug */,
@@ -996,7 +996,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		97364D021AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateAid" */ = {
+		97364D021AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateDots" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97364D031AFBF44A0095BC57 /* Debug */,
@@ -1005,7 +1005,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		97364D051AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateAidTests" */ = {
+		97364D051AFBF44A0095BC57 /* Build configuration list for PBXNativeTarget "DateDotsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97364D061AFBF44A0095BC57 /* Debug */,
@@ -1020,7 +1020,7 @@
 		97943B571B0EDEB3004FC095 /* DateAid.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */
+				97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */,
 			);
 			currentVersion = 97D97C2A26AFDC0E0000F2B9 /* DateAid_V4.xcdatamodel */;
 			path = DateAid.xcdatamodeld;
