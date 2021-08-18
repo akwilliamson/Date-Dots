@@ -199,13 +199,20 @@ extension EventsViewController: EventsViewOutputting {
     }
     
     func presentMailComposer(recipient: String, subject: String, body: String) {
-        let mailComposer = MFMailComposeViewController()
-        mailComposer.mailComposeDelegate = self
-        mailComposer.setToRecipients([recipient])
-        mailComposer.setSubject(subject)
-        mailComposer.setMessageBody(body, isHTML: false)
         
-        present(mailComposer, animated: true, completion: nil)
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients([recipient])
+            mailComposer.setSubject(subject)
+            mailComposer.setMessageBody(body, isHTML: false)
+            
+            present(mailComposer, animated: true, completion: nil)
+        } else {
+            let emailString = "mailto:\(recipient)?subject=\(subject)&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            let emailURL = URL(string: emailString)!
+            UIApplication.shared.open(emailURL, options: [:], completionHandler: nil)
+        }
     }
 }
 
