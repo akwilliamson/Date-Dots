@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Flurry_iOS_SDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
             self.child = RouteManager.shared.router(for: .eventsNavigation, parent: self)
             self.child?.present()
         }
+        
+        startFlurryAnalytics()
 
         return true
     }
@@ -34,5 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
     func applicationWillTerminate(_ application: UIApplication) {
         // Persist data to disk when app terminates
         do { try CoreDataManager.save() } catch {}
+    }
+    
+    private func startFlurryAnalytics() {
+        
+        Flurry.startSession(
+            "ZRGQSS9NYG66WPJY5J6P",
+            with: FlurrySessionBuilder.init()
+                .withCrashReporting(true)
+                .withAppVersion("2.1.0")
+                .withLogLevel(FlurryLogLevelAll)
+        )
     }
 }

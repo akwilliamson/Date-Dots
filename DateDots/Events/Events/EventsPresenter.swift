@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 protocol EventsEventHandling: AnyObject {
     
@@ -121,6 +122,9 @@ class EventsPresenter {
         let newPreference = !oldPreference
         userDefaults.set(newPreference, forKey: eventType.key)
         
+        let params = ["eventType": eventType.rawValue, "isOn": "\(newPreference)"]
+        Flurry.logEvent("Toggle Event Type", withParameters: params)
+        
         return newPreference
     }
     
@@ -129,6 +133,9 @@ class EventsPresenter {
         let oldPreference = userDefaults.bool(forKey: noteType.key)
         let newPreference = !oldPreference
         userDefaults.set(newPreference, forKey: noteType.key)
+        
+        let params = ["noteType": noteType.rawValue, "isOn": "\(newPreference)"]
+        Flurry.logEvent("Toggle Note Type", withParameters: params)
         
         return newPreference
     }

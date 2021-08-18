@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class EventDetailsRouter {
     
@@ -51,16 +52,25 @@ extension EventDetailsRouter: Routing {
     func presentEventCreation(event: Event) {
         child = RouteManager.shared.router(for: .eventCreation, parent: self, with: event)
         child?.present()
+        Flurry.logEvent("Show Event Creation - Edit")
     }
     
     func presentEventReminder(details: ReminderDetails) {
         child = RouteManager.shared.router(for: .eventReminder, parent: self, with: details)
         child?.present()
+        if details.reminder != nil {
+            Flurry.logEvent("Show Event Reminder - Edit")
+        } else {
+            Flurry.logEvent("Show Event Reminder - New")
+        }
     }
     
     func presentEventNote(noteState: NoteState) {
         child = RouteManager.shared.router(for: .eventNoteDetails, parent: self, with: noteState)
         child?.present()
+        
+        let params = ["noteType": noteState.noteType.rawValue]
+        Flurry.logEvent("Show Event Note - Event Details", withParameters: params)
     }
     
     func dismiss<T>(route: Route, data: T) {
