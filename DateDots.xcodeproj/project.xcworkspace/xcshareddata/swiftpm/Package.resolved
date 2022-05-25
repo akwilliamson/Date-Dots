@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "flurryswiftpackage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flurry/FlurrySwiftPackage/",
+      "state" : {
+        "revision" : "25fa549d929a42c703e78abb63ad53c6aeb768c5",
+        "version" : "12.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}

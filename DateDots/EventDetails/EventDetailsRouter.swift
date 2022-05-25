@@ -52,16 +52,16 @@ extension EventDetailsRouter: Routing {
     func presentEventCreation(event: Event) {
         child = RouteManager.shared.router(for: .eventCreation, parent: self, with: event)
         child?.present()
-        Flurry.logEvent("Show Event Creation - Edit")
+        Flurry.log(eventName: "Show Event Creation - Edit")
     }
     
     func presentEventReminder(details: ReminderDetails) {
         child = RouteManager.shared.router(for: .eventReminder, parent: self, with: details)
         child?.present()
         if details.reminder != nil {
-            Flurry.logEvent("Show Event Reminder - Edit")
+            Flurry.log(eventName: "Show Event Reminder - Edit")
         } else {
-            Flurry.logEvent("Show Event Reminder - New")
+            Flurry.log(eventName: "Show Event Reminder - New")
         }
     }
     
@@ -70,7 +70,7 @@ extension EventDetailsRouter: Routing {
         child?.present()
         
         let params = ["noteType": noteState.noteType.rawValue]
-        Flurry.logEvent("Show Event Note - Event Details", withParameters: params)
+        Flurry.log(eventName: "Show Event Note - Event Details", parameters: params)
     }
     
     func dismiss<T>(route: Route, data: T) {

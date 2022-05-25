@@ -42,11 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
     private func startFlurryAnalytics() {
         
         Flurry.startSession(
-            "ZRGQSS9NYG66WPJY5J6P",
-            with: FlurrySessionBuilder.init()
-                .withCrashReporting(true)
-                .withAppVersion("2.1.0")
-                .withLogLevel(FlurryLogLevelAll)
+            apiKey: "ZRGQSS9NYG66WPJY5J6P",
+            sessionBuilder: FlurrySessionBuilder.init()
+                .build(crashReportingEnabled: true)
+                .build(appVersion: "2.1.0")
+                .build(logLevel: .all)
         )
     }
 }

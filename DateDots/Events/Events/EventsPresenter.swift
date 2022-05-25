@@ -123,7 +123,7 @@ class EventsPresenter {
         userDefaults.set(newPreference, forKey: eventType.key)
         
         let params = ["eventType": eventType.rawValue, "isOn": "\(newPreference)"]
-        Flurry.logEvent("Toggle Event Type", withParameters: params)
+        Flurry.log(eventName: "Toggle Event Type", parameters: params)
         
         return newPreference
     }
@@ -135,7 +135,7 @@ class EventsPresenter {
         userDefaults.set(newPreference, forKey: noteType.key)
         
         let params = ["noteType": noteType.rawValue, "isOn": "\(newPreference)"]
-        Flurry.logEvent("Toggle Note Type", withParameters: params)
+        Flurry.log(eventName: "Toggle Note Type", parameters: params)
         
         return newPreference
     }
