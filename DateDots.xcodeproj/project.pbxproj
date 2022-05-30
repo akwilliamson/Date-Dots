@@ -85,6 +85,7 @@
 		97B67D8A1E512FA1006C3216 /* InitialImportInteractorOutputting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */; };
 		97B9A517262CA5B600C980AC /* InfoCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B9A516262CA5B600C980AC /* InfoCircleImageView.swift */; };
 		97B9A51F262CA5ED00C980AC /* InfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B9A51E262CA5ED00C980AC /* InfoType.swift */; };
+		97BA450A28449E8B0053513F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BA450928449E8B0053513F /* UserDefaultsManager.swift */; };
 		97BDFCF0265E124E0061E0CB /* EventCreationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCEF265E124E0061E0CB /* EventCreationRouter.swift */; };
 		97BDFCF2265E13520061E0CB /* EventCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF1265E13520061E0CB /* EventCreationView.swift */; };
 		97BDFCF4265E136B0061E0CB /* EventCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BDFCF3265E136B0061E0CB /* EventCreationViewController.swift */; };
@@ -194,6 +195,7 @@
 		97B67D891E512FA1006C3216 /* InitialImportInteractorOutputting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportInteractorOutputting.swift; sourceTree = "<group>"; };
 		97B9A516262CA5B600C980AC /* InfoCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCircleImageView.swift; sourceTree = "<group>"; };
 		97B9A51E262CA5ED00C980AC /* InfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoType.swift; sourceTree = "<group>"; };
+		97BA450928449E8B0053513F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		97BDFCEF265E124E0061E0CB /* EventCreationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationRouter.swift; sourceTree = "<group>"; };
 		97BDFCF1265E13520061E0CB /* EventCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationView.swift; sourceTree = "<group>"; };
 		97BDFCF3265E136B0061E0CB /* EventCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationViewController.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				97A00A90248C84D900AB7F85 /* NotificationManager.swift */,
 				9715A27E26671F8C00719111 /* DatePickerManager.swift */,
 				97C059F226C1039500DF7160 /* CalendarManager.swift */,
+				97BA450928449E8B0053513F /* UserDefaultsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				9791F78C1BD4CCDF001E82BB /* Address.swift in Sources */,
 				975975EF25EE1134006C5285 /* Array+Subscript.swift in Sources */,
 				97B9A517262CA5B600C980AC /* InfoCircleImageView.swift in Sources */,
+				97BA450A28449E8B0053513F /* UserDefaultsManager.swift in Sources */,
 				97901FAC2467C82C00912CB0 /* Populatable.swift in Sources */,
 				97364CE61AFBF44A0095BC57 /* AppDelegate.swift in Sources */,
 				9707A7EB1DBC073D00C4A9C0 /* EventsInteractor.swift in Sources */,
