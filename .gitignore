@@ -17,8 +17,9 @@ Icons/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+.DS_Store
 
 ## Other
 *.moved-aside
 *.xccheckout
-*.xcscmblueprint.DS_Store
+*.xcscmblueprint

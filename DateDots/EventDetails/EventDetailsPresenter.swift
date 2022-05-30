@@ -117,7 +117,7 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
         
         let saveReminderCount = userDefaultsManager.getInt(for: .countReminderSave)
 
-        if saveReminderCount % 10 == 0 {
+        if saveReminderCount > 0 && saveReminderCount % 10 == 0 {
             if let date = userDefaultsManager.getTime(for: .timeSinceLastPrompt) {
                 let daysSinceLastPrompt = Calendar.current.dateComponents([.day], from: date, to: Date()).day!
                 if daysSinceLastPrompt > 60 {

@@ -316,7 +316,7 @@ extension EventsView: UITableViewDataSource {
         if section == 0 || section == activeEvents.count + 1 {
             return UIScreen.main.bounds.width/9 + 65
         } else {
-            return 50
+            return 35
         }
     }
     

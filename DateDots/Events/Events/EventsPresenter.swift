@@ -155,7 +155,7 @@ extension EventsPresenter: EventsEventHandling {
         
         let saveEventCount = userDefaultsManager.getInt(for: .countEventSave)
 
-        if saveEventCount % 10 == 0 {
+        if saveEventCount > 0 && saveEventCount % 10 == 0 {
             if let date = userDefaultsManager.getTime(for: .timeSinceLastPrompt) {
                 let daysSinceLastPrompt = Calendar.current.dateComponents([.day], from: date, to: Date()).day!
                 if daysSinceLastPrompt > 60 {
