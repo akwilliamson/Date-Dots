@@ -62,6 +62,7 @@ class EventCreationViewController: UIViewController {
     @objc
     func saveNewEvent() {
         presenter?.didTapSave()
+        
     }
     
     @objc

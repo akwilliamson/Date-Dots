@@ -11,7 +11,8 @@ import UserNotifications
 protocol ReminderEventHandling: AnyObject {
     
     func viewDidLoad()
-    func didSelectDayPrior(_ dayPrior: Int)
+    func didSelectWeeksPrior(_ weeksPrior: Int)
+    func didSelectDaysPrior(_ daysPrior: Int)
     func didChangeTimeOfDay(_ date: Date)
     func didPressSaveReminder()
     func didPressDeleteReminder()
@@ -41,6 +42,8 @@ class ReminderPresenter {
     }
     
     // MARK: Properties
+    
+    private let userDefaultsManager = UserDefaultsManager()
     
     private var event: Event
     private var reminder: UNNotificationRequest?
@@ -82,7 +85,11 @@ class ReminderPresenter {
         switch day {
         case 0:  return "Day of at \(time)"
         case 1:  return "\(day) day before at \(time)"
-        default: return "\(day) days before at \(time)"
+        case 7:  return "1 week before at \(time)"
+        case 14: return "2 weeks before at \(time)"
+        case 21: return "3 weeks before at \(time)"
+        default:
+            return "\(day) days before at \(time)"
         }
     }
     
@@ -172,34 +179,34 @@ extension ReminderPresenter: ReminderEventHandling {
         }
     }
     
-    func didSelectDayPrior(_ dayPrior: Int) {
-        setDateComponentDays(dayPrior: dayPrior)
-        if reminder != nil {
-            interactor?.updateReminder(
-                Reminder(
-                    id: event.id,
-                    title: reminderTitle,
-                    body: reminderBody,
-                    fireDate: fireDateComponents
-                )
-            )
-        }
+    func didSelectWeeksPrior(_ weeksPrior: Int) {
+        setEventReminder(weeksPrior: weeksPrior)
+        updateReminder()
+        view?.didUpdateSchedule(text: scheduleText)
+    }
+    
+    func didSelectDaysPrior(_ daysPrior: Int) {
+        setEventReminder(daysPrior: daysPrior)
+        updateReminder()
         view?.didUpdateSchedule(text: scheduleText)
     }
     
     func didChangeTimeOfDay(_ date: Date) {
-        setDateComponentTime(from: date)
-        if reminder != nil {
-            interactor?.updateReminder(
-                Reminder(
-                    id: event.id,
-                    title: reminderTitle,
-                    body: reminderBody,
-                    fireDate: fireDateComponents
-                )
-            )
-        }
+        setEventReminder(from: date)
+        updateReminder()
         view?.didUpdateSchedule(text: scheduleText)
+    }
+    
+    private func updateReminder() {
+        guard reminder != nil else { return }
+        interactor?.updateReminder(
+            Reminder(
+                id: event.id,
+                title: reminderTitle,
+                body: reminderBody,
+                fireDate: fireDateComponents
+            )
+        )
     }
     
     func didPressSaveReminder() {
@@ -228,51 +235,20 @@ extension ReminderPresenter: ReminderEventHandling {
     
     // MARK: Private Methods
     
-    private func setDateComponents(from date: Date) {
+    private func setEventReminder(weeksPrior: Int) {
+        let daysPrior = weeksPrior * 7
+        let date = Calendar.current.date(byAdding: .day, value: -daysPrior, to: event.date)!
+        fireDateComponents.month = date.month
         fireDateComponents.day = date.day
-        fireDateComponents.hour = date.hour
-        fireDateComponents.minute = date.minute
     }
-    
-    private func setDateComponentDays(dayPrior: Int) {
-        guard let eventDay = event.date.day else { return }
-        if eventDay > 7 {
-            fireDateComponents.day = eventDay - dayPrior
-        } else {
-            let notificationDay = eventDay - dayPrior
-            
-            if notificationDay > 0 {
-                fireDateComponents.day = notificationDay
-                fireDateComponents.month = event.date.month
-            } else {
-                if fireDateComponents.month != event.date.month! - 1 {
-                    fireDateComponents.month = event.date.month! - 1
-                }
-                let daysToSubtractFromPreviousMonth = abs(notificationDay)
-                
-                switch fireDateComponents.month {
-                case 1, 3, 5, 7, 8, 10, 12:
-                    fireDateComponents.day = 31 - daysToSubtractFromPreviousMonth
-                case 2:
-                    if Date().year! % 4 == 0 {
-                        fireDateComponents.day = 29 - daysToSubtractFromPreviousMonth
-                    } else {
-                        fireDateComponents.day = 28 - daysToSubtractFromPreviousMonth
-                    }
-                case 4, 6, 9, 11:
-                    fireDateComponents.day = 30 - daysToSubtractFromPreviousMonth
-                default:
-                    fireDateComponents.day = notificationDay
-                }
-            }
-        }
-    }
-    
-    private func setDateComponentDays(from date: Date) {
+
+    private func setEventReminder(daysPrior: Int) {
+        let date = Calendar.current.date(byAdding: .day, value: -daysPrior, to: event.date)!
+        fireDateComponents.month = date.month
         fireDateComponents.day = date.day
     }
     
-    private func setDateComponentTime(from date: Date) {
+    private func setEventReminder(from date: Date) {
         fireDateComponents.hour = date.hour
         fireDateComponents.minute = date.minute
     }
@@ -306,6 +282,7 @@ extension ReminderPresenter: ReminderInteractorOutputting {
     func reminderSaveSucceeded(reminder: UNNotificationRequest) {
         self.reminder = reminder
         event.hasReminder = true
+        userDefaultsManager.bumpInt(for: .countReminderSave)
         interactor?.saveEvent()
     }
     

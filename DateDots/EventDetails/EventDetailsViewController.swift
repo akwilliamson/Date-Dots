@@ -6,6 +6,7 @@
 //  Copyright © 2021 Aaron Williamson. All rights reserved.
 //
 
+import StoreKit
 import UIKit
 
 protocol EventDetailsViewOutputting: AnyObject {
@@ -21,6 +22,7 @@ protocol EventDetailsViewOutputting: AnyObject {
     func select(noteType: NoteType)
     
     func updateReminder(text: String)
+    func presentAppReviewModal()
 }
 
 class EventDetailsViewController: UIViewController {
@@ -93,6 +95,16 @@ extension EventDetailsViewController: EventDetailsViewOutputting {
     
     func updateReminder(text: String) {
         baseView.updateReminder(text: text)
+    }
+    
+    func presentAppReviewModal() {
+        if #available(iOS 14.0, *) {
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            } else {
+                SKStoreReviewController.requestReview()
+            }
+        }
     }
 }
 

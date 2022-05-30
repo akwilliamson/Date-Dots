@@ -14,10 +14,6 @@ enum NoteType: String {
     case plans
     case misc
     
-    var key: String {
-        return "note-\(rawValue)"
-    }
-    
     var image: UIImage {
         return UIImage(named: rawValue)!
     }

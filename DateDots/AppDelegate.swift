@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Routing {
         
         startFlurryAnalytics()
 
+        let userDefaultsManager = UserDefaultsManager()
+        userDefaultsManager.migrateOldKeys()
+        
+        startFlurryAnalytics()
+
         return true
     }
 

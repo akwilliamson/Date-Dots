@@ -14,10 +14,6 @@ enum EventType: String, CaseIterable {
     case anniversary
     case custom
     
-    var key: String {
-        return "event-\(rawValue)"
-    }
-    
     var image: UIImage {
         return UIImage(named: rawValue)!
     }

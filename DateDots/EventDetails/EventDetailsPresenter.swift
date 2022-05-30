@@ -48,19 +48,22 @@ class EventDetailsPresenter {
     
     // MARK: Properties
     
+    private let userDefaultsManager = UserDefaultsManager()
+    
     private var event: Event
     private var reminder: UNNotificationRequest?
     
     // MARK: Computed Properties
     
     private var activeInfoType: InfoType {
-        let key = "\(Constant.keyPrefix)\(InfoType.reminder.key)"
-        return UserDefaults.standard.bool(forKey: key) ? .reminder : .address
+        [.reminder, .address].filter {
+            userDefaultsManager.getBool(type: $0.rawValue, for: .displayInfo)
+        }.first ?? .reminder
     }
     
     private var activeNoteType: NoteType {
         return [.gifts, .plans, .misc].filter {
-            UserDefaults.standard.bool(forKey: "\(Constant.keyPrefix)\($0.key)")
+            userDefaultsManager.getBool(type: $0.rawValue, for: .displayNote)
         }.first ?? .gifts
     }
     
@@ -74,6 +77,10 @@ class EventDetailsPresenter {
     // MARK: Private Helpers
     
     private func setPreferenceFor(infoType: InfoType) {
+        userDefaultsManager.setBool(false, type: InfoType.address.rawValue, for: .displayInfo)
+        userDefaultsManager.setBool(false, type: InfoType.reminder.rawValue, for: .displayInfo)
+        userDefaultsManager.setBool(true, type: infoType.rawValue, for: .displayInfo)
+        
         switch infoType {
         case .address:
             UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(InfoType.reminder.key)")
@@ -83,10 +90,10 @@ class EventDetailsPresenter {
     }
     
     private func setPreferenceFor(noteType: NoteType) {
-        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.gifts.key)")
-        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.plans.key)")
-        UserDefaults.standard.set(false, forKey: "\(Constant.keyPrefix)\(NoteType.misc.key)")
-        UserDefaults.standard.set(true,  forKey: "\(Constant.keyPrefix)\(noteType.key)")
+        userDefaultsManager.setBool(false, type: NoteType.gifts.rawValue, for: .displayNote)
+        userDefaultsManager.setBool(false, type: NoteType.plans.rawValue, for: .displayNote)
+        userDefaultsManager.setBool(false, type: NoteType.misc.rawValue, for: .displayNote)
+        userDefaultsManager.setBool(true, type: noteType.rawValue, for: .displayNote)
     }
 }
 
@@ -107,6 +114,21 @@ extension EventDetailsPresenter: EventDetailsEventHandling {
                 noteType: activeNoteType
             )
         )
+        
+        let saveReminderCount = userDefaultsManager.getInt(for: .countReminderSave)
+
+        if saveReminderCount % 10 == 0 {
+            if let date = userDefaultsManager.getTime(for: .timeSinceLastPrompt) {
+                let daysSinceLastPrompt = Calendar.current.dateComponents([.day], from: date, to: Date()).day!
+                if daysSinceLastPrompt > 60 {
+                    userDefaultsManager.setTime(Date(), for: .timeSinceLastPrompt)
+                    view?.presentAppReviewModal()
+                }
+            } else {
+                userDefaultsManager.setTime(Date(), for: .timeSinceLastPrompt)
+                view?.presentAppReviewModal()
+            }
+        }
     }
     
     func didSelectEdit() {
@@ -185,8 +207,12 @@ extension EventDetailsPresenter: EventDetailsInteractorOutputting {
         
         switch day {
         case 0:  return "Day of\nat \(time)"
-        case 1:  return "\(day) day before\nat \(time)"
-        default: return "\(day) days before\nat \(time)"
+        case 1:  return "\(day) day befor\nat \(time)"
+        case 7:  return "1 week before\nat \(time)"
+        case 14: return "2 weeks before\nat \(time)"
+        case 21: return "3 weeks before\nat \(time)"
+        default:
+            return "\(day) days before\nat \(time)"
         }
     }
 }

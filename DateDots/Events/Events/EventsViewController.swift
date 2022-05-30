@@ -8,6 +8,7 @@
 
 import CoreData
 import MessageUI
+import StoreKit
 import UIKit
 
 protocol EventsViewOutputting: AnyObject {
@@ -27,6 +28,7 @@ protocol EventsViewOutputting: AnyObject {
     func reloadView()
     
     func presentMailComposer(recipient: String, subject: String, body: String)
+    func presentAppReviewModal()
 }
 
 class EventsViewController: UIViewController {
@@ -234,6 +236,16 @@ extension EventsViewController: EventsViewDelegate {
     
     func didSelectNote(noteState: NoteState) {
         presenter?.selectNotePressed(noteState: noteState)
+    }
+    
+    func presentAppReviewModal() {
+        if #available(iOS 14.0, *) {
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            } else {
+                SKStoreReviewController.requestReview()
+            }
+        }
     }
 }
 

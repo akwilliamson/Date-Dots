@@ -42,6 +42,8 @@ class EventCreationPresenter {
     
     // MARK: Properties
     
+    private let userDefaultsManager = UserDefaultsManager()
+    
     private var event: Event?
     
     private var eventType = EventType.birthday
@@ -304,6 +306,7 @@ extension EventCreationPresenter: EventCreationInteractorOutputting {
     }
     
     func newEventSaved() {
+        userDefaultsManager.bumpInt(for: .countEventSave)
         router?.dismiss(event: event)
     }
     

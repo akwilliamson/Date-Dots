@@ -39,13 +39,13 @@ class EventsInteractor {
 extension EventsInteractor: EventsInteractorInputting {
 
     func fetchEvents() {
-        do {
-            events = try CoreDataManager.fetch()
-            migrateEvents {
+        Dispatch.main.async {
+            do {
+                self.events = try CoreDataManager.fetch()
                 self.presenter?.eventsFetched(self.events)
+            } catch {
+                self.presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
             }
-        } catch {
-            presenter?.eventsFetchedFailed(EventsInteractorError.fetchFailed)
         }
     }
     
@@ -83,60 +83,6 @@ extension EventsInteractor: EventsInteractorInputting {
             Dispatch.main {
                 self.presenter?.reminderNotFound(for: event)
             }
-        }
-    }
-}
-
-// MARK: Pseudo-migration to reset event names for old app events
-
-extension EventsInteractor {
-    
-    // Old events don't have a given/family name, so set those values to eventually delete the old properties.
-    func migrateEvents(completion: @escaping () -> Void) {
-        events.forEach { event in
-            if event.abbreviatedName.isEmpty {
-                do {
-                    try CoreDataManager.delete(object: event)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        let reminderIDs = reminders.map { $0.identifier }
-        
-        events = events.map { event -> Event in
-            
-            if event.givenName.isEmpty {
-                let nameComponents = event.name.components(separatedBy: " ")
-                
-                event.givenName = nameComponents.first ?? "No Name"
-                
-                if nameComponents.count == 2 {
-                    event.familyName = nameComponents.last ?? String()
-                } else {
-                    event.familyName = String()
-                }
-            }
-            
-            if event.type == "other" {
-                event.type = "custom"
-            }
-            
-            if event.type == "holiday" {
-                event.type = "custom"
-            }
-
-            event.hasReminder = reminderIDs.contains(event.id)
-            
-            return event
-        }
-        
-        do {
-            try CoreDataManager.save()
-            completion()
-        } catch {
-            completion()
         }
     }
 }

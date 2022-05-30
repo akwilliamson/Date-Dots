@@ -118,8 +118,12 @@ extension ReminderViewController: ReminderViewOutputting {
 
 extension ReminderViewController: ReminderViewDelegate {
     
-    func didSelectDayPrior(_ dayPrior: Int) {
-        presenter?.didSelectDayPrior(dayPrior)
+    func didSelectWeeksPrior(_ weekPrior: Int) {
+        presenter?.didSelectWeeksPrior(weekPrior)
+    }
+    
+    func didSelectDaysPrior(_ dayPrior: Int) {
+        presenter?.didSelectDaysPrior(dayPrior)
     }
     
     func didChangeTimeOfDay(date: Date) {

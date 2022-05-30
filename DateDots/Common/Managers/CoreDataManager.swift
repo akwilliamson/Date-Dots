@@ -43,7 +43,6 @@ class CoreDataManager {
     
     static func fetch<T: NSManagedObject>() throws -> [T] {
         let request = NSFetchRequest<T>(entityName: String(describing: T.self))
-        
         do {
             return try shared.viewContext.fetch(request) as [T]
         } catch {

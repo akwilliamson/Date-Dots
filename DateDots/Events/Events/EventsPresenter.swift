@@ -54,31 +54,33 @@ class EventsPresenter {
 
     // MARK: Properties
     
+    private let userDefaultsManager = UserDefaultsManager()
+    
     private var reminders: [UNNotificationRequest] = []
     
     private var events: [Event] = []
     
     private var activeEventTypes: [EventType] {
         return [.birthday, .anniversary, .custom].filter {
-            UserDefaults.standard.bool(forKey: $0.key)
+            userDefaultsManager.getBool(type: $0.rawValue, for: .filterEvent)
         }
     }
     
     private var inactiveEventTypes: [EventType] {
         return [.birthday, .anniversary, .custom].filter {
-            !UserDefaults.standard.bool(forKey: $0.key)
+            !userDefaultsManager.getBool(type: $0.rawValue, for: .filterEvent)
         }
     }
     
     private var activeNoteTypes: [NoteType] {
         return [.gifts, .plans, .misc].filter {
-            UserDefaults.standard.bool(forKey: $0.key)
+            userDefaultsManager.getBool(type: $0.rawValue, for: .filterNote)
         }
     }
     
     private var inactiveNoteTypes: [NoteType] {
         return [.gifts, .plans, .misc].filter {
-            !UserDefaults.standard.bool(forKey: $0.key)
+            !userDefaultsManager.getBool(type: $0.rawValue, for: .filterNote)
         }
     }
     
@@ -116,28 +118,25 @@ class EventsPresenter {
         }
     }
     
-    private func togglePreferenceFor(eventType: EventType) -> Bool {
-        let userDefaults = UserDefaults.standard
-        let oldPreference = userDefaults.bool(forKey: eventType.key)
-        let newPreference = !oldPreference
-        userDefaults.set(newPreference, forKey: eventType.key)
-        
-        let params = ["eventType": eventType.rawValue, "isOn": "\(newPreference)"]
+    private func toggleFilterFor(eventType: EventType) -> Bool {
+        let old = userDefaultsManager.getBool(type: eventType.rawValue, for: .filterEvent)
+        userDefaultsManager.setBool(!old, type: eventType.rawValue, for: .filterEvent)
+
+        let params = ["eventType": eventType.rawValue, "isOn": "\(!old)"]
         Flurry.log(eventName: "Toggle Event Type", parameters: params)
         
-        return newPreference
+        return !old
+
     }
     
-    private func togglePreferenceFor(noteType: NoteType) -> Bool {
-        let userDefaults = UserDefaults.standard
-        let oldPreference = userDefaults.bool(forKey: noteType.key)
-        let newPreference = !oldPreference
-        userDefaults.set(newPreference, forKey: noteType.key)
+    private func toggleFilterFor(noteType: NoteType) -> Bool {
+        let old = userDefaultsManager.getBool(type: noteType.rawValue, for: .filterNote)
+        userDefaultsManager.setBool(!old, type: noteType.rawValue, for: .filterNote)
         
-        let params = ["noteType": noteType.rawValue, "isOn": "\(newPreference)"]
+        let params = ["noteType": noteType.rawValue, "isOn": "\(!old)"]
         Flurry.log(eventName: "Toggle Note Type", parameters: params)
         
-        return newPreference
+        return !old
     }
 }
 
@@ -153,12 +152,27 @@ extension EventsPresenter: EventsEventHandling {
     func viewWillAppear() {
         interactor?.fetchReminders()
         view?.configureNavigation(state: .normal)
+        
+        let saveEventCount = userDefaultsManager.getInt(for: .countEventSave)
+
+        if saveEventCount % 10 == 0 {
+            if let date = userDefaultsManager.getTime(for: .timeSinceLastPrompt) {
+                let daysSinceLastPrompt = Calendar.current.dateComponents([.day], from: date, to: Date()).day!
+                if daysSinceLastPrompt > 60 {
+                    userDefaultsManager.setTime(Date(), for: .timeSinceLastPrompt)
+                    view?.presentAppReviewModal()
+                }
+            } else {
+                userDefaultsManager.setTime(Date(), for: .timeSinceLastPrompt)
+                view?.presentAppReviewModal()
+            }
+        }
     }
     
     func composeButtonPressed() {
         let recipient = "datedots@gmail.com"
-        let subject = "Feedback"
-        let body = "Feedback or feature requests? Leave them here!"
+        let subject = "Feedback/Request"
+        let body = "Feedback or feature requests? Let me know here!"
         view?.presentMailComposer(recipient: recipient, subject: subject, body: body)
     }
     
@@ -182,7 +196,7 @@ extension EventsPresenter: EventsEventHandling {
     }
 
     func eventDotPressed(type: EventType) {
-        let isSelected = togglePreferenceFor(eventType: type)
+        let isSelected = toggleFilterFor(eventType: type)
         view?.toggleDotFor(eventType: type, isSelected: isSelected)
         view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
         view?.reloadView()
@@ -195,7 +209,7 @@ extension EventsPresenter: EventsEventHandling {
     }
     
     func noteDotPressed(type: NoteType) {
-        let isSelected = togglePreferenceFor(noteType: type)
+        let isSelected = toggleFilterFor(noteType: type)
         view?.toggleDotFor(noteType: type, isSelected: isSelected)
         view?.populateView(activeEvents: sortedActiveEvents, activeNoteTypes: activeNoteTypes)
         view?.reloadView()

@@ -12,7 +12,7 @@ class ReminderCircleLabel: CircleLabel {
 
     // MARK: Properties
 
-    let dayPrior: Int
+    let number: Int
 
     // MARK: Initialization
     
@@ -20,15 +20,17 @@ class ReminderCircleLabel: CircleLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(dayPrior: Int) {
-        self.dayPrior = dayPrior
+    init(_ number: Int) {
+        self.number = number
         super.init(frame: .zero)
+
         lineBreakMode = .byWordWrapping
         textColor = .white
         font = FontType.avenirNextDemiBold(25).font
-        text = "\(dayPrior)"
+        text = "\(number)"
         
         layer.shadowColor = UIColor.black.cgColor
+
         switch traitCollection.userInterfaceStyle {
         case .light, .unspecified:
             layer.shadowRadius = 5.0
