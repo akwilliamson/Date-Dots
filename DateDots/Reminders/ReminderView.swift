@@ -33,13 +33,14 @@ class ReminderView: BaseView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     private let scheduleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         label.font = FontType.noteworthyBold(30).font
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
@@ -49,6 +50,7 @@ class ReminderView: BaseView {
     private let weeksPriorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         label.textAlignment = .center
         label.font = FontType.avenirNextBold(20).font
         label.text = Constant.String.weeksBefore
@@ -66,6 +68,7 @@ class ReminderView: BaseView {
     private let oneWeekPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(1)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 1
         return label
@@ -74,6 +77,7 @@ class ReminderView: BaseView {
     private let twoWeeksPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(2)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 2
         return label
@@ -82,6 +86,7 @@ class ReminderView: BaseView {
     private let threeWeeksPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(3)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 3
         return label
@@ -90,6 +95,7 @@ class ReminderView: BaseView {
     private let dayPriorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         label.textAlignment = .center
         label.font = FontType.avenirNextBold(20).font
         label.text = Constant.String.daysBefore
@@ -115,6 +121,7 @@ class ReminderView: BaseView {
     private let zeroDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(0)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 0
         
@@ -124,6 +131,7 @@ class ReminderView: BaseView {
     private let oneDayPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(1)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 1
         return label
@@ -132,6 +140,7 @@ class ReminderView: BaseView {
     private let twoDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(2)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 2
         return label
@@ -140,6 +149,7 @@ class ReminderView: BaseView {
     private let threeDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(3)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 3
         return label
@@ -156,6 +166,7 @@ class ReminderView: BaseView {
     private let fourDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(4)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 4
         return label
@@ -164,6 +175,7 @@ class ReminderView: BaseView {
     private let fiveDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(5)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 5
         return label
@@ -172,6 +184,7 @@ class ReminderView: BaseView {
     private let sixDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(6)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 6
         return label
@@ -180,6 +193,7 @@ class ReminderView: BaseView {
     private let sevenDaysPriorLabel: ReminderCircleLabel = {
         let label = ReminderCircleLabel(7)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         label.isUserInteractionEnabled = true
         label.tag = 7
         return label
@@ -305,23 +319,16 @@ class ReminderView: BaseView {
         super.constructLayout()
         
         NSLayoutConstraint.activate([
-            scheduleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 15)
-        ])
-        
-        NSLayoutConstraint.activate([
-            oneWeekPriorLabel.heightAnchor.constraint(equalTo: oneWeekPriorLabel.widthAnchor),
-            oneWeekPriorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
-            threeWeeksPriorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            zeroDaysPriorLabel.heightAnchor.constraint(equalTo: zeroDaysPriorLabel.widthAnchor),
-            fourDaysPriorLabel.heightAnchor.constraint(equalTo: fourDaysPriorLabel.widthAnchor),
+            scheduleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 15),
             
-            zeroDaysPriorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            fourDaysPriorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            threeDaysPriorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            sevenDaysPriorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            weeksPriorStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                oneWeekPriorLabel.heightAnchor.constraint(equalTo: oneWeekPriorLabel.widthAnchor),
+            
+            daysPriorFirstRowStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                zeroDaysPriorLabel.heightAnchor.constraint(equalTo: zeroDaysPriorLabel.widthAnchor),
+            
+            daysPriorSecondRowStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                fourDaysPriorLabel.heightAnchor.constraint(equalTo: fourDaysPriorLabel.widthAnchor),
         ])
     }
     

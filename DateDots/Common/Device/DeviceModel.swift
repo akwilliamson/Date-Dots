@@ -35,6 +35,11 @@ public enum DeviceModel: String {
     case iPhone12       = "iPhone 12"
     case iPhone12Pro    = "iPhone 12 Pro"
     case iPhone12ProMax = "iPhone 12 Pro Max"
+    case iPhone13       = "iPhone 13"
+    case iPhone13Pro    = "iPhone 13 Pro"
+    case iPhone13ProMax = "iPhone 13 Pro Max"
+    case iPhone13Mini   = "iPhone 13 Mini"
+    case iPhoneSE3      = "iPhone SE 3rd gen"
     
     case unrecognized   = "?unrecognized?"
 }
